@@ -651,26 +651,31 @@
   // the LEFT into slots and padded with null; flat items:[...] = a single front layer.
   var EMBEDDED_STAGES = {
     1: {
-      "level": 1, "timeLimit": 160, "cols": 3, "rows": 4, "cellCap": 3,
-      "goods": ["cola","juice","milk","chips","donut","soda","snack","icebar_a","icebar_b","sauce","water"],
+      "level": 1, "timeLimit": 220, "cols": 3, "rows": 4, "cellCap": 3,
+      "goods": ["broccoli","chips","cola","donut_pink","flower_vase","gelato_cup","grape_soda","hot_sauce","icebar_blue","lemon_soda","milkshake","orange_soda","popcorn_bag","rubber_duck","strawberry","yogurt"],
       "combo": { "resetAfterMs": 4000 },
       "scoring": { "starsPerSort": 1, "comboBonus": 1 },
-      // V11 — RICH/VARIED 11-type packed board (see stages/stage1.json _note). 11 packed
-      // cubbies (front+back) + 1 empty workspace (idx6,r2c0); each type x6 (all mult of 3)
-      // = 66 goods; solver-verified solvable; colorful front-row variety like the reference.
+      // V17 — VARIED/COLORFUL 16-type packed board (see stages/stage1.json _note). 11 packed
+      // cubbies (front-full + back depth) + 1 empty workspace (idx6,r2c0). MIXED multiplicity
+      // for solvability: 6 anchors x6 + 10 accents x3 (all mult of 3) = 66 goods. Broad mix
+      // across drinks/sauce/dairy/snacks/frozen/bakery/fruit-veg/toy/decor; front-row variety
+      // 32/33 (colorful, no monotony). Engine-mirror bounded-DFS solvable both PRISTINE (222
+      // steps) AND after the verify (2) greedy clear-test pre-moves (219 steps) under the EXACT
+      // engine budget (nodeBudget=400000, maxSteps=600); __qa.autoSolve re-verifies to 0.
+      // cubby0 slot2 = grape_soda (vivid, non-brown) for the N9b base-pixel assert. seed=413.
       "cubbies": [
-        { "r":0,"c":0,"layers":[ ["sauce","water","soda"], ["juice","milk","cola"] ] },
-        { "r":0,"c":1,"layers":[ ["icebar_a","water","water"], ["soda","milk","icebar_a"] ] },
-        { "r":0,"c":2,"layers":[ ["chips","snack","soda"], ["sauce","milk","snack"] ] },
-        { "r":1,"c":0,"layers":[ ["sauce","cola","donut"], ["snack","chips","icebar_a"] ] },
-        { "r":1,"c":1,"layers":[ ["cola","juice","icebar_b"], ["water","chips","chips"] ] },
-        { "r":1,"c":2,"layers":[ ["milk","sauce","donut"], ["icebar_b","icebar_b","icebar_b"] ] },
-        { "r":2,"c":0,"layers":[ [null,null,null] ] },
-        { "r":2,"c":1,"layers":[ ["snack","milk","icebar_a"], ["sauce","chips","icebar_a"] ] },
-        { "r":2,"c":2,"layers":[ ["water","soda","water"], ["donut","cola","juice"] ] },
-        { "r":3,"c":0,"layers":[ ["sauce","soda","icebar_b"], ["juice","juice","soda"] ] },
-        { "r":3,"c":1,"layers":[ ["cola","donut","cola"], ["donut","milk","icebar_b"] ] },
-        { "r":3,"c":2,"layers":[ ["donut","snack","icebar_a"], ["chips","snack","juice"] ] }
+        { "r":0,"c":0,"layers":[ [ "cola", "chips", "grape_soda" ], [ "lemon_soda", "icebar_blue", "cola" ] ] },
+        { "r":0,"c":1,"layers":[ [ "orange_soda", "popcorn_bag", "rubber_duck" ], [ "popcorn_bag", "icebar_blue", "donut_pink" ] ] },
+        { "r":0,"c":2,"layers":[ [ "strawberry", "orange_soda", "hot_sauce" ], [ "broccoli", "donut_pink", "chips" ] ] },
+        { "r":1,"c":0,"layers":[ [ "flower_vase", "strawberry", "milkshake" ], [ "hot_sauce", "gelato_cup", "broccoli" ] ] },
+        { "r":1,"c":1,"layers":[ [ "grape_soda", "gelato_cup", "milkshake" ], [ "rubber_duck", "gelato_cup", "milkshake" ] ] },
+        { "r":1,"c":2,"layers":[ [ "broccoli", "popcorn_bag", "orange_soda" ], [ "chips", "lemon_soda", "yogurt" ] ] },
+        { "r":2,"c":0,"layers":[ [ null, null, null ] ] },
+        { "r":2,"c":1,"layers":[ [ "flower_vase", "hot_sauce", "chips" ], [ "grape_soda", "icebar_blue", "orange_soda" ] ] },
+        { "r":2,"c":2,"layers":[ [ "orange_soda", "broccoli", "lemon_soda" ], [ "icebar_blue", "icebar_blue", "cola" ] ] },
+        { "r":3,"c":0,"layers":[ [ "milkshake", "flower_vase", "cola" ], [ "rubber_duck", "donut_pink", "yogurt" ] ] },
+        { "r":3,"c":1,"layers":[ [ "broccoli", "milkshake", "chips" ], [ "milkshake", "yogurt", "chips" ] ] },
+        { "r":3,"c":2,"layers":[ [ "cola", "cola", "strawberry" ], [ "icebar_blue", "orange_soda", "broccoli" ] ] }
       ]
     }
   };
@@ -709,23 +714,102 @@
   function tileURL(type){ return '../assets/goods/' + type + '_tile.png'; }
   // per-type display scale so goods read at consistent real-world sizes (bottle bigger
   // than donut). V3: front goods are BIG (fill the cubby) — these scale the .good box.
-  // V16 — FAT/chubby tiles (re-trimmed from 256² to alpha bbox). The per-type box is
-  // sized by GOOD_AR (content aspect) + width-clamped to the slot budget in fitGoods, so
-  // overlap protection is fully aspect-driven. GOOD_SCALE is now a uniform 1.0 (the old
-  // <1 nudges on chips/donut/snack were for the SLIM boxes; the new fat aspects are
-  // width-bound by fitGoods, so no per-type scale shaving is needed). --gs > 1 is never
+  // V17 — ALL 119 goods. The per-type box is sized by GOOD_AR (real content aspect) +
+  // width-clamped to the slot budget in fitGoods, so overlap protection is fully
+  // aspect-driven. GOOD_SCALE is a uniform 1.0 for every type — the FAT aspects are
+  // width-bound by fitGoods so no per-type scale shaving is needed; --gs > 1 is never
   // used (it would push width past the slot budget and break the no-overlap guarantee).
-  var GOOD_SCALE = { cola:1.0, juice:1.0, milk:1.0, chips:1.0, donut:1.0,
-    soda:1.0, snack:1.0, icebar_a:1.0, icebar_b:1.0, sauce:1.0, water:1.0 };
-  // V16 — per-type CONTENT aspect ratio (visible-sprite width / height) MEASURED from the
-  // FAT re-trimmed tiles via alpha bbox (trim_tiles.mjs). The .good box HUGS the content
-  // at this aspect; slim items get slim boxes, fat/wide items get wide boxes. fitGoods
-  // width-clamps each box to W/3 - gap so adjacent goods NEVER overlap regardless of AR.
-  // OLD (slim) -> NEW (fat): cola 0.33->0.72, juice 0.40->0.72, milk 0.45->0.93,
-  // chips 0.69->1.05, donut 2.13->1.90, soda 0.38->0.90, snack 0.71->0.96,
-  // icebar_a 0.38->0.53, icebar_b 0.35->0.52, sauce 0.50->0.72, water 0.40->0.65.
-  var GOOD_AR = { cola:0.719, juice:0.719, milk:0.934, chips:1.053, donut:1.896,
-    soda:0.895, snack:0.961, icebar_a:0.531, icebar_b:0.520, sauce:0.723, water:0.652 };
+  // Baked inline (below) so the single-HTML build works offline; if goods_manifest.json
+  // is fetchable (served), its values OVERRIDE GOOD_AR at runtime (see manifest fetch).
+  var GOOD_SCALE = {
+    "apple":1.0, "avocado":1.0, "bagel":1.0, "banana":1.0,
+    "bell_pepper":1.0, "biscuit_box":1.0, "bread_loaf":1.0, "broccoli":1.0,
+    "bunny":1.0, "butter":1.0, "cactus":1.0, "cake_slice":1.0,
+    "candle":1.0, "candy_bag":1.0, "carrot":1.0, "cat_toy":1.0,
+    "cereal_box":1.0, "chick":1.0, "chip_tube":1.0, "chips":1.0,
+    "chocolate_bar":1.0, "coffee_can":1.0, "coffee_cup":1.0, "cola":1.0,
+    "cookie_box":1.0, "cookie_stack":1.0, "cooking_oil":1.0, "corn":1.0,
+    "cracker_box":1.0, "croissant":1.0, "cupcake_choco":1.0, "cupcake_pink":1.0,
+    "detergent":1.0, "dino_toy":1.0, "donut":1.0, "donut_pink":1.0,
+    "egg":1.0, "eggplant":1.0, "energy_drink":1.0, "flower_vase":1.0,
+    "frog_toy":1.0, "frozen_tub":1.0, "gelato_cup":1.0, "gingerbread":1.0,
+    "grape_soda":1.0, "grapes":1.0, "green_tea":1.0, "gum_pack":1.0,
+    "honey_jar":1.0, "hot_sauce":1.0, "icebar_a":1.0, "icebar_b":1.0,
+    "icebar_blue":1.0, "icebar_choco":1.0, "icebar_orange":1.0, "icecream_cone":1.0,
+    "icecream_cup":1.0, "icecream_sandwich":1.0, "icecream_stick":1.0, "iced_tea":1.0,
+    "jam_jar":1.0, "jelly_bag":1.0, "juice":1.0, "lantern":1.0,
+    "lemon_fruit":1.0, "lemon_soda":1.0, "lemonade":1.0, "lollipop":1.0,
+    "macaron":1.0, "marshmallow_bag":1.0, "mayo":1.0, "milk":1.0,
+    "milkshake":1.0, "muffin":1.0, "mug":1.0, "mushroom_decor":1.0,
+    "mustard":1.0, "nuts_bag":1.0, "orange_fruit":1.0, "orange_soda":1.0,
+    "pancake_stack":1.0, "panda":1.0, "peanut_butter":1.0, "penguin":1.0,
+    "perfume":1.0, "pickle_jar":1.0, "pie_slice":1.0, "popcorn_bag":1.0,
+    "popsicle_twin":1.0, "potted_plant":1.0, "pretzel_bag":1.0, "robot_toy":1.0,
+    "rubber_duck":1.0, "salsa_jar":1.0, "santa":1.0, "sauce":1.0,
+    "shampoo":1.0, "shiba_dog":1.0, "smoothie":1.0, "snack":1.0,
+    "snowcone":1.0, "snowman":1.0, "soap_bar":1.0, "soda":1.0,
+    "sorbet_cup":1.0, "soy_sauce":1.0, "sports_drink":1.0, "spray_cleaner":1.0,
+    "strawberry":1.0, "syrup_bottle":1.0, "teapot":1.0, "teddy_bear":1.0,
+    "tissue_box":1.0, "tomato":1.0, "vinegar":1.0, "waffle":1.0,
+    "water":1.0, "watermelon_slice":1.0, "yogurt":1.0
+  };
+  // V17 — per-type CONTENT aspect ratio (visible-sprite width / height) MEASURED from the
+  // 119 trimmed tiles via alpha bbox (measure_goods.mjs -> goods_manifest.json). The .good
+  // box HUGS the content at this aspect; slim/tall items (carrot 0.33) get slim boxes,
+  // fat/wide items (waffle 1.83) get wide boxes. fitGoods width-clamps each box to
+  // W/3 - gap so adjacent goods NEVER overlap regardless of AR. SINGLE SOURCE OF TRUTH =
+  // goods_manifest.json (these values are inlined from it for offline single-HTML).
+  var GOOD_AR = {
+    "apple":0.777, "avocado":0.645, "bagel":1.243, "banana":1.515,
+    "bell_pepper":0.77, "biscuit_box":0.512, "bread_loaf":1.48, "broccoli":0.883,
+    "bunny":0.621, "butter":0.594, "cactus":0.582, "cake_slice":1.138,
+    "candle":0.398, "candy_bag":0.594, "carrot":0.328, "cat_toy":0.918,
+    "cereal_box":0.563, "chick":0.984, "chip_tube":0.363, "chips":0.605,
+    "chocolate_bar":0.48, "coffee_can":0.492, "coffee_cup":0.449, "cola":0.375,
+    "cookie_box":0.477, "cookie_stack":0.883, "cooking_oil":0.367, "corn":0.477,
+    "cracker_box":0.457, "croissant":1.561, "cupcake_choco":0.754, "cupcake_pink":0.809,
+    "detergent":0.559, "dino_toy":0.801, "donut":1.34, "donut_pink":1.6,
+    "egg":0.719, "eggplant":0.527, "energy_drink":0.398, "flower_vase":0.508,
+    "frog_toy":0.852, "frozen_tub":0.887, "gelato_cup":0.867, "gingerbread":0.813,
+    "grape_soda":0.469, "grapes":0.602, "green_tea":0.418, "gum_pack":0.547,
+    "honey_jar":0.512, "hot_sauce":0.336, "icebar_a":0.402, "icebar_b":0.383,
+    "icebar_blue":0.414, "icebar_choco":0.422, "icebar_orange":0.422, "icecream_cone":0.613,
+    "icecream_cup":0.59, "icecream_sandwich":1.191, "icecream_stick":0.418, "iced_tea":0.332,
+    "jam_jar":0.547, "jelly_bag":0.605, "juice":0.363, "lantern":0.426,
+    "lemon_fruit":1.43, "lemon_soda":0.457, "lemonade":0.395, "lollipop":0.582,
+    "macaron":1.153, "marshmallow_bag":0.699, "mayo":0.426, "milk":0.391,
+    "milkshake":0.453, "muffin":1.053, "mug":1.326, "mushroom_decor":0.887,
+    "mustard":0.332, "nuts_bag":0.621, "orange_fruit":0.945, "orange_soda":0.48,
+    "pancake_stack":0.949, "panda":0.922, "peanut_butter":0.586, "penguin":0.914,
+    "perfume":0.375, "pickle_jar":0.516, "pie_slice":1.399, "popcorn_bag":0.617,
+    "popsicle_twin":0.52, "potted_plant":0.637, "pretzel_bag":0.648, "robot_toy":1.261,
+    "rubber_duck":0.832, "salsa_jar":0.48, "santa":0.738, "sauce":0.406,
+    "shampoo":0.391, "shiba_dog":0.926, "smoothie":0.426, "snack":0.641,
+    "snowcone":0.754, "snowman":0.711, "soap_bar":1.196, "soda":0.48,
+    "sorbet_cup":0.891, "soy_sauce":0.41, "sports_drink":0.363, "spray_cleaner":0.359,
+    "strawberry":0.746, "syrup_bottle":0.422, "teapot":1.299, "teddy_bear":0.855,
+    "tissue_box":0.887, "tomato":1.076, "vinegar":0.371, "waffle":1.829,
+    "water":0.359, "watermelon_slice":1.036, "yogurt":0.672
+  };
+  // OPTIONAL runtime override: when SERVED (http/https), fetch goods_manifest.json and
+  // override GOOD_AR + default GOOD_SCALE so re-measured tiles update sizing without a
+  // rebuild. Silently ignored on file:// or when missing (the inlined map is the offline
+  // single-HTML source of truth). Runs before the first board build (buildBoard awaits it
+  // via __goodsManifestReady when present).
+  var __goodsManifestReady = (function(){
+    try {
+      if (location.protocol !== 'http:' && location.protocol !== 'https:') return Promise.resolve(false);
+      return fetch('../goods_manifest.json', { cache: 'no-store' })
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(m){
+          if (!m || typeof m !== 'object') return false;
+          for (var k in m){ if (typeof m[k] === 'number' && m[k] > 0){ GOOD_AR[k] = m[k]; if (GOOD_SCALE[k] == null) GOOD_SCALE[k] = 1.0; } }
+          if (typeof fitGoods === 'function'){ try { fitGoods(); } catch(e){} }
+          return true;
+        })
+        .catch(function(){ return false; });
+    } catch(e){ return Promise.resolve(false); }
+  })();
 
   // =============================================================
   // STATE

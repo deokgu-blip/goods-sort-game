@@ -1,25 +1,222 @@
 {
   "level": 1,
-  "timeLimit": 160,
+  "timeLimit": 220,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
-  "goods": ["cola", "juice", "milk", "chips", "donut", "soda", "snack", "icebar_a", "icebar_b", "sauce", "water"],
-  "combo": { "resetAfterMs": 4000 },
-  "scoring": { "starsPerSort": 1, "comboBonus": 1 },
-  "_note": "V11 RICH/VARIED densely-packed 3 cols x 4 rows (12 cubbies) matching reference/target_shelf.png — now using ALL 11 goods (cola/juice/milk/chips/donut + the 6 NEW clay goods soda/snack/icebar_a/icebar_b/sauce/water). 11 cubbies are front-FULL (33 front goods spread EDGE TO EDGE + near-touching via the far-left/middle/far-right slot anchors), each carrying a back depth-layer (+33 hidden goods that fill the upper cubby half, peek above/between the front row + reveal). ONE corner-ish cubby (idx6, r2c0) is an EMPTY workspace so the sort is PLAYABLE. Each of the 11 types appears EXACTLY 6 times (all multiples of 3) = 66 total, so the board is SOLVABLE — verified by the engine's own bounded-DFS solver (window.__qa.autoSolve solves to remaining=0 in ~70 steps) + verify.mjs autoSolve. The layout is colorful + varied per cubby (front-row distinct-type variety 30/33), NOT monotone. V4 POSITIONAL SLOTS: layers[0]=FRONT (visible+interactive); each layer = FIXED-LENGTH-3 [left,center,right], type string OR null. Empty workspace cubbies use layers:[[null,null,null]].",
+  "goods": [
+    "broccoli",
+    "chips",
+    "cola",
+    "donut_pink",
+    "flower_vase",
+    "gelato_cup",
+    "grape_soda",
+    "hot_sauce",
+    "icebar_blue",
+    "lemon_soda",
+    "milkshake",
+    "orange_soda",
+    "popcorn_bag",
+    "rubber_duck",
+    "strawberry",
+    "yogurt"
+  ],
+  "combo": {
+    "resetAfterMs": 4000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_note": "V17 VARIED/COLORFUL densely-packed 3 cols x 4 rows (12 cubbies). Broad MIX of 16 good types across ALL categories (drinks: cola/orange_soda/lemon_soda/grape_soda/milkshake; dairy/sauce: milkshake/yogurt/hot_sauce; snacks: chips/popcorn_bag; frozen: icebar_blue/gelato_cup; bakery: donut_pink; fruit/veg: broccoli/strawberry; toy: rubber_duck; decor: flower_vase) — colorful, no monotony like the reference. MIXED multiplicity for SOLVABILITY: 6 anchor types x6 + 10 accent types x3 = 66 goods, every count a MULTIPLE OF 3. 11 cubbies front-FULL (33 front goods spread edge-to-edge across the 3 uniform cells) + each carries a BACK depth-layer (33 hidden goods that peek above/between the front row + reveal on clear). ONE corner-ish cubby (idx6, r2c0) is an EMPTY workspace so the sort is PLAYABLE — it is the ONLY maneuver room (this sort mechanic only moves the FRONT layer, so ~20+ distinct x3 with one workspace is unsolvable; 16 distinct via mixed multiplicity is the colorful max that stays SOLVABLE). SOLVABLE — verified by the engine-mirror bounded-DFS solver under the EXACT engine budget (nodeBudget=400000, maxSteps=600) BOTH pristine (222 steps) AND after the verify (2) greedy clear-test pre-moves (219 steps); verify.mjs window.__qa.autoSolve re-checks to remaining=0. cubby0 slot2 is a vivid non-brown good for the N9b base-pixel assert. Front-row distinct-type variety 32/33. V4 POSITIONAL SLOTS: layers[0]=FRONT (visible+interactive); each layer = FIXED-LENGTH-3 [left,center,right], type string OR null. seed=413.",
   "cubbies": [
-    { "r": 0, "c": 0, "layers": [ ["sauce", "water", "soda"], ["juice", "milk", "cola"] ] },
-    { "r": 0, "c": 1, "layers": [ ["icebar_a", "water", "water"], ["soda", "milk", "icebar_a"] ] },
-    { "r": 0, "c": 2, "layers": [ ["chips", "snack", "soda"], ["sauce", "milk", "snack"] ] },
-    { "r": 1, "c": 0, "layers": [ ["sauce", "cola", "donut"], ["snack", "chips", "icebar_a"] ] },
-    { "r": 1, "c": 1, "layers": [ ["cola", "juice", "icebar_b"], ["water", "chips", "chips"] ] },
-    { "r": 1, "c": 2, "layers": [ ["milk", "sauce", "donut"], ["icebar_b", "icebar_b", "icebar_b"] ] },
-    { "r": 2, "c": 0, "layers": [ [null, null, null] ] },
-    { "r": 2, "c": 1, "layers": [ ["snack", "milk", "icebar_a"], ["sauce", "chips", "icebar_a"] ] },
-    { "r": 2, "c": 2, "layers": [ ["water", "soda", "water"], ["donut", "cola", "juice"] ] },
-    { "r": 3, "c": 0, "layers": [ ["sauce", "soda", "icebar_b"], ["juice", "juice", "soda"] ] },
-    { "r": 3, "c": 1, "layers": [ ["cola", "donut", "cola"], ["donut", "milk", "icebar_b"] ] },
-    { "r": 3, "c": 2, "layers": [ ["donut", "snack", "icebar_a"], ["chips", "snack", "juice"] ] }
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "cola",
+          "chips",
+          "grape_soda"
+        ],
+        [
+          "lemon_soda",
+          "icebar_blue",
+          "cola"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "orange_soda",
+          "popcorn_bag",
+          "rubber_duck"
+        ],
+        [
+          "popcorn_bag",
+          "icebar_blue",
+          "donut_pink"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "strawberry",
+          "orange_soda",
+          "hot_sauce"
+        ],
+        [
+          "broccoli",
+          "donut_pink",
+          "chips"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "flower_vase",
+          "strawberry",
+          "milkshake"
+        ],
+        [
+          "hot_sauce",
+          "gelato_cup",
+          "broccoli"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "grape_soda",
+          "gelato_cup",
+          "milkshake"
+        ],
+        [
+          "rubber_duck",
+          "gelato_cup",
+          "milkshake"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "broccoli",
+          "popcorn_bag",
+          "orange_soda"
+        ],
+        [
+          "chips",
+          "lemon_soda",
+          "yogurt"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "flower_vase",
+          "hot_sauce",
+          "chips"
+        ],
+        [
+          "grape_soda",
+          "icebar_blue",
+          "orange_soda"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "orange_soda",
+          "broccoli",
+          "lemon_soda"
+        ],
+        [
+          "icebar_blue",
+          "icebar_blue",
+          "cola"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "milkshake",
+          "flower_vase",
+          "cola"
+        ],
+        [
+          "rubber_duck",
+          "donut_pink",
+          "yogurt"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "broccoli",
+          "milkshake",
+          "chips"
+        ],
+        [
+          "milkshake",
+          "yogurt",
+          "chips"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "cola",
+          "cola",
+          "strawberry"
+        ],
+        [
+          "icebar_blue",
+          "orange_soda",
+          "broccoli"
+        ]
+      ]
+    }
   ]
 }

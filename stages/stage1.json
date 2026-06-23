@@ -1,0 +1,25 @@
+{
+  "level": 1,
+  "timeLimit": 160,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": ["cola", "juice", "milk", "chips", "donut", "soda", "snack", "icebar_a", "icebar_b", "sauce", "water"],
+  "combo": { "resetAfterMs": 4000 },
+  "scoring": { "starsPerSort": 1, "comboBonus": 1 },
+  "_note": "V11 RICH/VARIED densely-packed 3 cols x 4 rows (12 cubbies) matching reference/target_shelf.png — now using ALL 11 goods (cola/juice/milk/chips/donut + the 6 NEW clay goods soda/snack/icebar_a/icebar_b/sauce/water). 11 cubbies are front-FULL (33 front goods spread EDGE TO EDGE + near-touching via the far-left/middle/far-right slot anchors), each carrying a back depth-layer (+33 hidden goods that fill the upper cubby half, peek above/between the front row + reveal). ONE corner-ish cubby (idx6, r2c0) is an EMPTY workspace so the sort is PLAYABLE. Each of the 11 types appears EXACTLY 6 times (all multiples of 3) = 66 total, so the board is SOLVABLE — verified by the engine's own bounded-DFS solver (window.__qa.autoSolve solves to remaining=0 in ~70 steps) + verify.mjs autoSolve. The layout is colorful + varied per cubby (front-row distinct-type variety 30/33), NOT monotone. V4 POSITIONAL SLOTS: layers[0]=FRONT (visible+interactive); each layer = FIXED-LENGTH-3 [left,center,right], type string OR null. Empty workspace cubbies use layers:[[null,null,null]].",
+  "cubbies": [
+    { "r": 0, "c": 0, "layers": [ ["sauce", "water", "soda"], ["juice", "milk", "cola"] ] },
+    { "r": 0, "c": 1, "layers": [ ["icebar_a", "water", "water"], ["soda", "milk", "icebar_a"] ] },
+    { "r": 0, "c": 2, "layers": [ ["chips", "snack", "soda"], ["sauce", "milk", "snack"] ] },
+    { "r": 1, "c": 0, "layers": [ ["sauce", "cola", "donut"], ["snack", "chips", "icebar_a"] ] },
+    { "r": 1, "c": 1, "layers": [ ["cola", "juice", "icebar_b"], ["water", "chips", "chips"] ] },
+    { "r": 1, "c": 2, "layers": [ ["milk", "sauce", "donut"], ["icebar_b", "icebar_b", "icebar_b"] ] },
+    { "r": 2, "c": 0, "layers": [ [null, null, null] ] },
+    { "r": 2, "c": 1, "layers": [ ["snack", "milk", "icebar_a"], ["sauce", "chips", "icebar_a"] ] },
+    { "r": 2, "c": 2, "layers": [ ["water", "soda", "water"], ["donut", "cola", "juice"] ] },
+    { "r": 3, "c": 0, "layers": [ ["sauce", "soda", "icebar_b"], ["juice", "juice", "soda"] ] },
+    { "r": 3, "c": 1, "layers": [ ["cola", "donut", "cola"], ["donut", "milk", "icebar_b"] ] },
+    { "r": 3, "c": 2, "layers": [ ["donut", "snack", "icebar_a"], ["chips", "snack", "juice"] ] }
+  ]
+}

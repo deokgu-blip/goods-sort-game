@@ -1,0 +1,2350 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>물건 정리 / Goods Sort</title>
+<style>
+  /* ============================================================
+     LAYOUT — mobile PORTRAIT, viewport-driven, no fixed design box.
+     --safe-top : honored by HUD; set to 0 in reels mode.
+     ============================================================ */
+  :root{
+    --safe-top: env(safe-area-inset-top, 0px);
+    --hud:#2c1c0e; --gold:#ffcf3f; --gold-d:#f1a91d;
+    --green:#3fb24a; --green-d:#2e8a37; --red:#e8453c;
+    /* ===========================================================
+       V12 — UNIFIED 3D WOOD NICHE (ported from _niche_poc.html).
+       Each cubby is now ONE real folded 3D wood box built with CSS-3D,
+       receding into the screen by a fixed DEPTH (D):
+         BACK WALL (cream, at z=-D)
+         + WOOD FLOOR   (bottom, hinged front-bottom, rotateX 90°, lit)
+         + WOOD CEILING (top, hinged front-top, rotateX -90°, dim)
+         + WOOD SIDE WALLS (left+right, rotateY ∓90°, full height)
+         + WOOD FRONT RIM (plank thickness along front-bottom edge)
+       These are the SIDES OF ONE FOLDED BOX -> they meet at REAL shared
+       3D edges => NO step (단차) where floor/ceiling join the side/back.
+       The cabinet face stays UPRIGHT (no rotateX on the whole shelf);
+       depth reveals purely via a per-niche `perspective` + a SHARED
+       global eye (perspective-origin) so left niches show their RIGHT
+       inner wall, right niches their LEFT — side walls + ceiling + floor
+       all visible without leaning the shelf. Everything derives from the
+       box depth D + cell W,H -> per-cell parametric (scales to any grid).
+       --board-img used for FLOOR/CEILING/RIM ; --post-img for SIDE WALLS.
+       =========================================================== */
+    --board-img: url("../assets/shelf_board.png");
+    --post-img:  url("../assets/post.png");
+    /* TOP-SURFACE fraction kept for legacy baseline math (slot bottom). */
+    --board-top-frac: 0.60;
+    /* NICHE box depth (px) into the screen — clear-but-subtle (not fisheye).
+       Set per-render in JS from the live cell size, but a default lives here. */
+    --niche-depth: 70px;
+    --niche-persp: 560px;    /* per-niche perspective: gentle, real depth */
+    --rim-h: 7px;            /* front-rim = THIN front FACE band BELOW the standing surface
+                                (V14: reverted the over-tall 16px lip that walled-off / occluded
+                                the goods' bases — now a thin band that sits BENEATH the goods). */
+    /* a gentle WARM-LIGHTEN tint applied to wood faces (matches the POC look). */
+    --wood-tint: brightness(1.07) saturate(1.06) sepia(.05);
+    /* CABINET frame thickness (the outer wood box the niches sit inside) +
+       inter-niche gap (the wood lattice between cubbies). */
+    --cab-pad: 12px;         /* outer cabinet wood border */
+    --niche-gap: 9px;        /* wood gap between cubbies (the lattice) */
+    /* CORNER RADIUS of the outer frame + niche/cubby wood. 0 = ANGULAR (sharp/squared),
+       the default look. Driven by SHELF.cornerRadius (config single source of truth). */
+    --corner-radius: 0px;
+    /* legacy alias kept so prior --wall-depth asserts still resolve > V2 baseline.
+       It now equals the niche box depth (the real recess depth). */
+    --wall-depth: 70px;
+    /* ===========================================================
+       WALLPAPER — one continuous cream wall behind everything. FLAT
+       color (no repeating texture -> no tile seams). The page/body bg,
+       the #bg full-viewport layer, AND each niche's back wall all use
+       this EXACT value so the whole thing reads as one seamless wall.
+       =========================================================== */
+    --wallpaper: #f0e2c8;
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; padding:0; height:100%; overflow:hidden;
+    background:var(--wallpaper); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+    touch-action:none; user-select:none; -webkit-user-select:none; }
+  /* full-viewport CREAM WALL so any ratio is filled (L12) and it blends with the
+     page/body bg into one seamless wall. FLAT color — no tiling texture. This is the
+     SAME wall the cubby open-backs show through their openings (V6). */
+  #bg{ position:fixed; inset:0; z-index:0;
+    background-color:var(--wallpaper);
+    transition:filter .3s ease; }
+  body.dim #bg{ filter:brightness(.45) saturate(.8); }
+
+  #game{ position:fixed; inset:0; z-index:1; display:flex; flex-direction:column;
+    align-items:center; }
+
+  /* ---------------- HUD (reference layout) ----------------
+     row: [Lv N] [heart chip]   ·   [ PILL TIMER ]   ·   [★ count] [⏸]
+     combo badge sits centered just under the pill.
+     ------------------------------------------------------- */
+  #hud{ width:100%; max-width:560px; padding:calc(var(--safe-top) + 12px) 12px 2px;
+    display:grid; grid-template-columns:1fr auto 1fr; align-items:start; column-gap:8px; z-index:5; }
+  .hud-left{ display:flex; align-items:center; gap:7px; justify-self:start; }
+  .hud-right{ display:flex; align-items:center; gap:7px; justify-self:end; }
+  .hud-center{ display:flex; flex-direction:column; align-items:center; gap:6px; justify-self:center; }
+  .hud-chip{ background:linear-gradient(#fff8ec,#f1ddb8); color:var(--hud);
+    border:2px solid #fff; border-radius:16px; padding:6px 12px;
+    box-shadow:0 3px 0 rgba(0,0,0,.22); font-weight:800; font-size:15px;
+    display:flex; align-items:center; gap:5px; line-height:1; }
+  #lv{ }
+  #lives{ color:#e8453c; gap:3px; }
+  #lives .heart{ font-size:14px; filter:drop-shadow(0 1px 0 rgba(0,0,0,.18)); }
+  /* pill countdown timer */
+  #timer{ font-variant-numeric:tabular-nums; font-size:22px; padding:9px 22px;
+    border-radius:22px; background:linear-gradient(#fff8ec,#ffe7b0);
+    box-shadow:0 4px 0 rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.7); }
+  #timer.warn{ color:#fff; background:linear-gradient(var(--red),#c5342c);
+    border-color:#ffd0cc; animation:tpulse .8s ease-in-out infinite; }
+  @keyframes tpulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.07);} }
+  #combo{ background:linear-gradient(var(--green),var(--green-d)); color:#fff;
+    border-color:#bff0c4; font-size:13px; padding:5px 12px; border-radius:12px;
+    box-shadow:0 3px 0 rgba(0,0,0,.25); opacity:0; transform:translateY(-4px) scale(.85);
+    transition:opacity .18s, transform .18s; pointer-events:none; }
+  #combo.show{ opacity:1; transform:translateY(0) scale(1); }
+  #combo.bump{ animation:cbump .3s ease; }
+  @keyframes cbump{ 0%{transform:scale(1);} 35%{transform:scale(1.35);} 100%{transform:scale(1);} }
+  #stars{ }
+  #star-icon{ font-size:18px; filter:drop-shadow(0 1px 0 rgba(0,0,0,.2)); }
+  #pause{ cursor:pointer; padding:6px 11px; }
+
+  /* ============================================================
+     V12 — UNIFIED 3D WOOD NICHE SHELF (ported from _niche_poc.html).
+     The cabinet face stays UPRIGHT (NO rotateX on the whole shelf, V5-1
+     kept). Each cubby is now ONE real folded 3D wood box (back + floor +
+     ceiling + 2 side walls + front rim) that recedes into the screen by a
+     fixed DEPTH and reveals its interior purely via a per-niche perspective
+     + a SHARED global eye (perspective-origin set per niche in JS). The
+     #cabinet is the outer wood box; #grid lays the niches in a CSS grid
+     with a wood gap (the lattice between cubbies).
+     ============================================================ */
+  #board-wrap{ flex:1; width:100%; display:flex; align-items:center; justify-content:center;
+    padding:6px 12px 12px; min-height:0; }
+  /* the shelf — FRONT-ON, no tilt (transform carries NO rotation, V5-1 kept).
+     V12 — LANDSCAPE cubbies: a WIDER, SHORTER aspect so a 3x4 grid yields wide
+     short cubbies (~1.5:1 w:h) like the reference. */
+  #shelf{ position:relative; width:min(94vw, 62vh, 460px); aspect-ratio:1/0.95;
+    transform-style:flat;
+    transform: none;                 /* front elevation — NO rotateX tilt */
+    filter: drop-shadow(0 18px 24px rgba(60,38,16,.42)); }
+  /* #cabinet = the OUTER WOOD BOX the niches sit inside (wood border + wood lattice
+     gap). It is the real wood frame; the niches open into it. */
+  #shelf .frame{ position:absolute; inset:0;
+    background-color: var(--wallpaper);              /* seamless cream wall (assert V5/V6) */
+    background-image: var(--board-img);
+    background-size: 100% 100%; background-repeat:no-repeat;
+    filter: var(--wood-tint);
+    border-radius: var(--corner-radius, 0px);
+    padding: var(--cab-pad);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,.22), inset 0 -3px 8px rgba(40,24,8,.4); }
+  /* the niche grid sits inside the cabinet wood border. The GAP is a wood lattice
+     (the #grid background shows between niches). gap + grid placement = data-driven. */
+  #shelf .grid{ position:absolute;
+    inset: var(--cab-pad);
+    display:grid; gap: var(--niche-gap);
+    background:
+      var(--board-img);
+    background-size: 100% 100%; background-repeat:no-repeat;
+    filter: var(--wood-tint);
+    border-radius: var(--corner-radius, 0px); z-index:1; }
+  /* legacy wood-layer container kept (empty) so old selectors resolve harmlessly. */
+  #shelf .wood-layer{ position:absolute; inset:0; z-index:0; pointer-events:none; display:none; }
+
+  /* ============================================================
+     A single CUBBY = the GRID CELL that owns the slot hit-regions + holds
+     ONE folded 3D wood niche box. The .cubby is the OUTER clip+perspective
+     element (overflow:hidden + perspective) so the receding interior is
+     clipped to the opening and never spills over the wood lattice. The
+     INNER .niche-clip keeps transform-style:preserve-3d with NO overflow
+     (a non-visible overflow would flatten the box to 2D — POC insight).
+       .niche-clip  : preserve-3d layer holding the 6 wood faces.
+       .c-back      : BACK WALL (cream, at z=-D) — same color as page wall.
+       .c-wall .t/.b/.l/.r : the FLOOR/CEILING + LEFT/RIGHT side walls
+                      (real folded wood faces — the visible 3D interior).
+       .c-back-layer: the preserve-3d stage holding peeking BACK-row goods.
+       .c-floor     : the preserve-3d stage holding the FRONT-row goods +
+                      the 3 slot hit-columns (left/center/right).
+     ============================================================ */
+  .cubby{ position:relative; overflow:hidden; border-radius: var(--corner-radius, 0px);
+    perspective: var(--niche-persp);
+    /* perspective-origin set per-cubby in JS (shared global eye). */ }
+  /* INNER preserve-3d layer — holds the folded box + the goods. NO overflow (would
+     flatten). z-index ABOVE the front rim (V14) so the GOODS standing on the floor PAINT
+     OVER the thin front-lip band -> each good's FULL base is visible, never walled-off. */
+  .cubby .niche-clip{ position:absolute; inset:0; transform-style:preserve-3d; z-index:3; }
+  /* recess shadow at the opening (read as set into the wood). */
+  .cubby::before{ content:""; position:absolute; inset:0;
+    z-index:6; pointer-events:none;
+    box-shadow:
+      inset 0 5px 9px -4px rgba(40,24,8,.42),
+      inset 5px 0 8px -6px rgba(40,24,8,.30),
+      inset -5px 0 8px -6px rgba(40,24,8,.30); }
+
+  /* ---- THE 6 WOOD FACES (folded box) ----
+     Sizes/transforms are set per-cubby in JS so the box CLOSES exactly (no step).
+     Local 3D space: origin=front-top-left, x→right, y→DOWN, z→toward camera. */
+  .cubby .c-back, .cubby .c-wall{ position:absolute; left:0; top:0; }
+  /* BACK WALL — cream plane at z=-D. background-color == page wall (assert V5/V6). */
+  .cubby .c-back{ background-color: var(--wallpaper);
+    background-image:
+      radial-gradient(135% 130% at 50% 12%, rgba(0,0,0,0) 50%, rgba(70,45,18,.20) 100%);
+    z-index:0; }
+  /* the folded WOOD faces — FLOOR (.b), CEILING (.t), LEFT (.l), RIGHT (.r). One
+     light (upper-front-left): FLOOR lightest, CEILING darkest, LEFT lit, RIGHT shaded. */
+  .cubby .c-wall{ pointer-events:none; z-index:1;
+    background-repeat:no-repeat; background-size:100% 100%; }
+  /* FLOOR (.b) — lit top of the wood plank, hinged front-bottom, folds back flat. */
+  .cubby .c-wall.b{
+    background-image:
+      linear-gradient(to top, rgba(255,244,222,.16) 0%, rgba(255,244,222,0) 32%, rgba(120,84,46,.12) 100%),
+      var(--board-img);
+    background-size: 100% 100%, 100% 150%;
+    background-position: 0 100%, 0 100%;
+    filter: brightness(1.40) saturate(1.05) sepia(.07); }
+  /* CEILING (.t) — underside of the shelf above. It faces DOWN so it's dimmer than the lit
+     floor, but V15 brightens it (.66 -> .82) + softens the dark overlay so it reads as a
+     CLEAR wood plank SURFACE (not a dark hairline). Still a step darker than the floor
+     (floor brightness 1.40) so the box still reads as lit-from-above. */
+  .cubby .c-wall.t{
+    background-image:
+      linear-gradient(to bottom, rgba(28,16,5,.20) 0%, rgba(28,16,5,.07) 45%, rgba(28,16,5,0) 100%),
+      var(--board-img);
+    background-size: 100% 100%, 100% 150%;
+    background-position: 0 0, 0 0;
+    filter: brightness(.82) saturate(1.0) sepia(.06); }
+  /* LEFT side wall (.l) — vertical-grain post, lit (light from front-left). */
+  .cubby .c-wall.l{ background-image: var(--post-img);
+    filter: brightness(1.05) saturate(1.04); }
+  /* RIGHT side wall (.r) — vertical-grain post, shaded (darker). */
+  .cubby .c-wall.r{ background-image: var(--post-img);
+    filter: brightness(.80) saturate(1.04); }
+  /* FRONT RIM — the THIN front FACE of the shelf board, a wood band BELOW the standing
+     surface along the front-bottom edge. z-index BELOW the niche-clip (V14) so it sits
+     BENEATH the goods (the goods paint over it) — it must never rise in front to cover a
+     base. It reads as the front lip wood between/beside the goods' feet. */
+  .cubby .c-rim{ position:absolute; left:0; z-index:2; pointer-events:none;
+    background-image: var(--board-img);
+    background-size:100% 340%; background-position:0 100%; background-repeat:no-repeat;
+    filter: brightness(.9) saturate(1.06);
+    box-shadow:0 2px 5px rgba(40,24,8,.55); }
+
+  /* target highlights (drop feedback) — on the cubby opening. */
+  .cubby.target-ok::before{ box-shadow: inset 0 0 0 3px #5fd06b, inset 0 0 18px rgba(95,208,107,.45); }
+  .cubby.target-bad::before{ box-shadow: inset 0 0 0 3px #e8453c, inset 0 0 18px rgba(232,69,60,.4); }
+  .cubby.clearing{ animation:cubbyPop .34s ease; }
+  @keyframes cubbyPop{ 0%{transform:scale(1);} 30%{transform:scale(1.04);} 100%{transform:scale(1);} }
+
+  /* ---- GOOD STAGES (inside the preserve-3d niche-clip) ----
+     .c-floor    = the FRONT-row goods + 3 slot hit-columns (interactive).
+     .c-back-layer = the BACK-row goods (peeking, non-interactive, deeper z).
+     Both are full-opening planes inside the 3D box; goods are billboards on
+     the floor, given translateZ in JS to sit at the floor depth (front/back). */
+  .cubby .c-floor{ position:absolute; inset:0; z-index:5; transform-style:preserve-3d;
+    overflow:visible; transition: box-shadow .12s; }
+  .cubby .c-back-layer{ position:absolute; inset:0; z-index:3; transform-style:preserve-3d;
+    pointer-events:none; }
+
+  /* ---- FIXED 3-SLOT COLUMNS (left / center / right) ----
+     Each .slot is a transparent column cell that owns the interactive hit-region
+     for ONE position (slotFromX maps pointer→column). The good billboard sits in
+     it, anchored to the floor line (bottom) + pushed back via translateZ in JS.
+     The good art may overflow ABOVE the slot box (big bottles) but the HIT region
+     is the slot column -> a good never steals a neighbor's grab (Fix #2). All slots
+     share the same bottom floor line (Fix #4 baseline). */
+  .cubby .c-floor .slot, .cubby .c-back-layer .slot{
+    position:absolute; bottom:0; height:8%;
+    display:flex; align-items:flex-end; justify-content:center;
+    overflow:visible; }
+  /* 3 columns spread EDGE TO EDGE across the cubby width (reference): LEFT good hugs
+     the left inner wall, RIGHT good the right inner wall, center in the middle —
+     near-touching like the reference. Each slot is the full third; the good sits
+     CENTERED in it (centers ~17/50/83%). */
+  .slot.s0{ left:0%;    width:34%; }                /* center 17% — hugs LEFT inner wall */
+  .slot.s1{ left:33%;   width:34%; }                /* center 50% — middle */
+  .slot.s2{ left:66%;   width:34%; }                /* center 83% — hugs RIGHT inner wall */
+  .cubby .c-floor .slot{ z-index:2; }               /* front slots above back-layer */
+
+  /* good billboard — stands UPRIGHT on the floor plane, facing the camera. Sits at
+     the floor depth via a per-good --gz translateZ (set in JS: front small z, back
+     deeper z = real front/back depth). The box is HEIGHT-driven (--good-h, a % of the
+     cubby interior set per render) with width following the content aspect (--good-ar)
+     so slim items get slim boxes (3 fit across) + wide items short boxes. transform-
+     origin:bottom center + scale about the base keeps the shared baseline (Fix #4). */
+  .good{ position:absolute; left:50%; bottom:0;
+    height: var(--good-h, 90%); aspect-ratio: var(--good-ar, 0.42);
+    /* the source tiles are SQUARE (256²) with the product centered; the .good box HUGS
+       the product (height-driven, width = height*content-aspect). `auto 100%` scales the
+       square image to the box HEIGHT so the product reads at FULL cubby height (the slim
+       transparent sides of the square are clipped by the narrow box) — `contain` would
+       wrongly fit a slim box to its WIDTH and shrink the product. center-bottom standing. */
+    background-size:auto 100%; background-repeat:no-repeat; background-position:center bottom;
+    filter:drop-shadow(0 3px 3px rgba(0,0,0,.30));
+    transform: translateX(-50%) translateZ(var(--gz,0px)) scale(var(--gs,1));
+    transform-origin:bottom center;
+    will-change:transform; cursor:grab; touch-action:none; pointer-events:none; }
+  /* CONTACT SHADOW — soft base ellipse centered under the good's horizontal center,
+     lying ON the floor at the good's base (tracks center+base for every slot/scale,
+     Fix #3). It sits at the good's own translateZ so it stays glued to the foot. */
+  .good::after{ content:""; position:absolute; left:50%; bottom:0;
+    width:80%; height:12%; transform:translate(-50%,42%);
+    background:radial-gradient(closest-side, rgba(20,10,2,.50), rgba(20,10,2,.22) 56%, rgba(20,10,2,0) 80%);
+    border-radius:50%; z-index:-1; pointer-events:none; }
+  /* PEEKING back-row goods — set DEEPER on the floor (bigger translateZ in JS) so they
+     read as a real back row standing behind the front row, peeking above/between it.
+     Slightly dimmed so they read one step back (the depth, not a blur smudge). */
+  .good.peek{ cursor:default;
+    filter:drop-shadow(0 3px 3px rgba(0,0,0,.34)) brightness(.84) saturate(.94);
+    transform: translateX(-50%) translateZ(var(--gz,0px)) scale(var(--gs,1)); }
+  .good.peek::after{ background:radial-gradient(closest-side, rgba(20,10,2,.36), rgba(20,10,2,.14) 60%, rgba(20,10,2,0) 80%);
+    height:10%; width:74%; }
+  /* a blocked good (data flag / non-grabbable) is visibly inert but in the FRONT */
+  .good.blocked{ cursor:default; filter:drop-shadow(0 3px 3px rgba(0,0,0,.3)) brightness(.9); }
+  .good.dragging{ opacity:0; }
+  .good.land{ animation:land .34s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes land{
+    0%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-26%) scaleY(1.18) scaleX(.86) scale(var(--gs,1)); }
+    45%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(.78) scaleX(1.16) scale(var(--gs,1)); }
+    70%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(1.08) scaleX(.94) scale(var(--gs,1)); }
+    100%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(1) scaleX(1) scale(var(--gs,1)); }
+  }
+  /* REVEAL — when the front layer empties, the back row comes forward to become the
+     new front: it slides forward (smaller z -> 0) + scales up, then settles. */
+  .good.revealing{ animation:revealForward .5s cubic-bezier(.25,1.3,.5,1) both; }
+  @keyframes revealForward{
+    0%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-22%) scale(calc(var(--gs,1) * .8)); filter:brightness(.7) saturate(.85); opacity:.7; }
+    60%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(4%) scale(calc(var(--gs,1) * 1.08)); filter:brightness(1.02); opacity:1; }
+    100%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scale(var(--gs,1)); filter:none; opacity:1; }
+  }
+  /* drag avatar (floats above board) */
+  #drag-ghost{ position:fixed; z-index:60; pointer-events:none; display:none;
+    background-size:contain; background-repeat:no-repeat; background-position:center;
+    filter:drop-shadow(0 8px 6px rgba(0,0,0,.4)); transform:translate(-50%,-50%) scale(1.12); }
+
+  /* ---------------- EFFECT LAYERS ---------------- */
+  #fx{ position:fixed; inset:0; z-index:40; pointer-events:none; overflow:hidden; }
+  .fly-star{ position:fixed; z-index:55; width:34px; height:34px; pointer-events:none;
+    background:radial-gradient(circle at 38% 32%, #fff 0%, #ffe681 30%, #ffce2e 60%, #f59e0b 100%);
+    clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    filter:drop-shadow(0 0 6px rgba(255,200,40,.9)); will-change:transform,opacity; }
+  .praise{ position:fixed; z-index:56; pointer-events:none; transform:translate(-50%,-50%);
+    font-weight:900; font-size:26px; letter-spacing:-.5px; white-space:nowrap;
+    color:#fff; -webkit-text-stroke:3px var(--gold-d); paint-order:stroke fill;
+    text-shadow:0 3px 0 rgba(0,0,0,.25); }
+  .praise b{ -webkit-text-stroke:3px #c0392b; }
+  .praise.t3{ -webkit-text-stroke:3px #2e8a37; }
+  .praise.t5{ -webkit-text-stroke:3px #7a3fb2; }
+  .praise.tperf{ -webkit-text-stroke:3px #2b6fd8; font-size:30px; }
+  @keyframes praisePop{
+    0%{ transform:translate(-50%,-50%) scale(.3); opacity:0; }
+    25%{ transform:translate(-50%,-62%) scale(1.25); opacity:1; }
+    45%{ transform:translate(-50%,-60%) scale(.95); }
+    70%{ transform:translate(-50%,-66%) scale(1.05); opacity:1; }
+    100%{ transform:translate(-50%,-92%) scale(.9); opacity:0; }
+  }
+  .spark-ring{ position:fixed; z-index:54; pointer-events:none; transform:translate(-50%,-50%);
+    width:18px; height:18px; border-radius:50%; border:4px solid #fff3b0;
+    box-shadow:0 0 12px 3px rgba(255,225,120,.8); opacity:.9; }
+  @keyframes ring{ 0%{ transform:translate(-50%,-50%) scale(.2); opacity:.95; }
+    100%{ transform:translate(-50%,-50%) scale(5.2); opacity:0; } }
+  .sparkle{ position:fixed; z-index:54; pointer-events:none; width:8px; height:8px; border-radius:50%;
+    background:radial-gradient(circle,#fff,#ffd84a); box-shadow:0 0 6px #ffd84a; }
+
+  /* ---------------- RESULT POPUP ---------------- */
+  #overlay{ position:fixed; inset:0; z-index:100; display:none;
+    align-items:center; justify-content:center; padding:24px; }
+  #overlay.on{ display:flex; }
+  .popup{ width:min(86vw,360px); background:linear-gradient(#fff8ea,#ffe9c0);
+    border:4px solid #fff; border-radius:26px; padding:26px 22px 22px; text-align:center;
+    box-shadow:0 18px 50px rgba(0,0,0,.5); animation:popIn .4s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes popIn{ 0%{transform:scale(.6); opacity:0;} 100%{transform:scale(1); opacity:1;} }
+  .popup h2{ margin:0 0 6px; font-size:30px; color:var(--hud);
+    -webkit-text-stroke:0; text-shadow:0 2px 0 #fff; }
+  .popup .sub{ font-size:15px; color:#7a5a32; margin-bottom:14px; }
+  .pstars{ font-size:40px; margin:6px 0 14px; filter:drop-shadow(0 3px 0 rgba(0,0,0,.15)); }
+  .btn{ display:inline-block; margin-top:6px; padding:14px 30px; border-radius:18px;
+    font-weight:900; font-size:19px; color:#fff; cursor:pointer; border:3px solid #fff;
+    box-shadow:0 5px 0 rgba(0,0,0,.25); }
+  .btn.next{ background:linear-gradient(var(--green),var(--green-d)); }
+  .btn.retry{ background:linear-gradient(#ff8c3a,#e8682a); }
+  .btn:active{ transform:translateY(3px); box-shadow:0 2px 0 rgba(0,0,0,.25); }
+
+  /* pause overlay */
+  #pauseScreen{ position:fixed; inset:0; z-index:90; display:none;
+    align-items:center; justify-content:center; }
+  #pauseScreen.on{ display:flex; }
+  #pauseScreen .popup h2{ font-size:26px; }
+
+  /* dev nav */
+  #devnav{ position:fixed; left:0; right:0; bottom:0; z-index:120; display:none;
+    justify-content:center; gap:10px; padding:8px; }
+  #devnav.on{ display:flex; }
+  #devnav button{ background:#222; color:#fff; border:1px solid #555; border-radius:8px;
+    padding:8px 14px; font-weight:700; }
+
+  /* ---------------- BOOSTER BAR (bottom) ---------------- */
+  #boosters{ width:100%; max-width:560px; padding:4px 16px calc(env(safe-area-inset-bottom,0px) + 14px);
+    display:flex; align-items:center; justify-content:center; gap:12px; z-index:5; }
+  .booster{ position:relative; flex:1; max-width:84px; aspect-ratio:1/1.06;
+    background:linear-gradient(#fff8ec,#ecd6ab);
+    border:3px solid #fff; border-radius:18px;
+    box-shadow:0 5px 0 rgba(120,84,40,.45), inset 0 1px 0 rgba(255,255,255,.7);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+    cursor:pointer; transition:transform .08s; }
+  .booster:active{ transform:translateY(3px); box-shadow:0 2px 0 rgba(120,84,40,.45); }
+  .booster .ic{ font-size:26px; line-height:1; filter:drop-shadow(0 2px 0 rgba(0,0,0,.12)); }
+  .booster .lbl{ font-size:10px; font-weight:800; color:#8a5e34; }
+  .booster .badge{ position:absolute; top:-7px; right:-6px; min-width:18px; height:18px;
+    padding:0 4px; border-radius:10px; background:linear-gradient(var(--green),var(--green-d));
+    color:#fff; font-size:10px; font-weight:900; display:flex; align-items:center; justify-content:center;
+    border:2px solid #fff; box-shadow:0 2px 0 rgba(0,0,0,.2); }
+  .booster.free .badge{ background:linear-gradient(var(--red),#c5342c); }
+
+  /* reels mode: zero safe-top */
+  body.reels{ --safe-top:0px; }
+</style>
+</head>
+<body>
+<div id="bg"></div>
+
+<div id="game">
+  <div id="hud">
+    <div class="hud-left">
+      <div class="hud-chip" id="lv">Lv <span id="lvNum">1</span></div>
+      <div class="hud-chip" id="lives"><span class="heart">❤</span><span id="livesNum">5</span></div>
+    </div>
+    <div class="hud-center">
+      <div class="hud-chip" id="timer">02:00</div>
+      <div class="hud-chip" id="combo">굿즈 x1</div>
+    </div>
+    <div class="hud-right">
+      <div class="hud-chip" id="stars"><span id="star-icon">★</span><span id="starNum">0</span></div>
+      <div class="hud-chip" id="pause">⏸</div>
+    </div>
+  </div>
+
+  <div id="board-wrap">
+    <div id="shelf">
+      <div class="frame"></div>
+      <div class="grid" id="grid"></div>
+      <div class="wood-layer" id="woodLayer"></div>
+    </div>
+  </div>
+
+  <div id="boosters">
+    <div class="booster free" data-booster="free"><span class="ic">🚩</span><span class="lbl">무료</span><span class="badge">AD</span></div>
+    <div class="booster" data-booster="hammer"><span class="ic">🔨</span><span class="lbl">망치</span><span class="badge">0</span></div>
+    <div class="booster" data-booster="shuffle"><span class="ic">🔀</span><span class="lbl">셔플</span><span class="badge">0</span></div>
+    <div class="booster" data-booster="undo"><span class="ic">↩️</span><span class="lbl">되돌리기</span><span class="badge">0</span></div>
+  </div>
+</div>
+
+<div id="fx"></div>
+<div id="drag-ghost"></div>
+
+<div id="overlay"><div class="popup" id="popupBox"></div></div>
+<div id="pauseScreen"><div class="popup">
+  <h2>일시정지</h2>
+  <div class="sub">계속하려면 누르세요</div>
+  <div class="btn next" id="resumeBtn">계속하기</div>
+</div></div>
+
+<div id="devnav">
+  <button id="devPrev">◀ Prev</button>
+  <button id="devNext">Next ▶</button>
+</div>
+
+<script>
+/* =================================================================
+   GameReels host bridge — GLOBAL (window.__GR) to avoid scope trap.
+   Events + Haptics share the channel but are conceptually separate.
+   ================================================================= */
+(function(){
+  var URLP = new URLSearchParams(location.search);
+  var REELS = URLP.has('reels') || URLP.has('gamereels');
+  var DEV   = URLP.has('dev');
+  var FROM  = parseInt(URLP.get('from'),10); if(!(FROM>=1)) FROM = 1;
+  var TO    = parseInt(URLP.get('to'),10);   if(!(TO>=1))   TO = null;
+
+  // single channel post (event-message) — FLAT {event,data}
+  function postMsg(event, data){
+    var msg = { event: event, data: (data===undefined? null : data) };
+    try{
+      if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler){
+        window.flutter_inappwebview.callHandler('flutterChannel', msg);
+      }
+    }catch(e){}
+    try{ if (window.GameReels && window.GameReels.post) window.GameReels.post(event, msg.data); }catch(e){}
+    try{ if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.gamereels)
+           window.webkit.messageHandlers.gamereels.postMessage(msg); }catch(e){}
+    try{ if (window.parent && window.parent!==window) window.parent.postMessage(msg,'*'); }catch(e){}
+  }
+
+  // Haptic delegation — multi-path. iOS web has no navigator.vibrate (real app vibrates via signal).
+  function vibrate(signal){
+    var msg = { event: signal, data: null };
+    try{
+      if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler)
+        window.flutter_inappwebview.callHandler('flutterChannel', msg);
+    }catch(e){}
+    try{ if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.haptic)
+           window.webkit.messageHandlers.haptic.postMessage(signal); }catch(e){}
+    try{
+      if (navigator.vibrate){
+        var ms = signal==='MediumVibrate'?22 : signal==='LightVibrate'?12 : 8;
+        navigator.vibrate(ms);
+      }
+    }catch(e){}
+  }
+
+  window.__GR = {
+    reels: REELS, dev: DEV, from: FROM, to: TO, active: true,
+    post: postMsg, vibrate: vibrate
+  };
+  // GameReels.post fallback object (so postMsg's own fallback works if host supplies it later)
+  if (!window.GameReels) window.GameReels = { post: function(ev,d){ postMsg(ev,d); } };
+})();
+</script>
+
+<script>
+/* =================================================================
+   GOODS SORT engine — data-driven match-3 "sort into cubbies".
+   ================================================================= */
+(function(){
+  'use strict';
+  var GR = window.__GR;
+
+  // ---------- runtime config (from URL via __GR) ----------
+  var REELS = GR.reels, DEV = GR.dev;
+  var startLevel = GR.from;            // 1-based
+  var stopLevel  = GR.to;              // 1-based or null
+
+  if (REELS) document.body.classList.add('reels');
+  if (DEV) document.getElementById('devnav').classList.add('on');
+
+  // GameEnd emission policy (single source of truth)
+  function shouldEmitGameEnd(level){
+    if (!REELS) return true;                 // non-reels: every level
+    if (stopLevel && level === stopLevel) return true;  // segment end
+    return (level % 30) === 0;               // reels: 30-multiples only
+  }
+
+  // ---------- haptics (CORE-GATED only) ----------
+  function haptic(kind){
+    // kind: 'place' (drop/place) -> Light | 'clear' (cubby clear) -> Medium | 'btn' -> Soft
+    var sig = kind==='clear' ? 'MediumVibrate'
+            : kind==='place' ? 'LightVibrate'
+            : kind==='btn'   ? 'SoftVibrate' : null;
+    if (!sig) return;                         // anything else = not core -> no vibration
+    try{ GR.vibrate(sig); }catch(e){}
+  }
+
+  // =============================================================
+  // SHELF 3D CONFIG — SINGLE SOURCE OF TRUTH for the shelf "look".
+  // =============================================================
+  // These DEFAULTS are baked INLINE so the single self-contained HTML works fully
+  // OFFLINE (no JSON fetch required). BOTH the engine and the editor read this same
+  // object. The engine applies it to the niche CSS vars + buildNiches()/fitGoods().
+  // An OVERRIDE may be merged on top (so the editor's saved settings show up in the
+  // game in the SAME browser): localStorage['gs_shelf_config'] first, and optionally
+  // ./shelf_config.json when served. All values here = the current SETTLED look.
+  //   perspective       (px)  : per-niche perspective distance (gentle real depth)
+  //   eyeY              (frac) : perspective-origin Y as a fraction of cubby height
+  //                              (floor/ceiling balance; 0.45 = look INTO the box)
+  //   sideReveal        (mult) : how much the side walls show (subtle; 1.0 = current)
+  //   depth             (frac) : shelf depth/length — box depth D = depth*min(W,H)
+  //   shelfAngle        (deg)  : floor/ceiling plane fold angle (90 = upright box)
+  //   postThickness     (px)   : divider/post width between cubbies (the lattice gap)
+  //   frameThickness    (px)   : outer cabinet wood frame thickness
+  //   ceilingVisibility (mult) : ceiling band size/visibility (1.0 = current)
+  //   cornerRadius      (px)   : 0 = ANGULAR (sharp/squared) frame & niche corners
+  //   goodFillHeight    (frac) : good height as a fraction of the cubby interior
+  //   cubbyAspect       (frac) : shelf aspect-ratio 1/cubbyAspect -> cubby w:h ratio
+  //                              (<1 = landscape cubbies, wider than tall)
+  //   rimH              (px)   : front-rim band thickness (the front lip wood)
+  //   goodGap           (frac) : HORIZONTAL gap between adjacent goods in a cubby, as a
+  //                              fraction of the cubby width. Each front slot gets a width
+  //                              budget = cubbyW/3 - goodGap*cubbyW; a good is scaled
+  //                              (preserving its real aspect) to fit within BOTH that slot
+  //                              width AND the height budget -> NO good exceeds its slot
+  //                              width -> adjacent goods NEVER overlap (consistent gaps).
+  var SHELF_DEFAULTS = {
+    perspective: 560,
+    eyeY: 0.45,
+    sideReveal: 1.0,
+    depth: 0.68,
+    shelfAngle: 90,
+    postThickness: 9,
+    frameThickness: 12,
+    ceilingVisibility: 1.0,
+    cornerRadius: 0,
+    goodFillHeight: 0.88,
+    cubbyAspect: 0.95,
+    rimH: 7,
+    goodGap: 0.04
+  };
+  // merge an OVERRIDE over the defaults (shallow; only known keys). Reads
+  // localStorage['gs_shelf_config'] (same-browser editor save) + window.__SHELF_OVERRIDE
+  // (injected by the editor iframe / static build). Returns the resolved config.
+  function resolveShelfConfig(){
+    var cfg = {};
+    for (var k in SHELF_DEFAULTS) cfg[k] = SHELF_DEFAULTS[k];
+    function merge(src){
+      if (!src || typeof src !== 'object') return;
+      for (var k in SHELF_DEFAULTS){ if (src[k] !== undefined && src[k] !== null) cfg[k] = src[k]; }
+    }
+    // localStorage override (set by the editor's "저장" in the same browser)
+    try{
+      var raw = window.localStorage && window.localStorage.getItem('gs_shelf_config');
+      if (raw) merge(JSON.parse(raw));
+    }catch(e){}
+    // editor/static injection wins last (live preview + baked static build)
+    try{ if (window.__SHELF_OVERRIDE) merge(window.__SHELF_OVERRIDE); }catch(e){}
+    return cfg;
+  }
+  // the LIVE resolved config (defaults + override). buildNiches()/fitGoods() read this.
+  var SHELF = resolveShelfConfig();
+  // apply the config's CSS-var-driven params to :root + #shelf. Per-cubby 3D geometry
+  // (perspective-origin, fold angle, depth, side reveal, ceiling) is applied in
+  // buildNiches() which reads the SAME SHELF object. Call before buildNiches().
+  function applyShelfCssVars(){
+    var root = document.documentElement.style;
+    root.setProperty('--niche-persp', SHELF.perspective + 'px');
+    root.setProperty('--rim-h', SHELF.rimH + 'px');
+    root.setProperty('--cab-pad', SHELF.frameThickness + 'px');
+    root.setProperty('--niche-gap', SHELF.postThickness + 'px');
+    root.setProperty('--corner-radius', SHELF.cornerRadius + 'px');
+    // shelf aspect-ratio: 1 / cubbyAspect (cubbyAspect<1 -> wider/landscape)
+    var shelf = document.getElementById('shelf');
+    if (shelf) shelf.style.aspectRatio = '1 / ' + SHELF.cubbyAspect;
+  }
+  // PUBLIC API — so the editor can drive the SAME renderer (share, don't fork).
+  // applyConfig() merges a partial cfg over the current SHELF, re-applies CSS vars,
+  // and refolds the niche boxes + refits goods LIVE (matches the game exactly).
+  window.__shelfApi = {
+    DEFAULTS: SHELF_DEFAULTS,
+    get: function(){ var o={}; for (var k in SHELF) o[k]=SHELF[k]; return o; },
+    resolve: resolveShelfConfig,
+    applyConfig: function(partial){
+      if (partial && typeof partial==='object'){
+        for (var k in SHELF_DEFAULTS){ if (partial[k]!==undefined && partial[k]!==null) SHELF[k]=partial[k]; }
+      }
+      applyShelfCssVars();
+      try{ buildNiches(); fitGoods(); }catch(e){}
+    }
+  };
+
+  // =============================================================
+  // STAGE LOADING (data-driven)
+  // =============================================================
+  // Embedded copy of stage1.json so the single HTML is self-contained.
+  // (Build pipeline / editor can overwrite window.__STAGES; we prefer that.)
+  // V4 POSITIONAL SLOTS: cubby = { r, c, layers:[ [s0,s1,s2], [s0,s1,s2], .. ] }.
+  // Each layer is a FIXED-LENGTH-3 array of SLOTS (left/center/right). Each slot is
+  // a type string OR null (an empty slot). layers[0]=FRONT (visible+interactive);
+  // layers behind = hidden goods that peek and reveal when the front goes all-empty.
+  // Empty workspace cubbies use layers:[[null,null,null]].
+  // Backward-compat: legacy packed arrays (e.g. ["cola","juice"]) are filled from
+  // the LEFT into slots and padded with null; flat items:[...] = a single front layer.
+  var EMBEDDED_STAGES = {
+    1: {
+      "level": 1, "timeLimit": 160, "cols": 3, "rows": 4, "cellCap": 3,
+      "goods": ["cola","juice","milk","chips","donut","soda","snack","icebar_a","icebar_b","sauce","water"],
+      "combo": { "resetAfterMs": 4000 },
+      "scoring": { "starsPerSort": 1, "comboBonus": 1 },
+      // V11 — RICH/VARIED 11-type packed board (see stages/stage1.json _note). 11 packed
+      // cubbies (front+back) + 1 empty workspace (idx6,r2c0); each type x6 (all mult of 3)
+      // = 66 goods; solver-verified solvable; colorful front-row variety like the reference.
+      "cubbies": [
+        { "r":0,"c":0,"layers":[ ["sauce","water","soda"], ["juice","milk","cola"] ] },
+        { "r":0,"c":1,"layers":[ ["icebar_a","water","water"], ["soda","milk","icebar_a"] ] },
+        { "r":0,"c":2,"layers":[ ["chips","snack","soda"], ["sauce","milk","snack"] ] },
+        { "r":1,"c":0,"layers":[ ["sauce","cola","donut"], ["snack","chips","icebar_a"] ] },
+        { "r":1,"c":1,"layers":[ ["cola","juice","icebar_b"], ["water","chips","chips"] ] },
+        { "r":1,"c":2,"layers":[ ["milk","sauce","donut"], ["icebar_b","icebar_b","icebar_b"] ] },
+        { "r":2,"c":0,"layers":[ [null,null,null] ] },
+        { "r":2,"c":1,"layers":[ ["snack","milk","icebar_a"], ["sauce","chips","icebar_a"] ] },
+        { "r":2,"c":2,"layers":[ ["water","soda","water"], ["donut","cola","juice"] ] },
+        { "r":3,"c":0,"layers":[ ["sauce","soda","icebar_b"], ["juice","juice","soda"] ] },
+        { "r":3,"c":1,"layers":[ ["cola","donut","cola"], ["donut","milk","icebar_b"] ] },
+        { "r":3,"c":2,"layers":[ ["donut","snack","icebar_a"], ["chips","snack","juice"] ] }
+      ]
+    }
+  };
+  function loadStage(level){
+    var src = (window.__STAGES && window.__STAGES[level]) || EMBEDDED_STAGES[level] || EMBEDDED_STAGES[1];
+    // deep clone so replays start fresh
+    return JSON.parse(JSON.stringify(src));
+  }
+  // CAP is the per-layer slot count (always 3 for the positional left/center/right model).
+  var SLOTS = 3;
+  // normalize ONE layer to a fixed-length-3 slot array [s0,s1,s2] (type|null).
+  // - already-slot form (has a null OR length===3) is kept as-is (padded to 3).
+  // - legacy PACKED form (e.g. ["cola","juice"]) fills from the LEFT into slots.
+  function normSlots(layer){
+    var arr = (layer || []).slice();
+    var out = [null, null, null];
+    var hasNull = arr.indexOf(null) >= 0;
+    if (hasNull || arr.length === SLOTS){
+      // treat as slots directly (null = empty); pad/truncate to SLOTS
+      for (var i=0;i<SLOTS;i++) out[i] = (arr[i]===undefined ? null : arr[i]);
+    } else {
+      // legacy packed -> fill from left
+      for (var j=0;j<arr.length && j<SLOTS;j++) out[j] = arr[j];
+    }
+    return out;
+  }
+  // normalize a cubby spec to V4 layers form (each layer = 3-slot array;
+  // flat items -> single front layer; a cubby with no layers/items -> one empty front).
+  function normLayers(cb){
+    if (Array.isArray(cb.layers)) return cb.layers.map(normSlots);
+    if (Array.isArray(cb.items))  return [ normSlots(cb.items) ];
+    return [ [null,null,null] ];
+  }
+
+  // asset path resolver (relative — zippable for host)
+  function tileURL(type){ return '../assets/goods/' + type + '_tile.png'; }
+  // per-type display scale so goods read at consistent real-world sizes (bottle bigger
+  // than donut). V3: front goods are BIG (fill the cubby) — these scale the .good box.
+  // V16 — FAT/chubby tiles (re-trimmed from 256² to alpha bbox). The per-type box is
+  // sized by GOOD_AR (content aspect) + width-clamped to the slot budget in fitGoods, so
+  // overlap protection is fully aspect-driven. GOOD_SCALE is now a uniform 1.0 (the old
+  // <1 nudges on chips/donut/snack were for the SLIM boxes; the new fat aspects are
+  // width-bound by fitGoods, so no per-type scale shaving is needed). --gs > 1 is never
+  // used (it would push width past the slot budget and break the no-overlap guarantee).
+  var GOOD_SCALE = { cola:1.0, juice:1.0, milk:1.0, chips:1.0, donut:1.0,
+    soda:1.0, snack:1.0, icebar_a:1.0, icebar_b:1.0, sauce:1.0, water:1.0 };
+  // V16 — per-type CONTENT aspect ratio (visible-sprite width / height) MEASURED from the
+  // FAT re-trimmed tiles via alpha bbox (trim_tiles.mjs). The .good box HUGS the content
+  // at this aspect; slim items get slim boxes, fat/wide items get wide boxes. fitGoods
+  // width-clamps each box to W/3 - gap so adjacent goods NEVER overlap regardless of AR.
+  // OLD (slim) -> NEW (fat): cola 0.33->0.72, juice 0.40->0.72, milk 0.45->0.93,
+  // chips 0.69->1.05, donut 2.13->1.90, soda 0.38->0.90, snack 0.71->0.96,
+  // icebar_a 0.38->0.53, icebar_b 0.35->0.52, sauce 0.50->0.72, water 0.40->0.65.
+  var GOOD_AR = { cola:0.719, juice:0.719, milk:0.934, chips:1.053, donut:1.896,
+    soda:0.895, snack:0.961, icebar_a:0.531, icebar_b:0.520, sauce:0.723, water:0.652 };
+
+  // =============================================================
+  // STATE
+  // =============================================================
+  var S = {
+    level: startLevel,
+    cfg: null,
+    cubbies: [],        // [{r,c,layers:[[type...],...],el,floor,backEl}]  layers[0]=FRONT
+    cap: 3,
+    timeLeft: 0,
+    running: false,
+    paused: false,
+    over: false,
+    stars: 0,
+    combo: 1,
+    comboTimer: null,
+    lastTick: 0
+  };
+
+  // DOM refs
+  var shelfEl = document.getElementById('shelf');   // the front-on shelf
+  var gridEl  = document.getElementById('grid');    // the cubby grid (inside shelf)
+  var woodEl  = document.getElementById('woodLayer'); // continuous seam-free wood pieces
+  var lvNumEl = document.getElementById('lvNum');
+  var timerEl = document.getElementById('timer');
+  var starNumEl = document.getElementById('starNum');
+  var comboEl = document.getElementById('combo');
+  var fxEl = document.getElementById('fx');
+  var ghostEl = document.getElementById('drag-ghost');
+  var starsChip = document.getElementById('stars');
+
+  // =============================================================
+  // BUILD BOARD from data
+  // =============================================================
+  // Build the 3D cubby grid. Each cubby = recessed box with 6 wood faces
+  // (back wall + 4 inner side walls = visible depth/thickness) + a front FLOOR
+  // face where the big interactive front-layer goods stand, plus a BACK-LAYER
+  // stage deep in the recess where hidden goods peek over the front.
+  // ---- SEAM-FREE WOOD LAYER (V6) ----
+  // Build the continuous wood pieces over the cubby grid. EVERY piece is ONE element
+  // with the generated wood image STRETCHED (background-size:100% 100%, no-repeat) so
+  // there is NEVER a tile seam at ANY grid size. As the grid grows (more rows/cols from
+  // stage data) we just add more single full-width boards / full-height posts — each
+  // still one continuous stretched piece.
+  //   - 1 full-width row BOARD per row (the floor goods stand on), at the row bottom.
+  //   - outer FRAME = 2 posts (sides, full height) + 2 boards (top/bottom rails, full width).
+  //   - 1 full-height DIVIDER post per interior column boundary (cols-1 of them).
+  // Coordinates are in % of #shelf so it scales with the responsive shelf size.
+  // =============================================================
+  // V12 — UNIFIED 3D WOOD NICHE GEOMETRY (ported from _niche_poc.html).
+  // Build the FOLDED 3D WOOD BOX faces for EVERY cubby + the SHARED global eye
+  // (per-cubby perspective-origin). Per-cell PARAMETRIC: every face derives from
+  // the live cell size (W,H) + the box depth D, so the box CLOSES exactly (no step)
+  // at ANY grid size. Run on build + resize (px sizes track the responsive shelf).
+  // Local 3D space per niche: origin=front-top-left, x→right(0..W), y→DOWN(0..H),
+  // z→toward camera (front=0, back=-D). Faces:
+  //   BACK (.c-back)   : full WxH plane at z=-D (cream).
+  //   FLOOR (.c-wall.b): WxD, hinged front-bottom (y=H), rotateX(90°) folds back.
+  //   CEILING (.c-wall.t): WxD, hinged front-top (y=0), rotateX(-90°) folds back.
+  //   LEFT  (.c-wall.l): DxH, hinged front-left (x=0), rotateY(-90°) folds back.
+  //   RIGHT (.c-wall.r): DxH, hinged front-right (x=W), rotateY(90°) folds back.
+  //   FRONT RIM (.c-rim): plank thickness along the front-bottom edge at z=0.
+  // UNIFORM EYE (V13 — reference-balanced): perspective-origin X = EACH cubby's OWN
+  // horizontal center (W/2), NOT the shared grid center. This removes the left/right
+  // horizontal TURN, so every cubby looks identical and its side walls reduce to a thin
+  // symmetric SLIVER from box-depth parallax only (subtle, like the reference) instead
+  // of revealing a big inner wall. perspective-origin Y sits NEAR the cubby center (V15:
+  // 0.45 of H, was 0.28) so the camera looks INTO the box and reveals BOTH the FLOOR's top
+  // surface (receding up) AND the CEILING's underside (receding down) as clear wood planks
+  // — the floor kept a touch more 도톰 than the ceiling (floorProjH > ceilProjH). Box depth
+  // D is bumped a little (0.68 of the shorter dim) so both bands project a clear height; the
+  // side slivers grow only slightly (still subtle). The shelf box is NEVER leaned (upright).
+  var nicheGeom = { D: 57, rimH: 13 };       // cached so goods placement reads the live depth
+  function buildNiches(){
+    var cs = getComputedStyle(document.documentElement);
+    function pxv(name){ return parseFloat(cs.getPropertyValue(name)) || 0; }
+    // live cell (cubby opening) size — read one real cubby (all are equal in the grid).
+    var anyCubby = gridEl.querySelector('.cubby');
+    if (!anyCubby) return;
+    var cr = anyCubby.getBoundingClientRect();
+    var W = cr.width || 1, H = cr.height || 1;
+    if (W < 2 || H < 2) return;
+    // DEPTH derives from the cell so the box reads consistent at any size: a fraction
+    // (SHELF.depth) of the SHORTER cell dim, clamped so it's a MODEST recess. With the
+    // eye near the cubby CENTER (look-into, not look-down) a deeper box gives BOTH the
+    // floor AND the ceiling a clear projected wood band. depth=0.68 = current settled.
+    var D = Math.max(44, Math.min(78, Math.round(Math.min(W, H) * (SHELF.depth || 0.68))));
+    var rimH = pxv('--rim-h') || 13;
+    nicheGeom.D = D; nicheGeom.rimH = rimH;
+    document.documentElement.style.setProperty('--wall-depth', D + 'px'); // legacy assert alias
+
+    // UNIFORM EYE — X at EACH cubby's OWN horizontal center (W/2 in its local coords)
+    // so there is NO horizontal turn (side walls = symmetric thin sliver). V15: eye Y moved
+    // toward the cubby CENTER (0.28->0.45 of H) so the camera looks INTO the box and reveals
+    // BOTH surfaces — the FLOOR's top (receding up) AND the CEILING's underside (receding
+    // down) — as clearly-visible wood planks. Kept just ABOVE center (0.45 < 0.5) so the
+    // FLOOR stays a touch more 도톰 than the ceiling (floorProjH > ceilProjH) per the spec.
+    var oxLocal = W * 0.5;                               // eye X = this cubby's own center (no turn)
+    var EYE_OY  = H * (SHELF.eyeY || 0.45);              // eye Y near center -> look INTO the box (floor + ceiling both show)
+    // FOLD ANGLE (선반각도): floor/ceiling rotate by ±shelfAngle (90 = upright box).
+    // A smaller angle tilts the planes toward the camera so more surface shows.
+    var ang = (SHELF.shelfAngle != null) ? SHELF.shelfAngle : 90;
+    // SIDE REVEAL (옆면 보이기): scale the side-wall depth so the L/R inner walls
+    // project a touch wider/narrower (subtle). 1.0 = current. Floor/ceiling keep D.
+    var Dside = D * (SHELF.sideReveal != null ? SHELF.sideReveal : 1.0);
+    // CEILING VISIBILITY (윗면): scale the ceiling band depth so the top plank shows
+    // more/less. 1.0 = current (ceiling depth = D).
+    var Dceil = D * (SHELF.ceilingVisibility != null ? SHELF.ceilingVisibility : 1.0);
+
+    S.cubbies.forEach(function(cb){
+      if (!cb.el) return;
+      cb.el.style.perspectiveOrigin = oxLocal + 'px ' + EYE_OY + 'px';
+      // size + transform the 6 faces so the box closes exactly (no step / 단차).
+      var back = cb.el.querySelector('.c-back');
+      var floor = cb.el.querySelector('.c-wall.b');
+      var ceil  = cb.el.querySelector('.c-wall.t');
+      var left  = cb.el.querySelector('.c-wall.l');
+      var right = cb.el.querySelector('.c-wall.r');
+      var rim   = cb.el.querySelector('.c-rim');
+      if (back){ back.style.width=W+'px'; back.style.height=H+'px';
+        back.style.transform='translateZ('+(-D)+'px)'; }
+      if (floor){ floor.style.width=W+'px'; floor.style.height=D+'px';
+        floor.style.top=(H-D)+'px'; floor.style.transformOrigin='center bottom';
+        floor.style.transform='rotateX('+ang+'deg)'; }
+      if (ceil){ ceil.style.width=W+'px'; ceil.style.height=Dceil+'px';
+        ceil.style.top='0px'; ceil.style.transformOrigin='center top';
+        ceil.style.transform='rotateX('+(-ang)+'deg)'; }
+      if (left){ left.style.width=Dside+'px'; left.style.height=H+'px';
+        left.style.transformOrigin='left center'; left.style.transform='rotateY(-90deg)'; }
+      if (right){ right.style.width=Dside+'px'; right.style.height=H+'px';
+        right.style.left=(W-Dside)+'px'; right.style.transformOrigin='right center';
+        right.style.transform='rotateY(90deg)'; }
+      if (rim){ rim.style.width=W+'px'; rim.style.height=rimH+'px';
+        rim.style.top=(H-rimH)+'px'; rim.style.transform='translateZ(1px)'; }
+    });
+  }
+
+  // ---- FIT GOODS (V8) ----
+  // Size goods BIG + SNUG like the reference: each good fills ~GOOD_H_PCT of the cubby
+  // INTERIOR height (board-top -> shelf above), and the 3 slim goods sit side-by-side
+  // filling the cubby WIDTH with small gaps. Tiles are SQUARE but content aspects differ
+  // wildly (GOOD_AR), so we size PER TYPE: target height = GOOD_H_PCT of the interior,
+  // box width = height * AR; if a type's box would exceed GOOD_MAX_W_FRAC of the cubby
+  // width (wide items like donut), shrink THAT type's height so it still fits. We cache
+  // the per-type pixel HEIGHT in fitState; makeGood reads it to set --good-h / --good-ar.
+  // V9 — goods are BIGGER + SPREAD EDGE TO EDGE (reference). Each good fills ~90% of the
+  // cubby INTERIOR height (snug to the shelf above, only a sliver of headroom) and each
+  // good box may be up to ~32% of the cubby width so the 3 slim goods, sitting centered
+  // in their far-left / middle / far-right slots, span the WHOLE cubby width near-touching
+  // (kills the big empty side margins). Wide items (donut) still shrink to fit their slot.
+  // V9 — goods fill ~98% of the cubby INTERIOR height (snug to the shelf above). Slim
+  // items (bottles/cartons) reach that full height; WIDE items (the chips can, the donut
+  // disc) shrink their height so their width stays within budget, BUT never below a
+  // MIN-HEIGHT floor so a wide disc still reads as a real good (not a sliver). The width
+  // budget is generous (~0.50 of the cubby) so a can fills most of the height; a good box
+  // that is wider than its slot simply overflows into the small inter-good gap (its HIT
+  // region stays the slot, so it never steals a neighbor — Fix #2).
+  // ---- FIT GOODS (V12 — NICHE) ----
+  // Goods are BIG billboards standing on the 3D FLOOR, FILLING the (now SHORTER,
+  // landscape) cubby so their tops reach up near the ceiling ("가득 찬 느낌"). The cubby
+  // is shorter than before, so target height = a big fraction of the interior. The 3
+  // FRONT goods spread across the full width (slots s0/s1/s2 centered ~17/50/83%) and
+  // stand at the FRONT floor depth (small translateZ); the BACK row stands DEEPER on the
+  // floor (bigger translateZ = real front/back depth) so it peeks above/between the front.
+  // Per-type: box height = GOOD_H_PCT*interior, width = height*content-aspect; wide items
+  // (donut/snack) shrink height so width stays in budget (floored so they aren't slivers).
+  // V15: lowered 0.96->0.88 so the goods' tops leave a clear strip of CEILING wood visible
+  // ABOVE them (like the reference, where goods fill most of the cubby but the shelf above
+  // still shows). Goods stay BIG + filling (~88% of the interior), just not crowding the
+  // ceiling band so the ceiling reads as a real surface, not a hidden line.
+  var GOOD_H_PCT = 0.88;        // front good height = ~88% of the cubby interior (leaves ceiling strip)
+  var GOOD_GAP_FRAC = 0.04;     // DEFAULT horizontal gap between goods (fraction of cubby width) —
+                                // overridden by SHELF.goodGap. The 3 slot centers are spread W/6,
+                                // W/2, 5W/6 (spacing W/3), so a good's width MUST stay <= W/3 - gap
+                                // to NEVER reach a neighbor -> consistent gaps, no overlap.
+  var PEEK_H_FRAC = 0.86;       // peek (back-row) good height = this fraction of the front good height
+  // FLOOR DEPTH fractions t (0=front lip, 1=back wall): the FRONT row stands AT the FRONT
+  // EDGE of the floor (t≈0 -> base frontmost, fully visible, the floor recedes BEHIND it),
+  // the BACK row deeper toward the back wall (real depth -> front/back read; the back row
+  // is partially occluded by the front row, which is fine). V14: FRONT_T lowered 0.14->0
+  // so the front base is at/in-front-of the thin front rim and is never occluded.
+  var FRONT_T = 0.0, BACK_T = 0.62;
+  // FIT-TO-SLOT (no-overlap) MODEL: each good lives in ONE of 3 slot columns whose
+  // centers spread across the FULL cubby width (W/6, W/2, 5W/6 -> spacing W/3). To NEVER
+  // touch a neighbor, a centered good's WIDTH must stay <= the per-slot width budget:
+  //     slotWidthBudget = W/3 - goodGap*W
+  // We scale each good PRESERVING its real aspect (GOOD_AR = width/height) to fit within
+  // BOTH that slot width budget AND the height budget (goodFillHeight*interiorH) — whichever
+  // limit BINDS FIRST:
+  //   - TALL/SLIM goods (bottles/cans/ice bars, AR<<1): HEIGHT-bound -> fill the height,
+  //     stay narrow (their height*AR width is well under the slot budget).
+  //   - WIDE goods (snack bag AR~0.71, donut AR~2.13): WIDTH-bound -> shrink to the slot
+  //     width budget, end up SHORTER (their full-height width would overflow the slot).
+  // Result: NO good's box exceeds its slot width -> adjacent goods never overlap.
+  // fitState caches the per-type box HEIGHT (px) for the FRONT row; the back row reuses it
+  // scaled by PEEK_H_FRAC (the back slots share the SAME W/3 spacing, so the same width
+  // budget * PEEK_H_FRAC keeps the back row non-overlapping too).
+  var fitState = { interiorH: 0, slotBudgetPx: 0, heightPx: {} };   // heightPx[type] = front good box height (px)
+  function fitGoods(){
+    var anyCubby = gridEl.querySelector('.cubby');
+    if (!anyCubby) return;
+    var cr = anyCubby.getBoundingClientRect();
+    var W = cr.width || 1, H = cr.height || 1;
+    if (W < 2 || H < 2) return;
+    var interiorH = H;                                // goods stand on the floor at the opening bottom
+    var goodHpct = (SHELF.goodFillHeight != null) ? SHELF.goodFillHeight : GOOD_H_PCT;
+    var gapFrac  = (SHELF.goodGap != null) ? SHELF.goodGap : GOOD_GAP_FRAC;
+    // per-slot WIDTH BUDGET: adjacent slot centers are W/3 apart, so a centered good of
+    // width <= W/3 - gap can never reach its neighbor. Clamp gap so the budget stays > 0.
+    var slotWidthBudget = Math.max(W * 0.10, W / 3 - gapFrac * W);
+    var hBudget = goodHpct * interiorH;               // height budget (leaves a ceiling strip)
+    fitState.interiorH = interiorH;
+    fitState.slotBudgetPx = slotWidthBudget;
+    fitState.heightPx = {};
+    for (var type in GOOD_AR){
+      var ar = GOOD_AR[type] || 0.42;                 // width / height (real aspect, preserved)
+      // height-bound candidate: fill the height, width follows from AR.
+      var hpx = hBudget;
+      var wpx = hpx * ar;
+      // if that width overflows the slot, this good is WIDTH-bound -> shrink height so the
+      // width drops to the slot budget (aspect preserved -> shorter box).
+      if (wpx > slotWidthBudget){ hpx = slotWidthBudget / ar; }
+      fitState.heightPx[type] = hpx;                  // <= hBudget always; width = hpx*ar <= budget
+    }
+    // re-apply sizing to any goods already in the DOM (resize path)
+    var goods = gridEl.querySelectorAll('.good');
+    for (var i=0;i<goods.length;i++){ applyGoodSize(goods[i]); }
+  }
+  // apply the cached per-type box size + FLOOR DEPTH (translateZ) to ONE good element.
+  // FRONT goods sit at FRONT_T (small -z); PEEK/back goods at BACK_T (bigger -z = deeper).
+  // The width is ALWAYS height*AR <= the slot budget (set in fitGoods), so a good NEVER
+  // exceeds its slot width -> no horizontal overlap with neighbors (front OR back row).
+  function applyGoodSize(g){
+    var type = g.dataset.type;
+    if (!type || !fitState.heightPx[type]) return;
+    var isPeek = g.classList.contains('peek');
+    var h = fitState.heightPx[type] * (isPeek ? PEEK_H_FRAC : 1);
+    g.style.setProperty('--good-ar', String(GOOD_AR[type] || 0.42));
+    g.style.setProperty('--good-h', h.toFixed(2) + 'px');
+    // floor depth: t -> translateZ(-D*t). Front row near the opening, back row deeper.
+    var t = isPeek ? BACK_T : FRONT_T;
+    var gz = -(nicheGeom.D || 70) * t;
+    g.style.setProperty('--gz', gz.toFixed(2) + 'px');
+  }
+
+  function buildBoard(){
+    var cfg = S.cfg;
+    S.cap = cfg.cellCap || 3;
+    gridEl.style.gridTemplateColumns = 'repeat(' + cfg.cols + ', 1fr)';
+    gridEl.style.gridTemplateRows = 'repeat(' + cfg.rows + ', 1fr)';
+    gridEl.innerHTML = '';
+    // order cubbies row-major so grid placement matches r,c
+    var byRC = {};
+    S.cubbies.forEach(function(cb){ byRC[cb.r+'_'+cb.c] = cb; });
+    for (var r=0; r<cfg.rows; r++){
+      for (var c=0; c<cfg.cols; c++){
+        var cb = byRC[r+'_'+c];
+        var el = document.createElement('div');
+        el.className = 'cubby';
+        el.dataset.idx = cb ? S.cubbies.indexOf(cb) : -1;
+        // V12 NICHE: an INNER preserve-3d layer (.niche-clip) holds the folded box —
+        // BACK WALL + 4 folded WOOD faces (.c-wall t/b/l/r = ceiling/floor/left/right) +
+        // the back-row stage + the interactive front floor (slots). The FRONT RIM sits
+        // outside the clip (front-edge plank). All face sizes/transforms set in buildNiches().
+        el.innerHTML =
+          '<div class="niche-clip">' +
+            '<div class="c-back"></div>' +
+            '<div class="c-wall t"></div><div class="c-wall b"></div>' +
+            '<div class="c-wall l"></div><div class="c-wall r"></div>' +
+            '<div class="c-back-layer"></div>' +
+            '<div class="c-floor"></div>' +
+          '</div>' +
+          '<div class="c-rim"></div>';
+        if (cb){ cb.el = el; cb.floor = el.querySelector('.c-floor'); cb.backEl = el.querySelector('.c-back-layer'); }
+        gridEl.appendChild(el);
+      }
+    }
+    buildNiches();        // V12 — fold each cubby's 3D wood box (faces + shared eye)
+    fitGoods();           // V12 — size goods BIG (fill cubby) + floor depth (front/back)
+    renderAllCubbies();
+  }
+
+  // ---- LAYER ACCESSORS (single source of truth for the depth model) ----
+  function frontLayer(cb){ return (cb.layers && cb.layers.length) ? cb.layers[0] : null; }
+  function backLayer(cb){ return (cb.layers && cb.layers.length > 1) ? cb.layers[1] : null; }
+
+  // Render one cubby. V4 POSITIONAL SLOTS: each of the 3 fixed slot columns
+  // (left/center/right) is a transparent hit-box. The FRONT layer renders a good
+  // INSIDE its slot at the matching slot index (null slot = empty, no good). The
+  // back layer (if present) renders peeking goods in the SAME 3 slot columns,
+  // deeper/dimmer/higher and NON-interactive.
+  // The slot cell owns the hit region (constrained to its column) even though the
+  // sprite art overflows upward -> grabbing always hits the good in THAT column.
+  function makeGood(type, slot, idx, layer, peek){
+    var g = document.createElement('div');
+    g.className = peek ? 'good peek' : 'good';
+    g.style.backgroundImage = 'url("' + tileURL(type) + '")';
+    g.dataset.type = type;
+    g.style.setProperty('--gs', GOOD_SCALE[type] || 1);
+    g.dataset.cubby = idx;
+    g.dataset.slot = slot;
+    g.dataset.layer = String(layer);
+    applyGoodSize(g);          // V8 — BIG+SNUG per-type box (height-driven, content-aspect hugged)
+    return g;
+  }
+  function renderCubby(cb, opts){
+    opts = opts || {};
+    var idx = S.cubbies.indexOf(cb);
+    var front = frontLayer(cb) || [null,null,null];
+    var back  = backLayer(cb);
+
+    // FRONT layer — 3 fixed slot cells; a good sits in a slot iff that slot holds a type.
+    if (cb.floor){
+      cb.floor.innerHTML = '';
+      for (var i=0; i<SLOTS; i++){
+        var slotEl = document.createElement('div');
+        slotEl.className = 'slot s' + i;
+        slotEl.dataset.slot = i;
+        if (front[i]){
+          var g = makeGood(front[i], i, idx, 0, false);
+          // V4 GRAB RULE: every FRONT-layer good is grabbable.
+          // (locked cubbies mark all front goods blocked.)
+          if (cb.locked) g.classList.add('blocked');
+          if (opts.reveal){
+            g.classList.add('revealing');
+            (function(gg){ gg.addEventListener('animationend', function(){ gg.classList.remove('revealing'); }, { once:true }); })(g);
+          }
+          slotEl.appendChild(g);
+        }
+        cb.floor.appendChild(slotEl);
+      }
+    }
+    // BACK layer — peeking goods in the SAME 3 slot columns (non-interactive).
+    if (cb.backEl){
+      cb.backEl.innerHTML = '';
+      if (back){
+        for (var j=0; j<SLOTS; j++){
+          var bslot = document.createElement('div');
+          bslot.className = 'slot s' + j;
+          bslot.dataset.slot = j;
+          if (back[j]){
+            bslot.appendChild(makeGood(back[j], j, idx, 1, true));
+          }
+          cb.backEl.appendChild(bslot);
+        }
+      }
+    }
+  }
+  function renderAllCubbies(){ S.cubbies.forEach(function(cb){ renderCubby(cb); }); }
+
+  // =============================================================
+  // RULES — V4 POSITIONAL SLOTS
+  // A layer is a fixed-length-3 array [s0,s1,s2]; each slot is a type or null.
+  // =============================================================
+  // slot helpers -------------------------------------------------
+  function filledCount(layer){ var n=0; for(var i=0;i<SLOTS;i++) if(layer[i]) n++; return n; }
+  function isFull(layer){ return filledCount(layer)===SLOTS; }
+  function isAllEmpty(layer){ return filledCount(layer)===0; }
+  function firstFilledSlot(layer){ for(var i=0;i<SLOTS;i++) if(layer[i]) return i; return -1; }
+  // all 3 slots hold the SAME type (no null) -> clear condition
+  function allSameSlots(layer){
+    if (!isFull(layer)) return false;
+    for (var i=1;i<SLOTS;i++) if (layer[i]!==layer[0]) return false;
+    return true;
+  }
+  // nearest EMPTY slot to a preferred index (tie -> closer to preferred, then left)
+  function nearestEmptySlot(layer, prefer){
+    if (prefer>=0 && prefer<SLOTS && !layer[prefer]) return prefer;
+    var best=-1, bestD=99;
+    for (var i=0;i<SLOTS;i++){
+      if (layer[i]) continue;
+      var d = (prefer>=0) ? Math.abs(i-prefer) : i;
+      if (d<bestD){ bestD=d; best=i; }
+    }
+    return best;
+  }
+
+  // V4 GRAB RULE — a good is grabbable iff it is a FRONT-layer good (not a peeking
+  // back good) living in the floor, and the cubby isn't locked.
+  function isGrabbable(cb, goodEl){
+    if (!cb || !goodEl) return false;
+    if (cb.locked) return false;                        // future data flag
+    if (goodEl.dataset.layer !== '0') return false;     // only FRONT-layer goods
+    return !!(cb.floor && cb.floor.contains(goodEl) && !goodEl.classList.contains('peek'));
+  }
+  // V4 DROP RULE — a good drops into the target cubby's FRONT layer if it has at
+  // least one EMPTY slot, regardless of type (free-sort). A full front rejects.
+  function canDrop(fromCb, toCb, type){
+    if (fromCb === toCb) return false;
+    if (toCb.locked) return false;                      // future data flag
+    var tf = frontLayer(toCb);
+    if (!tf) return false;                              // no front layer to receive
+    return !isFull(tf);                                 // free iff any null slot
+  }
+
+  // SLOT FROM X — given a target cubby element and a pointer X, return the slot
+  // column (0/1/2) nearest the pointer within that cubby. Used so dropping on the
+  // LEFT lands in slot 0, RIGHT in slot 2 (Fix #1).
+  function slotFromX(cubbyEl, clientX){
+    if (!cubbyEl) return -1;
+    var r = cubbyEl.getBoundingClientRect();
+    if (r.width<=0) return 1;
+    var rel = (clientX - r.left) / r.width;             // 0..1 across the cubby
+    if (rel < 1/3) return 0;
+    if (rel < 2/3) return 1;
+    return 2;
+  }
+
+  // REVEAL — if a cubby's FRONT layer is ALL-EMPTY (all 3 slots null) AND a back
+  // layer exists, drop the empty front so the next layer SLIDES FORWARD to become
+  // the new front (with a reveal animation). If no back layer, the all-empty front
+  // stays as a free workspace. Returns true if a reveal actually happened.
+  function maybeReveal(cb){
+    var front = frontLayer(cb);
+    if (front && isAllEmpty(front) && cb.layers.length > 1){
+      cb.layers.shift();                                // drop empty front; next becomes front
+      renderCubby(cb, { reveal:true });                 // animate the new front sliding forward
+      return true;
+    }
+    return false;
+  }
+
+  // perform a move (data + render) ; returns true if a CLEAR happened.
+  // fromSlot (optional) = which source slot to take (default: first filled).
+  // toSlot   (optional) = preferred target slot; falls to nearest empty if taken.
+  function doMove(fromIdx, toIdx, fromSlot, toSlot){
+    var fromCb = S.cubbies[fromIdx], toCb = S.cubbies[toIdx];
+    if (!fromCb || !toCb) return false;
+    var ff = frontLayer(fromCb);
+    if (!ff) return false;
+    var sFrom = (fromSlot===undefined || fromSlot===null || !ff[fromSlot]) ? firstFilledSlot(ff) : fromSlot;
+    if (sFrom < 0) return false;                        // nothing to move
+    var type = ff[sFrom];
+    if (!canDrop(fromCb, toCb, type)) return false;
+
+    var tf = frontLayer(toCb);
+    // place into the preferred slot if empty, else nearest empty slot (Fix #1)
+    var prefer = (toSlot===undefined || toSlot===null) ? -1 : toSlot;
+    var sTo = nearestEmptySlot(tf, prefer);
+    if (sTo < 0) return false;                          // full (shouldn't reach, canDrop guards)
+
+    ff[sFrom] = null;                                   // vacate source slot
+    tf[sTo] = type;                                     // occupy target slot
+    renderCubby(toCb);
+
+    // squash-bounce on the landed good (the one we just placed in slot sTo)
+    if (toCb.floor){
+      var lg = toCb.floor.querySelector('.slot.s'+sTo+' .good');
+      if (lg){ lg.classList.add('land');
+        lg.addEventListener('animationend', function(){ lg.classList.remove('land'); }, { once:true }); }
+    }
+    haptic('place');
+
+    // CLEAR: front layer's 3 slots all hold the SAME type
+    if (allSameSlots(tf)){
+      clearCubby(toCb);                                 // clears + reveals toCb's back layer (if any)
+      renderCubby(fromCb); maybeReveal(fromCb);
+      return true;
+    }
+    // no clear: re-render source; if its front went all-empty, reveal next layer
+    renderCubby(fromCb);
+    maybeReveal(fromCb);
+    return false;
+  }
+
+  // =============================================================
+  // CLEAR + EFFECTS (star fly, praise, combo, pop)
+  // =============================================================
+  function clearCubby(cb){
+    var el = cb.el;
+    var rect = el ? el.getBoundingClientRect() : {left:0,top:0,width:0,height:0};
+    var cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+
+    // combo bump
+    bumpCombo();
+    var combo = S.combo;
+
+    // 1) STAR FLY  (counter += base * combo)
+    var base = (S.cfg.scoring && S.cfg.scoring.starsPerSort) || 1;
+    var gain = base * combo;
+    flyStar(cx, cy, gain);
+
+    // 2) PRAISE TEXT + sparkle ring
+    praise(cx, cy, combo);
+    sparkleRing(cx, cy);
+
+    // 4) cubby pop
+    if (el){
+      el.classList.add('clearing');
+      el.addEventListener('animationend', function(){ el.classList.remove('clearing'); }, { once:true });
+    }
+    haptic('clear');
+
+    // pop the current front goods visually (quick scale-out)
+    if (cb.floor){
+      var goods = cb.floor.querySelectorAll('.good');
+      goods.forEach(function(g){
+        g.style.transition = 'transform .22s ease, opacity .22s ease';
+        g.style.transform = 'scale(.2) translateY(-30%)';
+        g.style.opacity = '0';
+      });
+    }
+    // DATA is updated SYNCHRONOUSLY (single source of truth): null out all 3 front
+    // slots, then if a back layer exists drop the empty front so the back becomes the
+    // new front immediately. This keeps totalGoods()/win-check/solver consistent
+    // without waiting on animation. The visual pop + reveal slide are deferred.
+    var f = frontLayer(cb); if (f){ for (var si=0; si<SLOTS; si++) f[si] = null; }  // empty FRONT slots (data)
+    var willReveal = (cb.layers.length > 1);
+    if (willReveal) cb.layers.shift();                  // back layer -> front (data, now)
+    setTimeout(function(){
+      // re-render after the pop: if a back layer slid up, animate the reveal.
+      renderCubby(cb, willReveal ? { reveal:true } : {});
+      checkWin();
+    }, 200);
+  }
+
+  // combo logic ----------------------------------------------
+  function bumpCombo(){
+    S.combo += 1;
+    showCombo();
+    if (S.comboTimer) clearTimeout(S.comboTimer);
+    var ms = (S.cfg.combo && S.cfg.combo.resetAfterMs) || 4000;
+    S.comboTimer = setTimeout(resetCombo, ms);
+  }
+  function resetCombo(){
+    S.combo = 1;
+    comboEl.classList.remove('show');
+  }
+  function showCombo(){
+    comboEl.textContent = '굿즈 x' + S.combo;
+    comboEl.classList.add('show');
+    comboEl.classList.remove('bump'); void comboEl.offsetWidth; comboEl.classList.add('bump');
+  }
+
+  // star fly -------------------------------------------------
+  function flyStar(x, y, gain){
+    var target = starsChip.getBoundingClientRect();
+    var tx = target.left + target.width*0.32, ty = target.top + target.height/2;
+    var st = document.createElement('div'); st.className='fly-star';
+    st.style.left = x+'px'; st.style.top = y+'px';
+    st.style.transform = 'translate(-50%,-50%) scale(1)';
+    document.body.appendChild(st);
+    // burst then fly
+    requestAnimationFrame(function(){
+      st.style.transition = 'left .55s cubic-bezier(.5,-0.3,.3,1), top .55s cubic-bezier(.5,-0.3,.3,1), transform .55s ease, opacity .55s ease';
+      st.style.left = tx+'px'; st.style.top = ty+'px';
+      st.style.transform = 'translate(-50%,-50%) scale(.5)';
+    });
+    setTimeout(function(){
+      st.remove();
+      S.stars += gain;
+      starNumEl.textContent = S.stars;
+      // counter pop
+      starsChip.style.transition='transform .15s'; starsChip.style.transform='scale(1.25)';
+      setTimeout(function(){ starsChip.style.transform='scale(1)'; }, 150);
+    }, 560);
+  }
+
+  // praise text ----------------------------------------------
+  function praiseTier(combo){
+    if (combo >= 8) return { txt:'Perfect!', cls:'tperf' };
+    if (combo >= 5) return { txt:'훌륭해요!', cls:'t5' };
+    if (combo >= 3) return { txt:'멋져요!', cls:'t3' };
+    return { txt:'좋아요!', cls:'' };
+  }
+  function praise(x, y, combo){
+    var t = praiseTier(combo);
+    var p = document.createElement('div');
+    p.className = 'praise ' + t.cls;
+    p.textContent = t.txt;
+    p.style.left = x+'px'; p.style.top = y+'px';
+    p.style.animation = 'praisePop 1.0s ease forwards';
+    fxEl.appendChild(p);
+    setTimeout(function(){ p.remove(); }, 1050);
+  }
+  function sparkleRing(x, y){
+    var ring = document.createElement('div'); ring.className='spark-ring';
+    ring.style.left=x+'px'; ring.style.top=y+'px';
+    ring.style.animation='ring .55s ease-out forwards';
+    fxEl.appendChild(ring);
+    setTimeout(function(){ ring.remove(); }, 560);
+    // a few sparkles
+    for (var i=0;i<7;i++){
+      (function(i){
+        var s = document.createElement('div'); s.className='sparkle';
+        s.style.left=x+'px'; s.style.top=y+'px';
+        fxEl.appendChild(s);
+        var ang = (Math.PI*2)*(i/7) + Math.random()*0.6;
+        var dist = 40 + Math.random()*36;
+        requestAnimationFrame(function(){
+          s.style.transition='transform .5s ease-out, opacity .5s ease-out';
+          s.style.transform='translate('+Math.cos(ang)*dist+'px,'+Math.sin(ang)*dist+'px) scale(.2)';
+          s.style.opacity='0';
+        });
+        setTimeout(function(){ s.remove(); }, 520);
+      })(i);
+    }
+  }
+
+  // =============================================================
+  // DRAG-TO-SORT input (touch + mouse)
+  // =============================================================
+  var drag = null; // {type, fromIdx, ghostSize}
+  // With CSS-3D the hit element is usually a face (.c-floor/.good/.c-wall);
+  // walk up to the owning .cubby. Scan the full hit stack for robustness.
+  function cubbyElFromPoint(clientX, clientY){
+    var els = document.elementsFromPoint(clientX, clientY);
+    for (var i=0;i<els.length;i++){
+      var e = els[i];
+      while (e && e !== document.body){
+        if (e.classList && e.classList.contains('cubby')) return e;
+        e = e.parentElement;
+      }
+    }
+    return null;
+  }
+  // HIT-TEST (Fix #2) — given a pointer, find the cubby under it, map to its slot
+  // column, and return the FRONT good occupying THAT slot (if grabbable). The slot
+  // cell owns the hit region (constrained to its column), so a big neighboring
+  // sprite that visually overflows never steals this slot's grab.
+  function frontGoodAtSlot(cb, slot){
+    if (!cb || !cb.floor || slot<0) return null;
+    var sEl = cb.floor.querySelector('.slot.s'+slot);
+    return sEl ? sEl.querySelector('.good') : null;
+  }
+  // resolve a pointer to {cb, cubbyEl, slot, good} (good may be null)
+  function hitAt(clientX, clientY){
+    var cubbyEl = cubbyElFromPoint(clientX, clientY);
+    if (!cubbyEl) return null;
+    var idx = +cubbyEl.dataset.idx;
+    var cb = S.cubbies[idx];
+    if (!cb) return null;
+    var slot = slotFromX(cubbyEl, clientX);
+    return { cb:cb, idx:idx, cubbyEl:cubbyEl, slot:slot, good:frontGoodAtSlot(cb, slot) };
+  }
+
+  function startDrag(goodEl, clientX, clientY){
+    if (!S.running || S.paused || S.over) return;
+    var cb = S.cubbies[+goodEl.dataset.cubby];
+    if (!cb) return;
+    // GRAB RULE: only FRONT-layer goods are grabbable. A peeking back good is NOT
+    // draggable — reject the grab entirely (do not silently re-target the front one).
+    if (!isGrabbable(cb, goodEl)) return;
+
+    var rect = goodEl.getBoundingClientRect();
+    drag = { type: goodEl.dataset.type, fromIdx: +goodEl.dataset.cubby,
+             fromSlot: +goodEl.dataset.slot, el: goodEl, size: rect.width };
+    goodEl.classList.add('dragging');
+    ghostEl.style.display='block';
+    ghostEl.style.width = rect.width+'px';
+    ghostEl.style.height = rect.height+'px';
+    ghostEl.style.backgroundImage = 'url("' + tileURL(drag.type) + '")';
+    moveGhost(clientX, clientY);
+  }
+  function moveGhost(clientX, clientY){
+    ghostEl.style.left = clientX+'px';
+    ghostEl.style.top  = clientY+'px';
+    // highlight target
+    clearTargetHL();
+    var tEl = cubbyElFromPoint(clientX, clientY);
+    if (tEl){
+      var tIdx = +tEl.dataset.idx;
+      var toCb = S.cubbies[tIdx];
+      if (toCb && tIdx !== drag.fromIdx){
+        tEl.classList.add(canDrop(S.cubbies[drag.fromIdx], toCb, drag.type) ? 'target-ok' : 'target-bad');
+      }
+    }
+  }
+  function clearTargetHL(){
+    var hs = shelfEl.querySelectorAll('.target-ok,.target-bad');
+    hs.forEach(function(h){ h.classList.remove('target-ok','target-bad'); });
+  }
+  function endDrag(clientX, clientY){
+    if (!drag) return;
+    clearTargetHL();
+    ghostEl.style.display='none';
+    if (drag.el) drag.el.classList.remove('dragging');
+    var tEl = cubbyElFromPoint(clientX, clientY);
+    var done = false;
+    if (tEl){
+      var tIdx = +tEl.dataset.idx;
+      // target slot = the slot column nearest the drop X (Fix #1)
+      var toSlot = slotFromX(tEl, clientX);
+      done = doMove(drag.fromIdx, tIdx, drag.fromSlot, toSlot);
+    }
+    // if move didn't happen, re-render source to restore the (hidden) good
+    if (!done){
+      renderCubby(S.cubbies[drag.fromIdx]);
+    }
+    drag = null;
+  }
+
+  // pointer handlers
+  function onDown(ev){
+    if (S.paused || S.over) return;
+    var p = pt(ev);
+    // HIT-TEST by SLOT (Fix #2): map the pointer to the slot column under it and
+    // grab THAT slot's FRONT good — never a visually-overlapping neighbor/back good.
+    var hit = hitAt(p.x, p.y);
+    if (hit && hit.good){
+      startDrag(hit.good, p.x, p.y);
+      ev.preventDefault();
+    }
+  }
+  function onMove(ev){ if (drag){ var p=pt(ev); moveGhost(p.x,p.y); ev.preventDefault(); } }
+  function onUp(ev){ if (drag){ var p=pt(ev); endDrag(p.x,p.y); ev.preventDefault(); } }
+  function pt(ev){
+    if (ev.touches && ev.touches.length) return { x:ev.touches[0].clientX, y:ev.touches[0].clientY };
+    if (ev.changedTouches && ev.changedTouches.length) return { x:ev.changedTouches[0].clientX, y:ev.changedTouches[0].clientY };
+    return { x:ev.clientX, y:ev.clientY };
+  }
+  shelfEl.addEventListener('pointerdown', onDown, { passive:false });
+  window.addEventListener('pointermove', onMove, { passive:false });
+  window.addEventListener('pointerup', onUp, { passive:false });
+  window.addEventListener('pointercancel', onUp, { passive:false });
+
+  // =============================================================
+  // TIMER + WIN/LOSE
+  // =============================================================
+  function fmt(sec){
+    sec = Math.max(0, Math.ceil(sec));
+    var m = Math.floor(sec/60), s = sec%60;
+    return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  }
+  function tick(now){
+    if (!S.running){ S.lastTick = now; return; }
+    if (!S.paused && !S.over){
+      var dt = (now - S.lastTick)/1000;
+      S.lastTick = now;
+      S.timeLeft -= dt;
+      if (S.timeLeft <= 0){ S.timeLeft = 0; updateTimer(); lose(); }
+      else updateTimer();
+    } else {
+      S.lastTick = now;
+    }
+    requestAnimationFrame(tick);
+  }
+  function updateTimer(){
+    timerEl.textContent = fmt(S.timeLeft);
+    if (S.timeLeft < 30) timerEl.classList.add('warn'); else timerEl.classList.remove('warn');
+  }
+
+  // V4: count goods across ALL layers of all cubbies (front + every hidden back
+  // layer). Layers are fixed-length-3 slot arrays, so count NON-NULL slots.
+  function totalGoods(){
+    var n=0;
+    S.cubbies.forEach(function(cb){
+      if (cb.layers) cb.layers.forEach(function(l){ for (var i=0;i<l.length;i++) if (l[i]) n++; });
+    });
+    return n;
+  }
+  function checkWin(){
+    if (S.over) return;
+    // WIN only when every layer of every cubby is empty.
+    if (totalGoods() === 0){ win(); }
+  }
+  function win(){
+    if (S.over) return;
+    S.over = true; S.running = false;
+    if (S.comboTimer) clearTimeout(S.comboTimer);
+    if (shouldEmitGameEnd(S.level)){
+      GR.post('GameEnd', { success:true, progressIndex:S.level, currentIndex:S.level });
+    }
+    setTimeout(function(){ showWinPopup(); }, 480);
+  }
+  function lose(){
+    if (S.over) return;
+    S.over = true; S.running = false;
+    if (S.comboTimer) clearTimeout(S.comboTimer);
+    if (shouldEmitGameEnd(S.level)){
+      GR.post('GameEnd', { success:false, progressIndex:S.level, currentIndex:S.level });
+    }
+    showLosePopup();
+  }
+
+  // =============================================================
+  // RESULT POPUPS
+  // =============================================================
+  var overlay = document.getElementById('overlay');
+  var popupBox = document.getElementById('popupBox');
+  function starRating(){
+    // simple star rating by time remaining ratio
+    var ratio = S.timeLeft / (S.cfg.timeLimit || 1);
+    if (ratio > 0.6) return 3;
+    if (ratio > 0.3) return 2;
+    return 1;
+  }
+  function showWinPopup(){
+    var rating = starRating();
+    var srow = '';
+    for (var i=0;i<3;i++) srow += (i<rating ? '⭐' : '☆');
+    document.body.classList.add('dim');
+    popupBox.innerHTML =
+      '<h2>클리어!</h2>' +
+      '<div class="sub">성공! 모든 굿즈를 정리했어요</div>' +
+      '<div class="pstars">'+srow+'</div>' +
+      '<div class="sub">획득 별 '+S.stars+'개</div>' +
+      '<div class="btn next" id="nextBtn">다음 ▶</div>';
+    overlay.classList.add('on');
+    document.getElementById('nextBtn').addEventListener('click', function(){
+      haptic('btn'); nextLevel();
+    });
+  }
+  function showLosePopup(){
+    document.body.classList.add('dim');
+    popupBox.innerHTML =
+      '<h2>시간 초과</h2>' +
+      '<div class="sub">아쉬워요! 시간이 다 됐어요</div>' +
+      '<div class="pstars">⏰</div>' +
+      '<div class="btn retry" id="retryBtn">다시하기</div>';
+    overlay.classList.add('on');
+    document.getElementById('retryBtn').addEventListener('click', function(){
+      haptic('btn'); retryLevel();
+    });
+  }
+  function closePopup(){ overlay.classList.remove('on'); document.body.classList.remove('dim'); }
+
+  function nextLevel(){
+    closePopup();
+    if (stopLevel && S.level >= stopLevel){ return; } // segment end: stop
+    S.level += 1;
+    startLevelFn(S.level);
+  }
+  function retryLevel(){ closePopup(); startLevelFn(S.level); }
+
+  // =============================================================
+  // LEVEL LIFECYCLE
+  // =============================================================
+  function startLevelFn(level){
+    S.level = level;
+    S.cfg = loadStage(level);
+    // V3: build per-cubby LAYER stacks (normLayers handles both layers:[...] and
+    // legacy flat items:[...]). layers[0]=FRONT (interactive), rest=hidden/peeking.
+    S.cubbies = S.cfg.cubbies.map(function(cb){
+      return { r:cb.r, c:cb.c, layers: normLayers(cb), locked: !!cb.locked, el:null, floor:null, backEl:null };
+    });
+    S.cap = S.cfg.cellCap || 3;
+    S.timeLeft = S.cfg.timeLimit || 120;
+    S.stars = 0; S.combo = 1; S.over = false; S.paused = false; S.running = true;
+    if (S.comboTimer) clearTimeout(S.comboTimer);
+    lvNumEl.textContent = level;
+    starNumEl.textContent = '0';
+    comboEl.classList.remove('show');
+    closePopup();
+    buildBoard();
+    updateTimer();
+  }
+
+  // =============================================================
+  // PAUSE / HOST CONTROL
+  // =============================================================
+  var pauseScreen = document.getElementById('pauseScreen');
+  function pauseGame(showUI){
+    if (S.over) return;
+    S.paused = true;
+    if (showUI) pauseScreen.classList.add('on');
+  }
+  function resumeGame(){
+    S.paused = false;
+    pauseScreen.classList.remove('on');
+    S.lastTick = performance.now();
+  }
+  document.getElementById('pause').addEventListener('click', function(){ haptic('btn'); pauseGame(true); });
+  document.getElementById('resumeBtn').addEventListener('click', function(){ haptic('btn'); resumeGame(); });
+
+  // booster bar — placeholders (real effects come later; each is a future data-driven power)
+  document.querySelectorAll('.booster').forEach(function(b){
+    b.addEventListener('click', function(){ haptic('btn'); /* TODO: hammer/shuffle/undo/free */ });
+  });
+
+  // host -> game
+  function handleHostMsg(payload){
+    var ev = payload && payload.event;
+    if (ev === 'GamePause') pauseGame(false);
+    else if (ev === 'GameResume') resumeGame();
+  }
+  window.OnMessageFromFlutter = function(payload){ handleHostMsg(payload); };
+  window.addEventListener('message', function(e){
+    var d = e.data;
+    if (d && typeof d === 'object' && d.event) handleHostMsg(d);
+  });
+
+  // dev nav
+  document.getElementById('devPrev').addEventListener('click', function(){
+    if (S.level>1){ S.level--; startLevelFn(S.level); }
+  });
+  document.getElementById('devNext').addEventListener('click', function(){
+    S.level++; startLevelFn(S.level);
+  });
+
+  // =============================================================
+  // GAMESTART (idempotent re-emit) + BOOT
+  // =============================================================
+  var gameStartSent = false;
+  function emitGameStart(){
+    GR.post('GameStart', null);
+    gameStartSent = true;
+  }
+  [0,300,800,1600,3000,5000].forEach(function(ms){
+    setTimeout(emitGameStart, ms);
+  });
+
+  // V12 — refold the niche 3D boxes on resize (per-cell px geometry tracks the
+  // responsive shelf) then re-fit goods (size + floor depth). Debounced.
+  var resizeT = null;
+  window.addEventListener('resize', function(){
+    if (resizeT) clearTimeout(resizeT);
+    resizeT = setTimeout(function(){ if (S.cfg){ buildNiches(); fitGoods(); } }, 120);
+  });
+
+  // boot — apply the resolved shelf config CSS vars BEFORE the first build so the
+  // niche corners/aspect/thickness are correct from frame 0, then build the level
+  // (buildBoard -> buildNiches/fitGoods read the SAME SHELF object).
+  applyShelfCssVars();
+  startLevelFn(startLevel);
+  requestAnimationFrame(function(t){ S.lastTick = t; requestAnimationFrame(tick); });
+
+  // =============================================================
+  // TEST HOOKS (for headless verify)
+  // =============================================================
+  // helper: the FRONT good DOM at a given slot column (null if empty)
+  function frontGoodDOM(cb, slot){
+    if (!cb || !cb.floor) return null;
+    var sEl = cb.floor.querySelector('.slot.s'+slot);
+    return sEl ? sEl.querySelector('.good') : null;
+  }
+  function backGoodDOM(cb, slot){
+    if (!cb || !cb.backEl) return null;
+    var sEl = cb.backEl.querySelector('.slot.s'+slot);
+    return sEl ? sEl.querySelector('.good') : null;
+  }
+  window.__qa = {
+    state: function(){ return {
+      level:S.level, timeLeft:S.timeLeft, stars:S.stars, combo:S.combo,
+      over:S.over, running:S.running, paused:S.paused, reels:REELS,
+      total: totalGoods()
+    }; },
+    // V4: expose full layer SLOT-stacks (front=layers[0]) + a convenience `front`
+    // (the raw 3-slot array, null=empty) + `frontPacked` (non-null types, legacy view).
+    board: function(){ return S.cubbies.map(function(cb){
+      var f = frontLayer(cb) || [];
+      return { r:cb.r, c:cb.c,
+        layers: (cb.layers||[]).map(function(l){ return l.slice(); }),
+        front: f.slice(),
+        frontPacked: f.filter(function(x){ return !!x; }),
+        layerCount: (cb.layers||[]).length };
+    }); },
+    // drive a move deterministically (returns true if a cubby cleared).
+    // optional fromSlot/toSlot to test positional placement.
+    move: function(fromIdx, toIdx, fromSlot, toSlot){ return doMove(fromIdx, toIdx, fromSlot, toSlot); },
+    SLOTS: SLOTS,
+    // map a pointer X to the slot column (0/1/2) within a cubby
+    slotFromX: function(cubbyIdx, clientX){
+      var cb = S.cubbies[cubbyIdx]; if (!cb || !cb.el) return -1;
+      return slotFromX(cb.el, clientX);
+    },
+    // the cubby's bounding rect (left/width) so tests can compute LEFT/RIGHT pointer X
+    cubbyRect: function(cubbyIdx){
+      var cb = S.cubbies[cubbyIdx]; if (!cb || !cb.el) return null;
+      var r = cb.el.getBoundingClientRect();
+      return { left:r.left, top:r.top, width:r.width, height:r.height,
+               leftX:r.left + r.width*1/6, centerX:r.left + r.width*0.5, rightX:r.left + r.width*5/6 };
+    },
+    // DROP+PLACE by pointer X (Fix #1 probe): grab fromIdx's good and drop it into
+    // toIdx at the slot nearest dropX; return the slot index it actually landed in.
+    dropAtX: function(fromIdx, toIdx, dropX){
+      var toCb = S.cubbies[toIdx]; if (!toCb || !toCb.el) return { landed:-1 };
+      var wantSlot = slotFromX(toCb.el, dropX);
+      var before = (frontLayer(toCb)||[]).slice();
+      var cleared = doMove(fromIdx, toIdx, undefined, wantSlot);
+      var after = (frontLayer(toCb)||[]).slice();
+      // find which slot newly got filled (or, after a clear, which it targeted)
+      var landed = wantSlot;
+      for (var i=0;i<SLOTS;i++){ if (!before[i] && after[i]){ landed=i; break; } }
+      return { wantSlot:wantSlot, landed:landed, cleared:cleared, before:before, after:after };
+    },
+    // --- rule probes (for headless verify) ---
+    // DROP RULE: can a FRONT-layer good from fromIdx drop into toIdx? (free slot, any type)
+    canDrop: function(fromIdx, toIdx){
+      var fr = S.cubbies[fromIdx], to = S.cubbies[toIdx];
+      if (!fr || !to) return false;
+      var ff = frontLayer(fr); if (!ff || firstFilledSlot(ff)<0) return false;
+      return canDrop(fr, to, ff[firstFilledSlot(ff)]);
+    },
+    // GRAB RULE: is the FRONT good in slot column `slot` grabbable? (every front good is)
+    canGrab: function(cubbyIdx, slot){
+      var cb = S.cubbies[cubbyIdx]; var g = frontGoodDOM(cb, slot);
+      if (!g) return false;
+      return isGrabbable(cb, g);
+    },
+    // GRAB RULE (back layer): is the peeking back good in slot column grabbable? (must be false)
+    canGrabBack: function(cubbyIdx, slot){
+      var cb = S.cubbies[cubbyIdx]; var g = backGoodDOM(cb, slot);
+      if (!g) return false;
+      return isGrabbable(cb, g);
+    },
+    // HIT-TEST (Fix #2 probe): given a pointer (clientX,clientY), which good is grabbed?
+    // Returns the resolved slot + the grabbed good's type/slot (the one actually under
+    // the pointer), proving a neighbor/below good is NOT stolen.
+    grabAt: function(clientX, clientY){
+      var hit = hitAt(clientX, clientY);
+      if (!hit) return { hit:false };
+      var g = hit.good;
+      return { hit:true, idx:hit.idx, slot:hit.slot,
+               goodType: g ? g.dataset.type : null,
+               goodSlot: g ? +g.dataset.slot : -1,
+               grabbable: g ? isGrabbable(hit.cb, g) : false };
+    },
+    // Drive startDrag against a back-layer good and report whether a drag began.
+    // V4 assert: a back good must REJECT startDrag (no drag avatar appears).
+    tryStartDragBack: function(cubbyIdx, slot){
+      var cb = S.cubbies[cubbyIdx]; var g = backGoodDOM(cb, slot);
+      if (!cb) return { started:false, reason:'no-cubby' };
+      if (!g) return { started:false, reason:'no-good' };
+      var rect = g.getBoundingClientRect();
+      startDrag(g, rect.left+rect.width/2, rect.top+rect.height/2);
+      var started = (ghostEl.style.display === 'block');
+      if (started){ endDrag(rect.left+rect.width/2, rect.top+rect.height/2); } // clean up if it (wrongly) started
+      return { started: started };
+    },
+    // Drive startDrag against a FRONT-layer good; report whether a drag began.
+    tryStartDragFront: function(cubbyIdx, slot){
+      var cb = S.cubbies[cubbyIdx]; var g = frontGoodDOM(cb, slot);
+      if (!cb || !cb.floor) return { started:false, reason:'no-floor' };
+      if (!g) return { started:false, reason:'no-good' };
+      var rect = g.getBoundingClientRect();
+      startDrag(g, rect.left+rect.width/2, rect.top+rect.height/2);
+      var started = (ghostEl.style.display === 'block');
+      if (started){ // cancel cleanly (don't actually move)
+        clearTargetHL(); ghostEl.style.display='none';
+        if (drag && drag.el) drag.el.classList.remove('dragging');
+        renderCubby(cb); drag=null;
+      }
+      return { started: started };
+    },
+    // how many layers does cubby have, filled counts, and DOM good counts.
+    layerInfo: function(cubbyIdx){
+      var cb = S.cubbies[cubbyIdx]; if (!cb) return null;
+      var f = frontLayer(cb)||[], b = backLayer(cb)||[];
+      return {
+        layerCount: (cb.layers||[]).length,
+        frontLen: filledCount(f),                       // NON-NULL front slots
+        backLen: backLayer(cb) ? filledCount(b) : 0,
+        peekDOM: cb.backEl ? cb.backEl.querySelectorAll('.good.peek').length : 0,
+        frontDOM: cb.floor ? cb.floor.querySelectorAll('.good').length : 0,
+        slots: cb.floor ? cb.floor.querySelectorAll('.slot').length : 0
+      };
+    },
+    // does the front good in slot column carry .blocked (locked cubby flag)? null if absent
+    isBlockedDOM: function(cubbyIdx, slot){
+      var cb = S.cubbies[cubbyIdx]; var g = frontGoodDOM(cb, slot);
+      return g ? g.classList.contains('blocked') : null;
+    },
+    // FIT-TO-SLOT NO-OVERLAP probe: for EVERY packed cubby, measure the screen-space
+    // x-extents (rect.left..rect.right) of the rendered FRONT-row goods (and separately the
+    // BACK-row peek goods), sorted left->right. Adjacent goods must NOT intersect: the gap
+    // between consecutive boxes (next.left - prev.right) must be >= 0 (no overlap; >0 = a
+    // real visible gap). Returns the per-cubby gaps + the global MIN gap for front & back.
+    goodGaps: function(){
+      var fronts = [], backs = [];   // arrays of {idx, gaps:[...], minGap, pads:[...]}
+      var globalFrontMin = Infinity, globalBackMin = Infinity;
+      var globalPadMax = 0;          // worst |leftPad - rightPad| over ALL goods (centering)
+      // collect each good's screen-space x-extents AND its UNIFORM CELL (slot column) extents,
+      // so we can verify both (a) no horizontal overlap between neighbours and (b) each good is
+      // CENTERED in its cell (left padding ≈ right padding -> thin goods sit centered with even
+      // empty padding on both sides, the user's uniform-cell look).
+      function extentsIn(container){
+        if (!container) return [];
+        var slots = container.querySelectorAll('.slot');
+        var arr = [];
+        for (var i=0;i<slots.length;i++){
+          var g = slots[i].querySelector('.good');
+          if (!g) continue;
+          var r  = g.getBoundingClientRect();
+          var sr = slots[i].getBoundingClientRect();         // the uniform CELL (slot column)
+          var leftPad  = r.left  - sr.left;                  // empty gap to the cell's left edge
+          var rightPad = sr.right - r.right;                 // empty gap to the cell's right edge
+          arr.push({ type: g.dataset.type, left: r.left, right: r.right, cx: r.left + r.width/2,
+                     cellLeft: sr.left, cellRight: sr.right, leftPad: leftPad, rightPad: rightPad,
+                     padDiff: Math.abs(leftPad - rightPad), cellW: sr.width, goodW: r.width });
+        }
+        arr.sort(function(a,b){ return a.cx - b.cx; });
+        return arr;
+      }
+      function gapsOf(arr){
+        var gaps = [];
+        for (var i=1;i<arr.length;i++){ gaps.push(arr[i].left - arr[i-1].right); }
+        return gaps;
+      }
+      for (var k=0;k<S.cubbies.length;k++){
+        var cb = S.cubbies[k];
+        var fe = extentsIn(cb.floor);
+        if (fe.length >= 2){
+          var fg = gapsOf(fe), fmin = Math.min.apply(null, fg);
+          var fpads = fe.map(function(x){ return x.padDiff; });
+          var fpmax = Math.max.apply(null, fpads);
+          fronts.push({ idx:k, types: fe.map(function(x){return x.type;}), gaps: fg, minGap: fmin,
+                        padDiffs: fpads, maxPadDiff: fpmax,
+                        cells: fe.map(function(x){ return {type:x.type, leftPad:+x.leftPad.toFixed(1), rightPad:+x.rightPad.toFixed(1), cellW:+x.cellW.toFixed(1), goodW:+x.goodW.toFixed(1)}; }) });
+          if (fmin < globalFrontMin) globalFrontMin = fmin;
+          if (fpmax > globalPadMax) globalPadMax = fpmax;
+        }
+        var be = extentsIn(cb.backEl);
+        if (be.length >= 2){
+          var bg = gapsOf(be), bmin = Math.min.apply(null, bg);
+          var bpads = be.map(function(x){ return x.padDiff; });
+          var bpmax = Math.max.apply(null, bpads);
+          backs.push({ idx:k, types: be.map(function(x){return x.type;}), gaps: bg, minGap: bmin,
+                       padDiffs: bpads, maxPadDiff: bpmax });
+          if (bmin < globalBackMin) globalBackMin = bmin;
+          if (bpmax > globalPadMax) globalPadMax = bpmax;
+        }
+      }
+      return {
+        frontMinGap: isFinite(globalFrontMin) ? globalFrontMin : null,
+        backMinGap:  isFinite(globalBackMin)  ? globalBackMin  : null,
+        maxPadDiff:  globalPadMax,            // worst |leftPad-rightPad| across all goods (centering)
+        frontCubbies: fronts.length, backCubbies: backs.length,
+        worstFront: fronts.slice().sort(function(a,b){ return a.minGap-b.minGap; })[0] || null,
+        worstBack:  backs.slice().sort(function(a,b){ return a.minGap-b.minGap; })[0] || null,
+        worstPad:   fronts.concat(backs).slice().sort(function(a,b){ return b.maxPadDiff-a.maxPadDiff; })[0] || null
+      };
+    },
+    // BASELINE (Fix #4 probe): for each filled front slot, the good sprite's rendered
+    // bottom Y (getBoundingClientRect().bottom). All filled slots in a cubby must share
+    // the same baseline within a few px regardless of type/scale.
+    baselines: function(cubbyIdx){
+      var cb = S.cubbies[cubbyIdx]; if (!cb || !cb.floor) return null;
+      var out = [];
+      for (var i=0;i<SLOTS;i++){
+        var g = frontGoodDOM(cb, i);
+        if (g){ var r = g.getBoundingClientRect(); out.push({ slot:i, type:g.dataset.type, bottom:r.bottom }); }
+      }
+      return out;
+    },
+    // SHADOW ALIGNMENT (Fix #3 probe): the good's center X vs its contact-shadow center X.
+    // The ::after is a child centered at left:50%/translateX(-50%); we report the good's
+    // own center X (the ::after shares it by construction) plus the slot center for cross-check.
+    shadowAlign: function(cubbyIdx, slot){
+      var cb = S.cubbies[cubbyIdx]; var g = frontGoodDOM(cb, slot);
+      if (!g) return null;
+      var gr = g.getBoundingClientRect();
+      var sEl = cb.floor.querySelector('.slot.s'+slot);
+      var sr = sEl ? sEl.getBoundingClientRect() : gr;
+      // ::after computed metrics (it's centered under the good by CSS: left:50% translateX(-50%))
+      var cs = getComputedStyle(g, '::after');
+      return {
+        goodCenterX: gr.left + gr.width/2,
+        slotCenterX: sr.left + sr.width/2,
+        goodBottom: gr.bottom,
+        shadowWidthPct: cs.getPropertyValue('width'),
+        shadowLeft: cs.getPropertyValue('left')      // should be 50%
+      };
+    },
+    // does a contact-shadow render under goods? (CSS ::after pseudo on .good)
+    hasContactShadow: function(cubbyIdx, slot){
+      var cb = S.cubbies[cubbyIdx]; var g = frontGoodDOM(cb, slot);
+      if (!g) return null;
+      var cs = getComputedStyle(g, '::after');
+      var content = cs.getPropertyValue('content');
+      var w = parseFloat(cs.getPropertyValue('width')) || 0;
+      var bg = cs.getPropertyValue('background-image') || cs.getPropertyValue('background');
+      var left = cs.getPropertyValue('left');
+      return { present: (content !== 'none' && content !== ''), width:w,
+               hasGradient: /gradient/.test(bg), centeredLeft: left };
+    },
+    // 3D shelf presence: CSS-3D folded-box niches + DOM goods on floors + back stages.
+    // V12 NICHE: the perspective lives PER-CUBBY (each clips its own interior) and the
+    // preserve-3d folded box lives in the INNER .niche-clip (NOT on #shelf — #shelf is
+    // flat). So read preserve3d from a .niche-clip + perspective from a .cubby.
+    shelf3d: function(){
+      var clip = document.querySelector('#grid .cubby .niche-clip');
+      var cub  = document.querySelector('#grid .cubby');
+      var clipSt = clip ? getComputedStyle(clip) : null;
+      var wd = getComputedStyle(document.documentElement).getPropertyValue('--wall-depth').trim();
+      return {
+        kind: 'css3d-niche',
+        threeCanvas: !!document.querySelector('#shelf canvas, #board-wrap canvas'),
+        // preserve-3d now lives on the INNER niche-clip (the folded-box layer).
+        preserve3d: clipSt ? (clipSt.transformStyle === 'preserve-3d') : false,
+        // perspective now lives PER-CUBBY (so each niche clips its own receding interior).
+        perspective: cub ? getComputedStyle(cub).perspective : 'none',
+        wallDepth: wd,
+        wallDepthPx: parseFloat(wd) || 0,
+        cubbies: document.querySelectorAll('#grid .cubby').length,
+        backWalls: document.querySelectorAll('#grid .cubby .c-back').length,
+        sideWalls: document.querySelectorAll('#grid .cubby .c-wall').length,        // 4/cubby (t/b/l/r)
+        floors: document.querySelectorAll('#grid .cubby .c-floor').length,
+        backLayers: document.querySelectorAll('#grid .cubby .c-back-layer').length,
+        goodsInFloors: document.querySelectorAll('#grid .cubby .c-floor .good').length,
+        peekGoods: document.querySelectorAll('#grid .cubby .c-back-layer .good.peek').length
+      };
+    },
+    // =====================================================================
+    // V12 — UNIFIED 3D WOOD NICHE probes (replaces the old flat-shelf wood probes).
+    //  Each cubby = a folded 3D wood box: 5+ faces (BACK + FLOOR + CEILING + L wall +
+    //  R wall) present and using wood/cream; FLOOR + CEILING visible (nonzero projected
+    //  height); SIDE walls visible (nonzero projected width); cubby aspect LANDSCAPE
+    //  (w/h > 1.25); goods stand ON the floor (good base ≈ floor line) with contact
+    //  shadow; FRONT row vs BACK row depth ordering (front goods closer = larger z).
+    // =====================================================================
+    shelfNiche: function(){
+      var cub = document.querySelector('#grid .cubby');
+      if (!cub) return null;
+      var cr = cub.getBoundingClientRect();
+      function styleImg(sel){ var e = cub.querySelector(sel); return e ? getComputedStyle(e).backgroundImage : ''; }
+      function projRect(sel){ var e = cub.querySelector(sel); if(!e) return {w:0,h:0,present:false};
+        var r = e.getBoundingClientRect(); return { w:r.width, h:r.height, present:true }; }
+      // the 5 box faces present + which asset/color each uses.
+      var back = cub.querySelector('.c-back');
+      var floor= cub.querySelector('.c-wall.b');
+      var ceil = cub.querySelector('.c-wall.t');
+      var left = cub.querySelector('.c-wall.l');
+      var right= cub.querySelector('.c-wall.r');
+      var rim  = cub.querySelector('.c-rim');
+      var backBg = back ? getComputedStyle(back).backgroundColor : null;
+      var bodyBg = getComputedStyle(document.body).backgroundColor;
+      // projected (rendered, post-3D-transform) sizes — folded faces foreshorten to a
+      // visible sliver: floor/ceiling get nonzero projected HEIGHT, side walls nonzero
+      // projected WIDTH. (A face that didn't fold/reveal would project to ~0.)
+      var fp = projRect('.c-wall.b'), cp = projRect('.c-wall.t');
+      var lp = projRect('.c-wall.l'), rp = projRect('.c-wall.r');
+      // wood asset usage per face
+      var usesBoard = function(s){ return /shelf_board\.png/.test(s); };
+      var usesPost  = function(s){ return /post\.png/.test(s); };
+      // GOOD ON FLOOR: a front good's base ≈ the cubby floor line (bottom). + contact shadow.
+      // Also: the good's TOP must leave a GAP below the cubby top so a strip of the CEILING
+      // wood shows ABOVE the good (V15 — goods don't crowd the ceiling). goodTopGap = px from
+      // the cubby top to the good top; goodFillPct = good height as % of the cubby interior.
+      var fg = cub.querySelector('.c-floor .good');
+      var goodBaseDelta = null, hasShadow = false, goodTopGap = null, goodFillPct = null, goodCellFillPct = null;
+      if (fg){
+        var gr = fg.getBoundingClientRect();
+        goodBaseDelta = Math.abs(gr.bottom - cr.bottom);       // good base vs cubby floor line
+        goodTopGap = gr.top - cr.top;                          // headroom above the good (ceiling strip)
+        goodFillPct = (gr.height / cr.height) * 100;           // how much of the cubby the good fills (HEIGHT)
+        // V16 FAT goods: a wide good is WIDTH-bound (shorter) and fills its uniform CELL by
+        // WIDTH. "filling the cubby" for fat goods = filling the cell width (cubbyW/3).
+        goodCellFillPct = (gr.width / (cr.width / 3)) * 100;
+        var cs2 = getComputedStyle(fg, '::after');
+        hasShadow = (cs2.getPropertyValue('content') !== 'none') &&
+                    /gradient/.test(cs2.getPropertyValue('background-image') || cs2.getPropertyValue('background') || '');
+      }
+      // FRONT vs BACK depth: read the translateZ (--gz) the engine sets. Front row should
+      // be CLOSER to camera (larger z, i.e. less negative) than the back/peek row.
+      function gzOf(sel){ var e = cub.querySelector(sel); if(!e) return null;
+        var v = e.style.getPropertyValue('--gz'); return v ? parseFloat(v) : null; }
+      var frontGz = gzOf('.c-floor .good');
+      var backGz  = gzOf('.c-back-layer .good');
+      return {
+        aspect: cr.width / cr.height,
+        cubbyW: cr.width, cubbyH: cr.height,
+        // 5+ faces present
+        facesPresent: !!(back && floor && ceil && left && right),
+        rimPresent: !!rim,
+        // faces use wood/cream
+        backIsCream: backBg === bodyBg,
+        floorUsesWood: usesBoard(styleImg('.c-wall.b')),
+        ceilUsesWood:  usesBoard(styleImg('.c-wall.t')),
+        leftUsesWood:  usesPost(styleImg('.c-wall.l')),
+        rightUsesWood: usesPost(styleImg('.c-wall.r')),
+        rimUsesWood:   usesBoard(styleImg('.c-rim')),
+        // floor + ceiling visible (nonzero projected height)
+        floorProjH: fp.h, ceilProjH: cp.h,
+        // side walls visible (nonzero projected width)
+        leftProjW: lp.w, rightProjW: rp.w,
+        // goods stand ON the floor + contact shadow
+        goodBaseDelta: goodBaseDelta, hasContactShadow: hasShadow,
+        // good leaves a ceiling strip above it (headroom) + how much of the cubby it fills
+        // (by HEIGHT for slim/tall goods; by CELL WIDTH for fat/wide goods)
+        goodTopGap: goodTopGap, goodFillPct: goodFillPct, goodCellFillPct: goodCellFillPct,
+        // front/back depth ordering
+        frontGz: frontGz, backGz: backGz,
+        depthOK: (frontGz != null && backGz != null) ? (frontGz > backGz) : null,
+        bodyBg: bodyBg, backBg: backBg
+      };
+    },
+    // =====================================================================
+    // V14 — FRONT-ROW BASE NOT OCCLUDED. The front-row good stands at the FRONT of the
+    // floor; the thin front rim sits BENEATH it (niche-clip z-index > rim z-index) so the
+    // good PAINTS OVER the rim and its full base is visible. Returns geometry for assert:
+    //  - rimTop / goodBottom: the rim's screen top must be at/below the good's base
+    //    contact line (rimTop >= goodBottom - tol, i.e. the rim does NOT rise above the
+    //    base) OR — when the band geometrically overlaps the base — the rim must be
+    //    LAYERED BELOW the good (rimZ < clipZ) so it cannot occlude (paintOrderOK).
+    //  - rimH: the rim band thickness (must be SLIM, not a tall wall).
+    //  - good is at the FRONT floor edge (frontGz ≈ 0, i.e. >= back row, and ~0 depth).
+    // The actual pixel test (good-base reads the good sprite, not wood) is done by the
+    // verifier via a screenshot sample at baseSample {x,y}.
+    // =====================================================================
+    baseOcclusion: function(cubIdx){
+      var sel = '#grid .cubby' + (cubIdx!=null ? '[data-idx="'+cubIdx+'"]' : '');
+      var cub = document.querySelector(sel);
+      if (!cub) return null;
+      var rim = cub.querySelector('.c-rim');
+      var clip = cub.querySelector('.niche-clip');
+      var good = cub.querySelector('.c-floor .good');
+      if (!rim || !good) return null;
+      var rr = rim.getBoundingClientRect();
+      var gr = good.getBoundingClientRect();
+      var rimZ  = parseInt(getComputedStyle(rim).zIndex)  || 0;
+      var clipZ = parseInt(getComputedStyle(clip).zIndex) || 0;
+      var frontGz = parseFloat(good.style.getPropertyValue('--gz'));
+      // paint order OK = the good's stage (niche-clip) is ABOVE the rim, so even if the
+      // thin rim band overlaps the base in screen space, the GOOD is drawn ON TOP of it.
+      var paintOrderOK = clipZ > rimZ;
+      // a sample point on the good's BASE contact row (just inside its base, where the
+      // wood rim would show if it occluded): good's horizontal center, 2px above its base.
+      var baseSample = { x: gr.left + gr.width*0.5, y: gr.bottom - 3 };
+      return {
+        rimTop: rr.top, rimBottom: rr.bottom, rimH: rr.height,
+        goodBottom: gr.bottom, goodTop: gr.top,
+        rimZ: rimZ, clipZ: clipZ, paintOrderOK: paintOrderOK,
+        frontGz: frontGz,
+        baseSample: baseSample,
+        goodLeft: gr.left, goodRight: gr.right, goodWidth: gr.width
+      };
+    },
+    // =====================================================================
+    // V5 — FRONT-ON probes (kept): no tilt + seamless cream wall.
+    //  (V5-1) board/shelf transform has NO rotateX/perspective tilt.
+    //  (V5-2) each cubby's open-back cream color == page/body bg color.
+    // =====================================================================
+    shelfV5: function(){
+      function hasRotation(matrix){
+        // a 2D/3D matrix with NO rotation: m11≈1,m12≈0,m21≈0,m22≈1 (and for 3D,
+        // the rotation submatrix is identity). 'none' = identity = no tilt.
+        if (!matrix || matrix === 'none') return false;
+        var m = matrix.match(/matrix3d?\(([^)]+)\)/);
+        if (!m) return false;
+        var p = m[1].split(',').map(parseFloat);
+        if (p.length === 6){
+          return Math.abs(p[1]) > 1e-3 || Math.abs(p[2]) > 1e-3;
+        }
+        if (p.length === 16){
+          return [1,2,4,6,8,9].some(function(i){ return Math.abs(p[i]) > 1e-3; });
+        }
+        return false;
+      }
+      var sh = document.getElementById('shelf');
+      var bw = document.getElementById('board-wrap');
+      var shTf = sh ? getComputedStyle(sh).transform : 'none';
+      var bwTf = bw ? getComputedStyle(bw).transform : 'none';
+      // page/body cream wall color (the seamless wall the shelf is mounted on)
+      var bodyBg = getComputedStyle(document.body).backgroundColor;
+      var bgEl = document.getElementById('bg');
+      var bgBg = bgEl ? getComputedStyle(bgEl).backgroundColor : null;
+      // per-cubby OPEN-BACK cream colors
+      var backs = Array.prototype.map.call(document.querySelectorAll('#grid .cubby .c-back'),
+        function(b){ return getComputedStyle(b).backgroundColor; });
+      return {
+        shelfTransform: shTf,
+        boardWrapTransform: bwTf,
+        shelfHasTilt: hasRotation(shTf),
+        boardWrapHasTilt: hasRotation(bwTf),
+        bodyBg: bodyBg, bgBg: bgBg,
+        backColors: backs,
+        backAllEqualBody: backs.length>0 && backs.every(function(c){ return c === bodyBg; })
+      };
+    },
+    // =====================================================================
+    // V6 — SEAM-FREE GENERATED WOOD probes.
+    //  (a) row floor boards: ONE shelf_board.png element per ROW, each
+    //      stretched (background-size 100% 100%, no-repeat) to ~full grid width.
+    //  (b) frame sides + interior dividers use post.png; frame rails use board.
+    //  (c) NO repeated/tiled wood backgrounds anywhere (all wood STRETCHES).
+    //  (d) page/body bg color == cubby back-wall (cream) color (seamless wall).
+    // =====================================================================
+    shelfWood: function(){
+      var sh = document.getElementById('shelf');
+      var shRect = sh ? sh.getBoundingClientRect() : { width:1, left:0, height:1 };
+      var cs = getComputedStyle(document.documentElement);
+      var postW = parseFloat(cs.getPropertyValue('--frame-post-w')) || 0;
+      var railH = parseFloat(cs.getPropertyValue('--frame-rail-h')) || 0;
+      var divW  = parseFloat(cs.getPropertyValue('--divider-w')) || 0;
+      var lap   = parseFloat(cs.getPropertyValue('--joint-lap')) || 0;
+      // expected continuous-board span = grid width = shelf width - 2*frame posts.
+      // V7: boards/dividers OVERLAP past the joint by `lap`, so spans are gridW+2*lap
+      // (boards) and gridH+2*lap (dividers). The grid HEIGHT (for full-height posts/divs).
+      var gridW = shRect.width - postW*2;
+      var gridH = shRect.height - railH*2;
+      function styleOf(el){ var s = getComputedStyle(el); return {
+        img: s.backgroundImage, repeat: s.backgroundRepeat, size: s.backgroundSize }; }
+      function usesBoard(s){ return /shelf_board\.png/.test(s.img); }
+      function usesPost(s){ return /post\.png/.test(s.img); }
+      function stretched(s){
+        // stretched = NOT tiled: background-repeat is no-repeat AND size is 100% 100%
+        // (cover/contain/auto or any 'repeat' would re-tile -> a seam).
+        return /no-repeat/.test(s.repeat) && /100%\s+100%/.test(s.size);
+      }
+      // ROW BOARDS (one per row) — w = rendered width (full grid width + overlap), h = thickness.
+      var boards = Array.prototype.map.call(document.querySelectorAll('#shelf .wood-layer .wood-board'),
+        function(el){ var r = el.getBoundingClientRect(); var s = styleOf(el);
+          return { w:r.width, h:r.height, board: usesBoard(s), stretched: stretched(s), repeat:s.repeat, size:s.size }; });
+      // FRAME rails (top/bottom, board) + posts (sides, post) — record thickness too.
+      var rails = Array.prototype.map.call(document.querySelectorAll('#shelf .wood-layer .frame-rail'),
+        function(el){ var r = el.getBoundingClientRect(); var s = styleOf(el);
+          return { h:r.height, board: usesBoard(s), stretched: stretched(s) }; });
+      var posts = Array.prototype.map.call(document.querySelectorAll('#shelf .wood-layer .frame-post'),
+        function(el){ var r = el.getBoundingClientRect(); var s = styleOf(el);
+          return { w:r.width, h:r.height, post: usesPost(s), stretched: stretched(s) }; });
+      // DIVIDERS (interior column boundaries, post) — record width + full-height span.
+      var divs = Array.prototype.map.call(document.querySelectorAll('#shelf .wood-layer .divider'),
+        function(el){ var r = el.getBoundingClientRect(); var s = styleOf(el);
+          return { w:r.width, h:r.height, post: usesPost(s), stretched: stretched(s) }; });
+      // collect EVERY wood element to assert none tiles
+      var allWood = Array.prototype.slice.call(document.querySelectorAll(
+        '#shelf .wood-layer .wood-board, #shelf .wood-layer .frame-rail, #shelf .wood-layer .frame-post, #shelf .wood-layer .divider'));
+      var anyTiled = allWood.some(function(el){
+        var s = getComputedStyle(el);
+        // tiled iff background-repeat is anything other than no-repeat (repeat / repeat-x / round / space)
+        return !/^no-repeat/.test(s.backgroundRepeat) || !/100%\s+100%/.test(s.backgroundSize);
+      });
+      var bodyBg = getComputedStyle(document.body).backgroundColor;
+      var firstBack = document.querySelector('#grid .cubby .c-back');
+      var backBg = firstBack ? getComputedStyle(firstBack).backgroundColor : null;
+      return {
+        rows: (S.cfg ? S.cfg.rows : 0),
+        cols: (S.cfg ? S.cfg.cols : 0),
+        gridW: gridW,
+        gridH: gridH,
+        lap: lap,
+        // declared chunky thickness vars (CSS) — proves the THICKENING is data-driven.
+        boardHvar: parseFloat(cs.getPropertyValue('--board-h')) || 0,
+        railHvar: railH, postWvar: postW, divWvar: divW,
+        boardCount: boards.length,
+        boards: boards,
+        boardsAllUseBoardImg: boards.length>0 && boards.every(function(b){ return b.board; }),
+        boardsAllStretched: boards.length>0 && boards.every(function(b){ return b.stretched; }),
+        // each board spans the FULL grid width (and a touch MORE due to the overlap lap):
+        // w >= gridW (covers edge-to-edge) and w <= gridW + 2*lap + slack.
+        boardsSpanFullWidth: boards.length>0 && boards.every(function(b){
+          return b.w >= gridW - 2 && b.w <= gridW + 2*lap + 4; }),
+        // rendered thicknesses (px) — for the THICK assert.
+        boardThick: boards.length>0 ? Math.min.apply(null, boards.map(function(b){ return b.h; })) : 0,
+        railCount: rails.length,
+        railsUseBoardImg: rails.length>0 && rails.every(function(r){ return r.board; }),
+        railsStretched: rails.length>0 && rails.every(function(r){ return r.stretched; }),
+        railThick: rails.length>0 ? Math.min.apply(null, rails.map(function(r){ return r.h; })) : 0,
+        postCount: posts.length,
+        postsUsePostImg: posts.length>0 && posts.every(function(p){ return p.post; }),
+        postsStretched: posts.length>0 && posts.every(function(p){ return p.stretched; }),
+        postThick: posts.length>0 ? Math.min.apply(null, posts.map(function(p){ return p.w; })) : 0,
+        // posts span the FULL shelf height (corner to corner).
+        postsFullHeight: posts.length>0 && posts.every(function(p){
+          return Math.abs(p.h - shRect.height) <= 2; }),
+        dividerCount: divs.length,
+        dividersUsePostImg: divs.length>0 && divs.every(function(d){ return d.post; }),
+        dividersStretched: divs.length===0 || divs.every(function(d){ return d.stretched; }),
+        divThick: divs.length>0 ? Math.min.apply(null, divs.map(function(d){ return d.w; })) : 0,
+        // dividers span the FULL grid height plus overlap into rails (full-height + lap).
+        dividersFullHeight: divs.length===0 || divs.every(function(d){
+          return d.h >= gridH - 2 && d.h <= gridH + 2*lap + 4; }),
+        anyTiled: anyTiled,
+        bodyBg: bodyBg,
+        backBg: backBg,
+        backEqualsBody: backBg === bodyBg
+      };
+    },
+    // =====================================================================
+    // V12 — NICHE WOOD-INTERIOR SAMPLE POINTS (pixel assert that the folded wood
+    // faces actually RENDER visible wood, not just exist in the DOM). Returns
+    // viewport (client) px coordinates inside an EMPTY niche (no goods to occlude
+    // the interior) AT the left wall, right wall, ceiling underside, and floor
+    // strips. The verifier screenshots a tiny region at each point and asserts the
+    // pixel is OPAQUE WOOD (not transparent, not the cream back wall) -> the wood
+    // interior is genuinely visible. Picks the EMPTY workspace cubby if present.
+    // =====================================================================
+    nicheSamples: function(){
+      // find an EMPTY cubby (its front layer all-null) so goods don't cover the walls.
+      var emptyIdx = -1;
+      for (var i=0;i<S.cubbies.length;i++){
+        var f = frontLayer(S.cubbies[i]);
+        if (f && f.every(function(x){ return !x; })){ emptyIdx = i; break; }
+      }
+      if (emptyIdx < 0) emptyIdx = 0;
+      var cb = S.cubbies[emptyIdx];
+      if (!cb || !cb.el) return { points: [], creamRGB: getComputedStyle(document.body).backgroundColor };
+      var r = cb.el.getBoundingClientRect();
+      var W = r.width, H = r.height;
+      var pts = [];
+      // LEFT/RIGHT inner walls — V13: with the UNIFORM (centered) eye the side walls fold
+      // to a SUBTLE sliver (~4px) whose OPAQUE wood is right AT the opening edge (z≈0) and
+      // thins toward the back wall. Sample HUGGING the opening edge (~2px in) so the strip
+      // lands on the wood sliver, not the cream back wall just inside it.
+      pts.push({ kind:'leftwall',  x: r.left + 2,     y: r.top + H*0.50 });
+      pts.push({ kind:'rightwall', x: r.right - 2,    y: r.top + H*0.50 });
+      // CEILING underside — RIGHT at the top opening edge (the dim wood ceiling
+      // foreshortens to a thin sliver there; sample the topmost band).
+      pts.push({ kind:'ceiling',   x: r.left + W*0.50, y: r.top + 1 });
+      // FLOOR — the look-down wood floor PLANE foreshortens to a band at the VERY bottom
+      // opening edge (V14: the front rim is now a THIN band BEHIND the goods, so the floor
+      // band is the bottommost wood strip — sample 2px above the bottom edge to land on the
+      // lit plank, not the thin rim front-face just below it).
+      pts.push({ kind:'floor',     x: r.left + W*0.50, y: r.bottom - 2 });
+      // FRONT RIM — the thin front-face plank band along the bottom (sits just below the
+      // floor surface; its front face is darker). Sample right at the bottom edge.
+      pts.push({ kind:'rim',       x: r.left + W*0.50, y: r.bottom - 1 });
+      var bb = getComputedStyle(document.body).backgroundColor;
+      return { points: pts, creamRGB: bb, emptyIdx: emptyIdx,
+               nicheRect: { left:r.left, top:r.top, width:W, height:H } };
+    },
+    stars: function(){ return S.stars; },
+    combo: function(){ return S.combo; },
+    timeLeft: function(){ return S.timeLeft; },
+    setTime: function(t){ S.timeLeft = t; updateTimer(); },
+    forceLose: function(){ S.timeLeft = 0; lose(); },
+    shouldEmitGameEnd: shouldEmitGameEnd,
+    safeTop: function(){ return getComputedStyle(document.documentElement).getPropertyValue('--safe-top').trim(); },
+    win: function(){ win(); },
+    // find a winning move sequence, then EXECUTE it on the live board (so effects +
+    // haptics still fire). Solving runs on a CLONED SLOT model via bounded DFS with
+    // memoization — mirrors V4 doMove/maybeReveal/clear (3-slot layers, null=empty).
+    autoSolve: function(maxSteps){
+      maxSteps = maxSteps || 600;
+      // ---- pure model over SLOT layer-stacks (each layer = [s0,s1,s2], null=empty) ----
+      function clone(){ return S.cubbies.map(function(cb){ return (cb.layers||[]).map(function(l){return l.slice();}); }); }
+      function mFront(st,i){ return st[i].length? st[i][0] : null; }      // the front layer (slot array) or null
+      function mFilled(l){ var n=0; for(var k=0;k<SLOTS;k++) if(l[k]) n++; return n; }
+      function mAllEmpty(l){ return mFilled(l)===0; }
+      function mFullSame(l){ if(mFilled(l)!==SLOTS) return false; for(var k=1;k<SLOTS;k++) if(l[k]!==l[0]) return false; return true; }
+      function mFirstFilled(l){ for(var k=0;k<SLOTS;k++) if(l[k]) return k; return -1; }
+      function mFirstEmpty(l){ for(var k=0;k<SLOTS;k++) if(!l[k]) return k; return -1; }
+      function mReveal(st,i){ while(st[i].length>1 && mAllEmpty(st[i][0])) st[i].shift(); }
+      function mTotal(st){ var n=0; for(var i=0;i<st.length;i++) for(var j=0;j<st[i].length;j++) n+=mFilled(st[i][j]); return n; }
+      function mMove(st,f,t){ // returns new cloned state or null if illegal
+        if(f===t) return null;
+        var ff=mFront(st,f), tf=mFront(st,t);
+        if(!ff) return null;
+        var sf=mFirstFilled(ff); if(sf<0) return null;
+        if(!tf) return null;
+        var se=mFirstEmpty(tf); if(se<0) return null;                    // target full
+        var ns = st.map(function(c){ return c.map(function(l){return l.slice();}); });
+        var nff=ns[f][0], ntf=ns[t][0];
+        var g = nff[sf]; nff[sf]=null; ntf[se]=g;
+        if(mFullSame(ntf)){ for(var k=0;k<SLOTS;k++) ntf[k]=null; }       // clear
+        mReveal(ns,f); mReveal(ns,t);
+        return ns;
+      }
+      function key(st){ return st.map(function(c){ return c.map(function(l){return l.map(function(x){return x||'_';}).join(',');}).join('|'); }).join(';'); }
+      // candidate moves from a state (ordered: completing > gathering > dumping)
+      function moves(st){
+        var n=st.length, out=[];
+        function pushIf(f,t,pri){ var ns=mMove(st,f,t); if(ns){ out.push({f:f,t:t,pri:pri,ns:ns}); } }
+        for(var f=0;f<n;f++){ var ff=mFront(st,f); if(!ff || mFirstFilled(ff)<0) continue;
+          var tp=ff[mFirstFilled(ff)];
+          for(var t=0;t<n;t++){ if(t===f) continue; var tf=mFront(st,t); if(!tf || mFirstEmpty(tf)<0) continue;
+            var fc=mFilled(tf), same=true;
+            for(var k=0;k<SLOTS;k++){ if(tf[k] && tf[k]!==tp){ same=false; break; } }
+            var pri;
+            if(fc===SLOTS-1 && same) pri=0;                              // completes (2 same + 1 empty, dropping tp)
+            else if(fc>0 && fc<SLOTS && same) pri=1;                     // gathers onto same-type
+            else if(fc===0) pri=2;                                       // dump to empty cubby
+            else continue;                                              // skip mixing onto mixed
+            pushIf(f,t,pri);
+          }
+        }
+        out.sort(function(a,b){ return a.pri-b.pri; });
+        return out;
+      }
+      // bounded DFS for a winning sequence
+      var seen = {};
+      var path = null;
+      var nodeBudget = 400000;   // V10 — larger search budget for the deeper 66-good packed board
+      function dfs(st, acc){
+        if(nodeBudget-- <= 0) return false;
+        if(mTotal(st)===0){ path = acc.slice(); return true; }
+        var k = key(st); if(seen[k]) return false; seen[k]=1;
+        if(acc.length>maxSteps) return false;
+        var ms = moves(st);
+        for(var i=0;i<ms.length;i++){
+          acc.push([ms[i].f, ms[i].t]);
+          if(dfs(ms[i].ns, acc)) return true;
+          acc.pop();
+        }
+        return false;
+      }
+      var solved = dfs(clone(), []);
+      var steps = 0;
+      if(solved && path){
+        // execute on the live board (no explicit slot -> first-filled source, nearest-empty target)
+        for(var s=0;s<path.length && totalGoods()>0;s++){ doMove(path[s][0], path[s][1]); steps++; }
+      }
+      return { steps:steps, remaining:totalGoods(), won:totalGoods()===0, solvedPlan: !!solved };
+    },
+    // =====================================================================
+    // SHELF CONFIG probes — prove the engine reads SHELF_DEFAULTS as the single
+    // source of truth, that cornerRadius=0 yields ANGULAR corners, and that an
+    // override (localStorage / applyConfig) changes the RENDERED vars.
+    // =====================================================================
+    shelfConfig: function(){
+      var cs = getComputedStyle(document.documentElement);
+      var frame = document.querySelector('#shelf .frame');
+      var cub   = document.querySelector('#grid .cubby');
+      var shelf = document.getElementById('shelf');
+      function pxv(n){ return parseFloat(cs.getPropertyValue(n)) || 0; }
+      return {
+        defaults: SHELF_DEFAULTS,                          // baked-inline defaults object
+        live: window.__shelfApi.get(),                     // resolved live config
+        // rendered CSS-var-driven values (what actually paints):
+        cornerRadiusVar: cs.getPropertyValue('--corner-radius').trim(),
+        frameRadius: frame ? getComputedStyle(frame).borderTopLeftRadius : null,
+        cubbyRadius: cub ? getComputedStyle(cub).borderTopLeftRadius : null,
+        nichePersp: cub ? getComputedStyle(cub).perspective : null,
+        rimHVar: pxv('--rim-h'),
+        cabPadVar: pxv('--cab-pad'),
+        nicheGapVar: pxv('--niche-gap'),
+        shelfAspect: shelf ? getComputedStyle(shelf).aspectRatio : null
+      };
+    },
+    // apply a partial config LIVE (same path the editor uses) and return the new
+    // rendered values so a test can prove the override changes what paints.
+    applyShelfConfig: function(partial){
+      window.__shelfApi.applyConfig(partial);
+      return window.__qa.shelfConfig();
+    }
+  };
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>선반 3D 에디터 / Goods Sort Shelf Editor</title>
+<style>
+  :root{
+    --bg:#1b2330; --panel:#222c3c; --panel2:#2b3650; --ink:#eef3fb; --muted:#9fb0c8;
+    --accent:#ffcf3f; --accent-d:#f1a91d; --green:#3fb24a; --green-d:#2e8a37;
+    --blue:#3f8ff0; --line:#37445a;
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; height:100%; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; }
+  /* layout: LEFT live preview | RIGHT control panel (L12 — editor on the SIDE, not over the game). */
+  #app{ display:flex; height:100vh; min-height:0; }
+  #previewWrap{ flex:1; min-width:0; display:flex; flex-direction:column; align-items:center;
+    justify-content:center; padding:18px; gap:10px; background:
+      radial-gradient(120% 120% at 50% 0%, #243043 0%, #161d28 100%); }
+  #previewWrap h1{ font-size:15px; font-weight:800; color:var(--muted); margin:0; letter-spacing:.2px; }
+  #previewWrap .hint{ font-size:12px; color:var(--muted); opacity:.8; margin:0; }
+  /* the live preview = the REAL engine (same niche renderer) in an iframe, framed like a phone. */
+  #frameBox{ position:relative; width:min(420px, 92%); aspect-ratio:430/932; max-height:78vh;
+    border-radius:22px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,.55), 0 0 0 6px #0c121b;
+    background:#f0e2c8; }
+  #preview{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+  #panel{ width:340px; flex:none; background:var(--panel); border-left:1px solid var(--line);
+    display:flex; flex-direction:column; min-height:0; }
+  #panel header{ padding:16px 18px 12px; border-bottom:1px solid var(--line); }
+  #panel header .t{ font-size:18px; font-weight:900; }
+  #panel header .s{ font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4; }
+  #controls{ flex:1; overflow-y:auto; padding:12px 16px 8px; }
+  .ctrl{ margin-bottom:14px; }
+  .ctrl .row{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:5px; }
+  .ctrl label{ font-size:13px; font-weight:700; }
+  .ctrl .en{ font-size:10px; color:var(--muted); font-weight:600; }
+  .ctrl .val{ font-size:12px; color:var(--accent); font-variant-numeric:tabular-nums;
+    background:#161d28; border:1px solid var(--line); border-radius:7px; padding:2px 8px; min-width:54px; text-align:right; }
+  .ctrl input[type=range]{ width:100%; height:26px; -webkit-appearance:none; appearance:none; background:transparent; }
+  .ctrl input[type=range]::-webkit-slider-runnable-track{ height:6px; border-radius:3px;
+    background:linear-gradient(90deg, var(--blue), #6fb0ff); }
+  .ctrl input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none;
+    width:20px; height:20px; margin-top:-7px; border-radius:50%; background:var(--accent);
+    border:3px solid #fff; box-shadow:0 2px 5px rgba(0,0,0,.5); cursor:pointer; }
+  #actions{ padding:12px 16px; border-top:1px solid var(--line); display:grid;
+    grid-template-columns:1fr 1fr; gap:8px; }
+  .btn{ padding:11px 8px; border-radius:11px; font-weight:800; font-size:13px; cursor:pointer;
+    border:0; color:#fff; text-align:center; }
+  .btn.save{ background:linear-gradient(var(--green),var(--green-d)); grid-column:1/3; }
+  .btn.reset{ background:#3a475c; }
+  .btn.copy{ background:linear-gradient(var(--blue),#2f6fcf); }
+  .btn.export{ background:linear-gradient(var(--accent),var(--accent-d)); color:#27210a; grid-column:1/3; }
+  .btn:active{ transform:translateY(2px); }
+  #jsonBox{ margin:0 16px 14px; }
+  #jsonBox .lab{ font-size:11px; color:var(--muted); margin-bottom:5px; font-weight:700; }
+  #json{ width:100%; height:118px; resize:vertical; background:#0e141d; color:#bfe; border:1px solid var(--line);
+    border-radius:9px; padding:9px 10px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:11px; line-height:1.45; }
+  #toast{ position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px);
+    background:#0c121b; color:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 18px;
+    font-size:13px; font-weight:700; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s; z-index:50; }
+  #toast.on{ opacity:1; transform:translateX(-50%) translateY(0); }
+  /* narrow screens: stack */
+  @media (max-width:760px){
+    #app{ flex-direction:column; height:auto; min-height:100vh; }
+    #panel{ width:100%; border-left:0; border-top:1px solid var(--line); }
+    #frameBox{ max-height:60vh; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="previewWrap">
+    <h1>실시간 미리보기 — 게임과 동일한 선반 렌더링</h1>
+    <div id="frameBox">
+      <!-- LIVE PREVIEW = the REAL engine (same buildNiches/fitGoods niche renderer).
+           Sliders call iframe.contentWindow.__shelfApi.applyConfig() so the preview
+           matches the game EXACTLY (no forked/divergent renderer). -->
+      <iframe id="preview" src="../engine/goods-sort.html" title="shelf preview"></iframe>
+    </div>
+    <p class="hint">슬라이더를 움직이면 위 화면이 바로 바뀌어요. "저장"하면 게임(같은 브라우저)에 적용됩니다.</p>
+  </div>
+
+  <div id="panel">
+    <header>
+      <div class="t">선반 3D 설정</div>
+      <div class="s">선반의 입체감·나무틀 모양을 슬라이더로 직접 조절하세요. 모서리는 기본 "각짐(0)" 입니다.</div>
+    </header>
+    <div id="controls"><!-- sliders injected by JS --></div>
+    <div id="jsonBox">
+      <div class="lab">현재 설정 (JSON)</div>
+      <textarea id="json" readonly spellcheck="false"></textarea>
+    </div>
+    <div id="actions">
+      <button class="btn save" id="btnSave">저장 (게임에 적용)</button>
+      <button class="btn reset" id="btnReset">기본값으로</button>
+      <button class="btn copy" id="btnCopy">설정 복사</button>
+      <button class="btn export" id="btnExport">Export (.json 저장)</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+/* =====================================================================
+   SHELF 3D EDITOR — drives the SAME niche renderer that ships in the game.
+   The live preview is the REAL engine in an iframe; sliders call its
+   window.__shelfApi.applyConfig() so the preview == the game exactly.
+   "저장" writes localStorage['gs_shelf_config'] -> the engine merges it over
+   SHELF_DEFAULTS on load -> the setting shows up in the game (same browser).
+   ===================================================================== */
+(function(){
+  'use strict';
+  var LS_KEY = 'gs_shelf_config';
+
+  // SLIDER SPECS — Korean labels + sensible min/max/step for every shelf param.
+  // (key, korean label, english hint, min, max, step, decimals)
+  var SPECS = [
+    { key:'cubbyAspect',       ko:'칸 비율 (가로/세로)', en:'cubby aspect',        min:0.70, max:1.30, step:0.01, dec:2 },
+    { key:'goodFillHeight',    ko:'굿즈 크기',           en:'good fill height',    min:0.55, max:1.00, step:0.01, dec:2 },
+    { key:'goodGap',           ko:'굿즈 간격',           en:'good gap',            min:0.00, max:0.14, step:0.005, dec:3 },
+    { key:'perspective',       ko:'퍼스펙티브 (입체감)', en:'perspective',         min:300,  max:1100, step:10,   dec:0 },
+    { key:'depth',             ko:'선반 깊이',           en:'depth',               min:0.40, max:0.95, step:0.01, dec:2 },
+    { key:'shelfAngle',        ko:'선반 각도',           en:'shelf angle',         min:74,   max:100,  step:1,    dec:0 },
+    { key:'eyeY',              ko:'시선 높이 (바닥/천장)', en:'eye Y',             min:0.20, max:0.70, step:0.01, dec:2 },
+    { key:'ceilingVisibility', ko:'윗면 보이기',         en:'ceiling visibility',  min:0.50, max:1.60, step:0.02, dec:2 },
+    { key:'sideReveal',        ko:'옆면 보이기',         en:'side reveal',         min:0.50, max:1.60, step:0.02, dec:2 },
+    { key:'postThickness',     ko:'기둥 두께',           en:'post thickness',      min:2,    max:24,   step:1,    dec:0 },
+    { key:'frameThickness',    ko:'프레임 두께',         en:'frame thickness',     min:4,    max:30,   step:1,    dec:0 },
+    { key:'rimH',              ko:'앞 턱 두께',          en:'front rim',           min:0,    max:20,   step:1,    dec:0 },
+    { key:'cornerRadius',      ko:'모서리 둥글기 (0=각짐)', en:'corner radius',    min:0,    max:30,   step:1,    dec:0 }
+  ];
+
+  var frame = document.getElementById('preview');
+  var controlsEl = document.getElementById('controls');
+  var jsonEl = document.getElementById('json');
+  var toastEl = document.getElementById('toast');
+
+  // DEFAULTS + current config. DEFAULTS come from the engine itself (single source
+  // of truth) once the iframe loads; until then use a local fallback copy.
+  var FALLBACK_DEFAULTS = {
+    perspective:560, eyeY:0.45, sideReveal:1.0, depth:0.68, shelfAngle:90,
+    postThickness:9, frameThickness:12, ceilingVisibility:1.0, cornerRadius:0,
+    goodFillHeight:0.88, cubbyAspect:0.95, rimH:7, goodGap:0.04
+  };
+  var DEFAULTS = Object.assign({}, FALLBACK_DEFAULTS);
+  var cfg = Object.assign({}, DEFAULTS);
+  var inputs = {};   // key -> {range, val}
+
+  function api(){
+    try{ return frame.contentWindow && frame.contentWindow.__shelfApi; }catch(e){ return null; }
+  }
+  function applyToPreview(){
+    var a = api();
+    if (a){ try{ a.applyConfig(cfg); }catch(e){} }
+  }
+  function fmt(v, dec){ return (dec>0) ? Number(v).toFixed(dec) : String(Math.round(v)); }
+  function updateJson(){
+    // stable key order = the canonical SHELF_DEFAULTS order for clean copy/commit.
+    var order = ['perspective','eyeY','sideReveal','depth','shelfAngle','postThickness',
+      'frameThickness','ceilingVisibility','cornerRadius','goodFillHeight','cubbyAspect','rimH','goodGap'];
+    var o = {};
+    order.forEach(function(k){ o[k] = cfg[k]; });
+    jsonEl.value = JSON.stringify(o, null, 2);
+  }
+  function syncInputs(){
+    SPECS.forEach(function(s){
+      var io = inputs[s.key]; if (!io) return;
+      io.range.value = cfg[s.key];
+      io.val.textContent = fmt(cfg[s.key], s.dec);
+    });
+    updateJson();
+  }
+  function buildControls(){
+    controlsEl.innerHTML = '';
+    SPECS.forEach(function(s){
+      var wrap = document.createElement('div'); wrap.className='ctrl';
+      var row = document.createElement('div'); row.className='row';
+      var lab = document.createElement('label'); lab.textContent = s.ko;
+      var en  = document.createElement('span'); en.className='en'; en.textContent = s.en;
+      var val = document.createElement('span'); val.className='val';
+      var head = document.createElement('div');
+      head.style.display='flex'; head.style.alignItems='baseline'; head.style.gap='7px';
+      head.appendChild(lab); head.appendChild(en);
+      row.appendChild(head); row.appendChild(val);
+      var range = document.createElement('input');
+      range.type='range'; range.min=s.min; range.max=s.max; range.step=s.step;
+      range.value = cfg[s.key];
+      range.addEventListener('input', function(){
+        var v = parseFloat(range.value);
+        cfg[s.key] = (s.dec>0) ? v : Math.round(v);
+        val.textContent = fmt(cfg[s.key], s.dec);
+        updateJson();
+        applyToPreview();
+      });
+      wrap.appendChild(row); wrap.appendChild(range);
+      controlsEl.appendChild(wrap);
+      inputs[s.key] = { range:range, val:val };
+      val.textContent = fmt(cfg[s.key], s.dec);
+    });
+  }
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.classList.add('on');
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ toastEl.classList.remove('on'); }, 1600);
+  }
+
+  // load any saved override so the editor opens showing the CURRENT game look.
+  function loadSaved(){
+    try{
+      var raw = localStorage.getItem(LS_KEY);
+      if (raw){ var s = JSON.parse(raw);
+        Object.keys(DEFAULTS).forEach(function(k){ if (s[k]!==undefined && s[k]!==null) cfg[k]=s[k]; }); }
+    }catch(e){}
+  }
+
+  // when the iframe (engine) is ready, pull its SHELF_DEFAULTS (single source of truth)
+  // so the editor's defaults/reset match the shipped engine exactly, then apply cfg.
+  function onPreviewReady(){
+    var a = api();
+    if (a && a.DEFAULTS){
+      DEFAULTS = Object.assign({}, a.DEFAULTS);
+      // re-seed any cfg key that wasn't overridden by a save so it tracks the engine default.
+      // (keep user-saved values; only fill keys equal to old fallback default.)
+    }
+    applyToPreview();
+    syncInputs();
+  }
+
+  // poll until the engine inside the iframe exposes __shelfApi (it sets __ready last).
+  frame.addEventListener('load', function(){
+    var tries = 0;
+    var iv = setInterval(function(){
+      tries++;
+      if (api() || tries>60){ clearInterval(iv); onPreviewReady(); }
+    }, 100);
+  });
+
+  document.getElementById('btnSave').addEventListener('click', function(){
+    try{ localStorage.setItem(LS_KEY, jsonEl.value); }catch(e){}
+    toast('저장됨 — 게임을 새로고침하면 적용돼요');
+  });
+  document.getElementById('btnReset').addEventListener('click', function(){
+    cfg = Object.assign({}, DEFAULTS);
+    syncInputs(); applyToPreview();
+    toast('기본값으로 되돌렸어요 (저장하려면 저장 버튼)');
+  });
+  document.getElementById('btnCopy').addEventListener('click', function(){
+    var txt = jsonEl.value;
+    function done(){ toast('설정 JSON을 복사했어요 — SHELF_DEFAULTS / shelf_config.json 에 붙여넣기'); }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, function(){ jsonEl.select(); document.execCommand('copy'); done(); });
+    } else { jsonEl.select(); document.execCommand('copy'); done(); }
+  });
+  // Export = DOWNLOAD the current config (exactly what the readout shows / "저장" persists)
+  // as a pretty-printed shelf_config.json file via Blob + object URL + temporary <a download>.
+  function exportConfig(){
+    var txt = jsonEl.value;  // same canonical, pretty-printed config object as the readout
+    var blob = new Blob([txt], { type:'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'shelf_config.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    return { blob:blob, text:txt };
+  }
+  document.getElementById('btnExport').addEventListener('click', function(){
+    exportConfig();
+    toast('shelf_config.json 으로 내려받았어요 — 그 파일을 보내주세요');
+  });
+
+  // init
+  loadSaved();
+  buildControls();
+  updateJson();
+
+  // expose for headless verification (editor screenshot/test harness)
+  window.__editor = {
+    cfg: function(){ return Object.assign({}, cfg); },
+    set: function(k,v){ if (inputs[k]){ inputs[k].range.value=v;
+      inputs[k].range.dispatchEvent(new Event('input')); } },
+    api: api, specs: SPECS,
+    exportConfig: exportConfig, json: function(){ return jsonEl.value; }
+  };
+  window.__editorReady = true;
+})();
+</script>
+</body>
+</html>

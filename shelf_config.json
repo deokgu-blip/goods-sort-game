@@ -1,0 +1,31 @@
+{
+  "perspective": 560,
+  "eyeY": 0.45,
+  "sideReveal": 1.0,
+  "depth": 0.68,
+  "shelfAngle": 90,
+  "postThickness": 9,
+  "frameThickness": 12,
+  "ceilingVisibility": 1.0,
+  "cornerRadius": 0,
+  "goodFillHeight": 0.88,
+  "cubbyAspect": 0.95,
+  "rimH": 7,
+  "goodGap": 0.04,
+  "_note": "Shelf 3D look config = single source of truth. Defaults are baked INLINE in engine/goods-sort.html as SHELF_DEFAULTS (the single self-contained HTML works offline without this file). The engine also merges an override from localStorage['gs_shelf_config'] (the editor's save) on top of the defaults. This JSON mirrors the current defaults for reference/commit. To change the game's default look: edit it live in editor/shelf3d.html, click '설정 복사', and paste the JSON into BOTH SHELF_DEFAULTS in the engine AND this file.",
+  "_units": {
+    "perspective": "px — per-niche perspective distance (작을수록 강한 원근/입체)",
+    "eyeY": "fraction of cubby height — perspective-origin Y (0.5=정중앙, <0.5=바닥 더 보임)",
+    "sideReveal": "multiplier on side-wall depth (옆면 보이기; 1.0=현재)",
+    "depth": "fraction of min(cubbyW,cubbyH) — box depth D (선반 깊이/길이)",
+    "shelfAngle": "degrees — floor/ceiling fold angle (선반각도; 90=직각 박스, 작을수록 윗/아랫면 더 보임)",
+    "postThickness": "px — divider/post gap width between cubbies (기둥 두께)",
+    "frameThickness": "px — outer cabinet wood frame thickness (프레임 두께)",
+    "ceilingVisibility": "multiplier on ceiling band depth (윗면; 1.0=현재)",
+    "cornerRadius": "px — frame & niche corner radius (0=각짐/ANGULAR)",
+    "goodFillHeight": "fraction of cubby interior — good height (굿즈 크기)",
+    "cubbyAspect": "shelf aspect-ratio is 1/cubbyAspect (cubby 가로:세로; <1=가로로 넓은 칸)",
+    "rimH": "px — front-rim band thickness (앞 턱 나무 두께)",
+    "goodGap": "fraction of cubby width — horizontal gap between adjacent goods (굿즈 간격). Each of the 3 front slots is a uniform cell (cubbyW/3); a good is scaled (real aspect preserved) to fit within cellW - goodGap*cubbyW and centered -> thin goods sit centered with side padding, NO overlap."
+  }
+}

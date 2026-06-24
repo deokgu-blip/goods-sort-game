@@ -358,8 +358,8 @@ function rgbDist(p, c){
     'backDim='+light.backDim.toFixed(2)+' backBrightness='+light.backBrightness+' frontBrightness='+light.frontBrightness);
   // V19/V22 — back row VERY dark (deep interior shadow): default backDim ≈ 0.37 (<= 0.45, the user-
   // tuned value). Depth-based, applied to the peek goods regardless of a front good.
-  assert('(N19a-BACK-VERY-DARK) backDim DEFAULT is VERY dark (V22 = 0.37, <= 0.45) + the peek good actually renders at it',
-    Math.abs(light.backDim - 0.37) < 0.001 && light.backDim <= 0.45 && Math.abs(light.backBrightness - 0.37) < 0.001,
+  assert('(N19a-BACK-VERY-DARK) backDim DEFAULT is VERY dark (user = 0.25, <= 0.45) + the peek good actually renders at it',
+    Math.abs(light.backDim - 0.25) < 0.001 && light.backDim <= 0.45 && Math.abs(light.backBrightness - 0.25) < 0.001,
     'backDim='+light.backDim+' backBrightness='+light.backBrightness);
   // V19 — SHALLOW TOP inner-shadow: a faint top band exists on the back wall and its opacity
   // is a SMALL fraction (subtle/shallow), tied to shadowStrength*topShadow.
@@ -924,8 +924,8 @@ function rgbDist(p, c){
   });
   assert('(V19-SAME-1) setup: cubby6 front has slot0+slot1 filled, slot2 empty',
     sc.before[0] && sc.before[1] && !sc.before[2], 'before='+JSON.stringify(sc.before));
-  assert('(V19-SAME-2) grab slot0 good + drop over the EMPTY slot2 RELOCATES it within the SAME cubby (slot0 now empty, slot2 now holds it)',
-    sc.reloc.landed===2 && !sc.after[0] && sc.after[2]===sc.before[0] && sc.after[2] && (sc.after[1]===sc.before[1]),
+  assert('(V19-SAME-2) grab slot0 + drop over the EMPTY slot2 in the SAME cubby = CANCEL: good returns to slot0 (no relocation)',
+    sc.reloc.landed===-1 && sc.after[0]===sc.before[0] && !sc.after[2] && (sc.after[1]===sc.before[1]),
     'landed='+sc.reloc.landed+' after='+JSON.stringify(sc.after)+' before='+JSON.stringify(sc.before));
 
   // HOME no-op: a good in a FULL front (its own slot is the only "free" cell) returns
@@ -964,8 +964,8 @@ function rgbDist(p, c){
     const res = qa.relocateViaDrag(6, 0, r6.rightX);    // drag slot0 good, drop over RIGHT column
     return { before, res };
   });
-  assert('(V19-SAME-4) FULL POINTER PATH (startDrag->endDrag) relocates within the SAME cubby (slot0 good lands in slot2 by drop X)',
-    drg.res.landed===2 && !drg.res.after[0] && drg.res.after[2]===drg.before[0],
+  assert('(V19-SAME-4) FULL POINTER PATH (startDrag->endDrag) same-cubby drop = CANCEL: good returns to its original slot0 (no relocation)',
+    drg.res.landed===-1 && drg.res.after[0]===drg.before[0] && !drg.res.after[1] && !drg.res.after[2],
     'landed='+drg.res.landed+' before='+JSON.stringify(drg.before)+' after='+JSON.stringify(drg.res.after));
   assert('(V19-SAME-err) zero pageerrors (same-cubby-move run)', pageErrors.length === 0, pageErrors.join(' | '));
   await page.close();
@@ -1333,7 +1333,7 @@ function rgbDist(p, c){
     wallFalloff:3, depth:0.4, floorDepth:1.5, frameCeilingDepth:0, shelfAngle:74, cameraAngle:0,
     cameraHeight:0.5, postThickness:7, frameThickness:7, ceilingVisibility:0, cornerRadius:4,
     goodFillHeight:0.87, cubbyAspect:0.86, rimH:0, goodGap:0, lightAngle:135, shadowStrength:0.45,
-    cubbyShadowStrength:0.23, goodShadowStrength:0.09, backDim:0.37, topShadow:0.6, gridColor:'#ffbb5c'
+    cubbyShadowStrength:0.23, goodShadowStrength:0.09, backDim:0.25, topShadow:0.6, gridColor:'#ffbb5c'
   };
   const ucMismatch = Object.keys(userCfg).filter(k =>
     (k === 'gridColor') ? String(sc.defaults[k]).toLowerCase() !== userCfg[k].toLowerCase()
@@ -1343,8 +1343,8 @@ function rgbDist(p, c){
   // V22 — frameTopDepth is a NEW default param (the OUTER cabinet top face), present + VISIBLE (>0) by default.
   assert('(S1-V22b) SHELF_DEFAULTS carries frameTopDepth (OUTER cabinet top face) and it is VISIBLE by default (>0)',
     typeof sc.defaults.frameTopDepth === 'number' && sc.defaults.frameTopDepth > 0, 'frameTopDepth='+sc.defaults.frameTopDepth);
-  assert('(S1d) SHELF_DEFAULTS backDim default = 0.37 (V22 — user-tuned) + topShadow default = 0.6',
-    sc.defaults.backDim === 0.37 && sc.defaults.topShadow === 0.6,
+  assert('(S1d) SHELF_DEFAULTS backDim default = 0.25 (user) + topShadow default = 0.6',
+    sc.defaults.backDim === 0.25 && sc.defaults.topShadow === 0.6,
     'backDim='+sc.defaults.backDim+' topShadow='+sc.defaults.topShadow);
   assert('(S1b) SHELF_DEFAULTS cornerRadius default = 4 (V22 — slightly rounded per user config)',
     sc.defaults.cornerRadius === 4, sc.defaults.cornerRadius);

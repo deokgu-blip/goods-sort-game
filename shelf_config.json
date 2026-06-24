@@ -24,7 +24,7 @@
   "shadowStrength": 0.45,
   "cubbyShadowStrength": 0.23,
   "goodShadowStrength": 0.09,
-  "backDim": 0.37,
+  "backDim": 0.25,
   "topShadow": 0.6,
   "gridColor": "#ffbb5c",
   "_note": "Shelf 3D look config = single source of truth. Defaults are baked INLINE in engine/goods-sort.html as SHELF_DEFAULTS (the single self-contained HTML works offline without this file). The engine also merges an override from localStorage['gs_shelf_config'] (the editor's save) on top of the defaults. This JSON mirrors the current defaults for reference/commit. V22: these are the USER-TUNED defaults (exported from the editor) — strong look-down (perspective 1400 / eyeY 0.18), tilted shelf (shelfAngle 74), deep floor (floorDepth 1.5), subtle independent walls, the warm #ffbb5c wood, plus the NEW frameTopDepth (the OUTER cabinet TOP face). To change the game's default look: edit it live in editor/shelf3d.html, click '설정 복사' (or Export .json), and paste the JSON into BOTH SHELF_DEFAULTS in the engine AND this file.",

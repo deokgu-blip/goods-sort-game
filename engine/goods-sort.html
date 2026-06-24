@@ -792,9 +792,13 @@
   .clear-show .cb-maxcombo .val{ font-weight:900; font-size:64px; line-height:1; color:#ffce3a;
     -webkit-text-stroke:4px #8a3d00; paint-order:stroke fill; text-shadow:0 4px 0 rgba(0,0,0,.25);
     font-variant-numeric:tabular-nums; animation:obPop .5s .1s both cubic-bezier(.34,1.56,.64,1); }
-  .clear-show .cb-next{ width:62%; max-width:230px; height:54px; background-image:url("../assets/ui/btn_continue.png"); }
-  .clear-show .cb-next .nextlbl{ position:absolute; font-weight:900; font-size:19px; color:#fff; letter-spacing:1px;
-    -webkit-text-stroke:2px #2a6a14; paint-order:stroke fill; text-shadow:0 2px 0 rgba(0,0,0,.2); }
+  .clear-show .cb-next{ width:62%; max-width:230px; height:54px; border-radius:27px; cursor:pointer; pointer-events:auto;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(#82dd5a,#4cae31); border:3px solid #fff;
+    box-shadow:0 5px 0 #387f23, 0 7px 8px rgba(0,0,0,.22); transition:transform .08s; }
+  .clear-show .cb-next:active{ transform:translateY(2px); }
+  .clear-show .cb-next .nextlbl{ position:relative; font-weight:800; font-size:21px; color:#fff; letter-spacing:1px;
+    text-shadow:0 2px 1px rgba(0,0,0,.28); }
 
   /* legacy .popup kept for the PAUSE screen only */
   .popup{ width:min(86vw,360px); background:linear-gradient(#fff8ea,#ffe9c0);
@@ -862,9 +866,12 @@
   @keyframes obPop{ 0%{transform:scale(.3) rotate(-12deg); opacity:0;} 100%{transform:scale(1);} }
   .card.onboard .ob-name{ font-weight:900; font-size:21px; color:#5a3a14; }
   .card.onboard .ob-desc{ font-size:14px; color:#7a5a32; text-align:center; line-height:1.35; }
-  .card.onboard .ob-ok{ margin-top:6px; width:62%; height:46px; background-image:url("../assets/ui/btn_continue.png");
-    font-weight:900; font-size:17px; color:#fff; letter-spacing:.5px;
-    -webkit-text-stroke:2px #2a6a14; paint-order:stroke fill; text-shadow:0 2px 0 rgba(0,0,0,.2); }
+  .card.onboard .ob-ok{ margin-top:8px; width:64%; height:48px; border-radius:24px; cursor:pointer; pointer-events:auto;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(#82dd5a,#4cae31); border:3px solid #fff;
+    box-shadow:0 4px 0 #387f23, 0 6px 7px rgba(0,0,0,.2);
+    font-weight:800; font-size:18px; color:#fff; letter-spacing:.5px; text-shadow:0 2px 1px rgba(0,0,0,.28); }
+  .card.onboard .ob-ok:active{ transform:translateY(2px); }
   /* time-freeze active — subtle icy tint on the timer */
   body.frozen #timer{ filter:hue-rotate(150deg) saturate(1.15) brightness(1.06); }
 
@@ -1146,7 +1153,7 @@
     shadowStrength: 0.45,       // LEGACY — kept; migrates to cubby/good shadow strengths (back-compat)
     cubbyShadowStrength: 0.23,  // V21 — frame/cubby interior shading opacity (was shadowStrength)
     goodShadowStrength: 0.09,   // V21 — goods' drop-shadow opacity (was shadowStrength)
-    backDim: 0.37,          // V19 — back-row (peek) goods darkness (deep interior shadow per reference)
+    backDim: 0.25,          // back-row (peek) goods darkness (user: 0.25)
     topShadow: 0.6,         // V19 — SHALLOW top inner-shadow band strength (frac of cubbyShadowStrength)
     gridColor: '#ffbb5c'    // V21 — SINGLE wood hue: every wood face derives its color from this base
   };
@@ -2120,29 +2127,10 @@
     if (sFrom < 0) return false;                        // nothing to move
     var type = ff[sFrom];
 
-    // SAME-CUBBY SLOT MOVE — drop back onto the SOURCE cubby relocates the grabbed
-    // good to the nearest EMPTY slot in that same front layer (by the drop's X via
-    // toSlot). Front-layer only; respects no-overlap (uniform cells) + counts. If the
-    // only empty slot is the one it came from (or no other empty), it's a NO-OP (home).
-    if (fromCb === toCb){
-      if (fromCb.lock > 0) return false;
-      var prefer0 = (toSlot===undefined || toSlot===null) ? -1 : toSlot;
-      // never relocate INTO the slot it already occupies — treat the source slot as taken.
-      var sTo0 = nearestEmptySlotExcept(ff, prefer0, sFrom);
-      if (sTo0 < 0 || sTo0 === sFrom) return false;     // only empty slot is home -> no-op
-      ff[sFrom] = null;                                  // vacate source
-      ff[sTo0] = type;                                   // occupy new slot in SAME cubby
-      renderCubby(fromCb);
-      if (fromCb.floor){
-        var lg0 = fromCb.floor.querySelector('.slot.s'+sTo0+' .good');
-        if (lg0){ lg0.classList.add('land');
-          lg0.addEventListener('animationend', function(){ lg0.classList.remove('land'); }, { once:true }); }
-      }
-      haptic('place');
-      // a same-cubby shuffle can complete a CLEAR (3 same) — keep counts/clear/reveal working.
-      if (allSameSlots(ff)){ clearCubby(fromCb); return true; }
-      return false;     // a non-clearing move does NOT reset the combo (it lives the 20s window)
-    }
+    // SAME-CUBBY drop = CANCEL the action (user): dropping the good back onto its OWN cubby
+    // does NOT relocate it — it returns to its ORIGINAL slot (endDrag re-renders the source,
+    // restoring the hidden good in place). No data change, no combo change.
+    if (fromCb === toCb) return false;
 
     if (!canDrop(fromCb, toCb, type)) return false;
 

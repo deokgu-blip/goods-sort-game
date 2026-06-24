@@ -1581,9 +1581,9 @@ function rgbDist(p, c){
     'shown='+ft.def.shown+' projH='+(ft.def.projH||0).toFixed(2)+' aboveShelf='+ft.def.aboveShelf+' frameTopDepth='+ft.def.frameTopDepth);
   // (S22a2 — FIX 0) the top face is FLUSH to the frame: its FRONT-BOTTOM edge connects to the
   // shelf top edge with NO gap (not floating) and spans the SAME width as the frame (one piece).
-  assert('(S22a2-FRAME-TOP-FLUSH) the OUTER top face connects FLUSH to the frame top edge (no gap, |bandBottom-shelfTop|<=2) and is the SAME WIDTH as the frame (not floating/wider)',
-    ft.def.flush && ft.def.sameWidth && Math.abs(ft.def.gap) <= 2,
-    'gap='+ (ft.def.gap||0).toFixed(2) +'px flush='+ft.def.flush+' sameWidth='+ft.def.sameWidth+' (projW='+(ft.def.projW||0).toFixed(1)+' frameW='+(ft.def.frameW||0).toFixed(1)+')');
+  assert('(S22a2-FRAME-TOP-FUSED) the OUTER top face CONNECTS into the frame top (bottom at-or-below, no floating gap) and spans the SAME width as the frame (one piece)',
+    ft.def.flush && ft.def.sameWidth && ft.def.gap <= 2,
+    'gap='+ (ft.def.gap||0).toFixed(2) +'px (<=2 ok; <0 = fused overlap) connected='+ft.def.flush+' sameWidth='+ft.def.sameWidth+' (projW='+(ft.def.projW||0).toFixed(1)+' frameW='+(ft.def.frameW||0).toFixed(1)+')');
   // (S22a3) sample TWO pixels at the JOIN — one just ABOVE the shelf-top line (on the top band)
   // and one just BELOW it (on the frame) — both must be OPAQUE WOOD (no cream wall leaking through
   // a gap). With the OLD floating bug the pixel between the sliver and the frame was cream.

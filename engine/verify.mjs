@@ -180,6 +180,8 @@ function rgbDist(p, c){
       comboLabel: txt('#combo .cg-label'),
       comboFlame: !!document.querySelector('#comboCount .fl'),
       comboCountTxt: txt('#comboCount .cc-x'),
+      lvW: Math.round(document.getElementById('lv').getBoundingClientRect().width),
+      comboW: Math.round(document.getElementById('comboCount').getBoundingClientRect().width),
       items,
       // hearts REMOVED; pause kept
       pausePresent: !!document.getElementById('pause'),
@@ -202,8 +204,9 @@ function rgbDist(p, c){
   assert('(HUD-4 ITEM bar) 4 items hammer/timefreeze/shuffle/addtime; hammer unlocked+Free, others LOCKED at Lv1',
     itemsOK && !hammer.locked && hammer.free && lockedRest,
     JSON.stringify(hud.items.map(b=>b.key+(b.locked?'(lock)':'')+(b.free?'(free)':''))));
-  assert('(HUD-5 hearts removed, pause kept) #lives is gone; pause still present',
-    hud.pausePresent && hud.livesGone, 'pause='+hud.pausePresent+' livesGone='+hud.livesGone);
+  assert('(HUD-5 hearts + pause removed; flame pill == Lv size) #lives & #pause gone; #comboCount width == #lv width (symmetric)',
+    hud.livesGone && !hud.pausePresent && Math.abs(hud.lvW - hud.comboW) <= 2,
+    'livesGone='+hud.livesGone+' pauseGone='+(!hud.pausePresent)+' lvW='+hud.lvW+' comboW='+hud.comboW);
 
   // ===== URGENT TIMER (<60s): swap to pill_timer_urgent.png (skull) + RED page bg.
   //       Reverts to normal when time goes back >=60 (e.g. after a continue). =====

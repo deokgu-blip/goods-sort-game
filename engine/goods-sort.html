@@ -186,8 +186,8 @@
   /* COMBO gauge — the TRACK is ALWAYS shown (user: 프로그래스 UI 위치는 항상 노출).
      The green fill + "COMBO xN" label appear only during an active combo. Overlaps the
      frame's bottom edge, centered under the timer. */
-  /* COMBO COUNT — engraved flame pill on the HUD right (🔥 xN), same 음각 look as #lv. */
-  #comboCount{ display:flex; align-items:center; gap:3px; height:38px; padding:0 11px;
+  /* COMBO COUNT — engraved flame pill on the HUD right (🔥 xN); SAME size as #lv (78x38). */
+  #comboCount{ width:78px; height:38px; box-sizing:border-box; display:flex; align-items:center; justify-content:center; gap:3px;
     border-radius:12px; background:linear-gradient(#6f3d2c,#5b3324);
     box-shadow: inset 0 3px 4px rgba(0,0,0,.55), inset 0 -2px 3px rgba(0,0,0,.28), 0 1px 0 rgba(255,224,188,.30);
     font-weight:800; color:#ffeede; font-size:16px; pointer-events:none; }
@@ -204,9 +204,10 @@
   .combo-gauge .cg-track{ position:absolute; left:7px; right:7px; top:4px; bottom:6px; border-radius:9px;
     background:#3a2010; overflow:hidden;                  /* DEBOSSED channel carved into the wood */
     box-shadow:inset 0 3px 5px rgba(0,0,0,.7), inset 0 -1px 0 rgba(255,205,155,.12); }
+  /* clean SINGLE-layer green fill — clipped by the track's rounded box (no double outline). */
   .combo-gauge .cg-fill{ position:absolute; left:0; top:0; bottom:0; width:0%;
-    background:url("../assets/ui/gauge_combo.png") left center/auto 100% no-repeat;
-    background-color:#5fd13a; opacity:0; transition:opacity .15s; }
+    background:linear-gradient(#83ea54,#4ec22e);
+    box-shadow:inset 0 2px 0 rgba(255,255,255,.35); opacity:0; transition:opacity .15s; }
   .combo-gauge .cg-label{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
     font-weight:900; font-size:13px; color:#fff; -webkit-text-stroke:1.5px rgba(35,80,18,.95);
     paint-order:stroke fill; text-shadow:0 1px 0 rgba(25,60,12,.5); letter-spacing:.3px;
@@ -693,7 +694,11 @@
   /* CONTINUE? sub-banner (txt_continue.png) */
   .go-continue{ width:74%; height:34px; background:url("../assets/ui/txt_continue.png") center/contain no-repeat; }
   /* the offered booster row: an icon + label/value (plus30 +30s  /  reshuffle x1) */
-  .go-offer{ display:flex; flex-direction:column; align-items:center; gap:2px; margin:2px 0; }
+  /* the continue EFFECT sits in its own inset TAN box (reference) */
+  .go-offer{ display:flex; flex-direction:column; align-items:center; gap:3px; margin:2px 0;
+    align-self:stretch; padding:12px 16px; border-radius:18px;
+    background:linear-gradient(#f1dba9,#e7c98a);
+    box-shadow:inset 0 2px 5px rgba(150,105,55,.4), inset 0 -1px 0 rgba(255,255,255,.4), 0 1px 0 rgba(255,255,255,.45); }
   .go-offer .oicon{ width:54px; height:54px; background:center/contain no-repeat; }
   .go-offer .oicon.plus30{ background-image:url("../assets/ui/icon_plus30.png"); }
   .go-offer .oicon.reshuffle{ background-image:url("../assets/ui/icon_reshuffle.png"); }
@@ -721,8 +726,8 @@
   .btn-row .ibtn.continue{ width:46%; height:50px; }
 
   /* ---- CLEAN game-over panel (panel_gameover_clean.png) + coin HUD + X + RETRY ---- */
-  .card.gameover.clean{ background-image:url("../assets/ui/panel_gameover_clean.png"); aspect-ratio:939/1362; }
-  .card.gameover.clean .card-body{ top:25%; bottom:8%; left:11%; right:11%; gap:0;
+  .card.gameover.clean{ background-image:url("../assets/ui/panel_gameover_clean.png"); aspect-ratio:915/916; }
+  .card.gameover.clean .card-body{ top:24%; bottom:7%; left:10%; right:10%; gap:0;
     display:flex; flex-direction:column; justify-content:space-between; }
   /* TITLE on the ribbon — rounded font, gold fill + dark outline (TIME UP! / NO SPACE!) */
   .card.gameover.clean .go-title{ position:absolute; top:1%; left:50%; transform:translateX(-50%); z-index:4;
@@ -864,9 +869,8 @@
         <div class="img-pill" id="timer"><span class="txt">02:00</span></div>
       </div>
       <div class="hud-right">
-        <!-- COMBO COUNT — engraved flame pill (🔥 xN), like the reference's score slot but flame -->
+        <!-- COMBO COUNT — engraved flame pill (🔥 xN); SAME size as #lv, mirror position (no pause) -->
         <div id="comboCount"><span class="fl">🔥</span><span class="cc-x">x<span id="comboNum">0</span></span></div>
-        <div class="hud-chip" id="pause">⏸</div>
       </div>
     </div>
     <!-- COMBO retention PROGRESS bar (depletes over 20s) — overlaps the frame's bottom edge -->
@@ -3046,7 +3050,7 @@
     pauseScreen.classList.remove('on');
     S.lastTick = performance.now();
   }
-  document.getElementById('pause').addEventListener('click', function(){ haptic('btn'); pauseGame(true); });
+  (function(){ var pb=document.getElementById('pause'); if(pb) pb.addEventListener('click', function(){ haptic('btn'); pauseGame(true); }); })();
   document.getElementById('resumeBtn').addEventListener('click', function(){ haptic('btn'); resumeGame(); });
 
   // =============================================================

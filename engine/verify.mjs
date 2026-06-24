@@ -188,8 +188,8 @@ function rgbDist(p, c){
   });
   assert('(HUD-1 level ENGRAVED) #lv shows "Lv. N" and is DEBOSSED into the frame (음각: inset shadow), not a raised image pill',
     /^Lv\./.test(hud.lvTxt||'') && hud.lvEngraved && hud.comboLobe, 'txt='+hud.lvTxt+' engraved='+hud.lvEngraved+' comboLobe='+hud.comboLobe);
-  assert('(HUD-2 timer AMBER pill IMG) #timer uses pill_timer_amber.png + "M:SS" overlay (default)',
-    hud.timerBg.includes('pill_timer_amber.png') && /^\d?\d:\d\d$/.test(hud.timerTxt||''), hud.timerBg+' | '+hud.timerTxt);
+  assert('(HUD-2 timer AMBER plate) #timer is the CSS amber rounded-rect (gradient, not the urgent image) + "M:SS" overlay',
+    hud.timerBg.includes('gradient') && !hud.timerBg.includes('pill_timer_urgent') && /^\d?\d:\d\d$/.test(hud.timerTxt||''), hud.timerBg.slice(0,40)+' | '+hud.timerTxt);
   assert('(HUD-3 combo GAUGE replaces star/combo pill) #combo is the gauge (track + "COMBO xN" label); star counter gone',
     hud.comboIsGauge && hud.comboTrack && /^COMBO x\d+$/.test(hud.comboLabel||'') && hud.starCounterGone,
     hud.comboIsGauge+' | track='+hud.comboTrack+' | '+hud.comboLabel+' | starGone='+hud.starCounterGone);
@@ -216,15 +216,15 @@ function rgbDist(p, c){
     window.__qa.setTime(120);           // restore
     return { before, during, after };
   });
-  assert('(URG-1 normal @>=60s) timer = pill_timer_amber.png, no red bg',
-    urg.before.bg.includes('pill_timer_amber.png') && !urg.before.bodyUrgent && !urg.before.urgentState,
-    JSON.stringify(urg.before));
+  assert('(URG-1 normal @>=60s) timer = amber CSS plate (gradient, not urgent image), no red bg',
+    urg.before.bg.includes('gradient') && !urg.before.bg.includes('pill_timer_urgent') && !urg.before.bodyUrgent && !urg.before.urgentState,
+    JSON.stringify(urg.before).slice(0,120));
   assert('(URG-2 urgent @<60s) timer swaps to pill_timer_urgent.png (skull) + RED bg (body.urgent + tint visible)',
     urg.during.bg.includes('pill_timer_urgent.png') && urg.during.bodyUrgent && urg.during.urgentState && parseFloat(urg.during.tint) > 0,
     JSON.stringify(urg.during));
-  assert('(URG-3 revert @>=60s) back to AMBER pill + no red bg when time goes back up',
-    urg.after.bg.includes('pill_timer_amber.png') && !urg.after.bodyUrgent && !urg.after.urgentState,
-    JSON.stringify(urg.after));
+  assert('(URG-3 revert @>=60s) back to amber CSS plate + no red bg when time goes back up',
+    urg.after.bg.includes('gradient') && !urg.after.bg.includes('pill_timer_urgent') && !urg.after.bodyUrgent && !urg.after.urgentState,
+    JSON.stringify(urg.after).slice(0,120));
 
   // ===== totalGoods counts ALL layers, NON-NULL slots (front 33 + back 33 = 66) =====
   const total0 = await page.evaluate(() => window.__qa.state().total);

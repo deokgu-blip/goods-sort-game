@@ -152,14 +152,19 @@
                 0 1px 0 rgba(255,224,188,.30); }
   #lv .txt{ font-size:16px; color:#ffeede; -webkit-text-stroke:0; text-shadow:0 1px 2px rgba(0,0,0,.6); }
 
-  /* Timer — AMBER pill (pill_timer_amber.png), centered + big. Urgent <60s -> skull/red. */
-  #timer{ width:152px; height:52px; background-image:url("../assets/ui/pill_timer_amber.png"); }
-  #timer .txt{ font-size:27px; color:#fff; -webkit-text-stroke:2px rgba(150,80,10,.75);
-    text-shadow:0 2px 0 rgba(120,60,5,.45); }
-  #timer.urgent{ background-image:url("../assets/ui/pill_timer_urgent.png");
-    animation:tpulse .8s ease-in-out infinite; }
-  #timer.urgent .txt{ color:#fff; -webkit-text-stroke:2px rgba(150,20,10,.8);
-    text-shadow:0 2px 0 rgba(120,10,5,.5); }
+  /* Timer — CSS amber rounded-RECT plate (reference): warm gold gradient + light cream rim
+     + white digits with a soft outline. Urgent <60s -> red SKULL image (alert state). */
+  #timer{ width:150px; height:52px; background:linear-gradient(#f6ca52,#e6952c);
+    border-radius:17px; border:3px solid #ffe6ac;
+    box-shadow:0 3px 4px rgba(90,50,10,.26), inset 0 2px 2px rgba(255,255,255,.5),
+               inset 0 -3px 5px rgba(168,94,16,.42); }
+  #timer .txt{ font-size:27px; color:#fff; letter-spacing:1px;
+    -webkit-text-stroke:2.5px #9a7c49; paint-order:stroke fill;
+    text-shadow:0 2px 1px rgba(110,70,20,.4); }
+  #timer.urgent{ background:url("../assets/ui/pill_timer_urgent.png") center/100% 100% no-repeat;
+    border:none; box-shadow:none; animation:tpulse .8s ease-in-out infinite; }
+  #timer.urgent .txt{ color:#fff; -webkit-text-stroke:2.5px #a32014;
+    text-shadow:0 2px 1px rgba(120,10,5,.5); }
   @keyframes tpulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.07);} }
 
   /* pause chip (kept) */
@@ -1269,7 +1274,7 @@
     1: {
       "level": 1, "timeLimit": 220, "cols": 3, "rows": 4, "cellCap": 3,
       "goods": ["broccoli","chips","cola","donut_pink","flower_vase","gelato_cup","grape_soda","hot_sauce","icebar_blue","lemon_soda","milkshake","orange_soda","popcorn_bag","rubber_duck","strawberry","yogurt"],
-      "combo": { "resetAfterMs": 4000 },
+      "combo": { "resetAfterMs": 20000 },
       "scoring": { "starsPerSort": 1, "comboBonus": 1 },
       // V17 — VARIED/COLORFUL 16-type packed board (see stages/stage1.json _note). 11 packed
       // cubbies (front-full + back depth) + 1 empty workspace (idx6,r2c0). MIXED multiplicity
@@ -2181,7 +2186,7 @@
     if (S.combo > S.maxCombo) S.maxCombo = S.combo;
     updateComboPill(true);
     if (S.comboTimer) clearTimeout(S.comboTimer);
-    var ms = (S.cfg.combo && S.cfg.combo.resetAfterMs) || 4000;
+    var ms = (S.cfg.combo && S.cfg.combo.resetAfterMs) || 20000;   // combo retention = 20s
     startComboGauge(ms);                                // green fill depletes over `ms`
     S.comboTimer = setTimeout(resetCombo, ms);
   }

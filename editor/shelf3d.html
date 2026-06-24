@@ -93,7 +93,7 @@
   <div id="panel">
     <header>
       <div class="t">선반 3D 설정</div>
-      <div class="s">선반의 입체감·나무틀·조명·색상을 섹션별 슬라이더로 직접 조절하세요. <b>📷카메라</b>(전체 기울기·높이), <b>🧱벽면</b>(바깥쪽/중앙쪽 옆면을 따로, 중앙으로 갈수록 사라지는 정도), <b>📐깊이</b>(바닥면·천장면 깊이), <b>💡라이트/그림자</b>, <b>🎨색상</b>(그리드 나무 색 컬러피커), <b>📦굿즈</b>, <b>🪵프레임</b>. 기본값은 현재 보이는 모습 그대로입니다.</div>
+      <div class="s">선반의 입체감·나무틀·조명·색상을 섹션별 슬라이더로 직접 조절하세요. <b>📷카메라</b>(전체 기울기·높이), <b>🧱벽면</b>(바깥쪽/중앙쪽 옆면을 따로, 중앙으로 갈수록 사라지는 정도), <b>📐깊이</b>(바닥면 깊이, 천장면 깊이/보이기=0이면 숨김), <b>💡라이트/그림자</b>(프레임/칸 그림자·굿즈 그림자 따로), <b>🎨색상</b>(그리드 나무 색 컬러피커 — 선반 전체가 같은 한 가지 나무색으로 칠해짐), <b>📦굿즈</b>, <b>🪵프레임</b>. 기본값은 현재 보이는 모습 그대로입니다.</div>
     </header>
     <div id="controls"><!-- sliders injected by JS --></div>
     <div id="jsonBox">
@@ -148,14 +148,16 @@
       { key:'shelfAngle',        ko:'선반 각도',           en:'shelf angle',         min:74,   max:100,  step:1,    dec:0 },
       // V20 — per-face depth multipliers (× base depth).
       { key:'floorDepth',        ko:'바닥면 깊이 (각 칸)',  en:'floor face depth',    min:0.20, max:1.50, step:0.05, dec:2 },
-      { key:'frameCeilingDepth', ko:'천장면 깊이 (프레임)', en:'ceiling face depth',  min:0.20, max:1.50, step:0.05, dec:2 },
-      // ceilingVisibility: 0 = 윗면 숨김(기본). 올리면 윗 벽면이 다시 보임.
-      { key:'ceilingVisibility', ko:'윗면 보이기 (0=숨김)', en:'ceiling vis (0=hide)', min:0.00, max:1.60, step:0.02, dec:2 }
+      // V21 — SINGLE intuitive ceiling control: 0 = hidden (default), >0 = SHOWS + deepens.
+      // (folds the old ceilingVisibility + frameCeilingDepth into one slider.)
+      { key:'frameCeilingDepth', ko:'천장면 깊이/보이기 (0=숨김)', en:'ceiling depth/show', min:0.00, max:1.50, step:0.05, dec:2 }
     ]},
     { title:'💡 라이트 / 그림자', items:[
       // V18 — DIRECTIONAL LIGHTING. 라이트 각도(315=왼쪽 위 빛 -> 오른쪽 아래 그림자).
       { key:'lightAngle',        ko:'라이트 각도',         en:'light angle',         min:0,    max:360,  step:5,    dec:0 },
-      { key:'shadowStrength',    ko:'그림자 진하기',       en:'shadow strength',     min:0.00, max:0.90, step:0.01, dec:2 },
+      // V21 — SPLIT shadow strength into two independent sliders.
+      { key:'cubbyShadowStrength', ko:'프레임/칸 그림자',  en:'frame/cubby shadow',  min:0.00, max:0.90, step:0.01, dec:2 },
+      { key:'goodShadowStrength',  ko:'굿즈 그림자',       en:'goods shadow',        min:0.00, max:0.90, step:0.01, dec:2 },
       { key:'backDim',           ko:'뒷줄 어둡기',         en:'back-row dim',        min:0.30, max:1.00, step:0.01, dec:2 },
       { key:'topShadow',         ko:'천장 그림자 (얕게)',  en:'top shadow',          min:0.00, max:1.00, step:0.05, dec:2 }
     ]},
@@ -190,10 +192,13 @@
     postThickness:9, frameThickness:12, ceilingVisibility:0, cornerRadius:0,
     goodFillHeight:0.88, cubbyAspect:0.95, rimH:7, goodGap:0.04,
     lightAngle:315, shadowStrength:0.45, backDim:0.4, topShadow:0.5,
+    // V21 — SPLIT shadow strength (frame/cubby vs goods).
+    cubbyShadowStrength:0.45, goodShadowStrength:0.45,
     // V20 — independent walls + falloff, grid color tint, global camera, per-face depths.
     wallOuterReveal:0.5, wallCenterReveal:0, wallFalloff:1.0,
     gridColor:'#caa06a', cameraAngle:0, cameraHeight:0.5,
-    floorDepth:1.0, frameCeilingDepth:1.0
+    // V21 — frameCeilingDepth default 0 = ceiling hidden (single ceiling control).
+    floorDepth:1.0, frameCeilingDepth:0
   };
   var DEFAULTS = Object.assign({}, FALLBACK_DEFAULTS);
   var cfg = Object.assign({}, DEFAULTS);
@@ -211,7 +216,8 @@
   var JSON_ORDER = ['perspective','eyeY','sideReveal','wallOuterReveal','wallCenterReveal','wallFalloff',
     'depth','floorDepth','frameCeilingDepth','shelfAngle','cameraAngle','cameraHeight',
     'postThickness','frameThickness','ceilingVisibility','cornerRadius','goodFillHeight','cubbyAspect',
-    'rimH','goodGap','lightAngle','shadowStrength','backDim','topShadow','gridColor'];
+    'rimH','goodGap','lightAngle','shadowStrength','cubbyShadowStrength','goodShadowStrength',
+    'backDim','topShadow','gridColor'];
   function updateJson(){
     var o = {};
     JSON_ORDER.forEach(function(k){ if (cfg[k] !== undefined) o[k] = cfg[k]; });

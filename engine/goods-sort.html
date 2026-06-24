@@ -34,6 +34,13 @@
        =========================================================== */
     --board-img: url("../assets/shelf_board.png");
     --post-img:  url("../assets/post.png");
+    /* V21 — UNIFIED WOOD COLOR: GRAYSCALE (luminance-only) grain maps. They carry ONLY the
+       wood grain detail (no baked brown), so the wood's COLOR comes ENTIRELY from --grid-color
+       (the gridColor picker). Each wood face = a SOLID --grid-color base × this near-white grain
+       map (multiply) so every face is the SAME hue, differing only by a per-face brightness().
+       The original colored boards stay as --board-img/--post-img for legacy/back-compat selectors. */
+    --board-grain: url("../assets/shelf_board_gray.png");
+    --post-grain:  url("../assets/post_gray.png");
     /* TOP-SURFACE fraction kept for legacy baseline math (slot bottom). */
     --board-top-frac: 0.60;
     /* NICHE box depth (px) into the screen — clear-but-subtle (not fisheye).
@@ -47,8 +54,13 @@
     --wood-tint: brightness(1.07) saturate(1.06) sepia(.05);
     /* V20 — GRID TINT: a MULTIPLY overlay color recomputed in JS from SHELF.gridColor,
        NORMALIZED against the default wood tone so the DEFAULT gridColor (#caa06a) yields
-       white (= no change, current look). Picking a different color shifts every wood face. */
+       white (= no change, current look). Kept for legacy selectors (frame/grid backgrounds). */
     --grid-tint: #ffffff;
+    /* V21 — GRID COLOR: the RAW gridColor (the picker value, NOT normalized). It is the SOLID
+       base color every wood face multiplies its grayscale grain map over, so the WHOLE shelf is
+       ONE uniform wood hue and moving the picker recolors all faces identically (frame rails/posts,
+       floor planks, dividers, side walls, front rim, ceiling) — they differ ONLY in brightness. */
+    --grid-color: #caa06a;
     /* CABINET frame thickness (the outer wood box the niches sit inside) +
        inter-niche gap (the wood lattice between cubbies). */
     --cab-pad: 12px;         /* outer cabinet wood border */
@@ -155,16 +167,20 @@
     filter: drop-shadow(0 18px 24px rgba(60,38,16,.42)); }
   /* #cabinet = the OUTER WOOD BOX the niches sit inside (wood border + wood lattice
      gap). It is the real wood frame; the niches open into it. */
-  /* V20 — --grid-tint is a MULTIPLY overlay color (from SHELF.gridColor) prepended to the
-     wood background so changing gridColor recolors ALL grid wood (frame + planks + dividers
-     + side walls) while keeping the grain (multiply preserves the texture). The wood asset
-     (shelf_board.png / post.png) stays in the layer list so the wood-asset asserts still match. */
+  /* V21 — UNIFIED WOOD: the frame is a SOLID --grid-color base × the GRAYSCALE board grain map
+     (multiply) so its hue comes ENTIRELY from gridColor (no baked brown). The colored --board-img
+     stays LAST in the layer list (fully covered by the opaque grain map above it) so the
+     wood-asset selectors/asserts (shelf_board.png present) still resolve. A plain brightness()
+     (no sepia/saturate, which would shift hue) gives this face its consistent lighting level. */
   #shelf .frame{ position:absolute; inset:0;
-    background-color: var(--wallpaper);              /* seamless cream wall (assert V5/V6) */
-    background-image: linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)), var(--board-img);
-    background-size: 100% 100%, 100% 100%; background-repeat:no-repeat;
-    background-blend-mode: multiply, normal;
-    filter: var(--wood-tint);
+    background-color: var(--grid-color, #caa06a);    /* solid wood hue base (the picker value) */
+    background-image:
+      var(--board-grain),                            /* grayscale grain map (multiply over the hue) */
+      linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
+      var(--board-img);                              /* legacy colored asset kept for selectors */
+    background-size: 100% 100%, 100% 100%, 100% 100%; background-repeat:no-repeat;
+    background-blend-mode: multiply, normal, normal;
+    filter: brightness(1.04);
     border-radius: var(--corner-radius, 0px);
     padding: var(--cab-pad);
     box-shadow: inset 0 2px 0 rgba(255,255,255,.22), inset 0 -3px 8px rgba(40,24,8,.4); }
@@ -173,10 +189,14 @@
   #shelf .grid{ position:absolute;
     inset: var(--cab-pad);
     display:grid; gap: var(--niche-gap);
-    background-image: linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)), var(--board-img);
-    background-size: 100% 100%, 100% 100%; background-repeat:no-repeat;
-    background-blend-mode: multiply, normal;
-    filter: var(--wood-tint);
+    background-color: var(--grid-color, #caa06a);
+    background-image:
+      var(--board-grain),
+      linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
+      var(--board-img);
+    background-size: 100% 100%, 100% 100%, 100% 100%; background-repeat:no-repeat;
+    background-blend-mode: multiply, normal, normal;
+    filter: brightness(1.04);
     border-radius: var(--corner-radius, 0px); z-index:1; }
   /* legacy wood-layer container kept (empty) so old selectors resolve harmlessly. */
   #shelf .wood-layer{ position:absolute; inset:0; z-index:0; pointer-events:none; display:none; }
@@ -245,48 +265,70 @@
      light (upper-front-left): FLOOR lightest, CEILING darkest, LEFT lit, RIGHT shaded. */
   .cubby .c-wall{ pointer-events:none; z-index:1;
     background-repeat:no-repeat; background-size:100% 100%; }
-  /* FLOOR (.b) — lit top of the wood plank, hinged front-bottom, folds back flat. */
+  /* V21 — EVERY wood face = SOLID --grid-color base × GRAYSCALE grain map (multiply). The hue
+     is IDENTICAL on every face (it IS gridColor); faces differ ONLY by a per-face brightness()
+     (NO sepia/saturate — those would shift the hue). A neutral (hue-free) lit/shade gradient on
+     top of the floor/ceiling adds the plank-surface read without tinting. The colored --board-img/
+     --post-img stay LAST (covered) so the wood-asset selectors still resolve. */
+  /* FLOOR (.b) — lit top of the wood plank (LIGHTEST face). */
   .cubby .c-wall.b{
+    background-color: var(--grid-color, #caa06a);
     background-image:
-      linear-gradient(to top, rgba(255,244,222,.16) 0%, rgba(255,244,222,0) 32%, rgba(120,84,46,.12) 100%),
-      linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)),
+      linear-gradient(to top, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 32%, rgba(0,0,0,.10) 100%),
+      var(--board-grain),
+      linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
       var(--board-img);
-    background-size: 100% 100%, 100% 100%, 100% 150%;
-    background-position: 0 100%, 0 0, 0 100%;
-    background-blend-mode: normal, multiply, normal;
-    filter: brightness(1.40) saturate(1.05) sepia(.07); }
-  /* CEILING (.t) — underside of the shelf above. It faces DOWN so it's dimmer than the lit
-     floor, but V15 brightens it (.66 -> .82) + softens the dark overlay so it reads as a
-     CLEAR wood plank SURFACE (not a dark hairline). Still a step darker than the floor
-     (floor brightness 1.40) so the box still reads as lit-from-above. */
+    background-size: 100% 100%, 100% 150%, 100% 100%, 100% 150%;
+    background-position: 0 100%, 0 100%, 0 0, 0 100%;
+    background-repeat:no-repeat;
+    background-blend-mode: normal, multiply, normal, normal;
+    filter: brightness(1.34); }
+  /* CEILING (.t) — underside of the shelf above. Faces DOWN so a step DARKER than the lit floor
+     (lit-from-above read) but still a clear wood SURFACE (V15). Same hue as every face. */
   .cubby .c-wall.t{
+    background-color: var(--grid-color, #caa06a);
     background-image:
-      linear-gradient(to bottom, rgba(28,16,5,.20) 0%, rgba(28,16,5,.07) 45%, rgba(28,16,5,0) 100%),
-      linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)),
+      linear-gradient(to bottom, rgba(0,0,0,.18) 0%, rgba(0,0,0,.06) 45%, rgba(0,0,0,0) 100%),
+      var(--board-grain),
+      linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
       var(--board-img);
-    background-size: 100% 100%, 100% 100%, 100% 150%;
-    background-position: 0 0, 0 0, 0 0;
-    background-blend-mode: normal, multiply, normal;
-    filter: brightness(.82) saturate(1.0) sepia(.06); }
-  /* LEFT side wall (.l) — vertical-grain post, lit (light from front-left). */
+    background-size: 100% 100%, 100% 150%, 100% 100%, 100% 150%;
+    background-position: 0 0, 0 0, 0 0, 0 0;
+    background-repeat:no-repeat;
+    background-blend-mode: normal, multiply, normal, normal;
+    filter: brightness(.86); }
+  /* LEFT side wall (.l) — vertical-grain post, LIT (light from front-left). */
   .cubby .c-wall.l{
-    background-image: linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)), var(--post-img);
-    background-size: 100% 100%, 100% 100%; background-blend-mode: multiply, normal;
-    filter: brightness(1.05) saturate(1.04); }
-  /* RIGHT side wall (.r) — vertical-grain post, shaded (darker). */
+    background-color: var(--grid-color, #caa06a);
+    background-image:
+      var(--post-grain),
+      linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
+      var(--post-img);
+    background-size: 100% 100%, 100% 100%, 100% 100%; background-repeat:no-repeat;
+    background-blend-mode: multiply, normal, normal;
+    filter: brightness(1.06); }
+  /* RIGHT side wall (.r) — vertical-grain post, SHADED (darker). Same hue, lower brightness. */
   .cubby .c-wall.r{
-    background-image: linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)), var(--post-img);
-    background-size: 100% 100%, 100% 100%; background-blend-mode: multiply, normal;
-    filter: brightness(.80) saturate(1.04); }
+    background-color: var(--grid-color, #caa06a);
+    background-image:
+      var(--post-grain),
+      linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
+      var(--post-img);
+    background-size: 100% 100%, 100% 100%, 100% 100%; background-repeat:no-repeat;
+    background-blend-mode: multiply, normal, normal;
+    filter: brightness(.82); }
   /* FRONT RIM — the THIN front FACE of the shelf board, a wood band BELOW the standing
      surface along the front-bottom edge. z-index BELOW the niche-clip (V14) so it sits
-     BENEATH the goods (the goods paint over it) — it must never rise in front to cover a
-     base. It reads as the front lip wood between/beside the goods' feet. */
+     BENEATH the goods (the goods paint over it). Same hue, a touch darker than the floor. */
   .cubby .c-rim{ position:absolute; left:0; z-index:2; pointer-events:none;
-    background-image: linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)), var(--board-img);
-    background-size:100% 100%, 100% 340%; background-position:0 0, 0 100%; background-repeat:no-repeat;
-    background-blend-mode: multiply, normal;
-    filter: brightness(.9) saturate(1.06);
+    background-color: var(--grid-color, #caa06a);
+    background-image:
+      var(--board-grain),
+      linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
+      var(--board-img);
+    background-size:100% 340%, 100% 100%, 100% 340%; background-position:0 100%, 0 0, 0 100%; background-repeat:no-repeat;
+    background-blend-mode: multiply, normal, normal;
+    filter: brightness(.92);
     box-shadow:0 2px 5px rgba(40,24,8,.55); }
 
   /* target highlights (drop feedback) — on the cubby opening. */
@@ -628,8 +670,8 @@
   //   shelfAngle        (deg)  : floor/ceiling plane fold angle (90 = upright box)
   //   postThickness     (px)   : divider/post width between cubbies (the lattice gap)
   //   frameThickness    (px)   : outer cabinet wood frame thickness
-  //   ceilingVisibility (mult) : ceiling band size/visibility. DEFAULT 0 = ceiling HIDDEN
-  //                              (only the floor shows). Editor may raise it > 0 to show it.
+  //   ceilingVisibility (mult) : LEGACY — kept for back-compat only (V21 folds it into
+  //                              frameCeilingDepth, the single ceiling control). Not used directly.
   //   cornerRadius      (px)   : 0 = ANGULAR (sharp/squared) frame & niche corners
   //   goodFillHeight    (frac) : good height as a fraction of the cubby interior
   //   cubbyAspect       (frac) : shelf aspect-ratio 1/cubbyAspect -> cubby w:h ratio
@@ -646,8 +688,13 @@
   //                              shadow falls toward the BOTTOM-RIGHT (dx>0, dy>0). All shadow
   //                              offsets (each good's drop-shadow, each cubby's inner shading)
   //                              derive from this angle so the whole lighting is adjustable.
-  //   shadowStrength    (0..1) : opacity of the directional shadows (good drop-shadow + cubby
-  //                              inner shading). Higher = darker/heavier shadows.
+  //   shadowStrength    (0..1) : LEGACY — the OLD single shadow param. V21 SPLITS it into
+  //                              cubbyShadowStrength + goodShadowStrength; a legacy shadowStrength
+  //                              migrates to BOTH. Kept so old configs still work.
+  //   cubbyShadowStrength(0..1) : V21 — FRAME/CUBBY interior shading opacity (.c-back inner shading
+  //                              + the shallow top band). Higher = darker cubby interiors.
+  //   goodShadowStrength (0..1) : V21 — the GOODS' drop-shadow/contact opacity. Higher = heavier
+  //                              shadows under the goods. Independent of the cubby shading.
   //   backDim           (frac) : brightness multiplier for the BACK-row (peeking) goods — they
   //                              sit in shadow behind the front row. DEFAULT 0.5 = ~half
   //                              brightness (darker + slightly desaturated, like the reference).
@@ -663,9 +710,12 @@
   //   wallFalloff       (exp)  : V20 — exponent on the per-cubby center-distance factor:
   //                              factor = distFrac ^ wallFalloff (distFrac = |cubbyCx−boardCx| /
   //                              (gridW/2)). Higher = walls vanish FASTER toward center.
-  //   gridColor         (hex)  : V20 — a tint color multiplied over the wood (frame + planks +
-  //                              dividers + side walls). Default = the current warm wood tone
-  //                              (recolors all grid wood while keeping the grain).
+  //   gridColor         (hex)  : V21 — the SINGLE wood hue. Every wood face (frame rails/posts,
+  //                              floor planks, dividers, side walls, front rim, ceiling) is this
+  //                              SOLID color × a GRAYSCALE grain map, so the whole shelf is ONE
+  //                              uniform tone and the picker recolors all faces identically (they
+  //                              differ only in a consistent per-face brightness). Default = the
+  //                              current warm wood tone (#caa06a) so the default look is preserved.
   //   cameraAngle       (deg)  : V20 — GLOBAL board tilt (board-level rotateX on #shelf). Default
   //                              0 = upright (the user disliked a strong backward lean). Distinct
   //                              from the per-cubby eyeY.
@@ -673,8 +723,10 @@
   //                              (board-level perspective-origin Y). 0.5 = centered.
   //   floorDepth        (mult) : V20 — depth multiplier on EACH cubby's FLOOR face ("각 그리드의
   //                              바닥면 깊이"). Multiplies the base box depth (depth).
-  //   frameCeilingDepth (mult) : V20 — depth multiplier on the FRAME/top CEILING face ("프레임의
-  //                              천장면 깊이"). Multiplies the base box depth for the ceiling band.
+  //   frameCeilingDepth (mult) : V21 — the SINGLE ceiling control ("천장면 깊이/보이기"). 0 = ceiling
+  //                              HIDDEN (default, current look); > 0 = ceiling SHOWS + deepens
+  //                              (ceiling band depth = base box depth × frameCeilingDepth). No longer
+  //                              gated by ceilingVisibility (that made the depth slider a no-op).
   var SHELF_DEFAULTS = {
     perspective: 560,
     eyeY: 0.20,             // V17 — eye HIGH above center -> look DOWN, floor surface shows
@@ -684,23 +736,30 @@
     wallFalloff: 1.0,       // V20 — exponent on center-distance falloff (1 = linear, current)
     depth: 0.68,
     floorDepth: 1.0,        // V20 — multiplier on the FLOOR face depth (×base depth)
-    frameCeilingDepth: 1.0, // V20 — multiplier on the top/ceiling (frame) face depth (×base depth)
+    // V21 — FRAME CEILING DEPTH is now the SINGLE intuitive ceiling control: 0 = ceiling HIDDEN
+    // (default, current look), > 0 = ceiling SHOWS + deepens (depth = base D × frameCeilingDepth).
+    // No longer multiplied by ceilingVisibility (that hard dependency made the slider do nothing).
+    frameCeilingDepth: 0,   // V21 — 0 = ceiling hidden (default); raise to SHOW + deepen the ceiling
     shelfAngle: 90,
     cameraAngle: 0,         // V20 — global board tilt (rotateX on #shelf); 0 = upright
     cameraHeight: 0.5,      // V20 — global board camera height (board perspective-origin Y); 0.5 = center
     postThickness: 9,
     frameThickness: 12,
-    ceilingVisibility: 0,   // V17 — ceiling HIDDEN by default (only the floor shows)
+    ceilingVisibility: 0,   // LEGACY (V17) — kept for back-compat; folded into frameCeilingDepth (V21)
     cornerRadius: 0,
     goodFillHeight: 0.88,
     cubbyAspect: 0.95,
     rimH: 7,
     goodGap: 0.04,
     lightAngle: 315,        // V18 — light from TOP-LEFT -> shadows fall BOTTOM-RIGHT (dx>0,dy>0)
-    shadowStrength: 0.45,   // V18 — directional shadow opacity (good drop-shadow + cubby inner shading)
+    // V21 — SPLIT shadow strength: cubbyShadowStrength = frame/cubby interior shading opacity,
+    // goodShadowStrength = goods' drop-shadow opacity. Legacy `shadowStrength` migrates to BOTH.
+    shadowStrength: 0.45,       // LEGACY — kept; migrates to cubby/good shadow strengths (back-compat)
+    cubbyShadowStrength: 0.45,  // V21 — frame/cubby interior shading opacity (was shadowStrength)
+    goodShadowStrength: 0.45,   // V21 — goods' drop-shadow opacity (was shadowStrength)
     backDim: 0.4,           // V19 — back-row (peek) goods VERY dark (~0.4, deep interior shadow per reference)
-    topShadow: 0.5,         // V19 — SHALLOW top inner-shadow band strength (frac of shadowStrength; a faint dark band at the cubby ceiling edge)
-    gridColor: '#caa06a'    // V20 — wood TINT color (warm wood tone) multiplied over the grain
+    topShadow: 0.5,         // V19 — SHALLOW top inner-shadow band strength (frac of cubbyShadowStrength)
+    gridColor: '#caa06a'    // V21 — SINGLE wood hue: every wood face derives its color from this base
   };
   // merge an OVERRIDE over the defaults (shallow; only known keys). Reads
   // localStorage['gs_shelf_config'] (same-browser editor save) + window.__SHELF_OVERRIDE
@@ -715,6 +774,21 @@
       // its value into wallOuterReveal so the OUTER wall keeps the saved reveal amount.
       if (src.sideReveal !== undefined && src.sideReveal !== null && src.wallOuterReveal === undefined){
         cfg.wallOuterReveal = src.sideReveal;
+      }
+      // V21 back-compat: a legacy config with `shadowStrength` (the old single param) but WITHOUT
+      // the split keys migrates that value into BOTH cubbyShadowStrength + goodShadowStrength so an
+      // old saved config keeps driving the frame shading AND the goods' shadows at the same amount.
+      if (src.shadowStrength !== undefined && src.shadowStrength !== null){
+        if (src.cubbyShadowStrength === undefined || src.cubbyShadowStrength === null) cfg.cubbyShadowStrength = src.shadowStrength;
+        if (src.goodShadowStrength  === undefined || src.goodShadowStrength  === null) cfg.goodShadowStrength  = src.shadowStrength;
+      }
+      // V21 back-compat: a legacy config that SHOWED the ceiling via ceilingVisibility>0 (the old
+      // way) but lacks an explicit frameCeilingDepth migrates that visibility into frameCeilingDepth
+      // (the new SINGLE ceiling control). We fold the two old factors (ceilingVisibility ×
+      // frameCeilingDepth=1) into the new single depth so the saved look is preserved.
+      if (src.ceilingVisibility !== undefined && src.ceilingVisibility !== null && src.ceilingVisibility > 0 &&
+          (src.frameCeilingDepth === undefined || src.frameCeilingDepth === null)){
+        cfg.frameCeilingDepth = src.ceilingVisibility;
       }
     }
     // localStorage override (set by the editor's "저장" in the same browser)
@@ -750,19 +824,27 @@
     // = shadows fall to the BOTTOM-RIGHT (light comes from the TOP-LEFT). Adjusting lightAngle
     // rotates EVERY shadow (good drop-shadows + each cubby's inner shading) consistently.
     var la = (SHELF.lightAngle != null ? SHELF.lightAngle : 315);
-    var ss = (SHELF.shadowStrength != null ? SHELF.shadowStrength : 0.45);
+    // V21 — SPLIT shadow strength into TWO independent params:
+    //   cubbyShadowStrength : the FRAME/CUBBY interior shading opacity (.c-back inner shading +
+    //                         the shallow top band). Drives --cubby-shade-op / --cubby-top-shade-op.
+    //   goodShadowStrength  : the GOODS' drop-shadow opacity (.good drop-shadow / contact).
+    // BACK-COMPAT: a legacy `shadowStrength` migrates to BOTH (done in resolveShelfConfig), so an
+    // old config still drives both at the same value. Each falls back to the legacy/default here.
+    var legacySS = (SHELF.shadowStrength != null ? SHELF.shadowStrength : 0.45);
+    var cubbyShadowStrength = (SHELF.cubbyShadowStrength != null ? SHELF.cubbyShadowStrength : legacySS);
+    var goodShadowStrength  = (SHELF.goodShadowStrength  != null ? SHELF.goodShadowStrength  : legacySS);
     var backDim = (SHELF.backDim != null ? SHELF.backDim : 0.4);
     var topShadow = (SHELF.topShadow != null ? SHELF.topShadow : 0.5);
     var shadowRad = (la - 270) * Math.PI / 180;
     var ux = Math.cos(shadowRad), uy = Math.sin(shadowRad);   // unit shadow direction (y-down)
     // GOOD drop-shadow: offset along the shadow direction by a fixed visual magnitude (px),
-    // soft blur, opacity = shadowStrength. dx>0,dy>0 by default -> bottom-right.
+    // soft blur, opacity = goodShadowStrength. dx>0,dy>0 by default -> bottom-right.
     var GMAG = 6;                                              // good drop-shadow offset magnitude (px)
     var dx = +(ux * GMAG).toFixed(2), dy = +(uy * GMAG).toFixed(2);
     root.setProperty('--good-shadow-dx', dx + 'px');
     root.setProperty('--good-shadow-dy', dy + 'px');
     root.setProperty('--good-shadow-blur', '5px');
-    root.setProperty('--good-shadow-color', 'rgba(20,10,2,' + ss.toFixed(3) + ')');
+    root.setProperty('--good-shadow-color', 'rgba(20,10,2,' + goodShadowStrength.toFixed(3) + ')');
     // back-row (peek) goods brightness (in shadow). Slightly desaturated too.
     root.setProperty('--back-dim', backDim.toFixed(3));
     // CUBBY INNER SHADING gradient direction: the niche back wall is darkest toward the
@@ -774,30 +856,36 @@
     root.setProperty('--cubby-shade-dark-y', darkY + '%');
     root.setProperty('--cubby-shade-lit-x',  litX + '%');
     root.setProperty('--cubby-shade-lit-y',  litY + '%');
-    // inner-shadow opacity scaled from shadowStrength (a touch lighter than the drop-shadow).
-    root.setProperty('--cubby-shade-op', (ss * 0.55).toFixed(3));
+    // CUBBY inner-shadow opacity scaled from cubbyShadowStrength (V21 — independent of the goods'
+    // drop-shadow; a touch lighter than the drop-shadow magnitude).
+    root.setProperty('--cubby-shade-op', (cubbyShadowStrength * 0.55).toFixed(3));
     // V19 — SHALLOW TOP inner-shadow: a faint dark band along the TOP edge of each cubby
     // interior (a ceiling drop-shadow into the recess), per the reference. SHALLOW = a thin
-    // band confined to the top; strength = a small fraction of shadowStrength (topShadow mult,
-    // default 0.5) so it stays subtle. (The user: "그리드 윗쪽 천장그림자는 얕은데" — keep it shallow.)
-    root.setProperty('--cubby-top-shade-op', (ss * topShadow * 0.6).toFixed(3));
+    // band confined to the top; strength = a small fraction of cubbyShadowStrength (topShadow
+    // mult, default 0.5) so it stays subtle. (The user: "그리드 윗쪽 천장그림자는 얕은데" — keep it shallow.)
+    root.setProperty('--cubby-top-shade-op', (cubbyShadowStrength * topShadow * 0.6).toFixed(3));
     // shelf aspect-ratio: 1 / cubbyAspect (cubbyAspect<1 -> wider/landscape)
     var shelf = document.getElementById('shelf');
     if (shelf) shelf.style.aspectRatio = '1 / ' + SHELF.cubbyAspect;
 
-    // ----- V20 GRID TINT (gridColor -> --grid-tint MULTIPLY overlay) -----
-    // Normalize the picked color against the DEFAULT wood tone (#caa06a) so the default
-    // gridColor yields white (multiply identity = current look) and any OTHER color shifts
-    // every wood face proportionally. tint_channel = clamp(picked/ref * 255).
+    // ----- V21 UNIFIED GRID COLOR (gridColor -> --grid-color SOLID base + --grid-tint legacy) -----
+    // V21: every wood face is now a SOLID --grid-color base × a GRAYSCALE grain map, so the WHOLE
+    // shelf is ONE uniform hue (= gridColor) and the picker recolors all faces identically. We set
+    // --grid-color to the RAW picked color. We ALSO keep --grid-tint (the OLD normalized multiply
+    // overlay) for any legacy selector + the back-compat (S20c) assert: default gridColor -> white.
     (function(){
-      var GRID_TINT_REF = [0xca, 0xa0, 0x6a];        // = #caa06a, the default gridColor
-      var gc = (SHELF.gridColor != null ? String(SHELF.gridColor) : '#caa06a').replace('#','');
+      var gcRaw = (SHELF.gridColor != null ? String(SHELF.gridColor) : '#caa06a');
+      var gc = gcRaw.replace('#','');
       if (gc.length === 3) gc = gc[0]+gc[0]+gc[1]+gc[1]+gc[2]+gc[2];
       var pr = parseInt(gc.substr(0,2),16), pg = parseInt(gc.substr(2,2),16), pb = parseInt(gc.substr(4,2),16);
-      if (isNaN(pr)||isNaN(pg)||isNaN(pb)){ pr=GRID_TINT_REF[0]; pg=GRID_TINT_REF[1]; pb=GRID_TINT_REF[2]; }
+      if (isNaN(pr)||isNaN(pg)||isNaN(pb)){ pr=0xca; pg=0xa0; pb=0x6a; }
+      function hx(n){ var s = n.toString(16); return s.length<2 ? '0'+s : s; }
+      // RAW solid base color (the hue every wood face shares).
+      root.setProperty('--grid-color', '#'+hx(pr)+hx(pg)+hx(pb));
+      // legacy normalized multiply tint (default #caa06a -> #ffffff identity).
+      var GRID_TINT_REF = [0xca, 0xa0, 0x6a];
       function norm(p, ref){ return Math.max(0, Math.min(255, Math.round(p / ref * 255))); }
       var tr = norm(pr, GRID_TINT_REF[0]), tg = norm(pg, GRID_TINT_REF[1]), tb = norm(pb, GRID_TINT_REF[2]);
-      function hx(n){ var s = n.toString(16); return s.length<2 ? '0'+s : s; }
       root.setProperty('--grid-tint', '#'+hx(tr)+hx(tg)+hx(tb));
     })();
 
@@ -1132,13 +1220,14 @@
     // Higher exponent = walls vanish FASTER toward the center; center column factor ≈ 0.
     var wallFalloff = (SHELF.wallFalloff != null ? SHELF.wallFalloff : 1.0);
     var halfBoardW = Math.max(1, gridRect.width / 2);   // for the per-cubby distance normalization
-    // CEILING VISIBILITY (윗면): scale the ceiling band depth. DEFAULT 0 = ceiling HIDDEN
-    // (the user only wants the floor to show). When 0 we both zero the depth AND set the
-    // ceiling face display:none so it never renders. The editor can still toggle it > 0.
-    // V20: the visible ceiling band depth also scales by frameCeilingDepth ("프레임의 천장면 깊이").
-    var ceilVis = (SHELF.ceilingVisibility != null ? SHELF.ceilingVisibility : 0);
-    var frameCeilDepthMul = (SHELF.frameCeilingDepth != null ? SHELF.frameCeilingDepth : 1.0);
-    var Dceil = D * ceilVis * frameCeilDepthMul;
+    // V21 — CEILING is controlled by a SINGLE intuitive param, frameCeilingDepth ("천장면 깊이/보이기"):
+    //   frameCeilingDepth == 0  -> ceiling HIDDEN (display:none, default — current look).
+    //   frameCeilingDepth  > 0  -> ceiling RENDERS with depth = base D × frameCeilingDepth (the band
+    //                              projects a visible wood strip and DEEPENS as the value increases).
+    // The old hard dependency on ceilingVisibility (Dceil = D × ceilingVisibility × frameCeilingDepth,
+    // which forced 0 whenever ceilingVisibility=0 so the depth slider did nothing) is REMOVED.
+    var frameCeilDepth = (SHELF.frameCeilingDepth != null ? SHELF.frameCeilingDepth : 0);
+    var Dceil = D * frameCeilDepth;
     // V20 — FLOOR DEPTH ("각 그리드의 바닥면 깊이"): the floor face depth multiplies the base box
     // depth so the floor band can be deeper/shallower than the box.
     var floorDepthMul = (SHELF.floorDepth != null ? SHELF.floorDepth : 1.0);
@@ -1201,8 +1290,8 @@
         floor.style.top=(H-Dfloor)+'px'; floor.style.transformOrigin='center bottom';
         floor.style.transform='rotateX('+ang+'deg)'; }
       if (ceil){
-        // CEILING — HIDDEN by default (ceilVis=0). Hide via display:none so it never renders.
-        // Depth = base D × ceilingVisibility × frameCeilingDepth (V20).
+        // CEILING — V21: depth = base D × frameCeilingDepth. frameCeilingDepth=0 -> Dceil=0 -> the
+        // ceiling is HIDDEN via display:none (never renders); > 0 -> it RENDERS + deepens.
         if (Dceil <= 0){ ceil.style.display='none'; }
         else {
           ceil.style.display='';
@@ -2674,9 +2763,9 @@
       // lands on the wood sliver, not the cream back wall just inside it.
       pts.push({ kind:'leftwall',  x: r.left + 2,     y: r.top + H*0.50 });
       pts.push({ kind:'rightwall', x: r.right - 2,    y: r.top + H*0.50 });
-      // CEILING is HIDDEN by default (V17 — display:none) so there is NO ceiling wood band to
-      // sample. Only probe it when the editor has re-enabled it (ceilingVisibility > 0).
-      if (SHELF && SHELF.ceilingVisibility > 0){
+      // CEILING is HIDDEN by default (V21 — display:none) so there is NO ceiling wood band to
+      // sample. Only probe it when the editor has shown it (frameCeilingDepth > 0).
+      if (SHELF && SHELF.frameCeilingDepth > 0){
         pts.push({ kind:'ceiling', x: r.left + W*0.50, y: r.top + 1 });
       }
       // FLOOR — the look-down wood floor PLANE foreshortens to a band at the VERY bottom
@@ -2690,6 +2779,55 @@
       var bb = getComputedStyle(document.body).backgroundColor;
       return { points: pts, creamRGB: bb, emptyIdx: emptyIdx,
                nicheRect: { left:r.left, top:r.top, width:W, height:H } };
+    },
+    // =====================================================================
+    // V21 — UNIFORM WOOD COLOR sample points. Returns viewport (client) px coords on DISTINCT
+    // wood faces — the OUTER FRAME, a cubby FLOOR-top band, a DIVIDER (the wood gap/lattice that
+    // shows between two cubbies = the #grid background), and a FRONT RIM — so the verifier can
+    // screenshot each and assert they are all the SAME hue (since V21 every wood face derives its
+    // color from the SINGLE --grid-color, differing only in brightness). Also returns the resolved
+    // --grid-color so a test can correlate the sampled hue with the picked color.
+    // =====================================================================
+    woodFaceSamples: function(){
+      var pts = [];
+      var frame = document.querySelector('#shelf .frame');
+      var grid  = document.getElementById('grid');
+      // OUTER FRAME — sample the wood border just inside the shelf's top-left corner (the cab-pad
+      // band, which is frame wood, not a cubby opening).
+      if (frame){
+        var fr = frame.getBoundingClientRect();
+        var pad = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--cab-pad')) || 12;
+        pts.push({ kind:'frame', x: fr.left + Math.max(3, pad*0.5), y: fr.top + Math.max(3, pad*0.5) });
+      }
+      // DIVIDER — the wood lattice gap between two horizontally-adjacent cubbies (the #grid bg
+      // showing through the gap). Find two cubbies in the same row and sample the midpoint gap.
+      var cubs = [].slice.call(document.querySelectorAll('#grid .cubby'));
+      if (cubs.length >= 2){
+        // pick a cubby and its right neighbor in the same row (same top, larger left).
+        var a = cubs[0], aR = a.getBoundingClientRect();
+        var b = null, bestDx = 1e9;
+        cubs.forEach(function(c){ var cr = c.getBoundingClientRect();
+          if (Math.abs(cr.top - aR.top) < 3 && cr.left > aR.right - 1){
+            var dx = cr.left - aR.right; if (dx >= 0 && dx < bestDx){ bestDx = dx; b = c; } } });
+        if (b){ var bR = b.getBoundingClientRect();
+          pts.push({ kind:'divider', x: (aR.right + bR.left)/2, y: aR.top + aR.height*0.5 }); }
+      }
+      // FLOOR-top + RIM — reuse an EMPTY cubby's floor/rim bands (same logic as nicheSamples).
+      var emptyIdx = -1;
+      for (var i=0;i<S.cubbies.length;i++){
+        var f = frontLayer(S.cubbies[i]);
+        if (f && f.every(function(x){ return !x; })){ emptyIdx = i; break; }
+      }
+      if (emptyIdx < 0) emptyIdx = 0;
+      var cb = S.cubbies[emptyIdx];
+      if (cb && cb.el){
+        var cr2 = cb.el.getBoundingClientRect();
+        pts.push({ kind:'floor', x: cr2.left + cr2.width*0.50, y: cr2.bottom - 2 });
+        pts.push({ kind:'rim',   x: cr2.left + cr2.width*0.50, y: cr2.bottom - 1 });
+      }
+      var gridColorVar = getComputedStyle(document.documentElement).getPropertyValue('--grid-color').trim();
+      return { points: pts, gridColor: gridColorVar,
+               liveGridColor: window.__shelfApi.get().gridColor };
     },
     stars: function(){ return S.stars; },
     combo: function(){ return S.combo; },
@@ -2862,10 +3000,20 @@
       }
       var frontG = document.querySelector('#grid .cubby .c-floor .good');
       var backG  = document.querySelector('#grid .cubby .c-back-layer .good.peek');
+      var liveCfg = window.__shelfApi.get();
       return {
         shadowDx: dx, shadowDy: dy,
-        lightAngle: (window.__shelfApi.get().lightAngle),
-        shadowStrength: (window.__shelfApi.get().shadowStrength),
+        lightAngle: liveCfg.lightAngle,
+        shadowStrength: liveCfg.shadowStrength,
+        // V21 — split shadow strengths (cubby interior shading vs goods' drop-shadow)
+        cubbyShadowStrength: liveCfg.cubbyShadowStrength,
+        goodShadowStrength: liveCfg.goodShadowStrength,
+        // resolved good drop-shadow opacity (parsed out of --good-shadow-color rgba alpha)
+        goodShadowOp: (function(){
+          var c = cs.getPropertyValue('--good-shadow-color') || '';
+          var m = /rgba?\([^)]*,\s*([0-9.]+)\s*\)/.exec(c); return m ? parseFloat(m[1]) : null;
+        })(),
+        cubbyShadeOp: parseFloat(cs.getPropertyValue('--cubby-shade-op')) || 0,
         backDim: backDim,
         frontBrightness: brightnessOf(frontG),
         backBrightness: brightnessOf(backG),

@@ -976,10 +976,10 @@ function rgbDist(p, c){
   await page.waitForFunction('window.__ready === true', { timeout: 20000 });
   await new Promise(r => setTimeout(r, 150));
   const dl = await page.evaluate(() => window.__qa.dragLiftProbe(0, 0));
-  assert('(V19-LIFT-1) drag started + ghost lift offset is a real upward offset (~40-60px)',
-    dl && dl.started===true && dl.lift >= 40 && dl.lift <= 60, JSON.stringify(dl));
-  assert('(V19-LIFT-2) during an active drag the dragged element is ABOVE the pointer (ghost center Y < pointer Y by the lift offset)',
-    dl && dl.ghostAbovePointer===true && dl.centerLiftPx >= dl.lift - 2 && dl.ghostCenterY < dl.pointerY,
+  assert('(V19-LIFT-1) drag started + good follows the finger DIRECTLY (no upward lift)',
+    dl && dl.started===true && dl.lift === 0, JSON.stringify(dl));
+  assert('(V19-LIFT-2) during an active drag the dragged element is CENTERED on the pointer (ghost center Y ≈ pointer Y)',
+    dl && Math.abs(dl.centerLiftPx) <= 4,
     'ghostCenterY='+ (dl?dl.ghostCenterY.toFixed(1):'?') +' pointerY='+ (dl?dl.pointerY.toFixed(1):'?') +' centerLiftPx='+ (dl?dl.centerLiftPx.toFixed(1):'?') +' lift='+(dl?dl.lift:'?'));
   assert('(V19-LIFT-err) zero pageerrors (drag-lift run)', pageErrors.length === 0, pageErrors.join(' | '));
   await page.close();

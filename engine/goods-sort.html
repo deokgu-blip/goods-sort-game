@@ -2135,8 +2135,7 @@
       haptic('place');
       // a same-cubby shuffle can complete a CLEAR (3 same) — keep counts/clear/reveal working.
       if (allSameSlots(ff)){ clearCubby(fromCb); return true; }
-      resetCombo();      // a placement that didn't clear breaks the streak
-      return false;
+      return false;     // a non-clearing move does NOT reset the combo (it lives the 20s window)
     }
 
     if (!canDrop(fromCb, toCb, type)) return false;
@@ -2168,8 +2167,7 @@
     // no clear: re-render source; if its front went all-empty, reveal next layer
     renderCubby(fromCb);
     maybeReveal(fromCb);
-    resetCombo();        // a placement that didn't clear breaks the streak
-    return false;
+    return false;        // a non-clearing move does NOT reset the combo (it lives the 20s window)
   }
 
   // =============================================================
@@ -2438,12 +2436,10 @@
   // DRAG-TO-SORT input (touch + mouse)
   // =============================================================
   var drag = null; // {type, fromIdx, ghostSize}
-  // DRAG LIFT — while dragging, the floating good is rendered OFFSET UPWARD from the
-  // pointer so the finger doesn't cover it (mobile). The ghost's CENTER sits this many
-  // px ABOVE the touch point -> the good reads clearly above the finger. The DROP still
-  // resolves by the pointer's raw X/cubby (the lift is purely visual). ~50px works well
-  // on phones (good base ends up well clear of the fingertip).
-  var DRAG_LIFT = 52;
+  // DRAG LIFT — the dragged good follows the pointer DIRECTLY (centered on the finger).
+  // (We tried an upward lift so the finger wouldn't cover the good, but that made the DROP
+  // position confusing — user asked to start it right at the finger. 0 = follow finger.)
+  var DRAG_LIFT = 0;
   // walk up to the owning .cubby. Scan the full hit stack for robustness.
   function cubbyElFromPoint(clientX, clientY){
     var els = document.elementsFromPoint(clientX, clientY);

@@ -178,6 +178,8 @@ function rgbDist(p, c){
       comboIsGauge: !!document.querySelector('#combo.combo-gauge'),
       comboTrack: !!document.querySelector('#combo .cg-track'),
       comboLabel: txt('#combo .cg-label'),
+      comboFlame: !!document.querySelector('#comboCount .fl'),
+      comboCountTxt: txt('#comboCount .cc-x'),
       items,
       // hearts REMOVED; pause kept
       pausePresent: !!document.getElementById('pause'),
@@ -190,9 +192,9 @@ function rgbDist(p, c){
     /^Lv\./.test(hud.lvTxt||'') && hud.lvEngraved && hud.comboLobe, 'txt='+hud.lvTxt+' engraved='+hud.lvEngraved+' comboLobe='+hud.comboLobe);
   assert('(HUD-2 timer AMBER plate) #timer is the CSS amber rounded-rect (gradient, not the urgent image) + "M:SS" overlay',
     hud.timerBg.includes('gradient') && !hud.timerBg.includes('pill_timer_urgent') && /^\d?\d:\d\d$/.test(hud.timerTxt||''), hud.timerBg.slice(0,40)+' | '+hud.timerTxt);
-  assert('(HUD-3 combo GAUGE replaces star/combo pill) #combo is the gauge (track + "COMBO xN" label); star counter gone',
-    hud.comboIsGauge && hud.comboTrack && /^COMBO x\d+$/.test(hud.comboLabel||'') && hud.starCounterGone,
-    hud.comboIsGauge+' | track='+hud.comboTrack+' | '+hud.comboLabel+' | starGone='+hud.starCounterGone);
+  assert('(HUD-3 combo = FLAME count pill + retention bar) #comboCount shows "🔥 xN", #combo is the retention gauge; star counter gone',
+    hud.comboFlame && /^x\d+$/.test(hud.comboCountTxt||'') && hud.comboIsGauge && hud.comboTrack && hud.starCounterGone,
+    'flame='+hud.comboFlame+' count='+hud.comboCountTxt+' gauge='+hud.comboIsGauge+' starGone='+hud.starCounterGone);
   const wantIcon = { hammer:'btn_hammer.png', timefreeze:'btn_timefreeze.png', shuffle:'btn_shuffle.png', addtime:'btn_addtime.png' };
   const itemsOK = hud.items.length === 4 && hud.items.every(b => (b.bg||'').includes(wantIcon[b.key]));
   const hammer = hud.items.find(b=>b.key==='hammer') || {};
@@ -207,10 +209,11 @@ function rgbDist(p, c){
   //       Reverts to normal when time goes back >=60 (e.g. after a continue). =====
   const urg = await page.evaluate(() => {
     function timerBg(){ return getComputedStyle(document.getElementById('timer')).backgroundImage; }
+    function skull(){ return (getComputedStyle(document.getElementById('timer'),'::before').backgroundImage||'').includes('skull_timer'); }
     function tintOpacity(){ return getComputedStyle(document.getElementById('urgentTint')).opacity; }
-    const before = { bg:timerBg(), bodyUrgent:document.body.classList.contains('urgent'), tint:tintOpacity(), urgentState:window.__qa.urgent() };
+    const before = { bg:timerBg(), skull:skull(), bodyUrgent:document.body.classList.contains('urgent'), tint:tintOpacity(), urgentState:window.__qa.urgent() };
     window.__qa.setTime(45);            // drop below 60s
-    const during = { bg:timerBg(), bodyUrgent:document.body.classList.contains('urgent'), tint:tintOpacity(), urgentState:window.__qa.urgent() };
+    const during = { bg:timerBg(), skull:skull(), bodyUrgent:document.body.classList.contains('urgent'), tint:tintOpacity(), urgentState:window.__qa.urgent() };
     window.__qa.setTime(90);            // back to >=60 (continue / refill)
     const after = { bg:timerBg(), bodyUrgent:document.body.classList.contains('urgent'), tint:tintOpacity(), urgentState:window.__qa.urgent() };
     window.__qa.setTime(120);           // restore
@@ -219,9 +222,9 @@ function rgbDist(p, c){
   assert('(URG-1 normal @>=60s) timer = amber CSS plate (gradient, not urgent image), no red bg',
     urg.before.bg.includes('gradient') && !urg.before.bg.includes('pill_timer_urgent') && !urg.before.bodyUrgent && !urg.before.urgentState,
     JSON.stringify(urg.before).slice(0,120));
-  assert('(URG-2 urgent @<60s) timer swaps to pill_timer_urgent.png (skull) + RED bg (body.urgent + tint visible)',
-    urg.during.bg.includes('pill_timer_urgent.png') && urg.during.bodyUrgent && urg.during.urgentState && parseFloat(urg.during.tint) > 0,
-    JSON.stringify(urg.during));
+  assert('(URG-2 urgent @<60s) RED plate + SKULL on the left (skull_timer) + RED page bg (body.urgent + tint visible)',
+    urg.during.skull && !urg.before.skull && urg.during.bodyUrgent && urg.during.urgentState && parseFloat(urg.during.tint) > 0,
+    JSON.stringify(urg.during).slice(0,140));
   assert('(URG-3 revert @>=60s) back to amber CSS plate + no red bg when time goes back up',
     urg.after.bg.includes('gradient') && !urg.after.bg.includes('pill_timer_urgent') && !urg.after.bodyUrgent && !urg.after.urgentState,
     JSON.stringify(urg.after).slice(0,120));
@@ -637,12 +640,13 @@ function rgbDist(p, c){
     const ringEls = document.querySelectorAll('.spark-ring').length;
     const ringImg = (() => { const r=document.querySelector('.spark-ring'); return r ? bgHas(r,'fx_sparkle.png') : false; })();
     const confettiEls = document.querySelectorAll('.confetti').length;
-    const comboPillTxt = qa.comboPillText();           // "xN" overlaid on the pill image
+    const comboPillTxt = qa.comboPillText();           // gauge label ("COMBO")
+    const comboCountTxt = qa.comboCountText();          // flame pill count ("xN")
     await new Promise(r=>setTimeout(r, 650));
     return {
       cleared, moves,
       praiseSeen: praiseEls, praiseImg, flyStarSeen: flyStarEls, flyStarImg,
-      ringSeen: ringEls, ringImg, confettiSeen: confettiEls, comboPillTxt,
+      ringSeen: ringEls, ringImg, confettiSeen: confettiEls, comboPillTxt, comboCountTxt,
       starsBefore, comboBefore, maxComboBefore,
       starsAfter: qa.stars(), comboAfter: qa.combo(), maxComboAfter: qa.maxCombo(),
       total: totalGoods()
@@ -655,9 +659,9 @@ function rgbDist(p, c){
   assert('(2c-FX2 star fly IMAGE) fly-star uses fx_star.png on clear', clearInfo.flyStarSeen >= 1 && clearInfo.flyStarImg,
     'els='+clearInfo.flyStarSeen+' img='+clearInfo.flyStarImg);
   assert('(2d-score) internal score incremented on clear', clearInfo.starsAfter > clearInfo.starsBefore, clearInfo.starsBefore+'->'+clearInfo.starsAfter);
-  // combo now starts at 0 and increments on clear; the pill shows the CURRENT combo "xN".
-  assert('(2e-FX3 combo) combo incremented + gauge shows "COMBO xN"', clearInfo.comboAfter > clearInfo.comboBefore && clearInfo.comboPillTxt === ('COMBO x'+clearInfo.comboAfter),
-    clearInfo.comboBefore+'->'+clearInfo.comboAfter+' gauge="'+clearInfo.comboPillTxt+'"');
+  // combo starts at 0 and increments on clear; the FLAME pill shows the CURRENT combo "xN".
+  assert('(2e-FX3 combo) combo incremented + flame pill shows "xN"', clearInfo.comboAfter > clearInfo.comboBefore && clearInfo.comboCountTxt === ('x'+clearInfo.comboAfter),
+    clearInfo.comboBefore+'->'+clearInfo.comboAfter+' flame="'+clearInfo.comboCountTxt+'"');
   assert('(2e2-maxCombo) maxCombo tracked (>= current combo)', clearInfo.maxComboAfter >= clearInfo.comboAfter && clearInfo.maxComboAfter > clearInfo.maxComboBefore,
     'max '+clearInfo.maxComboBefore+'->'+clearInfo.maxComboAfter+' combo='+clearInfo.comboAfter);
   assert('(2f-FX sparkle IMAGE) spark-ring uses fx_sparkle.png on clear', clearInfo.ringSeen >= 1 && clearInfo.ringImg,
@@ -741,10 +745,10 @@ function rgbDist(p, c){
     window.__qa.forceTimeUp();                 // timer -> 0, game over (TIME UP)
     return window.__qa.gameOverCard();
   });
-  assert('(GO1-TIMEUP CARD) TIME UP: clean panel + txt_timeup banner + coin HUD + CONTINUE + RETRY + (+30s), NO AD',
+  assert('(GO1-TIMEUP CARD) TIME UP: clean panel + "TIME UP!" title on ribbon + coin HUD + CONTINUE + RETRY + (+30s), NO AD, NO X',
     timeUp.shown && timeUp.mode==='timeup' && /panel_gameover_clean\.png/.test(timeUp.panelImg) &&
-    /txt_timeup\.png/.test(timeUp.bannerImg) && timeUp.hasContinue && timeUp.hasRetry && timeUp.hasCoinHud && timeUp.noAd && timeUp.plus30,
-    JSON.stringify({mode:timeUp.mode, cont:timeUp.hasContinue, retry:timeUp.hasRetry, coin:timeUp.hasCoinHud, noAd:timeUp.noAd, plus30:timeUp.plus30, panel:timeUp.panelImg}));
+    timeUp.titleText==='TIME UP!' && timeUp.hasContinue && timeUp.hasRetry && timeUp.hasCoinHud && timeUp.noAd && timeUp.plus30 && !timeUp.hasClose,
+    JSON.stringify({mode:timeUp.mode, title:timeUp.titleText, cont:timeUp.hasContinue, retry:timeUp.hasRetry, coin:timeUp.hasCoinHud, noAd:timeUp.noAd, plus30:timeUp.plus30, noX:!timeUp.hasClose}));
   const goEmits1 = await page.evaluate(() => window.__emits.slice());
   const ge1 = goEmits1.find(e => e.msg && e.msg.event === 'GameEnd');
   assert('(GO2-TIMEUP GameEnd) GameEnd{success:false} fired on TIME UP (flat, flutterChannel)',
@@ -784,11 +788,11 @@ function rgbDist(p, c){
   assert('(GO5-DEADLOCK POSITIVE) the contrived board is detected as DEADLOCKED (no clear reachable within budget)',
     dead.setup.deadlocked && dead.before,
     'setupDeadlocked='+dead.setup.deadlocked+' isDeadlocked='+dead.before+' total='+dead.setup.total);
-  assert('(GO6-NOSPACE CARD) NO SPACE: clean panel + txt_nospace banner + reshuffle + "Refresh all items" + coin HUD + CONTINUE + RETRY, NO AD',
+  assert('(GO6-NOSPACE CARD) NO SPACE: clean panel + "NO SPACE!" title + reshuffle + "Refresh all items" + coin HUD + CONTINUE + RETRY, NO AD, NO X',
     dead.card.shown && dead.card.mode==='nospace' && /panel_gameover_clean\.png/.test(dead.card.panelImg) &&
-    /txt_nospace\.png/.test(dead.card.bannerImg) && dead.card.reshuffle && dead.card.hasContinue &&
-    dead.card.hasRetry && dead.card.hasCoinHud && dead.card.noAd && /refresh all items/i.test(dead.card.offerLabel||''),
-    JSON.stringify({mode:dead.card.mode, reshuffle:dead.card.reshuffle, coin:dead.card.hasCoinHud, noAd:dead.card.noAd, label:dead.card.offerLabel}));
+    dead.card.titleText==='NO SPACE!' && dead.card.reshuffle && dead.card.hasContinue &&
+    dead.card.hasRetry && dead.card.hasCoinHud && dead.card.noAd && !dead.card.hasClose && /refresh all items/i.test(dead.card.offerLabel||''),
+    JSON.stringify({mode:dead.card.mode, title:dead.card.titleText, reshuffle:dead.card.reshuffle, coin:dead.card.hasCoinHud, noAd:dead.card.noAd, noX:!dead.card.hasClose, label:dead.card.offerLabel}));
   const goEmits2 = await page.evaluate(() => window.__emits.slice());
   const ge2 = goEmits2.find(e => e.msg && e.msg.event === 'GameEnd');
   assert('(GO7-NOSPACE GameEnd) GameEnd{success:false} fired on NO SPACE (flat, flutterChannel)',

@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>물건 정리 / Goods Sort</title>
+<!-- rounded, chunky game font (동글동글) applied to ALL in-game text -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Jua&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
      LAYOUT — mobile PORTRAIT, viewport-driven, no fixed design box.
@@ -99,7 +103,7 @@
   }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body{ margin:0; padding:0; height:100%; overflow:hidden;
-    background:var(--wallpaper); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+    background:var(--wallpaper); font-family:"Baloo 2","Jua",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
     touch-action:none; user-select:none; -webkit-user-select:none; }
   /* full-viewport CREAM WALL so any ratio is filled (L12) and it blends with the
      page/body bg into one seamless wall. FLAT color — no tiling texture. This is the
@@ -161,10 +165,15 @@
   #timer .txt{ font-size:27px; color:#fff; letter-spacing:1px;
     -webkit-text-stroke:2.5px #9a7c49; paint-order:stroke fill;
     text-shadow:0 2px 1px rgba(110,70,20,.4); }
-  #timer.urgent{ background:url("../assets/ui/pill_timer_urgent.png") center/100% 100% no-repeat;
-    border:none; box-shadow:none; animation:tpulse .8s ease-in-out infinite; }
-  #timer.urgent .txt{ color:#fff; -webkit-text-stroke:2.5px #a32014;
-    text-shadow:0 2px 1px rgba(120,10,5,.5); }
+  /* URGENT (<60s): RED plate (same shape) + SKULL on the LEFT, digits pushed RIGHT (reference). */
+  #timer.urgent{ background:linear-gradient(#ff6f56,#e23a2b);
+    border:3px solid #ffd1c5; box-shadow:0 3px 4px rgba(120,20,10,.3), inset 0 2px 2px rgba(255,255,255,.32);
+    animation:tpulse .8s ease-in-out infinite; }
+  #timer.urgent::before{ content:""; position:absolute; left:9px; top:50%; transform:translateY(-50%);
+    width:31px; height:31px; background:url("../assets/ui/skull_timer.png") center/contain no-repeat;
+    filter:drop-shadow(0 1px 1px rgba(120,10,5,.4)); }
+  #timer.urgent .txt{ color:#fff; padding-left:28px;          /* shift digits RIGHT, clear of the skull */
+    -webkit-text-stroke:2.5px #a32014; text-shadow:0 2px 1px rgba(120,10,5,.5); }
   @keyframes tpulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.07);} }
 
   /* pause chip (kept) */
@@ -177,8 +186,17 @@
   /* COMBO gauge — the TRACK is ALWAYS shown (user: 프로그래스 UI 위치는 항상 노출).
      The green fill + "COMBO xN" label appear only during an active combo. Overlaps the
      frame's bottom edge, centered under the timer. */
-  /* COMBO gauge — INTEGRAL with the frame (일체형): a downward LOBE of the SAME wood as
-     #hudFrame (so it fuses, no separate border) with a DEBOSSED dark channel carved into it. */
+  /* COMBO COUNT — engraved flame pill on the HUD right (🔥 xN), same 음각 look as #lv. */
+  #comboCount{ display:flex; align-items:center; gap:3px; height:38px; padding:0 11px;
+    border-radius:12px; background:linear-gradient(#6f3d2c,#5b3324);
+    box-shadow: inset 0 3px 4px rgba(0,0,0,.55), inset 0 -2px 3px rgba(0,0,0,.28), 0 1px 0 rgba(255,224,188,.30);
+    font-weight:800; color:#ffeede; font-size:16px; pointer-events:none; }
+  #comboCount .fl{ font-size:15px; filter:drop-shadow(0 1px 1px rgba(0,0,0,.45)); }
+  #comboCount .cc-x{ text-shadow:0 1px 2px rgba(0,0,0,.6); font-variant-numeric:tabular-nums; }
+  #comboCount.bump{ animation:cbump .3s ease; }
+
+  /* COMBO retention bar — INTEGRAL with the frame (일체형): a downward LOBE of the SAME wood
+     as #hudFrame (fuses, no separate border) with a DEBOSSED dark channel carved into it. */
   .combo-gauge{ position:relative; width:148px; height:25px; margin-top:-14px; z-index:6; pointer-events:none;
     padding:4px 7px 6px; border-radius:0 0 16px 16px;     /* straight top fuses to the frame; rounded bottom = the lobe */
     background:linear-gradient(#96592f,#88512f);          /* SAME wood as the frame */
@@ -703,27 +721,40 @@
   .btn-row .ibtn.continue{ width:46%; height:50px; }
 
   /* ---- CLEAN game-over panel (panel_gameover_clean.png) + coin HUD + X + RETRY ---- */
-  .card.gameover.clean{ background-image:url("../assets/ui/panel_gameover_clean.png"); aspect-ratio:961/1381; }
-  .card.gameover.clean .card-body{ top:30%; bottom:7%; gap:6px; justify-content:flex-start; }
-  /* coin balance HUD at the very top of the popup */
-  .go-coins{ position:absolute; top:-10%; left:50%; transform:translateX(-50%); z-index:4;
+  .card.gameover.clean{ background-image:url("../assets/ui/panel_gameover_clean.png"); aspect-ratio:939/1362; }
+  .card.gameover.clean .card-body{ top:25%; bottom:8%; left:11%; right:11%; gap:0;
+    display:flex; flex-direction:column; justify-content:space-between; }
+  /* TITLE on the ribbon — rounded font, gold fill + dark outline (TIME UP! / NO SPACE!) */
+  .card.gameover.clean .go-title{ position:absolute; top:1%; left:50%; transform:translateX(-50%); z-index:4;
+    font-weight:800; font-size:27px; letter-spacing:1px; white-space:nowrap; color:#ffe27a;
+    -webkit-text-stroke:1.5px #6a2f6a; paint-order:stroke fill;
+    text-shadow:0 2px 0 rgba(70,25,70,.5), 0 3px 4px rgba(0,0,0,.22); }
+  /* coin balance HUD at the very top */
+  .go-coins{ position:absolute; top:-9%; left:50%; transform:translateX(-50%); z-index:5;
     display:flex; align-items:center; gap:5px; padding:4px 14px 4px 7px; border-radius:18px;
     background:linear-gradient(#fff6e4,#f3ddb2); border:3px solid #fff; box-shadow:0 4px 0 rgba(0,0,0,.18); }
   .go-coins .ci{ width:25px; height:25px; background:url("../assets/ui/icon_coin.png") center/contain no-repeat; }
-  .go-coins .cv{ font-weight:900; font-size:17px; color:#c2741a; text-shadow:0 1px 0 #fff;
-    font-variant-numeric:tabular-nums; }
-  /* X close (top-right) */
-  .go-x{ position:absolute; top:5%; right:-1%; width:38px; height:38px; z-index:5; cursor:pointer; pointer-events:auto;
-    border-radius:50%; background:radial-gradient(circle at 38% 32%, #ff8a7a, #e8453c 72%); border:3px solid #fff;
-    box-shadow:0 3px 0 rgba(0,0,0,.2); display:flex; align-items:center; justify-content:center; }
-  .go-x::before{ content:"\2715"; color:#fff; font-weight:900; font-size:17px; }
-  .go-x:active{ transform:translateY(2px); }
-  /* RETRY (image btn_retry) with a label */
-  .ibtn.retry{ background-image:url("../assets/ui/btn_retry.png"); }
-  .ibtn.retry.wide{ width:46%; height:50px; }
-  .ibtn.retry .retrylbl{ position:absolute; font-weight:900; font-size:16px; color:#fff; letter-spacing:.5px;
-    -webkit-text-stroke:2px rgba(120,40,10,.85); paint-order:stroke fill; text-shadow:0 2px 0 rgba(0,0,0,.2); }
-  .ibtn.shake{ animation:shakeX .3s ease; }
+  .go-coins .cv{ font-weight:700; font-size:18px; color:#c2741a; text-shadow:0 1px 0 #fff; font-variant-numeric:tabular-nums; }
+  /* SECTIONS (구역 분리): top = continue effect, divider, bottom = buttons */
+  .go-sec{ display:flex; flex-direction:column; align-items:center; }
+  .go-sec.top{ gap:6px; padding-top:4px; }
+  .go-continue-txt{ font-weight:800; font-size:22px; color:#ffb02e;
+    -webkit-text-stroke:1.2px #fff; paint-order:stroke fill; text-shadow:0 2px 0 rgba(150,80,10,.22); }
+  .go-divider{ width:86%; height:3px; margin:8px auto; border-radius:3px;
+    background:linear-gradient(90deg, rgba(165,120,70,0), rgba(165,120,70,.45) 50%, rgba(165,120,70,0)); }
+  .go-sec.bot{ flex-direction:row; gap:10px; width:100%; }
+  /* CSS pill buttons — green coin / orange RETRY, rounded-font labels (consistent fonts) */
+  .go-btn{ flex:1; height:50px; border-radius:25px; display:flex; align-items:center; justify-content:center; gap:6px;
+    cursor:pointer; pointer-events:auto; font-weight:800; font-size:19px; color:#fff;
+    text-shadow:0 2px 1px rgba(0,0,0,.28); transition:transform .08s; }
+  .go-btn:active{ transform:translateY(2px); }
+  .go-btn.coin{ background:linear-gradient(#82dd5a,#4cae31); border:3px solid #fff;
+    box-shadow:0 4px 0 #387f23, 0 6px 7px rgba(0,0,0,.2); }
+  .go-btn.retry{ background:linear-gradient(#ffaa3c,#ef7d1c); border:3px solid #fff;
+    box-shadow:0 4px 0 #c25e12, 0 6px 7px rgba(0,0,0,.2); }
+  .go-btn .bi-coin{ width:24px; height:24px; background:url("../assets/ui/icon_coin.png") center/contain no-repeat; }
+  .go-btn .bi-retry{ font-size:21px; font-weight:800; }
+  .go-btn.shake{ animation:shakeX .3s ease; }
   @keyframes shakeX{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-5px);} 75%{transform:translateX(5px);} }
 
   /* ---- CLEAR: full-screen DIM show (no card) — big praise + MAX COMBO + NEXT ---- */
@@ -833,13 +864,15 @@
         <div class="img-pill" id="timer"><span class="txt">02:00</span></div>
       </div>
       <div class="hud-right">
+        <!-- COMBO COUNT — engraved flame pill (🔥 xN), like the reference's score slot but flame -->
+        <div id="comboCount"><span class="fl">🔥</span><span class="cc-x">x<span id="comboNum">0</span></span></div>
         <div class="hud-chip" id="pause">⏸</div>
       </div>
     </div>
-    <!-- COMBO gauge (depletes over the combo-reset window) — overlaps the frame's bottom edge -->
+    <!-- COMBO retention PROGRESS bar (depletes over 20s) — overlaps the frame's bottom edge -->
     <div class="combo-gauge" id="combo">
       <div class="cg-track"><div class="cg-fill" id="comboFill"></div></div>
-      <div class="cg-label">COMBO&nbsp;<span class="cg-x">x<span id="comboNum">0</span></span></div>
+      <div class="cg-label">COMBO</div>
     </div>
   </div>
 
@@ -1463,6 +1496,7 @@
   var comboEl = document.getElementById('combo');       // COMBO gauge (below the timer)
   var comboNumEl = document.getElementById('comboNum'); // the "xN" number in the gauge label
   var comboFillEl = document.getElementById('comboFill'); // the depleting green fill
+  var comboCountEl = document.getElementById('comboCount'); // engraved flame pill (🔥 xN)
   var fxEl = document.getElementById('fx');
   var ghostEl = document.getElementById('drag-ghost');
 
@@ -2210,7 +2244,7 @@
     if (comboNumEl) comboNumEl.textContent = S.combo;
     comboEl.classList.toggle('show', S.combo > 0);
     if (S.combo === 0 && comboFillEl){ comboFillEl.style.transition='none'; comboFillEl.style.width='0%'; }
-    if (bump){ comboEl.classList.remove('bump'); void comboEl.offsetWidth; comboEl.classList.add('bump'); }
+    if (bump){ [comboEl, comboCountEl].forEach(function(e){ if(e){ e.classList.remove('bump'); void e.offsetWidth; e.classList.add('bump'); } }); }
   }
 
   // star fly (fx_star.png sprite) ----------------------------
@@ -2896,7 +2930,7 @@
   // centered offer (+30s / reshuffle x1) + [CONTINUE(coin) | RETRY]. NO ads/AD labels.
   function showGameOverCard(mode){
     var isTime = (mode === 'timeup');
-    var bannerCls = isTime ? 'timeup' : 'nospace';
+    var title = isTime ? 'TIME UP!' : 'NO SPACE!';
     var offer = isTime
       ? '<div class="go-offer">' +
           '<div class="oicon plus30"></div>' +
@@ -2908,24 +2942,27 @@
           '<div class="olbl">Refresh all items</div>' +
         '</div>';
     var cost = 800;
+    // Sectioned (구역 분리): TOP = continue effect (CONTINUE? + icon/value), BOTTOM = buttons.
+    // All text inherits the rounded font (동글). NO X close. Title sits on the ribbon.
     popupBox.innerHTML =
       '<div class="card gameover clean" id="goCard">' +
         '<div class="go-coins"><span class="ci"></span><span class="cv" id="goCoinVal">' + S.coins + '</span></div>' +
-        '<div class="go-banner ' + bannerCls + '"></div>' +
-        '<div class="go-x" id="goClose"></div>' +
+        '<div class="go-title ' + (isTime ? 'timeup' : 'nospace') + '">' + title + '</div>' +
         '<div class="card-body">' +
-          '<div class="go-continue"></div>' +
-          offer +
-          '<div class="btn-row">' +
-            '<div class="ibtn continue" id="goContinue"><span class="cost">' + cost + '</span></div>' +
-            '<div class="ibtn retry wide" id="goRetry"></div>' +
+          '<div class="go-sec top">' +
+            '<div class="go-continue-txt">CONTINUE?</div>' +
+            offer +
+          '</div>' +
+          '<div class="go-divider"></div>' +
+          '<div class="go-sec bot">' +
+            '<div class="go-btn coin" id="goContinue"><span class="bi-coin"></span><span class="bl">' + cost + '</span></div>' +
+            '<div class="go-btn retry" id="goRetry"><span class="bi-retry">↻</span><span class="bl">RETRY</span></div>' +
           '</div>' +
         '</div>' +
       '</div>';
     overlay.classList.add('on');
     document.getElementById('goContinue').addEventListener('click', function(){ haptic('btn'); tryContinue(mode, cost); });
     document.getElementById('goRetry').addEventListener('click', function(){ haptic('btn'); retryLevel(); });
-    document.getElementById('goClose').addEventListener('click', function(){ haptic('btn'); retryLevel(); });
   }
   // CONTINUE costs coins (no ads). If short on coins, nudge the button instead.
   function tryContinue(mode, cost){
@@ -3889,6 +3926,7 @@
     maxCombo: function(){ return S.maxCombo; },
     urgent: function(){ return S.urgent; },
     comboPillText: function(){ var t = comboEl.querySelector('.cg-label'); return t ? t.textContent.replace(/\s+/g,' ').trim() : ''; },
+    comboCountText: function(){ var e = document.querySelector('#comboCount .cc-x'); return e ? e.textContent.trim() : ''; },
     timeLeft: function(){ return S.timeLeft; },
     setTime: function(t){ S.timeLeft = t; updateTimer(); },
     forceLose: function(){ S.timeLeft = 0; lose(); },
@@ -3911,12 +3949,11 @@
     gameOverCard: function(){
       var c = document.querySelector('#popupBox .card.gameover');
       if (!c) return { shown:false, on:overlay.classList.contains('on') };
-      var banner = document.querySelector('#popupBox .go-banner');
-      var bcls = banner ? banner.className : '';
-      var bimg = banner ? getComputedStyle(banner).backgroundImage : '';
+      var title = document.querySelector('#popupBox .go-title');
+      var tcls = title ? title.className : '';
       return { shown:true, on:overlay.classList.contains('on'),
-        mode: /timeup/.test(bcls) ? 'timeup' : (/nospace/.test(bcls) ? 'nospace' : '?'),
-        bannerImg: bimg,
+        mode: /timeup/.test(tcls) ? 'timeup' : (/nospace/.test(tcls) ? 'nospace' : '?'),
+        titleText: title ? title.textContent.trim() : '',
         hasContinue: !!document.querySelector('#popupBox #goContinue'),
         hasCoinHud: !!document.querySelector('#popupBox .go-coins'),
         hasClose: !!document.querySelector('#popupBox #goClose'),

@@ -640,6 +640,9 @@ function rgbDist(p, c){
     const praiseImg = (() => { const p=document.querySelector('#fx .praise'); return p ? bgHas(p,'praise_') : false; })();
     const flyStarEls = document.querySelectorAll('.fly-star').length;
     const flyStarImg = (() => { const s=document.querySelector('.fly-star'); return s ? bgHas(s,'fx_star.png') : false; })();
+    const flameEls = document.querySelectorAll('.fly-flame').length;
+    const flameIsFire = (() => { const f=document.querySelector('.fly-flame'); return f ? /🔥/.test(f.textContent) : false; })();
+    const comboBadgeEls = document.querySelectorAll('#fx .combo-badge').length;
     const ringEls = document.querySelectorAll('.spark-ring').length;
     const ringImg = (() => { const r=document.querySelector('.spark-ring'); return r ? bgHas(r,'fx_sparkle.png') : false; })();
     const confettiEls = document.querySelectorAll('.confetti').length;
@@ -650,17 +653,19 @@ function rgbDist(p, c){
       cleared, moves,
       praiseSeen: praiseEls, praiseImg, flyStarSeen: flyStarEls, flyStarImg,
       ringSeen: ringEls, ringImg, confettiSeen: confettiEls, comboPillTxt, comboCountTxt,
+      flameSeen: flameEls, flameIsFire, comboBadgeSeen: comboBadgeEls,
       starsBefore, comboBefore, maxComboBefore,
       starsAfter: qa.stars(), comboAfter: qa.combo(), maxComboAfter: qa.maxCombo(),
       total: totalGoods()
     };
   });
   assert('(2a) a cubby cleared on completion (all 3 slots same type)', clearInfo.cleared, 'moves='+clearInfo.moves);
-  // 4 EFFECTS now use IMAGE sprites: (1) star fly (fx_star) (2) praise IMAGE (3) combo (4) sparkle/confetti
-  assert('(2b-FX1 praise IMAGE) praise_*.png DOM appeared on clear', clearInfo.praiseSeen >= 1 && clearInfo.praiseImg,
-    'els='+clearInfo.praiseSeen+' img='+clearInfo.praiseImg);
-  assert('(2c-FX2 star fly IMAGE) fly-star uses fx_star.png on clear', clearInfo.flyStarSeen >= 1 && clearInfo.flyStarImg,
-    'els='+clearInfo.flyStarSeen+' img='+clearInfo.flyStarImg);
+  // COMBO feedback is now a 🔥 FLAME that flies into the top flame pill — NO text banner/badge.
+  assert('(2b-FX1 combo FLAME) a 🔥 flame flies to the top flame pill on clear', clearInfo.flameSeen >= 1 && clearInfo.flameIsFire,
+    'flame='+clearInfo.flameSeen+' isFire='+clearInfo.flameIsFire);
+  assert('(2c-FX2 NO combo text) no praise banner / combo-badge text plays on clear (replaced by the flame)',
+    clearInfo.praiseSeen === 0 && clearInfo.comboBadgeSeen === 0,
+    'praise='+clearInfo.praiseSeen+' comboBadge='+clearInfo.comboBadgeSeen);
   assert('(2d-score) internal score incremented on clear', clearInfo.starsAfter > clearInfo.starsBefore, clearInfo.starsBefore+'->'+clearInfo.starsAfter);
   // combo starts at 0 and increments on clear; the FLAME pill shows the CURRENT combo "xN".
   assert('(2e-FX3 combo) combo incremented + flame pill shows "xN"', clearInfo.comboAfter > clearInfo.comboBefore && clearInfo.comboCountTxt === ('x'+clearInfo.comboAfter),
@@ -669,7 +674,8 @@ function rgbDist(p, c){
     'max '+clearInfo.maxComboBefore+'->'+clearInfo.maxComboAfter+' combo='+clearInfo.comboAfter);
   assert('(2f-FX sparkle IMAGE) spark-ring uses fx_sparkle.png on clear', clearInfo.ringSeen >= 1 && clearInfo.ringImg,
     'els='+clearInfo.ringSeen+' img='+clearInfo.ringImg);
-  assert('(2g-FX confetti IMAGE) fx_confetti.png sprites appeared on clear', clearInfo.confettiSeen >= 1, clearInfo.confettiSeen);
+  // (confetti per-clear removed — the clear burst is the sparkle ring + the bounce-pop goods; user wanted smaller FX)
+  assert('(2g-clear effect minimal) the per-clear burst is the sparkle ring (no heavy confetti)', clearInfo.ringSeen >= 1, 'ring='+clearInfo.ringSeen+' confetti='+clearInfo.confettiSeen);
 
   // (3) drive to WIN -> GameEnd {success:true}. WIN only when every layer empty.
   const winInfo = await page.evaluate(async () => {

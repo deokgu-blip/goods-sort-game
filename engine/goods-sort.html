@@ -604,6 +604,10 @@
   .fly-star{ position:fixed; z-index:55; width:38px; height:38px; pointer-events:none;
     background:url("../assets/ui/fx_star.png") center/contain no-repeat;
     filter:drop-shadow(0 0 6px rgba(255,200,40,.9)); will-change:transform,opacity; }
+  /* COMBO flame that flies from the clear spot into the top flame pill */
+  .fly-flame{ position:fixed; z-index:58; pointer-events:none; font-size:26px; line-height:1;
+    transform:translate(-50%,-50%) scale(1); will-change:left,top,transform,opacity;
+    filter:drop-shadow(0 0 5px rgba(255,140,30,.85)); }
   /* praise = praise_*.png banner image, escalating by combo tier */
   .praise{ position:fixed; z-index:56; pointer-events:none; transform:translate(-50%,-50%);
     width:138px; height:55px; background:center/contain no-repeat;
@@ -2184,17 +2188,12 @@
     bumpCombo();
     var combo = S.combo;
 
-    // 1) STAR FLY  (internal score += base * combo; star sprite = fx_star.png)
+    // COMBO FEEDBACK — NO text banner / xN badge. A small flame (🔥, matching the top UI)
+    // pops at the clear spot and flies INTO the top flame pill. + a small sparkle pop.
     var base = (S.cfg.scoring && S.cfg.scoring.starsPerSort) || 1;
-    var gain = base * Math.max(1, combo);
-    flyStar(cx, cy, gain);
-
-    // 2) PRAISE IMAGE (escalates by combo tier) + sparkle/confetti burst
-    praise(cx, cy, combo);
+    S.stars += base * Math.max(1, combo);              // internal score (no UI counter)
+    flyFlameToCombo(cx, cy);
     sparkleRing(cx, cy);
-    confettiBurst(cx, cy);
-    // 3) in-play COMBO badge (badge_combo.png) near the board when combo >= 2
-    if (combo >= 2) comboBadge(cx, cy, combo);
 
     // 4) cubby pop
     if (el){
@@ -2281,6 +2280,26 @@
       // combo pill pop on arrival
       comboEl.classList.remove('bump'); void comboEl.offsetWidth; comboEl.classList.add('bump');
     }, 560);
+  }
+  // COMBO flame — a small 🔥 pops at the clear spot and flies INTO the top flame pill (#comboCount).
+  function flyFlameToCombo(x, y){
+    var dest = comboCountEl || comboEl;
+    var t = dest.getBoundingClientRect();
+    var tx = t.left + t.width*0.5, ty = t.top + t.height/2;
+    var fl = document.createElement('div'); fl.className='fly-flame'; fl.textContent='🔥';
+    fl.style.left = x+'px'; fl.style.top = y+'px';
+    document.body.appendChild(fl);
+    requestAnimationFrame(function(){
+      fl.style.transition = 'left .5s cubic-bezier(.5,-0.25,.3,1), top .5s cubic-bezier(.5,-0.25,.3,1), transform .5s ease, opacity .5s ease';
+      fl.style.left = tx+'px'; fl.style.top = ty+'px';
+      fl.style.transform = 'translate(-50%,-50%) scale(.35)';
+      fl.style.opacity = '0.2';
+    });
+    setTimeout(function(){
+      fl.remove();
+      // the top flame pill pops as the flame enters it
+      if (comboCountEl){ comboCountEl.classList.remove('bump'); void comboCountEl.offsetWidth; comboCountEl.classList.add('bump'); }
+    }, 510);
   }
 
   // praise IMAGE (praise_*.png) — escalates by combo tier -----

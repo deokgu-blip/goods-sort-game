@@ -1,0 +1,13 @@
+crack_overlay.png — LOCK gimmick: white shattered-glass crack overlay covering a whole cubby cell. Count1 = crack only; Count2 = 1 chain + crack. Tint via multiply/overlay if needed.
+
+[model] gpt-image-2  --size 1024x1024 --quality high   (v2, shattered-glass — v1 came out too cobwebby/dense and was discarded)
+[prompt]
+A shattered cracked glass overlay, top-down flat front view, perfectly square, full-bleed edge to edge. A small bright impact point slightly off-center, with about 10 to 14 BOLD straight white fracture lines radiating outward from it like a star, reaching the edges of the frame. A few (2 or 3) thin angular concentric crack rings connect some of the radial lines, forming irregular glass shards. Lines are crisp clean WHITE with a faint soft cyan-white glow, varying thickness (thicker near center, hairline at tips), like real shattered glass. The areas between cracks are completely solid pure black and empty, no shading, no panes, no texture. Keep it fairly OPEN and readable, NOT a dense cobweb, NOT a spider web, fewer lines with clear black gaps between them. Only white crack lines on pure black #000000 background. NO frame, NO border, NO text, NO numbers, NO objects, no watermark.
+
+[transparency method] gpt-image-2 cannot output transparent, so generated as WHITE cracks on PURE BLACK, then luminance->alpha keying (NOT green keying):
+ -> node games/goods-sort/tools/_lum_to_alpha.mjs <raw_v2> assets/ui/crack_overlay.png --black 35 --white 150 --whiten 190
+    (per-pixel: luminance<=35 -> alpha 0 transparent; >=150 -> alpha 255; in-between -> proportional alpha;
+     bright cores pushed to pure white, partials lifted ~55% toward white so cracks read light/glassy.)
+    Result: white crack lines + fully transparent background (faces/panes transparent). opaque(>200a) ~2.7%.
+
+[final] assets/ui/crack_overlay.png  1024x1024  RGBA  (white cracks only, bg transparent)

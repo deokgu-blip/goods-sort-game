@@ -121,18 +121,22 @@
   #game{ position:fixed; inset:0; z-index:1; display:flex; flex-direction:column;
     align-items:center; }
 
-  /* ---------------- HUD (reference layout — IMAGE pills) ----------------
-     row: [Lv N pill][lives]  ·  [ TIMER pill ]  ·  [ COMBO pill ][⏸]
-     Every framed element is a gpt-image-2 PNG; dynamic NUMBERS overlay as
-     ENGLISH text on each frame's flat area. Pause + lives chips kept as-is.
-     ---------------------------------------------------------------------- */
-  #hud{ width:100%; max-width:560px; padding:calc(var(--safe-top) + 12px) 12px 2px;
-    display:grid; grid-template-columns:1fr auto 1fr; align-items:center; column-gap:8px; z-index:5; }
-  .hud-left{ display:flex; align-items:center; gap:7px; justify-self:start; }
-  .hud-right{ display:flex; align-items:center; gap:7px; justify-self:end; }
-  .hud-center{ display:flex; flex-direction:column; align-items:center; gap:6px; justify-self:center; }
+  /* ---------------- HUD (reference: a WOOD FRAME bar wrapping the row) ----------------
+     [ Lv ]   ·   [ TIMER ]   ·   [ ⏸ ]   +  COMBO gauge overlapping the frame's bottom.
+     ------------------------------------------------------------------------------------ */
+  #hud{ width:100%; max-width:560px; padding:calc(var(--safe-top) + 8px) 10px 0; z-index:5;
+    display:flex; flex-direction:column; align-items:center; }
+  /* the wood frame bar (hud_frame.png); a CSS wood gradient backs it as a fallback */
+  /* FLAT brown bar (user: 평면형 — no thick bevel, no inner border) */
+  #hudFrame{ position:relative; width:100%; max-width:432px;
+    display:grid; grid-template-columns:1fr auto 1fr; align-items:center; column-gap:8px;
+    padding:11px 18px 17px; border-radius:22px;
+    background:linear-gradient(#a4683f,#9a5d36);
+    box-shadow:0 3px 6px rgba(0,0,0,.16); }
+  .hud-left{ display:flex; align-items:center; justify-self:start; }
+  .hud-right{ display:flex; align-items:center; justify-self:end; }
+  .hud-center{ display:flex; align-items:center; justify-content:center; justify-self:center; }
 
-  /* generic image-pill: a PNG frame with a centered/positioned text overlay */
   .img-pill{ position:relative; display:flex; align-items:center; justify-content:center;
     background-repeat:no-repeat; background-position:center; background-size:100% 100%;
     line-height:1; pointer-events:none; }
@@ -140,41 +144,43 @@
     -webkit-text-stroke:2px rgba(120,40,10,.85); paint-order:stroke fill;
     text-shadow:0 2px 0 rgba(0,0,0,.28); font-variant-numeric:tabular-nums; white-space:nowrap; }
 
-  /* Level badge — pill_level.png (512x261, red). "Lv. N" centered. */
-  #lv{ width:84px; height:43px; background-image:url("../assets/ui/pill_level.png"); }
-  #lv .txt{ font-size:18px; }
+  #lv{ width:80px; height:42px; background-image:url("../assets/ui/pill_level.png"); }
+  #lv .txt{ font-size:17px; }
 
-  /* lives chip kept as the existing code-drawn chip (not in replace list) */
-  .hud-chip{ background:linear-gradient(#fff8ec,#f1ddb8); color:var(--hud);
-    border:2px solid #fff; border-radius:16px; padding:6px 12px;
-    box-shadow:0 3px 0 rgba(0,0,0,.22); font-weight:800; font-size:15px;
-    display:flex; align-items:center; gap:5px; line-height:1; }
-  #lives{ color:#e8453c; gap:3px; }
-  #lives .heart{ font-size:14px; filter:drop-shadow(0 1px 0 rgba(0,0,0,.18)); }
-
-  /* Timer — pill_timer.png (cream + clock). Icon sits on the LEFT, so the
-     "M:SS" text is offset RIGHT onto the flat area. Urgent <60s swaps to
-     pill_timer_urgent.png (skull, red). */
-  #timer{ width:168px; height:49px; background-image:url("../assets/ui/pill_timer.png");
-    justify-content:flex-end; padding-right:30px; }
-  #timer .txt{ font-size:26px; color:#7a5018; -webkit-text-stroke:0;
-    text-shadow:0 2px 0 rgba(255,255,255,.6); }
+  /* Timer — AMBER pill (pill_timer_amber.png), centered + big. Urgent <60s -> skull/red. */
+  #timer{ width:152px; height:52px; background-image:url("../assets/ui/pill_timer_amber.png"); }
+  #timer .txt{ font-size:27px; color:#fff; -webkit-text-stroke:2px rgba(150,80,10,.75);
+    text-shadow:0 2px 0 rgba(120,60,5,.45); }
   #timer.urgent{ background-image:url("../assets/ui/pill_timer_urgent.png");
     animation:tpulse .8s ease-in-out infinite; }
   #timer.urgent .txt{ color:#fff; -webkit-text-stroke:2px rgba(150,20,10,.8);
     text-shadow:0 2px 0 rgba(120,10,5,.5); }
   @keyframes tpulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.07);} }
 
-  /* Combo counter (REPLACES the star counter) — pill_combo.png (yellow +
-     flame). Flame icon on LEFT, so "xN" text offset RIGHT. Top-right slot. */
-  #combo{ width:96px; height:35px; background-image:url("../assets/ui/pill_combo.png");
-    justify-content:flex-end; padding-right:18px; }
-  #combo .txt{ font-size:19px; color:#b8420a; -webkit-text-stroke:1.5px rgba(255,255,255,.85);
-    text-shadow:0 1px 0 rgba(150,60,10,.4); }
-  #combo.bump{ animation:cbump .3s ease; }
-  @keyframes cbump{ 0%{transform:scale(1);} 35%{transform:scale(1.28);} 100%{transform:scale(1);} }
+  /* pause chip (kept) */
+  .hud-chip{ background:linear-gradient(#fff8ec,#f1ddb8); color:var(--hud);
+    border:2px solid #fff; border-radius:16px; padding:6px 11px;
+    box-shadow:0 3px 0 rgba(0,0,0,.22); font-weight:800; font-size:15px;
+    display:flex; align-items:center; line-height:1; }
+  #pause{ cursor:pointer; pointer-events:auto; font-size:17px; }
 
-  #pause{ cursor:pointer; padding:6px 11px; pointer-events:auto; }
+  /* COMBO gauge — the TRACK is ALWAYS shown (user: 프로그래스 UI 위치는 항상 노출).
+     The green fill + "COMBO xN" label appear only during an active combo. Overlaps the
+     frame's bottom edge, centered under the timer. */
+  .combo-gauge{ position:relative; width:144px; height:22px; margin-top:-13px; z-index:6; pointer-events:none; }
+  .combo-gauge .cg-track{ position:absolute; inset:0; border-radius:12px;
+    background:rgba(58,32,15,.85); box-shadow:inset 0 2px 3px rgba(0,0,0,.45); overflow:hidden;
+    border:2px solid rgba(40,22,8,.55); }
+  .combo-gauge .cg-fill{ position:absolute; left:0; top:0; bottom:0; width:0%;
+    background:url("../assets/ui/gauge_combo.png") left center/auto 100% no-repeat;
+    background-color:#5fd13a; opacity:0; transition:opacity .15s; }
+  .combo-gauge .cg-label{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-weight:900; font-size:13px; color:#fff; -webkit-text-stroke:1.5px rgba(35,80,18,.95);
+    paint-order:stroke fill; text-shadow:0 1px 0 rgba(25,60,12,.5); letter-spacing:.3px;
+    opacity:0; transition:opacity .15s; }
+  .combo-gauge.show .cg-fill, .combo-gauge.show .cg-label{ opacity:1; }
+  .combo-gauge.bump{ animation:cbump .3s ease; }
+  @keyframes cbump{ 0%{transform:scale(1);} 35%{transform:scale(1.1);} 100%{transform:scale(1);} }
 
   /* ============================================================
      V12 — UNIFIED 3D WOOD NICHE SHELF (ported from _niche_poc.html).
@@ -289,6 +295,51 @@
      flatten). z-index ABOVE the front rim (V14) so the GOODS standing on the floor PAINT
      OVER the thin front-lip band -> each good's FULL base is visible, never walled-off. */
   .cubby .niche-clip{ position:absolute; inset:0; transform-style:preserve-3d; z-index:3; }
+  /* ---- LOCK gimmick (자물쇠): count-driven overlay, ABOVE the goods (z 20) ----
+     count>=4 : solid dim + 2 chains       count 2 : cracked dim + 1 chain
+     count 3  : cracked dim + 2 chains      count 1 : cracked dim + 0 chains
+     count 0  : break — padlock flies off sideways, everything fades. */
+  .cubby .c-lock{ position:absolute; inset:0; z-index:20; display:none;
+    align-items:center; justify-content:center; pointer-events:auto; cursor:not-allowed; overflow:hidden; }
+  .cubby .c-lock.on{ display:flex; }
+  .cubby.locked .niche-clip{ filter:brightness(.74) saturate(.9); }   /* slightly darken frozen contents */
+  /* DIM layer: bluish, solid for >=4, lighter for cracked (1..3) */
+  .cubby .c-lock-dim{ position:absolute; inset:0; z-index:1; background:rgba(22,30,58,.0); transition:background .25s; }
+  .cubby .c-lock.dim-solid .c-lock-dim{ background:rgba(22,30,58,.50); }
+  .cubby .c-lock.dim-crack .c-lock-dim{ background:rgba(22,30,58,.30); }
+  /* CRACK overlay (금간 유리) — shown only on cracked (count<=3) */
+  .cubby .c-lock-crack{ position:absolute; inset:-4%; z-index:2; display:none;
+    background:url("../assets/ui/crack_overlay.png") center/cover no-repeat; opacity:.9;
+    mix-blend-mode:screen; pointer-events:none; }
+  .cubby .c-lock.dim-crack .c-lock-crack{ display:block; }
+  /* CHAINS — long metal strands crossing the cubby; c1 \ , c2 / */
+  .cubby .c-chain{ position:absolute; z-index:3; left:50%; top:50%; width:152%; height:30%;
+    background:url("../assets/ui/chain.png") center/100% 100% no-repeat;
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,.4)); pointer-events:none; }
+  .cubby .c-chain.c1{ transform:translate(-50%,-50%) rotate(38deg); }
+  .cubby .c-chain.c2{ transform:translate(-50%,-50%) rotate(-38deg); }
+  /* PADLOCK (gold) centered */
+  .cubby .c-lock-pad{ position:absolute; z-index:4; width:52%; height:52%; left:24%; top:30%;
+    background:url("../assets/ui/lock_closed.png") center/contain no-repeat;
+    filter:drop-shadow(0 3px 4px rgba(0,0,0,.45)); animation:lockIn .3s ease; }
+  /* COUNT badge — blue circle, top-center, overlapping the top edge */
+  .cubby .c-lock-badge{ position:absolute; z-index:5; top:3%; left:50%; transform:translateX(-50%);
+    min-width:30%; aspect-ratio:1/1; border-radius:50%;
+    background:radial-gradient(circle at 38% 32%, #6fc4ff, #2f8fe6 70%, #1f6fc0);
+    border:3px solid #fff; box-shadow:0 3px 5px rgba(0,0,0,.35);
+    display:flex; align-items:center; justify-content:center; }
+  .cubby .c-lock-num{ font-weight:900; font-size:clamp(14px,4.6vw,26px); color:#fff;
+    -webkit-text-stroke:1.5px #1f5fa6; paint-order:stroke fill; text-shadow:0 2px 2px rgba(0,0,0,.3); }
+  /* BREAK (count -> 0): padlock flies off sideways, rest fades. */
+  .cubby .c-lock.breaking .c-lock-pad{ background-image:url("../assets/ui/lock_break.png"); animation:lockFly .5s ease-in forwards; }
+  .cubby .c-lock.breaking .c-lock-dim,
+  .cubby .c-lock.breaking .c-lock-crack,
+  .cubby .c-lock.breaking .c-chain,
+  .cubby .c-lock.breaking .c-lock-badge{ animation:lockFade .3s ease forwards; }
+  @keyframes lockIn{ from{ transform:scale(.4); opacity:0; } to{ opacity:1; } }
+  @keyframes lockFly{ 0%{ transform:translate(0,0) rotate(0); opacity:1; }
+    100%{ transform:translate(150%,-40%) rotate(55deg); opacity:0; } }
+  @keyframes lockFade{ to{ opacity:0; } }
   /* recess shadow at the opening (read as set into the wood). */
   .cubby::before{ content:""; position:absolute; inset:0;
     z-index:6; pointer-events:none;
@@ -632,7 +683,47 @@
     letter-spacing:1px; -webkit-text-stroke:2px #2a6a14; paint-order:stroke fill; text-shadow:0 2px 0 rgba(0,0,0,.2); }
   /* continue + free sit side-by-side; retry full-width below */
   .btn-row{ display:flex; align-items:center; justify-content:center; gap:10px; width:100%; }
-  .btn-row .ibtn.continue{ width:62%; }
+  .btn-row .ibtn.continue{ width:46%; height:50px; }
+
+  /* ---- CLEAN game-over panel (panel_gameover_clean.png) + coin HUD + X + RETRY ---- */
+  .card.gameover.clean{ background-image:url("../assets/ui/panel_gameover_clean.png"); aspect-ratio:961/1381; }
+  .card.gameover.clean .card-body{ top:30%; bottom:7%; gap:6px; justify-content:flex-start; }
+  /* coin balance HUD at the very top of the popup */
+  .go-coins{ position:absolute; top:-10%; left:50%; transform:translateX(-50%); z-index:4;
+    display:flex; align-items:center; gap:5px; padding:4px 14px 4px 7px; border-radius:18px;
+    background:linear-gradient(#fff6e4,#f3ddb2); border:3px solid #fff; box-shadow:0 4px 0 rgba(0,0,0,.18); }
+  .go-coins .ci{ width:25px; height:25px; background:url("../assets/ui/icon_coin.png") center/contain no-repeat; }
+  .go-coins .cv{ font-weight:900; font-size:17px; color:#c2741a; text-shadow:0 1px 0 #fff;
+    font-variant-numeric:tabular-nums; }
+  /* X close (top-right) */
+  .go-x{ position:absolute; top:5%; right:-1%; width:38px; height:38px; z-index:5; cursor:pointer; pointer-events:auto;
+    border-radius:50%; background:radial-gradient(circle at 38% 32%, #ff8a7a, #e8453c 72%); border:3px solid #fff;
+    box-shadow:0 3px 0 rgba(0,0,0,.2); display:flex; align-items:center; justify-content:center; }
+  .go-x::before{ content:"\2715"; color:#fff; font-weight:900; font-size:17px; }
+  .go-x:active{ transform:translateY(2px); }
+  /* RETRY (image btn_retry) with a label */
+  .ibtn.retry{ background-image:url("../assets/ui/btn_retry.png"); }
+  .ibtn.retry.wide{ width:46%; height:50px; }
+  .ibtn.retry .retrylbl{ position:absolute; font-weight:900; font-size:16px; color:#fff; letter-spacing:.5px;
+    -webkit-text-stroke:2px rgba(120,40,10,.85); paint-order:stroke fill; text-shadow:0 2px 0 rgba(0,0,0,.2); }
+  .ibtn.shake{ animation:shakeX .3s ease; }
+  @keyframes shakeX{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-5px);} 75%{transform:translateX(5px);} }
+
+  /* ---- CLEAR: full-screen DIM show (no card) — big praise + MAX COMBO + NEXT ---- */
+  #overlay.on.clear{ background:rgba(20,8,2,.62); }
+  .clear-show{ width:min(92vw,420px); display:flex; flex-direction:column; align-items:center;
+    justify-content:center; gap:16px; }
+  .clear-show .cb-praise{ width:78vw; max-width:330px; height:116px; background:center/contain no-repeat;
+    filter:drop-shadow(0 5px 6px rgba(0,0,0,.4)); animation:obPop .5s cubic-bezier(.34,1.56,.64,1); }
+  .clear-show .cb-maxcombo{ display:flex; flex-direction:column; align-items:center; gap:2px; }
+  .clear-show .cb-maxcombo .lbl{ font-weight:900; font-size:21px; letter-spacing:2px; color:#ffe08a;
+    -webkit-text-stroke:1px rgba(120,60,10,.6); paint-order:stroke fill; }
+  .clear-show .cb-maxcombo .val{ font-weight:900; font-size:64px; line-height:1; color:#ffce3a;
+    -webkit-text-stroke:4px #8a3d00; paint-order:stroke fill; text-shadow:0 4px 0 rgba(0,0,0,.25);
+    font-variant-numeric:tabular-nums; animation:obPop .5s .1s both cubic-bezier(.34,1.56,.64,1); }
+  .clear-show .cb-next{ width:62%; max-width:230px; height:54px; background-image:url("../assets/ui/btn_continue.png"); }
+  .clear-show .cb-next .nextlbl{ position:absolute; font-weight:900; font-size:19px; color:#fff; letter-spacing:1px;
+    -webkit-text-stroke:2px #2a6a14; paint-order:stroke fill; text-shadow:0 2px 0 rgba(0,0,0,.2); }
 
   /* legacy .popup kept for the PAUSE screen only */
   .popup{ width:min(86vw,360px); background:linear-gradient(#fff8ea,#ffe9c0);
@@ -663,22 +754,48 @@
   /* ---------------- BOOSTER BAR (bottom — IMAGE buttons) ---------------- */
   #boosters{ width:100%; max-width:560px; padding:4px 16px calc(env(safe-area-inset-bottom,0px) + 14px);
     display:flex; align-items:center; justify-content:center; gap:12px; z-index:5; }
-  /* each booster is a gpt-image-2 PNG tile (btn_*.png). The image IS the button —
-     no code-drawn frame. Functional behavior is placeholder for now. */
+  /* each item is a gpt-image-2 button tile (icon set per-item in JS). */
   .booster{ position:relative; flex:1; max-width:78px; aspect-ratio:1/1.02;
     background-repeat:no-repeat; background-position:center; background-size:contain;
     filter:drop-shadow(0 4px 3px rgba(80,50,20,.35));
     cursor:pointer; transition:transform .08s; }
   .booster:active{ transform:translateY(3px); }
-  .booster[data-booster="free"]{ background-image:url("../assets/ui/btn_free.png"); }
-  .booster[data-booster="hammer"]{ background-image:url("../assets/ui/btn_hammer.png"); }
-  .booster[data-booster="shuffle"]{ background-image:url("../assets/ui/btn_shuffle.png"); }
-  .booster[data-booster="undo"]{ background-image:url("../assets/ui/btn_undo.png"); }
-  .booster .badge{ position:absolute; top:-5px; right:-4px; min-width:18px; height:18px;
-    padding:0 4px; border-radius:10px; background:linear-gradient(var(--green),var(--green-d));
-    color:#fff; font-size:10px; font-weight:900; display:flex; align-items:center; justify-content:center;
-    border:2px solid #fff; box-shadow:0 2px 0 rgba(0,0,0,.2); }
-  .booster.free .badge{ background:linear-gradient(var(--red),#c5342c); }
+  /* "Free" label — small green pill at the tile's bottom (when a free use is available) */
+  .booster .free-lbl{ position:absolute; left:50%; bottom:-7px; transform:translateX(-50%);
+    padding:1px 9px; border-radius:9px; background:linear-gradient(var(--green),var(--green-d));
+    color:#fff; font-size:11px; font-weight:900; border:2px solid #fff;
+    box-shadow:0 2px 0 rgba(0,0,0,.2); white-space:nowrap; pointer-events:none; }
+  /* LOCKED item — greyed + padlock + unlock level */
+  .booster.locked{ filter:grayscale(.85) brightness(.82) drop-shadow(0 4px 3px rgba(80,50,20,.3)); cursor:default; }
+  .booster .lock-ov{ position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:0; pointer-events:none; }
+  .booster .lock-ov .lk-pad{ width:48%; height:48%;
+    background:url("../assets/ui/lock_closed.png") center/contain no-repeat;
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
+  .booster .lock-ov .lk-lv{ font-weight:900; font-size:11px; color:#fff; margin-top:1px;
+    -webkit-text-stroke:1.4px #5a3a14; paint-order:stroke fill; }
+  /* ARMED (hammer targeting) — pulse the tile */
+  .booster.armed{ animation:itemPulse .7s ease-in-out infinite; }
+  @keyframes itemPulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.13);} }
+  body.hammer-aim #shelf{ cursor:crosshair; }
+
+  /* ITEM-unlock ONBOARDING card (code panel — distinct from the image cards) */
+  .card.onboard{ background:linear-gradient(#fff8ea,#ffe7bd); border:5px solid #fff;
+    border-radius:28px; width:min(82vw,320px); aspect-ratio:auto; padding:22px 20px 20px;
+    display:flex; flex-direction:column; align-items:center; gap:9px;
+    box-shadow:0 18px 50px rgba(0,0,0,.5); }
+  .card.onboard .ob-title{ font-weight:900; font-size:22px; color:#ff8a1e; letter-spacing:1px;
+    -webkit-text-stroke:1px #fff; paint-order:stroke fill; }
+  .card.onboard .ob-icon{ width:96px; height:96px; background:center/contain no-repeat;
+    filter:drop-shadow(0 6px 6px rgba(0,0,0,.25)); animation:obPop .5s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes obPop{ 0%{transform:scale(.3) rotate(-12deg); opacity:0;} 100%{transform:scale(1);} }
+  .card.onboard .ob-name{ font-weight:900; font-size:21px; color:#5a3a14; }
+  .card.onboard .ob-desc{ font-size:14px; color:#7a5a32; text-align:center; line-height:1.35; }
+  .card.onboard .ob-ok{ margin-top:6px; width:62%; height:46px; background-image:url("../assets/ui/btn_continue.png");
+    font-weight:900; font-size:17px; color:#fff; letter-spacing:.5px;
+    -webkit-text-stroke:2px #2a6a14; paint-order:stroke fill; text-shadow:0 2px 0 rgba(0,0,0,.2); }
+  /* time-freeze active — subtle icy tint on the timer */
+  body.frozen #timer{ filter:hue-rotate(150deg) saturate(1.15) brightness(1.06); }
 
   /* reels mode: zero safe-top */
   body.reels{ --safe-top:0px; }
@@ -690,16 +807,22 @@
 
 <div id="game">
   <div id="hud">
-    <div class="hud-left">
-      <div class="img-pill" id="lv"><span class="txt">Lv. <span id="lvNum">1</span></span></div>
-      <div class="hud-chip" id="lives"><span class="heart">❤</span><span id="livesNum">5</span></div>
+    <!-- top HUD wrapped in a single WOOD FRAME bar (hud_frame.png) -->
+    <div id="hudFrame">
+      <div class="hud-left">
+        <div class="img-pill" id="lv"><span class="txt">Lv. <span id="lvNum">1</span></span></div>
+      </div>
+      <div class="hud-center">
+        <div class="img-pill" id="timer"><span class="txt">02:00</span></div>
+      </div>
+      <div class="hud-right">
+        <div class="hud-chip" id="pause">⏸</div>
+      </div>
     </div>
-    <div class="hud-center">
-      <div class="img-pill" id="timer"><span class="txt">02:00</span></div>
-    </div>
-    <div class="hud-right">
-      <div class="img-pill" id="combo"><span class="txt">x<span id="comboNum">0</span></span></div>
-      <div class="hud-chip" id="pause">⏸</div>
+    <!-- COMBO gauge (depletes over the combo-reset window) — overlaps the frame's bottom edge -->
+    <div class="combo-gauge" id="combo">
+      <div class="cg-track"><div class="cg-fill" id="comboFill"></div></div>
+      <div class="cg-label">COMBO&nbsp;<span class="cg-x">x<span id="comboNum">0</span></span></div>
     </div>
   </div>
 
@@ -715,11 +838,12 @@
     </div>
   </div>
 
+  <!-- ITEM bar — 4 powerups. hammer always on; the rest unlock at Lv 3/6/9 (rendered in JS). -->
   <div id="boosters">
-    <div class="booster" data-booster="hammer"><span class="badge">0</span></div>
-    <div class="booster" data-booster="shuffle"><span class="badge">0</span></div>
-    <div class="booster" data-booster="undo"><span class="badge">0</span></div>
-    <div class="booster free" data-booster="free"><span class="badge">AD</span></div>
+    <div class="booster" data-item="hammer"></div>
+    <div class="booster" data-item="timefreeze"></div>
+    <div class="booster" data-item="shuffle"></div>
+    <div class="booster" data-item="addtime"></div>
   </div>
 </div>
 
@@ -1308,6 +1432,7 @@
     maxCombo: 0,         // highest combo reached this level (shown on result — Phase 2b)
     comboTimer: null,
     urgent: false,       // timer <60s red-urgency state
+    coins: (function(){ try{ var v=parseInt(localStorage.getItem('gs_coins'),10); return (v>=0)?v:1030; }catch(e){ return 1030; } })(),
     lastTick: 0
   };
 
@@ -1318,8 +1443,9 @@
   var lvNumEl = document.getElementById('lvNum');
   var timerEl = document.getElementById('timer');
   var timerTxtEl = timerEl.querySelector('.txt');
-  var comboEl = document.getElementById('combo');      // top-right combo pill (replaces stars)
-  var comboNumEl = document.getElementById('comboNum'); // the "xN" number on the combo pill
+  var comboEl = document.getElementById('combo');       // COMBO gauge (below the timer)
+  var comboNumEl = document.getElementById('comboNum'); // the "xN" number in the gauge label
+  var comboFillEl = document.getElementById('comboFill'); // the depleting green fill
   var fxEl = document.getElementById('fx');
   var ghostEl = document.getElementById('drag-ghost');
 
@@ -1687,8 +1813,15 @@
             '<div class="c-back-layer"></div>' +
             '<div class="c-floor"></div>' +
           '</div>' +
-          '<div class="c-rim"></div>';
-        if (cb){ cb.el = el; cb.floor = el.querySelector('.c-floor'); cb.backEl = el.querySelector('.c-back-layer'); }
+          '<div class="c-rim"></div>' +
+          '<div class="c-lock">' +
+            '<div class="c-lock-dim"></div>' +
+            '<div class="c-lock-crack"></div>' +
+            '<div class="c-chain c1"></div><div class="c-chain c2"></div>' +
+            '<div class="c-lock-pad"></div>' +
+            '<div class="c-lock-badge"><span class="c-lock-num"></span></div>' +
+          '</div>';
+        if (cb){ cb.el = el; cb.floor = el.querySelector('.c-floor'); cb.backEl = el.querySelector('.c-back-layer'); cb.lockEl = el.querySelector('.c-lock'); }
         gridEl.appendChild(el);
       }
     }
@@ -1736,8 +1869,8 @@
         if (front[i]){
           var g = makeGood(front[i], i, idx, 0, false);
           // V4 GRAB RULE: every FRONT-layer good is grabbable.
-          // (locked cubbies mark all front goods blocked.)
-          if (cb.locked) g.classList.add('blocked');
+          // (locked cubbies (lock>0) mark all front goods blocked.)
+          if (cb.lock > 0) g.classList.add('blocked');
           if (opts.reveal){
             g.classList.add('revealing');
             (function(gg){ gg.addEventListener('animationend', function(){ gg.classList.remove('revealing'); }, { once:true }); })(g);
@@ -1762,6 +1895,54 @@
         }
       }
     }
+    renderLock(cb);
+  }
+  // ---- LOCK gimmick (자물쇠) ---------------------------------------------------
+  // A cubby with lock:N is FROZEN — its front goods are 'blocked' (no grab), it rejects
+  // drops, and it shows a padlock badge with the count N. EVERY clear anywhere counts
+  // ALL locks down by 1; when a lock reaches 0 it BREAKS and the cubby becomes interactive.
+  function renderLock(cb){
+    if (!cb.lockEl) return;
+    var n = cb.lock, le = cb.lockEl;
+    var numEl = le.querySelector('.c-lock-num');
+    var c1 = le.querySelector('.c-chain.c1'), c2 = le.querySelector('.c-chain.c2');
+    if (n > 0){
+      cb.el && cb.el.classList.add('locked');
+      le.classList.add('on'); le.classList.remove('breaking');
+      // DIM: solid for >=4, cracked(금간) for 1..3
+      le.classList.toggle('dim-solid', n >= 4);
+      le.classList.toggle('dim-crack', n <= 3);
+      // CHAINS: 2 for >=3, 1 for ==2, 0 for ==1
+      if (c1) c1.style.display = (n >= 2) ? '' : 'none';
+      if (c2) c2.style.display = (n >= 3) ? '' : 'none';
+      if (numEl) numEl.textContent = n;
+    } else {
+      cb.el && cb.el.classList.remove('locked');
+      le.classList.remove('on','dim-solid','dim-crack');
+    }
+  }
+  // Called on EVERY clear: count every lock down by 1; break (and re-enable) any that hit 0.
+  function decrementLocks(){
+    S.cubbies.forEach(function(c){
+      if (c.lock > 0){
+        c.lock -= 1;
+        if (c.lock === 0){
+          if (c.lockEl){
+            var numEl = c.lockEl.querySelector('.c-lock-num');
+            if (numEl) numEl.textContent = '';
+            c.lockEl.classList.add('breaking');     // swap to broken-padlock art + pop
+            c.el && c.el.classList.remove('locked');
+            haptic('clear');
+            (function(cc){ setTimeout(function(){
+              if (cc.lockEl) cc.lockEl.classList.remove('on','breaking','dim-solid','dim-crack');
+              renderCubby(cc);                      // re-render so goods become grabbable
+            }, 520); })(c);
+          } else { renderCubby(c); }
+        } else {
+          renderLock(c);
+        }
+      }
+    });
   }
   function renderAllCubbies(){ S.cubbies.forEach(function(cb){ renderCubby(cb); }); }
 
@@ -1809,7 +1990,7 @@
   // back good) living in the floor, and the cubby isn't locked.
   function isGrabbable(cb, goodEl){
     if (!cb || !goodEl) return false;
-    if (cb.locked) return false;                        // future data flag
+    if (cb.lock > 0) return false;                      // LOCK gimmick: frozen cubby
     if (goodEl.dataset.layer !== '0') return false;     // only FRONT-layer goods
     return !!(cb.floor && cb.floor.contains(goodEl) && !goodEl.classList.contains('peek'));
   }
@@ -1817,7 +1998,7 @@
   // least one EMPTY slot, regardless of type (free-sort). A full front rejects.
   function canDrop(fromCb, toCb, type){
     if (fromCb === toCb) return false;
-    if (toCb.locked) return false;                      // future data flag
+    if (toCb.lock > 0) return false;                    // LOCK gimmick: frozen cubby
     var tf = frontLayer(toCb);
     if (!tf) return false;                              // no front layer to receive
     return !isFull(tf);                                 // free iff any null slot
@@ -1867,7 +2048,7 @@
     // toSlot). Front-layer only; respects no-overlap (uniform cells) + counts. If the
     // only empty slot is the one it came from (or no other empty), it's a NO-OP (home).
     if (fromCb === toCb){
-      if (fromCb.locked) return false;
+      if (fromCb.lock > 0) return false;
       var prefer0 = (toSlot===undefined || toSlot===null) ? -1 : toSlot;
       // never relocate INTO the slot it already occupies — treat the source slot as taken.
       var sTo0 = nearestEmptySlotExcept(ff, prefer0, sFrom);
@@ -1967,6 +2148,7 @@
     var f = frontLayer(cb); if (f){ for (var si=0; si<SLOTS; si++) f[si] = null; }  // empty FRONT slots (data)
     var willReveal = (cb.layers.length > 1);
     if (willReveal) cb.layers.shift();                  // back layer -> front (data, now)
+    decrementLocks();                                    // LOCK: every clear counts ALL locks down by 1
     setTimeout(function(){
       // re-render after the pop: if a back layer slid up, animate the reveal.
       renderCubby(cb, willReveal ? { reveal:true } : {});
@@ -1984,6 +2166,7 @@
     updateComboPill(true);
     if (S.comboTimer) clearTimeout(S.comboTimer);
     var ms = (S.cfg.combo && S.cfg.combo.resetAfterMs) || 4000;
+    startComboGauge(ms);                                // green fill depletes over `ms`
     S.comboTimer = setTimeout(resetCombo, ms);
   }
   function resetCombo(){
@@ -1992,9 +2175,20 @@
     if (S.comboTimer){ clearTimeout(S.comboTimer); S.comboTimer = null; }
     updateComboPill(false);
   }
-  // the HUD pill_combo always shows the CURRENT combo ("xN").
+  // restart the combo gauge: snap fill to 100% then linearly drain to 0 over `ms`.
+  function startComboGauge(ms){
+    if (!comboFillEl) return;
+    comboFillEl.style.transition = 'none';
+    comboFillEl.style.width = '100%';
+    void comboFillEl.offsetWidth;                       // force reflow so the next transition runs
+    comboFillEl.style.transition = 'width ' + ms + 'ms linear';
+    comboFillEl.style.width = '0%';
+  }
+  // the COMBO gauge shows the CURRENT combo ("COMBO xN") and is visible only during a streak.
   function updateComboPill(bump){
     if (comboNumEl) comboNumEl.textContent = S.combo;
+    comboEl.classList.toggle('show', S.combo > 0);
+    if (S.combo === 0 && comboFillEl){ comboFillEl.style.transition='none'; comboFillEl.style.width='0%'; }
     if (bump){ comboEl.classList.remove('bump'); void comboEl.offsetWidth; comboEl.classList.add('bump'); }
   }
 
@@ -2288,6 +2482,12 @@
     // HIT-TEST by SLOT (Fix #2): map the pointer to the slot column under it and
     // grab THAT slot's FRONT good — never a visually-overlapping neighbor/back good.
     var hit = hitAt(p.x, p.y);
+    if (hammerArmed){                                  // HAMMER targeting: tap a good to smash it
+      if (hit && hit.good){ hammerSmash(hit.good); }
+      else { hammerArmed = false; renderItems(); }     // tap empty space -> cancel
+      ev.preventDefault();
+      return;
+    }
     if (hit && hit.good){
       startDrag(hit.good, p.x, p.y);
       ev.preventDefault();
@@ -2318,7 +2518,7 @@
     if (!S.paused && !S.over){
       var dt = (now - S.lastTick)/1000;
       S.lastTick = now;
-      S.timeLeft -= dt;
+      if (now >= freezeUntil) S.timeLeft -= dt;        // TIME FREEZE: skip decrement while frozen
       if (S.timeLeft <= 0){ S.timeLeft = 0; updateTimer(); lose(); }
       else updateTimer();
     } else {
@@ -2359,8 +2559,16 @@
     function front(st,i){ return st[i].length ? st[i][0] : null; }
     function reveal(st,i){ while(st[i].length>1 && allEmpty(st[i][0])) st[i].shift(); }
     function total(st){ var n=0; for(var i=0;i<st.length;i++) for(var j=0;j<st[i].length;j++) n+=filled(st[i][j]); return n; }
-    function move(st,f,t){
+    // LOCK-aware: `locks` (optional parallel int array per cubby) freezes a cubby while >0.
+    function decLocks(locks){
+      if(!locks) return locks;
+      var any=false; for(var i=0;i<locks.length;i++){ if(locks[i]>0){ any=true; break; } }
+      if(!any) return locks;
+      var nl=locks.slice(); for(var j=0;j<nl.length;j++) if(nl[j]>0) nl[j]-=1; return nl;
+    }
+    function move(st,f,t,locks){
       if(f===t) return null;
+      if(locks && (locks[f]>0 || locks[t]>0)) return null;   // LOCK: frozen cubby — no source/target
       var ff=front(st,f), tf=front(st,t);
       if(!ff) return null;
       var sf=firstFilled(ff); if(sf<0) return null;
@@ -2372,32 +2580,37 @@
       var cleared=false;
       if(fullSame(ntf)){ for(var k=0;k<SLOTS;k++) ntf[k]=null; cleared=true; }
       reveal(ns,f); reveal(ns,t);
-      return { st:ns, cleared:cleared };
+      return { st:ns, cleared:cleared, locks: cleared ? decLocks(locks) : locks };
     }
-    function key(st){ return st.map(function(c){ return c.map(function(l){return l.map(function(x){return x||'_';}).join(',');}).join('|'); }).join(';'); }
+    function key(st,locks){ var s = st.map(function(c){ return c.map(function(l){return l.map(function(x){return x||'_';}).join(',');}).join('|'); }).join(';'); return locks ? s+'#'+locks.join(',') : s; }
     // NORMALIZE: a front layer that is ALREADY full-same is an immediate clear (the live
     // game never holds a stable full-same front — it clears on the move that completed it).
     // So before searching, auto-clear any full-same fronts + cascade reveals. This makes a
     // pre-grouped board (3-same per cubby) trivially solvable even when 100% packed -> the
     // reshuffle's grouped layout is recognized as solvable. Mutates a CLONE.
-    function normalize(st){
+    // LOCK-aware: locked cubbies (locks[i]>0) NEVER auto-clear; each auto-clear counts
+    // ALL locks down by 1 (mirrors the live decrementLocks). Returns {st, locks}.
+    function normalize(st, locks){
       var ns = st.map(function(c){ return c.map(function(l){return l.slice();}); });
+      var nl = locks ? locks.slice() : null;
       var changed = true;
       while(changed){
         changed = false;
         for(var i=0;i<ns.length;i++){
+          if(nl && nl[i]>0) continue;                    // LOCK: frozen cubby never auto-clears
           var f = ns[i].length ? ns[i][0] : null;
-          if(f && fullSame(f)){ for(var k=0;k<SLOTS;k++) f[k]=null; reveal(ns,i); changed = true; }
+          if(f && fullSame(f)){ for(var k=0;k<SLOTS;k++) f[k]=null; reveal(ns,i); changed = true;
+            if(nl){ for(var j=0;j<nl.length;j++) if(nl[j]>0) nl[j]-=1; } }
         }
       }
-      return ns;
+      return { st:ns, locks:nl };
     }
     // candidate moves ordered (completing > gathering > dump-to-empty)
-    function moves(st){
+    function moves(st, locks){
       var n=st.length, out=[];
-      for(var f=0;f<n;f++){ var ff=front(st,f); if(!ff || firstFilled(ff)<0) continue;
+      for(var f=0;f<n;f++){ if(locks && locks[f]>0) continue; var ff=front(st,f); if(!ff || firstFilled(ff)<0) continue;
         var tp=ff[firstFilled(ff)];
-        for(var t=0;t<n;t++){ if(t===f) continue; var tf=front(st,t); if(!tf || firstEmpty(tf)<0) continue;
+        for(var t=0;t<n;t++){ if(t===f) continue; if(locks && locks[t]>0) continue; var tf=front(st,t); if(!tf || firstEmpty(tf)<0) continue;
           var fc=filled(tf), same=true;
           for(var k=0;k<SLOTS;k++){ if(tf[k] && tf[k]!==tp){ same=false; break; } }
           var pri;
@@ -2413,55 +2626,57 @@
     }
     // snapshot the LIVE board into a pure state
     function snapshot(){ return S.cubbies.map(function(cb){ return (cb.layers||[]).map(function(l){return l.slice();}); }); }
+    // snapshot the LIVE lock counts (parallel to snapshot()); null when nothing is locked.
+    function snapshotLocks(){ var any=false; var a=S.cubbies.map(function(cb){ var v=cb.lock|0; if(v>0) any=true; return v; }); return any ? a : null; }
     // ---- DEADLOCK: is ANY clear reachable from `st` within a bounded node budget? ----
     // We BFS/DFS and succeed the moment a move's `cleared` flag fires (total drops). If
     // the budget exhausts with NO clear found -> DEADLOCK. Memoizes visited states + caps
     // the budget so it NEVER hangs. (Boards ship solvable, so deadlock = bad player moves.)
-    function anyClearReachable(st, budget){
+    function anyClearReachable(st, budget, locks){
       budget = budget || 60000;
-      var start = normalize(st);
-      var startTotal = total(start);
+      var nr = normalize(st, locks);
+      var start = nr.st, slocks = nr.locks;
       // if normalizing ALREADY cleared something (pre-grouped full-same fronts), a clear is
       // trivially "reachable" (the very next settle clears it).
-      if(startTotal < total(st)) return { reachable:true, exhausted:false };
+      if(total(start) < total(st)) return { reachable:true, exhausted:false };
       var seen = {};
-      var stack = [start];
-      seen[key(start)] = 1;
+      var stack = [{ st:start, locks:slocks }];
+      seen[key(start, slocks)] = 1;
       while(stack.length){
         if(budget-- <= 0) return { reachable:false, exhausted:true };
         var cur = stack.pop();
-        var ms = moves(cur);
+        var ms = moves(cur.st, cur.locks);
         for(var i=0;i<ms.length;i++){
-          var r = move(cur, ms[i].f, ms[i].t);
+          var r = move(cur.st, ms[i].f, ms[i].t, cur.locks);
           if(!r) continue;
           if(r.cleared) return { reachable:true, exhausted:false };   // a clear IS reachable
-          var k = key(r.st);
-          if(!seen[k]){ seen[k]=1; stack.push(r.st); }
+          var k = key(r.st, r.locks);
+          if(!seen[k]){ seen[k]=1; stack.push({ st:r.st, locks:r.locks }); }
         }
       }
       return { reachable:false, exhausted:false };   // searched everything, no clear -> DEADLOCK
     }
     // ---- is the FULL board solvable (clearable to empty)? for reshuffle validation ----
-    function solvable(st, maxSteps, budget){
+    function solvable(st, maxSteps, budget, locks){
       maxSteps = maxSteps || 800; budget = budget || 300000;
       var seen = {}; var found = false;
-      function dfs(s, depth){
+      function dfs(s, slocks, depth){
         if(budget-- <= 0) return false;
-        var ns = normalize(s);                         // auto-clear full-same fronts first
+        var nr = normalize(s, slocks); var ns=nr.st, nl=nr.locks;   // auto-clear full-same fronts first
         if(total(ns)===0){ found = true; return true; }
         if(depth>maxSteps) return false;
-        var k = key(ns); if(seen[k]) return false; seen[k]=1;
-        var ms = moves(ns);
+        var k = key(ns, nl); if(seen[k]) return false; seen[k]=1;
+        var ms = moves(ns, nl);
         for(var i=0;i<ms.length;i++){
-          var r = move(ns, ms[i].f, ms[i].t); if(!r) continue;
-          if(dfs(r.st, depth+1)) return true;
+          var r = move(ns, ms[i].f, ms[i].t, nl); if(!r) continue;
+          if(dfs(r.st, r.locks, depth+1)) return true;
         }
         return false;
       }
-      dfs(st, 0);
+      dfs(st, locks, 0);
       return found;
     }
-    return { snapshot:snapshot, anyClearReachable:anyClearReachable, solvable:solvable, normalize:normalize, total:total, moves:moves, move:move, key:key, front:front, filled:filled };
+    return { snapshot:snapshot, snapshotLocks:snapshotLocks, anyClearReachable:anyClearReachable, solvable:solvable, normalize:normalize, total:total, moves:moves, move:move, key:key, front:front, filled:filled };
   })();
 
   // DEADLOCK CHECK after a player move: if NO clear is reachable from the current
@@ -2469,7 +2684,7 @@
   function isDeadlocked(){
     if (totalGoods() === 0) return false;        // already won, not a deadlock
     var st = Model.snapshot();
-    var r = Model.anyClearReachable(st, 60000);
+    var r = Model.anyClearReachable(st, 60000, Model.snapshotLocks());
     // if the search EXHAUSTED its budget without proving reachability, do NOT cry
     // deadlock (avoid false positives on huge boards) — only a fully-searched "no
     // clear" is a real deadlock.
@@ -2631,25 +2846,26 @@
   var overlay = document.getElementById('overlay');
   var popupBox = document.getElementById('popupBox');
 
-  // RESULT (clear) — panel_result.png card + MAX COMBO readout + NEXT button.
+  // CLEAR — a DIM layer (no card): big praise banner + MAX COMBO + NEXT, with the
+  // all-sides fireworks still going. Fills the screen so it doesn't read empty.
   function showResultCard(){
+    var tier = praiseTier(S.maxCombo);
+    var praiseImg = ({'t-good':'praise_good','t-great':'praise_great','t-excellent':'praise_excellent','t-perfect':'praise_perfect'})[tier];
     popupBox.innerHTML =
-      '<div class="card result" id="resultCard">' +
-        '<div class="card-body">' +
-          '<div class="maxcombo">' +
-            '<div class="lbl">MAX COMBO</div>' +
-            '<div class="val" id="maxComboVal">x' + S.maxCombo + '</div>' +
-          '</div>' +
-          '<div class="ibtn next" id="nextBtn"><span class="nextlbl">NEXT</span></div>' +
+      '<div class="clear-show" id="resultCard">' +
+        '<div class="cb-praise" style="background-image:url(\'../assets/ui/' + praiseImg + '.png\')"></div>' +
+        '<div class="cb-maxcombo">' +
+          '<div class="lbl">MAX COMBO</div>' +
+          '<div class="val" id="maxComboVal">x' + S.maxCombo + '</div>' +
         '</div>' +
+        '<div class="ibtn cb-next" id="nextBtn"><span class="nextlbl">NEXT</span></div>' +
       '</div>';
-    overlay.classList.add('on');
+    overlay.classList.add('on','clear');
     document.getElementById('nextBtn').addEventListener('click', function(){ haptic('btn'); nextLevel(); });
   }
 
-  // GAME OVER — panel_popup.png card. mode = 'timeup' | 'nospace'.
-  // TIME UP: banner + CONTINUE? + (+30s) offer + [CONTINUE(coin)|FREE] + RETRY.
-  // NO SPACE: banner + CONTINUE? + (reshuffle x1) "Refresh all items" + same buttons.
+  // GAME OVER — CLEAN panel (panel_gameover_clean.png): coin HUD + ribbon title + X +
+  // centered offer (+30s / reshuffle x1) + [CONTINUE(coin) | RETRY]. NO ads/AD labels.
   function showGameOverCard(mode){
     var isTime = (mode === 'timeup');
     var bannerCls = isTime ? 'timeup' : 'nospace';
@@ -2663,28 +2879,32 @@
           '<div class="oval">x1</div>' +
           '<div class="olbl">Refresh all items</div>' +
         '</div>';
-    var cost = isTime ? 800 : 800;   // cosmetic coin price overlaid on the green button
+    var cost = 800;
     popupBox.innerHTML =
-      '<div class="card gameover" id="goCard">' +
+      '<div class="card gameover clean" id="goCard">' +
+        '<div class="go-coins"><span class="ci"></span><span class="cv" id="goCoinVal">' + S.coins + '</span></div>' +
         '<div class="go-banner ' + bannerCls + '"></div>' +
+        '<div class="go-x" id="goClose"></div>' +
         '<div class="card-body">' +
           '<div class="go-continue"></div>' +
           offer +
           '<div class="btn-row">' +
             '<div class="ibtn continue" id="goContinue"><span class="cost">' + cost + '</span></div>' +
-            '<div class="ibtn free" id="goFree"></div>' +
+            '<div class="ibtn retry wide" id="goRetry"></div>' +
           '</div>' +
-          '<div class="ibtn retry" id="goRetry"></div>' +
         '</div>' +
       '</div>';
     overlay.classList.add('on');
-    // CONTINUE (coin) and FREE both trigger the SAME continue action (coins are cosmetic,
-    // no shop/payment — per spec). RETRY restarts the level.
-    function onContinue(){ haptic('btn'); continueGame(mode); }
-    document.getElementById('goContinue').addEventListener('click', onContinue);
-    document.getElementById('goFree').addEventListener('click', onContinue);
+    document.getElementById('goContinue').addEventListener('click', function(){ haptic('btn'); tryContinue(mode, cost); });
     document.getElementById('goRetry').addEventListener('click', function(){ haptic('btn'); retryLevel(); });
+    document.getElementById('goClose').addEventListener('click', function(){ haptic('btn'); retryLevel(); });
   }
+  // CONTINUE costs coins (no ads). If short on coins, nudge the button instead.
+  function tryContinue(mode, cost){
+    if (S.coins >= cost){ S.coins -= cost; saveCoins(); var cv=document.getElementById('goCoinVal'); if(cv) cv.textContent=S.coins; continueGame(mode); }
+    else { var b=document.getElementById('goContinue'); if(b){ b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); } }
+  }
+  function saveCoins(){ try{ localStorage.setItem('gs_coins', String(S.coins)); }catch(e){} }
 
   // CONTINUE handler — resume play after a game-over.
   //  TIME UP  -> add +30 seconds and resume (clears urgent if >=60).
@@ -2727,7 +2947,7 @@
     // V3: build per-cubby LAYER stacks (normLayers handles both layers:[...] and
     // legacy flat items:[...]). layers[0]=FRONT (interactive), rest=hidden/peeking.
     S.cubbies = S.cfg.cubbies.map(function(cb){
-      return { r:cb.r, c:cb.c, layers: normLayers(cb), locked: !!cb.locked, el:null, floor:null, backEl:null };
+      return { r:cb.r, c:cb.c, layers: normLayers(cb), lock:(cb.lock|0), el:null, floor:null, backEl:null, lockEl:null };
     });
     S.cap = S.cfg.cellCap || 3;
     S.timeLeft = S.cfg.timeLimit || 120;
@@ -2739,6 +2959,12 @@
     closePopup();
     buildBoard();
     updateTimer();
+    // ITEM bar: refresh per-level free uses, clear transient item state, render, onboard new unlocks.
+    ITEM_DEFS.forEach(function(d){ itemFree[d.key] = FREE_PER_LEVEL; });
+    hammerArmed = false; freezeUntil = 0;
+    document.body.classList.remove('frozen');
+    renderItems();
+    maybeOnboard();
   }
 
   // =============================================================
@@ -2758,10 +2984,102 @@
   document.getElementById('pause').addEventListener('click', function(){ haptic('btn'); pauseGame(true); });
   document.getElementById('resumeBtn').addEventListener('click', function(){ haptic('btn'); resumeGame(); });
 
-  // booster bar — placeholders (real effects come later; each is a future data-driven power)
-  document.querySelectorAll('.booster').forEach(function(b){
-    b.addEventListener('click', function(){ haptic('btn'); /* TODO: hammer/shuffle/undo/free */ });
+  // =============================================================
+  // ITEM (POWERUP) BAR — hammer always on; timefreeze/shuffle/addtime unlock at Lv 3/6/9.
+  // Each item grants 1 FREE use per level ("Free" label). Locked items show a padlock + Lv.
+  // =============================================================
+  var ITEM_DEFS = [
+    { key:'hammer',     icon:'btn_hammer',     unlock:1, name:'HAMMER',      desc:'Tap an item to smash it and free up a slot.' },
+    { key:'timefreeze', icon:'btn_timefreeze', unlock:3, name:'TIME FREEZE', desc:'Freezes the timer for 8 seconds.' },
+    { key:'shuffle',    icon:'btn_shuffle',    unlock:6, name:'RESHUFFLE',   desc:'Shuffles every item into a fresh layout.' },
+    { key:'addtime',    icon:'btn_addtime',    unlock:9, name:'ADD TIME',    desc:'Adds 30 seconds to the timer.' }
+  ];
+  var FREE_PER_LEVEL = 1, FREEZE_MS = 8000;
+  var itemFree = {};            // per-level free uses remaining, keyed by item
+  var freezeUntil = 0;          // performance.now() ts until which the timer is frozen
+  var hammerArmed = false;
+  function defOf(k){ for (var i=0;i<ITEM_DEFS.length;i++) if (ITEM_DEFS[i].key===k) return ITEM_DEFS[i]; return null; }
+  function itemUnlocked(def){ return S.level >= def.unlock; }
+
+  // (re)render every item tile for the current level state.
+  function renderItems(){
+    document.querySelectorAll('#boosters .booster').forEach(function(b){
+      var key=b.getAttribute('data-item'), def=defOf(key); if(!def) return;
+      var locked=!itemUnlocked(def), free=itemFree[key]||0;
+      b.style.backgroundImage = 'url("../assets/ui/'+def.icon+'.png")';
+      b.classList.toggle('locked', locked);
+      b.classList.toggle('armed', key==='hammer' && hammerArmed);
+      b.innerHTML = locked
+        ? '<div class="lock-ov"><div class="lk-pad"></div><span class="lk-lv">Lv '+def.unlock+'</span></div>'
+        : (free>0 ? '<div class="free-lbl">Free</div>' : '');
+    });
+    document.body.classList.toggle('hammer-aim', hammerArmed);
+  }
+
+  // tapping an item. hammer toggles a targeting mode; the rest fire immediately.
+  function useItem(key){
+    if (S.over || S.paused) return false;
+    var def=defOf(key); if(!def || !itemUnlocked(def)) return false;
+    if ((itemFree[key]||0) <= 0 && !(key==='hammer' && hammerArmed)) { haptic('btn'); return false; }  // no free use left (no ads)
+    if (key==='hammer'){ hammerArmed=!hammerArmed; renderItems(); return true; }
+    var fired=false;
+    if (key==='timefreeze'){ freezeUntil = performance.now()+FREEZE_MS; document.body.classList.add('frozen');
+      setTimeout(function(){ document.body.classList.remove('frozen'); }, FREEZE_MS); fired=true; }
+    else if (key==='shuffle'){ reshuffleBoard(); fired=true; }
+    else if (key==='addtime'){ S.timeLeft = Math.max(0,S.timeLeft)+30; updateTimer(); fired=true; }
+    if (fired){ itemFree[key]=(itemFree[key]||0)-1; haptic('clear'); renderItems(); }
+    return fired;
+  }
+
+  // HAMMER smash — removes ONE front good from its slot (frees space). Not a clear: no combo/lock countdown.
+  function hammerSmash(goodEl){
+    var cb=S.cubbies[+goodEl.dataset.cubby]; if(!cb || cb.lock>0) return false;
+    var slot=+goodEl.dataset.slot, fl=frontLayer(cb); if(!fl || !fl[slot]) return false;
+    fl[slot]=null;                                     // data
+    var r=goodEl.getBoundingClientRect();
+    sparkleRing(r.left+r.width/2, r.top+r.height/2);
+    goodEl.style.transition='transform .2s ease, opacity .2s ease';
+    goodEl.style.transform='scale(.2) rotate(22deg)'; goodEl.style.opacity='0';
+    haptic('clear');
+    itemFree.hammer=Math.max(0,(itemFree.hammer||0)-1);
+    hammerArmed=false;
+    setTimeout(function(){ renderCubby(cb); renderItems(); checkWin(); maybeDeadlock(); }, 200);
+    return true;
+  }
+
+  document.querySelectorAll('#boosters .booster').forEach(function(b){
+    b.addEventListener('click', function(){ useItem(b.getAttribute('data-item')); });
   });
+
+  // ---- ITEM unlock ONBOARDING (shown once when an item first unlocks) ----
+  function onboardSet(){ try{ return JSON.parse(localStorage.getItem('gs_item_onboarded')||'{}'); }catch(e){ return {}; } }
+  function saveOnboardSet(s){ try{ localStorage.setItem('gs_item_onboarded', JSON.stringify(s)); }catch(e){} }
+  function maybeOnboard(){
+    var shown=onboardSet();
+    for (var i=0;i<ITEM_DEFS.length;i++){ var d=ITEM_DEFS[i];
+      if (d.unlock===S.level && d.unlock>1 && !shown[d.key]){
+        shown[d.key]=1; saveOnboardSet(shown);
+        setTimeout((function(def){ return function(){ showItemOnboard(def); }; })(d), 450);
+        break;
+      }
+    }
+  }
+  function showItemOnboard(def){
+    if (S.over) return;
+    S.paused = true;                                   // hold the timer during onboarding
+    popupBox.innerHTML =
+      '<div class="card onboard">' +
+        '<div class="ob-title">NEW ITEM!</div>' +
+        '<div class="ob-icon" style="background-image:url(\'../assets/ui/'+def.icon+'.png\')"></div>' +
+        '<div class="ob-name">'+def.name+'</div>' +
+        '<div class="ob-desc">'+def.desc+'</div>' +
+        '<div class="ibtn ob-ok" id="obOk">GOT IT</div>' +
+      '</div>';
+    overlay.classList.add('on');
+    document.getElementById('obOk').addEventListener('click', function(){
+      haptic('btn'); closePopup(); S.paused=false; S.lastTick=performance.now();
+    });
+  }
 
   // host -> game
   function handleHostMsg(payload){
@@ -3542,7 +3860,7 @@
     combo: function(){ return S.combo; },
     maxCombo: function(){ return S.maxCombo; },
     urgent: function(){ return S.urgent; },
-    comboPillText: function(){ var t = comboEl.querySelector('.txt'); return t ? t.textContent.trim() : ''; },
+    comboPillText: function(){ var t = comboEl.querySelector('.cg-label'); return t ? t.textContent.replace(/\s+/g,' ').trim() : ''; },
     timeLeft: function(){ return S.timeLeft; },
     setTime: function(t){ S.timeLeft = t; updateTimer(); },
     forceLose: function(){ S.timeLeft = 0; lose(); },
@@ -3551,14 +3869,15 @@
     // ---- Phase 2b QA hooks: clear / game-over / continue / deadlock ----
     // is the live overlay showing the RESULT (clear) card? returns its MAX COMBO label.
     resultCard: function(){
-      var c = document.querySelector('#popupBox .card.result');
+      var c = document.querySelector('#popupBox .clear-show');
       var v = document.querySelector('#popupBox #maxComboVal');
       var nb = document.querySelector('#popupBox #nextBtn');
+      var pr = document.querySelector('#popupBox .cb-praise');
       var fw = document.querySelectorAll('#fireworks .fw, #fireworks .confetti').length;
-      return { shown:!!c, on: overlay.classList.contains('on'),
+      return { shown:!!c, on: overlay.classList.contains('on'), dim: overlay.classList.contains('clear'),
                maxComboText: v ? v.textContent.trim() : null,
                hasNext: !!nb, fireworksDom: fw,
-               panelImg: c ? getComputedStyle(c).backgroundImage : '' };
+               praiseImg: pr ? getComputedStyle(pr).backgroundImage : '' };
     },
     // is a GAME-OVER card showing? returns its mode + which banner/offer/buttons exist.
     gameOverCard: function(){
@@ -3571,7 +3890,9 @@
         mode: /timeup/.test(bcls) ? 'timeup' : (/nospace/.test(bcls) ? 'nospace' : '?'),
         bannerImg: bimg,
         hasContinue: !!document.querySelector('#popupBox #goContinue'),
-        hasFree: !!document.querySelector('#popupBox #goFree'),
+        hasCoinHud: !!document.querySelector('#popupBox .go-coins'),
+        hasClose: !!document.querySelector('#popupBox #goClose'),
+        noAd: !/AD/.test(document.querySelector('#popupBox')?.textContent||''),
         hasRetry: !!document.querySelector('#popupBox #goRetry'),
         plus30: !!document.querySelector('#popupBox .oicon.plus30'),
         reshuffle: !!document.querySelector('#popupBox .oicon.reshuffle'),
@@ -3590,11 +3911,15 @@
     continueTimeUp: function(){ continueGame('timeup'); return { timeLeft:S.timeLeft, over:S.over, running:S.running }; },
     continueNoSpace: function(){ var before=totalGoods(); continueGame('nospace');
       return { totalBefore:before, totalAfter:totalGoods(), over:S.over, running:S.running,
-               solvable: Model.solvable(Model.snapshot(), 800, 200000) }; },
+               solvable: Model.solvable(Model.snapshot(), 800, 200000, Model.snapshotLocks()) }; },
     // deadlock probes
     isDeadlocked: function(){ return isDeadlocked(); },
-    anyClearReachable: function(){ var r=Model.anyClearReachable(Model.snapshot(), 60000); return r; },
-    boardSolvable: function(){ return Model.solvable(Model.snapshot(), 800, 200000); },
+    anyClearReachable: function(){ var r=Model.anyClearReachable(Model.snapshot(), 60000, Model.snapshotLocks()); return r; },
+    boardSolvable: function(){ return Model.solvable(Model.snapshot(), 800, 200000, Model.snapshotLocks()); },
+    // LOCK gimmick probes (test): set a cubby's lock count (+re-render) / read all lock states.
+    setLock: function(idx, n){ var cb=S.cubbies[idx]; if(!cb) return null; cb.lock=n|0; renderCubby(cb); return cb.lock; },
+    lockStates: function(){ return S.cubbies.map(function(cb){ return cb.lock|0; }); },
+    fireCombo: function(n){ for(var i=0;i<(n||1);i++) bumpCombo(); return S.combo; },   // preview the combo gauge
     // build a CONTRIVED deadlock board on the live state: 4 types x3 each (multiples of 3,
     // so the bag IS reshuffle-solvable), but arranged FULLY PACKED + MIXED with NO empty
     // slot anywhere -> no move is possible -> no clear is reachable -> DEADLOCK. This is a

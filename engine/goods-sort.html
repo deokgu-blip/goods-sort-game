@@ -726,13 +726,15 @@
   .btn-row .ibtn.continue{ width:46%; height:50px; }
 
   /* ---- CLEAN game-over panel (panel_gameover_clean.png) + coin HUD + X + RETRY ---- */
-  .card.gameover.clean{ background-image:url("../assets/ui/panel_gameover_clean.png"); aspect-ratio:915/916; }
-  .card.gameover.clean .card-body{ top:24%; bottom:7%; left:10%; right:10%; gap:0;
-    display:flex; flex-direction:column; justify-content:space-between; }
-  /* TITLE on the ribbon — rounded font, gold fill + dark outline (TIME UP! / NO SPACE!) */
-  .card.gameover.clean .go-title{ position:absolute; top:1%; left:50%; transform:translateX(-50%); z-index:4;
-    font-weight:800; font-size:27px; letter-spacing:1px; white-space:nowrap; color:#ffe27a;
-    -webkit-text-stroke:1.5px #6a2f6a; paint-order:stroke fill;
+  .card.gameover.clean{ background-image:url("../assets/ui/panel_gameover_clean.png"); aspect-ratio:943/1159; }
+  /* content is a CENTERED group inside the cream area (never stretched to the border,
+     so buttons can't spill past the frame). top/bottom = the cream inset of the panel. */
+  .card.gameover.clean .card-body{ top:22%; bottom:9%; left:10%; right:10%; gap:11px;
+    display:flex; flex-direction:column; justify-content:center; }
+  /* TITLE — centered ON the ribbon (popup-relative), bigger. */
+  .card.gameover.clean .go-title{ position:absolute; top:5.5%; left:50%; transform:translate(-50%,-50%); z-index:4;
+    font-weight:800; font-size:30px; letter-spacing:1px; white-space:nowrap; color:#ffe27a;
+    -webkit-text-stroke:1.8px #6a2f6a; paint-order:stroke fill;
     text-shadow:0 2px 0 rgba(70,25,70,.5), 0 3px 4px rgba(0,0,0,.22); }
   /* coin balance HUD at the very top */
   .go-coins{ position:absolute; top:-9%; left:50%; transform:translateX(-50%); z-index:5;

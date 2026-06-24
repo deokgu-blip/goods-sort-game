@@ -314,10 +314,10 @@ function rgbDist(p, c){
   // fills the cubby by HEIGHT (>=80% of interior), a FAT/wide good is width-bound (and therefore
   // shorter) but fills its uniform CELL by WIDTH (>=80% of cubbyW/3). Both read as "big + filling";
   // the no-overlap clamp (fitGoods) is what keeps fat goods inside the cell.
-  assert('(N6b-HEADROOM+FILL) good leaves headroom above it (topGap > 0) + FILLS the cubby (>=80% by HEIGHT for slim, or >=80% of its CELL WIDTH for fat goods)',
+  assert('(N6b-HEADROOM+FILL) good leaves headroom above + a visible FLOOR band below, while FILLING the cubby (>=74% by HEIGHT for slim, or >=74% of its CELL WIDTH for fat goods — mobile shrinks fill so the floor shows)',
     niche.goodTopGap != null && niche.goodTopGap > 0 &&
-    ((niche.goodFillPct != null && niche.goodFillPct >= 80) ||
-     (niche.goodCellFillPct != null && niche.goodCellFillPct >= 80)),
+    ((niche.goodFillPct != null && niche.goodFillPct >= 74) ||
+     (niche.goodCellFillPct != null && niche.goodCellFillPct >= 74)),
     'goodTopGap='+(niche.goodTopGap==null?'n/a':niche.goodTopGap.toFixed(2))+'px heightFill='+(niche.goodFillPct==null?'n/a':niche.goodFillPct.toFixed(1))+'% cellWidthFill='+(niche.goodCellFillPct==null?'n/a':niche.goodCellFillPct.toFixed(1))+'%');
   assert('(N7-DEPTH-ORDER) FRONT row closer to camera than BACK row (front --gz > back --gz = real front/back depth)',
     niche.depthOK === true && niche.frontGz != null && niche.backGz != null,

@@ -1831,6 +1831,10 @@
     if (W < 2 || H < 2) return;
     var interiorH = H;                                // goods stand on the floor at the opening bottom
     var goodHpct = (SHELF.goodFillHeight != null) ? SHELF.goodFillHeight : GOOD_H_PCT;
+    // MOBILE FIX: on small phone cells the tall goods covered the wood FLOOR band (user:
+    // "모바일에서 선반 바닥이 안보여"). Shrink the good a touch on phones so each shelf floor
+    // surface stays clearly visible. Wide/desktop viewports keep the tuned fill height.
+    if (typeof window !== 'undefined' && window.innerWidth < 500){ goodHpct = Math.min(goodHpct, 0.80); }
     var gapFrac  = (SHELF.goodGap != null) ? SHELF.goodGap : GOOD_GAP_FRAC;
     // per-slot WIDTH BUDGET: adjacent slot centers are W/3 apart, so a centered good of
     // width <= W/3 - gap can never reach its neighbor. Clamp gap so the budget stays > 0.

@@ -144,8 +144,13 @@
     -webkit-text-stroke:2px rgba(120,40,10,.85); paint-order:stroke fill;
     text-shadow:0 2px 0 rgba(0,0,0,.28); font-variant-numeric:tabular-nums; white-space:nowrap; }
 
-  #lv{ width:80px; height:42px; background-image:url("../assets/ui/pill_level.png"); }
-  #lv .txt{ font-size:17px; }
+  /* Lv — ENGRAVED into the frame (음각): a dark maroon plate pressed INTO the wood
+     (inset shadow = carved; bottom-edge highlight = the lip catching light). Not a raised pill. */
+  #lv{ width:78px; height:38px; background:linear-gradient(#6f3d2c,#5b3324);
+    border-radius:12px;
+    box-shadow: inset 0 3px 4px rgba(0,0,0,.55), inset 0 -2px 3px rgba(0,0,0,.28),
+                0 1px 0 rgba(255,224,188,.30); }
+  #lv .txt{ font-size:16px; color:#ffeede; -webkit-text-stroke:0; text-shadow:0 1px 2px rgba(0,0,0,.6); }
 
   /* Timer — AMBER pill (pill_timer_amber.png), centered + big. Urgent <60s -> skull/red. */
   #timer{ width:152px; height:52px; background-image:url("../assets/ui/pill_timer_amber.png"); }
@@ -167,12 +172,15 @@
   /* COMBO gauge — the TRACK is ALWAYS shown (user: 프로그래스 UI 위치는 항상 노출).
      The green fill + "COMBO xN" label appear only during an active combo. Overlaps the
      frame's bottom edge, centered under the timer. */
-  .combo-gauge{ position:relative; width:152px; height:27px; margin-top:-15px; z-index:6; pointer-events:none;
-    padding:3px 4px; border-radius:15px;                  /* WOOD FRAME wrapping the gauge (틀) */
-    background:linear-gradient(#c89c5e,#9a6c36);
-    box-shadow:0 2px 4px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,238,205,.45), inset 0 -2px 3px rgba(60,34,12,.4); }
-  .combo-gauge .cg-track{ position:absolute; inset:3px 4px; border-radius:11px;
-    background:rgba(50,27,11,.92); box-shadow:inset 0 2px 3px rgba(0,0,0,.55); overflow:hidden; }
+  /* COMBO gauge — INTEGRAL with the frame (일체형): a downward LOBE of the SAME wood as
+     #hudFrame (so it fuses, no separate border) with a DEBOSSED dark channel carved into it. */
+  .combo-gauge{ position:relative; width:148px; height:25px; margin-top:-14px; z-index:6; pointer-events:none;
+    padding:4px 7px 6px; border-radius:0 0 16px 16px;     /* straight top fuses to the frame; rounded bottom = the lobe */
+    background:linear-gradient(#96592f,#88512f);          /* SAME wood as the frame */
+    box-shadow:0 3px 3px rgba(0,0,0,.16); }
+  .combo-gauge .cg-track{ position:absolute; left:7px; right:7px; top:4px; bottom:6px; border-radius:9px;
+    background:#3a2010; overflow:hidden;                  /* DEBOSSED channel carved into the wood */
+    box-shadow:inset 0 3px 5px rgba(0,0,0,.7), inset 0 -1px 0 rgba(255,205,155,.12); }
   .combo-gauge .cg-fill{ position:absolute; left:0; top:0; bottom:0; width:0%;
     background:url("../assets/ui/gauge_combo.png") left center/auto 100% no-repeat;
     background-color:#5fd13a; opacity:0; transition:opacity .15s; }

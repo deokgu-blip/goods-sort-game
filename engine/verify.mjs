@@ -172,6 +172,8 @@ function rgbDist(p, c){
                    locked:b.classList.contains('locked'), free:!!b.querySelector('.free-lbl') }));
     return {
       lvBg: bg('#lv'), lvTxt: txt('#lv .txt'),
+      lvEngraved: (getComputedStyle(document.getElementById('lv')).boxShadow||'').includes('inset'),
+      comboLobe: (getComputedStyle(document.getElementById('combo')).borderBottomLeftRadius||'') !== '0px',
       timerBg: bg('#timer'), timerTxt: txt('#timer .txt'),
       comboIsGauge: !!document.querySelector('#combo.combo-gauge'),
       comboTrack: !!document.querySelector('#combo .cg-track'),
@@ -184,8 +186,8 @@ function rgbDist(p, c){
       starCounterGone: !document.getElementById('stars') && !document.getElementById('starNum')
     };
   });
-  assert('(HUD-1 level pill IMG) #lv uses pill_level.png + "Lv." ENGLISH overlay',
-    hud.lvBg.includes('pill_level.png') && /^Lv\./.test(hud.lvTxt||''), hud.lvBg+' | '+hud.lvTxt);
+  assert('(HUD-1 level ENGRAVED) #lv shows "Lv. N" and is DEBOSSED into the frame (음각: inset shadow), not a raised image pill',
+    /^Lv\./.test(hud.lvTxt||'') && hud.lvEngraved && hud.comboLobe, 'txt='+hud.lvTxt+' engraved='+hud.lvEngraved+' comboLobe='+hud.comboLobe);
   assert('(HUD-2 timer AMBER pill IMG) #timer uses pill_timer_amber.png + "M:SS" overlay (default)',
     hud.timerBg.includes('pill_timer_amber.png') && /^\d?\d:\d\d$/.test(hud.timerTxt||''), hud.timerBg+' | '+hud.timerTxt);
   assert('(HUD-3 combo GAUGE replaces star/combo pill) #combo is the gauge (track + "COMBO xN" label); star counter gone',

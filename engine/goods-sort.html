@@ -2288,18 +2288,26 @@
     var tx = t.left + t.width*0.5, ty = t.top + t.height/2;
     var fl = document.createElement('div'); fl.className='fly-flame'; fl.textContent='🔥';
     fl.style.left = x+'px'; fl.style.top = y+'px';
+    fl.style.transform = 'translate(-50%,-50%) scale(0)';
     document.body.appendChild(fl);
+    var HOLD = 520, RISE = 950;
+    // 1) POP IN at the clear spot, then HOLD a beat in place
     requestAnimationFrame(function(){
-      fl.style.transition = 'left .5s cubic-bezier(.5,-0.25,.3,1), top .5s cubic-bezier(.5,-0.25,.3,1), transform .5s ease, opacity .5s ease';
-      fl.style.left = tx+'px'; fl.style.top = ty+'px';
-      fl.style.transform = 'translate(-50%,-50%) scale(.35)';
-      fl.style.opacity = '0.2';
+      fl.style.transition = 'transform .26s cubic-bezier(.34,1.7,.5,1)';
+      fl.style.transform = 'translate(-50%,-50%) scale(1)';
     });
+    // 2) after the hold, rise up SLOWLY into the top flame pill
+    setTimeout(function(){
+      fl.style.transition = 'left '+RISE+'ms cubic-bezier(.45,0,.55,1), top '+RISE+'ms cubic-bezier(.45,0,.55,1), transform '+RISE+'ms ease-in, opacity '+RISE+'ms ease-in';
+      fl.style.left = tx+'px'; fl.style.top = ty+'px';
+      fl.style.transform = 'translate(-50%,-50%) scale(.3)';
+      fl.style.opacity = '0.12';
+    }, HOLD);
+    // 3) cleanup + the top flame pill pops as the flame enters it
     setTimeout(function(){
       fl.remove();
-      // the top flame pill pops as the flame enters it
       if (comboCountEl){ comboCountEl.classList.remove('bump'); void comboCountEl.offsetWidth; comboCountEl.classList.add('bump'); }
-    }, 510);
+    }, HOLD + RISE);
   }
 
   // praise IMAGE (praise_*.png) — escalates by combo tier -----

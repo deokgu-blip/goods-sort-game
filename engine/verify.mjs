@@ -225,8 +225,8 @@ function rgbDist(p, c){
   assert('(URG-1 normal @>=60s) timer = amber CSS plate (gradient, not urgent image), no red bg',
     urg.before.bg.includes('gradient') && !urg.before.bg.includes('pill_timer_urgent') && !urg.before.bodyUrgent && !urg.before.urgentState,
     JSON.stringify(urg.before).slice(0,120));
-  assert('(URG-2 urgent @<60s) RED plate + SKULL on the left (skull_timer) + RED page bg (body.urgent + tint visible)',
-    urg.during.skull && !urg.before.skull && urg.during.bodyUrgent && urg.during.urgentState && parseFloat(urg.during.tint) > 0,
+  assert('(URG-2 urgent @<60s) RED timer plate + SKULL on the left (skull_timer); NO full-screen red tint (disabled — user)',
+    urg.during.skull && !urg.before.skull && urg.during.bodyUrgent && urg.during.urgentState && parseFloat(urg.during.tint) === 0,
     JSON.stringify(urg.during).slice(0,140));
   assert('(URG-3 revert @>=60s) back to amber CSS plate + no red bg when time goes back up',
     urg.after.bg.includes('gradient') && !urg.after.bg.includes('pill_timer_urgent') && !urg.after.bodyUrgent && !urg.after.urgentState,

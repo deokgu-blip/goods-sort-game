@@ -119,7 +119,9 @@
   #urgentTint{ position:fixed; inset:0; z-index:2; pointer-events:none;
     background:radial-gradient(135% 110% at 50% 45%, rgba(255,70,50,.18) 0%, rgba(235,40,28,.42) 55%, rgba(190,20,14,.72) 100%);
     opacity:0; transition:opacity .35s ease; }
-  body.urgent #urgentTint{ opacity:1; animation:urgentPulse 1s ease-in-out infinite; }
+  /* DISABLED (user): the full-screen red tint made play feel too hard. Urgency is shown
+     by the TIMER alone (red plate + skull). The tint element stays but never paints. */
+  body.urgent #urgentTint{ opacity:0; }
   @keyframes urgentPulse{ 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
 
   #game{ position:fixed; inset:0; z-index:1; display:flex; flex-direction:column;
@@ -577,16 +579,16 @@
     will-change:transform,opacity; filter:none; z-index:9; }
   @keyframes goodPop{
     0%  { transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0)    scale(calc(var(--gs,1) * 1)); }
-    35% { transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-14%) scale(calc(var(--gs,1) * 1.32)); }  /* bounce up + grow */
-    58% { transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-8%)  scale(calc(var(--gs,1) * 1.12)); }
-    100%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-26%) scale(calc(var(--gs,1) * 0.05)); opacity:0; }  /* 뿅 */
+    35% { transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-7%)  scale(calc(var(--gs,1) * 1.14)); }  /* gentle bounce */
+    58% { transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-4%)  scale(calc(var(--gs,1) * 1.04)); }
+    100%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-16%) scale(calc(var(--gs,1) * 0.05)); opacity:0; }  /* 뿅 */
   }
-  /* REVEAL — when the front layer empties, the back row comes forward to become the
-     new front: it slides forward (smaller z -> 0) + scales up, then settles. */
-  .good.revealing{ animation:revealForward .5s cubic-bezier(.25,1.3,.5,1) both; }
+  /* REVEAL (스르륵) — when the front layer empties, the back row glides FORWARD smoothly:
+     it starts deeper/smaller/dimmer (behind) and slides forward to the front, brightening,
+     with a soft ease-out (no bounce) so it reads as a gentle forward slide. */
+  .good.revealing{ animation:revealForward .46s cubic-bezier(.22,.65,.3,1) both; }
   @keyframes revealForward{
-    0%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-22%) scale(calc(var(--gs,1) * .8)); filter:brightness(.7) saturate(.85); opacity:.7; }
-    60%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(4%) scale(calc(var(--gs,1) * 1.08)); filter:brightness(1.02); opacity:1; }
+    0%{ transform:translateX(-50%) translateZ(calc(var(--gz,0px) - 64px)) translateY(-7%) scale(calc(var(--gs,1) * .74)); filter:brightness(.6) saturate(.82); opacity:.45; }
     100%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scale(var(--gs,1)); filter:none; opacity:1; }
   }
   /* drag avatar (floats above board) */
@@ -604,12 +606,12 @@
     filter:drop-shadow(0 0 6px rgba(255,200,40,.9)); will-change:transform,opacity; }
   /* praise = praise_*.png banner image, escalating by combo tier */
   .praise{ position:fixed; z-index:56; pointer-events:none; transform:translate(-50%,-50%);
-    width:200px; height:80px; background:center/contain no-repeat;
-    filter:drop-shadow(0 4px 4px rgba(0,0,0,.32)); }
+    width:138px; height:55px; background:center/contain no-repeat;
+    filter:drop-shadow(0 3px 3px rgba(0,0,0,.3)); }
   .praise.t-good{ background-image:url("../assets/ui/praise_good.png"); }
   .praise.t-great{ background-image:url("../assets/ui/praise_great.png"); }
   .praise.t-excellent{ background-image:url("../assets/ui/praise_excellent.png"); }
-  .praise.t-perfect{ background-image:url("../assets/ui/praise_perfect.png"); width:220px; height:88px; }
+  .praise.t-perfect{ background-image:url("../assets/ui/praise_perfect.png"); width:152px; height:61px; }
   @keyframes praisePop{
     0%{ transform:translate(-50%,-50%) scale(.3); opacity:0; }
     25%{ transform:translate(-50%,-62%) scale(1.18); opacity:1; }
@@ -619,11 +621,11 @@
   }
   /* in-play COMBO badge = badge_combo.png with the multiplier overlaid */
   .combo-badge{ position:fixed; z-index:57; pointer-events:none; transform:translate(-50%,-50%);
-    width:150px; height:69px; display:flex; align-items:flex-end; justify-content:center;
+    width:102px; height:47px; display:flex; align-items:flex-end; justify-content:center;
     background:url("../assets/ui/badge_combo.png") center/contain no-repeat;
-    filter:drop-shadow(0 4px 4px rgba(0,0,0,.3)); }
-  .combo-badge .m{ position:relative; bottom:6px; font-weight:900; font-size:22px; color:#fff;
-    -webkit-text-stroke:2.5px #2e8a37; paint-order:stroke fill; text-shadow:0 2px 0 rgba(0,0,0,.25);
+    filter:drop-shadow(0 3px 3px rgba(0,0,0,.28)); }
+  .combo-badge .m{ position:relative; bottom:4px; font-weight:900; font-size:15px; color:#fff;
+    -webkit-text-stroke:2px #2e8a37; paint-order:stroke fill; text-shadow:0 2px 0 rgba(0,0,0,.25);
     font-variant-numeric:tabular-nums; }
   @keyframes comboBadgePop{
     0%{ transform:translate(-50%,-50%) scale(.3) rotate(-8deg); opacity:0; }
@@ -634,12 +636,12 @@
   }
   /* sparkle ring = expanding fx_sparkle.png burst at clear point */
   .spark-ring{ position:fixed; z-index:54; pointer-events:none; transform:translate(-50%,-50%);
-    width:60px; height:60px;
-    background:url("../assets/ui/fx_sparkle.png") center/contain no-repeat; opacity:.95; }
-  @keyframes ring{ 0%{ transform:translate(-50%,-50%) scale(.25) rotate(0deg); opacity:.95; }
-    100%{ transform:translate(-50%,-50%) scale(2.6) rotate(40deg); opacity:0; } }
+    width:46px; height:46px;
+    background:url("../assets/ui/fx_sparkle.png") center/contain no-repeat; opacity:.9; }
+  @keyframes ring{ 0%{ transform:translate(-50%,-50%) scale(.25) rotate(0deg); opacity:.9; }
+    100%{ transform:translate(-50%,-50%) scale(1.8) rotate(40deg); opacity:0; } }
   /* individual sparkles = small fx_sparkle.png sprites that fan out */
-  .sparkle{ position:fixed; z-index:54; pointer-events:none; width:18px; height:18px;
+  .sparkle{ position:fixed; z-index:54; pointer-events:none; width:14px; height:14px;
     background:url("../assets/ui/fx_sparkle.png") center/contain no-repeat; }
   /* clear confetti burst = fx_confetti.png sprites */
   .confetti{ position:fixed; z-index:53; pointer-events:none; width:46px; height:46px;

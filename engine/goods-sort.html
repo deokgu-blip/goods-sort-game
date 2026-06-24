@@ -45,6 +45,10 @@
                                 the goods' bases — now a thin band that sits BENEATH the goods). */
     /* a gentle WARM-LIGHTEN tint applied to wood faces (matches the POC look). */
     --wood-tint: brightness(1.07) saturate(1.06) sepia(.05);
+    /* V20 — GRID TINT: a MULTIPLY overlay color recomputed in JS from SHELF.gridColor,
+       NORMALIZED against the default wood tone so the DEFAULT gridColor (#caa06a) yields
+       white (= no change, current look). Picking a different color shifts every wood face. */
+    --grid-tint: #ffffff;
     /* CABINET frame thickness (the outer wood box the niches sit inside) +
        inter-niche gap (the wood lattice between cubbies). */
     --cab-pad: 12px;         /* outer cabinet wood border */
@@ -151,10 +155,15 @@
     filter: drop-shadow(0 18px 24px rgba(60,38,16,.42)); }
   /* #cabinet = the OUTER WOOD BOX the niches sit inside (wood border + wood lattice
      gap). It is the real wood frame; the niches open into it. */
+  /* V20 — --grid-tint is a MULTIPLY overlay color (from SHELF.gridColor) prepended to the
+     wood background so changing gridColor recolors ALL grid wood (frame + planks + dividers
+     + side walls) while keeping the grain (multiply preserves the texture). The wood asset
+     (shelf_board.png / post.png) stays in the layer list so the wood-asset asserts still match. */
   #shelf .frame{ position:absolute; inset:0;
     background-color: var(--wallpaper);              /* seamless cream wall (assert V5/V6) */
-    background-image: var(--board-img);
-    background-size: 100% 100%; background-repeat:no-repeat;
+    background-image: linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)), var(--board-img);
+    background-size: 100% 100%, 100% 100%; background-repeat:no-repeat;
+    background-blend-mode: multiply, normal;
     filter: var(--wood-tint);
     border-radius: var(--corner-radius, 0px);
     padding: var(--cab-pad);
@@ -164,9 +173,9 @@
   #shelf .grid{ position:absolute;
     inset: var(--cab-pad);
     display:grid; gap: var(--niche-gap);
-    background:
-      var(--board-img);
-    background-size: 100% 100%; background-repeat:no-repeat;
+    background-image: linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)), var(--board-img);
+    background-size: 100% 100%, 100% 100%; background-repeat:no-repeat;
+    background-blend-mode: multiply, normal;
     filter: var(--wood-tint);
     border-radius: var(--corner-radius, 0px); z-index:1; }
   /* legacy wood-layer container kept (empty) so old selectors resolve harmlessly. */
@@ -240,9 +249,11 @@
   .cubby .c-wall.b{
     background-image:
       linear-gradient(to top, rgba(255,244,222,.16) 0%, rgba(255,244,222,0) 32%, rgba(120,84,46,.12) 100%),
+      linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)),
       var(--board-img);
-    background-size: 100% 100%, 100% 150%;
-    background-position: 0 100%, 0 100%;
+    background-size: 100% 100%, 100% 100%, 100% 150%;
+    background-position: 0 100%, 0 0, 0 100%;
+    background-blend-mode: normal, multiply, normal;
     filter: brightness(1.40) saturate(1.05) sepia(.07); }
   /* CEILING (.t) — underside of the shelf above. It faces DOWN so it's dimmer than the lit
      floor, but V15 brightens it (.66 -> .82) + softens the dark overlay so it reads as a
@@ -251,23 +262,30 @@
   .cubby .c-wall.t{
     background-image:
       linear-gradient(to bottom, rgba(28,16,5,.20) 0%, rgba(28,16,5,.07) 45%, rgba(28,16,5,0) 100%),
+      linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)),
       var(--board-img);
-    background-size: 100% 100%, 100% 150%;
-    background-position: 0 0, 0 0;
+    background-size: 100% 100%, 100% 100%, 100% 150%;
+    background-position: 0 0, 0 0, 0 0;
+    background-blend-mode: normal, multiply, normal;
     filter: brightness(.82) saturate(1.0) sepia(.06); }
   /* LEFT side wall (.l) — vertical-grain post, lit (light from front-left). */
-  .cubby .c-wall.l{ background-image: var(--post-img);
+  .cubby .c-wall.l{
+    background-image: linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)), var(--post-img);
+    background-size: 100% 100%, 100% 100%; background-blend-mode: multiply, normal;
     filter: brightness(1.05) saturate(1.04); }
   /* RIGHT side wall (.r) — vertical-grain post, shaded (darker). */
-  .cubby .c-wall.r{ background-image: var(--post-img);
+  .cubby .c-wall.r{
+    background-image: linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)), var(--post-img);
+    background-size: 100% 100%, 100% 100%; background-blend-mode: multiply, normal;
     filter: brightness(.80) saturate(1.04); }
   /* FRONT RIM — the THIN front FACE of the shelf board, a wood band BELOW the standing
      surface along the front-bottom edge. z-index BELOW the niche-clip (V14) so it sits
      BENEATH the goods (the goods paint over it) — it must never rise in front to cover a
      base. It reads as the front lip wood between/beside the goods' feet. */
   .cubby .c-rim{ position:absolute; left:0; z-index:2; pointer-events:none;
-    background-image: var(--board-img);
-    background-size:100% 340%; background-position:0 100%; background-repeat:no-repeat;
+    background-image: linear-gradient(var(--grid-tint,#ffffff),var(--grid-tint,#ffffff)), var(--board-img);
+    background-size:100% 100%, 100% 340%; background-position:0 0, 0 100%; background-repeat:no-repeat;
+    background-blend-mode: multiply, normal;
     filter: brightness(.9) saturate(1.06);
     box-shadow:0 2px 5px rgba(40,24,8,.55); }
 
@@ -634,12 +652,42 @@
   //                              sit in shadow behind the front row. DEFAULT 0.5 = ~half
   //                              brightness (darker + slightly desaturated, like the reference).
   //                              Front-row goods stay full brightness.
+  //   wallOuterReveal   (mult) : V20 — how much each cubby's OUTER side wall (the one facing
+  //                              AWAY from board center, "중앙을 등지는 벽면") shows. Default 0.5
+  //                              = the old sideReveal (back-compat). Scaled per-cubby by the
+  //                              center-distance falloff (wallFalloff) so center column ≈ none.
+  //   wallCenterReveal  (mult) : V20 — how much each cubby's CENTER-FACING side wall (the one
+  //                              facing TOWARD board center, "중앙을 바라보는 벽면") shows.
+  //                              Default 0 = hidden (matches the current OUTER-only look). Raise
+  //                              it to reveal the inner wall too; both walls are INDEPENDENT.
+  //   wallFalloff       (exp)  : V20 — exponent on the per-cubby center-distance factor:
+  //                              factor = distFrac ^ wallFalloff (distFrac = |cubbyCx−boardCx| /
+  //                              (gridW/2)). Higher = walls vanish FASTER toward center.
+  //   gridColor         (hex)  : V20 — a tint color multiplied over the wood (frame + planks +
+  //                              dividers + side walls). Default = the current warm wood tone
+  //                              (recolors all grid wood while keeping the grain).
+  //   cameraAngle       (deg)  : V20 — GLOBAL board tilt (board-level rotateX on #shelf). Default
+  //                              0 = upright (the user disliked a strong backward lean). Distinct
+  //                              from the per-cubby eyeY.
+  //   cameraHeight      (frac) : V20 — GLOBAL camera/eye vertical position for the WHOLE board
+  //                              (board-level perspective-origin Y). 0.5 = centered.
+  //   floorDepth        (mult) : V20 — depth multiplier on EACH cubby's FLOOR face ("각 그리드의
+  //                              바닥면 깊이"). Multiplies the base box depth (depth).
+  //   frameCeilingDepth (mult) : V20 — depth multiplier on the FRAME/top CEILING face ("프레임의
+  //                              천장면 깊이"). Multiplies the base box depth for the ceiling band.
   var SHELF_DEFAULTS = {
     perspective: 560,
     eyeY: 0.20,             // V17 — eye HIGH above center -> look DOWN, floor surface shows
-    sideReveal: 0.5,        // V18 — base mult; ACTUAL per-cubby Dside scales by distance from center (outer walls)
+    sideReveal: 0.5,        // V18 — base mult; back-compat alias for wallOuterReveal (V20)
+    wallOuterReveal: 0.5,   // V20 — OUTER (center-away) side-wall reveal (= old sideReveal default)
+    wallCenterReveal: 0,    // V20 — CENTER-facing side-wall reveal (0 = current OUTER-only look)
+    wallFalloff: 1.0,       // V20 — exponent on center-distance falloff (1 = linear, current)
     depth: 0.68,
+    floorDepth: 1.0,        // V20 — multiplier on the FLOOR face depth (×base depth)
+    frameCeilingDepth: 1.0, // V20 — multiplier on the top/ceiling (frame) face depth (×base depth)
     shelfAngle: 90,
+    cameraAngle: 0,         // V20 — global board tilt (rotateX on #shelf); 0 = upright
+    cameraHeight: 0.5,      // V20 — global board camera height (board perspective-origin Y); 0.5 = center
     postThickness: 9,
     frameThickness: 12,
     ceilingVisibility: 0,   // V17 — ceiling HIDDEN by default (only the floor shows)
@@ -651,7 +699,8 @@
     lightAngle: 315,        // V18 — light from TOP-LEFT -> shadows fall BOTTOM-RIGHT (dx>0,dy>0)
     shadowStrength: 0.45,   // V18 — directional shadow opacity (good drop-shadow + cubby inner shading)
     backDim: 0.4,           // V19 — back-row (peek) goods VERY dark (~0.4, deep interior shadow per reference)
-    topShadow: 0.5          // V19 — SHALLOW top inner-shadow band strength (frac of shadowStrength; a faint dark band at the cubby ceiling edge)
+    topShadow: 0.5,         // V19 — SHALLOW top inner-shadow band strength (frac of shadowStrength; a faint dark band at the cubby ceiling edge)
+    gridColor: '#caa06a'    // V20 — wood TINT color (warm wood tone) multiplied over the grain
   };
   // merge an OVERRIDE over the defaults (shallow; only known keys). Reads
   // localStorage['gs_shelf_config'] (same-browser editor save) + window.__SHELF_OVERRIDE
@@ -662,6 +711,11 @@
     function merge(src){
       if (!src || typeof src !== 'object') return;
       for (var k in SHELF_DEFAULTS){ if (src[k] !== undefined && src[k] !== null) cfg[k] = src[k]; }
+      // V20 back-compat: a legacy config with only `sideReveal` (no wallOuterReveal) migrates
+      // its value into wallOuterReveal so the OUTER wall keeps the saved reveal amount.
+      if (src.sideReveal !== undefined && src.sideReveal !== null && src.wallOuterReveal === undefined){
+        cfg.wallOuterReveal = src.sideReveal;
+      }
     }
     // localStorage override (set by the editor's "저장" in the same browser)
     try{
@@ -725,6 +779,41 @@
     // shelf aspect-ratio: 1 / cubbyAspect (cubbyAspect<1 -> wider/landscape)
     var shelf = document.getElementById('shelf');
     if (shelf) shelf.style.aspectRatio = '1 / ' + SHELF.cubbyAspect;
+
+    // ----- V20 GRID TINT (gridColor -> --grid-tint MULTIPLY overlay) -----
+    // Normalize the picked color against the DEFAULT wood tone (#caa06a) so the default
+    // gridColor yields white (multiply identity = current look) and any OTHER color shifts
+    // every wood face proportionally. tint_channel = clamp(picked/ref * 255).
+    (function(){
+      var GRID_TINT_REF = [0xca, 0xa0, 0x6a];        // = #caa06a, the default gridColor
+      var gc = (SHELF.gridColor != null ? String(SHELF.gridColor) : '#caa06a').replace('#','');
+      if (gc.length === 3) gc = gc[0]+gc[0]+gc[1]+gc[1]+gc[2]+gc[2];
+      var pr = parseInt(gc.substr(0,2),16), pg = parseInt(gc.substr(2,2),16), pb = parseInt(gc.substr(4,2),16);
+      if (isNaN(pr)||isNaN(pg)||isNaN(pb)){ pr=GRID_TINT_REF[0]; pg=GRID_TINT_REF[1]; pb=GRID_TINT_REF[2]; }
+      function norm(p, ref){ return Math.max(0, Math.min(255, Math.round(p / ref * 255))); }
+      var tr = norm(pr, GRID_TINT_REF[0]), tg = norm(pg, GRID_TINT_REF[1]), tb = norm(pb, GRID_TINT_REF[2]);
+      function hx(n){ var s = n.toString(16); return s.length<2 ? '0'+s : s; }
+      root.setProperty('--grid-tint', '#'+hx(tr)+hx(tg)+hx(tb));
+    })();
+
+    // ----- V20 GLOBAL CAMERA (cameraAngle = board rotateX, cameraHeight = board eye Y) -----
+    // The WHOLE board tilts/looks via a board-level perspective context (distinct from the
+    // per-cubby eyeY). cameraAngle rotates #shelf about X (0 = upright, the default). cameraHeight
+    // sets the board perspective-origin Y (0.5 = centered). #board-wrap carries the perspective.
+    var cAngle = (SHELF.cameraAngle != null ? SHELF.cameraAngle : 0);
+    var cHeight = (SHELF.cameraHeight != null ? SHELF.cameraHeight : 0.5);
+    var bw = document.getElementById('board-wrap');
+    if (bw){
+      // only establish a board perspective when there is an actual tilt, so the DEFAULT
+      // (cameraAngle 0) leaves #shelf transform = rotateX(0) = identity (V5 no-tilt assert).
+      bw.style.perspective = (Math.abs(cAngle) > 0.001) ? '1100px' : 'none';
+      bw.style.perspectiveOrigin = '50% ' + (cHeight * 100).toFixed(1) + '%';
+    }
+    if (shelf){
+      shelf.style.transformOrigin = '50% ' + (cHeight * 100).toFixed(1) + '%';
+      shelf.style.transform = 'rotateX(' + cAngle + 'deg)';
+      shelf.style.transformStyle = (Math.abs(cAngle) > 0.001) ? 'preserve-3d' : 'flat';
+    }
   }
   // PUBLIC API — so the editor can drive the SAME renderer (share, don't fork).
   // applyConfig() merges a partial cfg over the current SHELF, re-applies CSS vars,
@@ -1025,18 +1114,30 @@
     // FOLD ANGLE (선반각도): floor/ceiling rotate by ±shelfAngle (90 = upright box).
     // A smaller angle tilts the planes toward the camera so more surface shows.
     var ang = (SHELF.shelfAngle != null) ? SHELF.shelfAngle : 90;
-    // SIDE REVEAL (옆면 보이기): base multiplier for the side-wall depth. The ACTUAL Dside is
-    // computed PER-CUBBY below, SCALED by the cubby's normalized distance from the board center
-    // (distFrac 0..1): center column ≈ 0 (straight-on, no wall), edge columns the full sliver.
-    // Kept SUBTLE — even the edge walls are a slight sliver (sideReveal default 0.5 -> the edge
-    // Dside ≈ 0.5*D, foreshortened by the near-grazing perspective to a thin OUTER-wall band).
-    var sideRev = (SHELF.sideReveal != null ? SHELF.sideReveal : 1.0);
+    // V20 — INDEPENDENT SIDE-WALL REVEALS (옆면 보이기, 바깥쪽/중앙쪽 따로):
+    //   wallOuterReveal  : OUTER wall depth multiplier (the wall facing AWAY from board center).
+    //   wallCenterReveal : CENTER-facing wall depth multiplier (the wall facing TOWARD center).
+    // EACH cubby's two side walls get an INDEPENDENT visible depth (Douter / Dcenter), both
+    // scaled by the per-cubby center-distance falloff below. sideReveal is a back-compat alias
+    // for wallOuterReveal (resolveShelfConfig migrates a legacy-only sideReveal).
+    var wallOuter  = (SHELF.wallOuterReveal != null ? SHELF.wallOuterReveal
+                       : (SHELF.sideReveal != null ? SHELF.sideReveal : 0.5));
+    var wallCenter = (SHELF.wallCenterReveal != null ? SHELF.wallCenterReveal : 0);
+    // wallFalloff (중앙으로 올수록 벽면이 얼마나 안보일지): per-cubby factor = distFrac^wallFalloff.
+    // Higher exponent = walls vanish FASTER toward the center; center column factor ≈ 0.
+    var wallFalloff = (SHELF.wallFalloff != null ? SHELF.wallFalloff : 1.0);
     var halfBoardW = Math.max(1, gridRect.width / 2);   // for the per-cubby distance normalization
     // CEILING VISIBILITY (윗면): scale the ceiling band depth. DEFAULT 0 = ceiling HIDDEN
     // (the user only wants the floor to show). When 0 we both zero the depth AND set the
     // ceiling face display:none so it never renders. The editor can still toggle it > 0.
+    // V20: the visible ceiling band depth also scales by frameCeilingDepth ("프레임의 천장면 깊이").
     var ceilVis = (SHELF.ceilingVisibility != null ? SHELF.ceilingVisibility : 0);
-    var Dceil = D * ceilVis;
+    var frameCeilDepthMul = (SHELF.frameCeilingDepth != null ? SHELF.frameCeilingDepth : 1.0);
+    var Dceil = D * ceilVis * frameCeilDepthMul;
+    // V20 — FLOOR DEPTH ("각 그리드의 바닥면 깊이"): the floor face depth multiplies the base box
+    // depth so the floor band can be deeper/shallower than the box.
+    var floorDepthMul = (SHELF.floorDepth != null ? SHELF.floorDepth : 1.0);
+    var Dfloor = D * floorDepthMul;
 
     S.cubbies.forEach(function(cb){
       if (!cb.el) return;
@@ -1053,14 +1154,34 @@
       // column shows ≈ none. This is the OUTER-WALL reveal the user asked for (reverts the prior
       // mirror that produced center-facing walls).
       var thisRect = cb.el.getBoundingClientRect();
-      var oxLocal = boardCenterX - thisRect.left;        // = boardCenterX − cubbyLeft (NON-mirrored)
-      cb.el.style.perspectiveOrigin = oxLocal + 'px ' + EYE_OY + 'px';
-      // PER-CUBBY side-wall depth scaled by distance from center: distFrac 0 (center) -> 1 (edge).
-      // center column gets Dside ≈ 0 (no visible wall); edge columns get the full sliver. This is
-      // what makes the reveal SUBTLE + SCALING (center straight-on, edges a slight outer sliver).
       var cubbyCenterX = thisRect.left + W / 2;
+      // PER-CUBBY center-distance: distFrac 0 (center column) -> 1 (edge). The V20 FALLOFF
+      // factor = distFrac^wallFalloff shrinks BOTH side walls toward the center (center ≈ 0).
       var distFrac = Math.min(1, Math.abs(cubbyCenterX - boardCenterX) / halfBoardW);
-      var Dside = D * sideRev * distFrac;
+      var falloff = Math.pow(distFrac, wallFalloff);
+      // INDEPENDENT wall depths: OUTER wall (center-away) ∝ wallOuterReveal, CENTER-facing wall
+      // (toward board center) ∝ wallCenterReveal — both × the falloff factor.
+      var Douter  = D * wallOuter  * falloff;
+      var Dcenter = D * wallCenter * falloff;
+      // Which physical wall (left/right) is the OUTER one for THIS cubby? A cubby LEFT of board
+      // center faces RIGHT toward center -> its LEFT wall is OUTER, RIGHT wall is CENTER-facing.
+      // A cubby RIGHT of center -> RIGHT wall OUTER, LEFT wall CENTER-facing.
+      var leftIsOuter = (cubbyCenterX <= boardCenterX);
+      var Dleft  = leftIsOuter ? Douter  : Dcenter;   // left wall depth
+      var Dright = leftIsOuter ? Dcenter : Douter;    // right wall depth
+
+      // GLOBAL EYE (perspective-origin) — base X = board center expressed in local coords
+      // (reveals the OUTER wall). V20: when wallCenterReveal>0 we BLEND the eye toward the
+      // cubby's OWN center (W/2) so the CENTER-facing wall also folds toward the camera and
+      // genuinely projects. blend = wallCenter / (wallOuter + wallCenter): 0 when no center
+      // reveal (pure outer eye = current look), grows as the center wall is dialed up.
+      var oxOuter = boardCenterX - thisRect.left;     // = boardCenterX − cubbyLeft (outer-wall eye)
+      var oxCenter = W / 2;                            // cubby's own center (both walls show)
+      var denom = wallOuter + wallCenter;
+      var blend = (denom > 1e-6) ? (wallCenter / denom) : 0;
+      var oxLocal = oxOuter * (1 - blend) + oxCenter * blend;
+      cb.el.style.perspectiveOrigin = oxLocal + 'px ' + EYE_OY + 'px';
+
       // size + transform the 6 faces so the box closes exactly (no step / 단차).
       var back = cb.el.querySelector('.c-back');
       var floor = cb.el.querySelector('.c-wall.b');
@@ -1070,12 +1191,14 @@
       var rim   = cb.el.querySelector('.c-rim');
       if (back){ back.style.width=W+'px'; back.style.height=H+'px';
         back.style.transform='translateZ('+(-D)+'px)'; }
-      if (floor){ floor.style.width=W+'px'; floor.style.height=D+'px';
-        floor.style.top=(H-D)+'px'; floor.style.transformOrigin='center bottom';
+      // FLOOR — depth = base D × floorDepth (V20). Hinged front-bottom, folds back.
+      if (floor){ floor.style.width=W+'px'; floor.style.height=Dfloor+'px';
+        floor.style.top=(H-Dfloor)+'px'; floor.style.transformOrigin='center bottom';
         floor.style.transform='rotateX('+ang+'deg)'; }
       if (ceil){
         // CEILING — HIDDEN by default (ceilVis=0). Hide via display:none so it never renders.
-        if (ceilVis <= 0){ ceil.style.display='none'; }
+        // Depth = base D × ceilingVisibility × frameCeilingDepth (V20).
+        if (Dceil <= 0){ ceil.style.display='none'; }
         else {
           ceil.style.display='';
           ceil.style.width=W+'px'; ceil.style.height=Dceil+'px';
@@ -1083,10 +1206,12 @@
           ceil.style.transform='rotateX('+(-ang)+'deg)';
         }
       }
-      if (left){ left.style.width=Dside+'px'; left.style.height=H+'px';
+      // SIDE WALLS — INDEPENDENT depths (Dleft / Dright). The perspective eye blend (above)
+      // decides which one is visibly revealed; here we give each its true folded depth.
+      if (left){ left.style.width=Dleft+'px'; left.style.height=H+'px';
         left.style.transformOrigin='left center'; left.style.transform='rotateY(-90deg)'; }
-      if (right){ right.style.width=Dside+'px'; right.style.height=H+'px';
-        right.style.left=(W-Dside)+'px'; right.style.transformOrigin='right center';
+      if (right){ right.style.width=Dright+'px'; right.style.height=H+'px';
+        right.style.left=(W-Dright)+'px'; right.style.transformOrigin='right center';
         right.style.transform='rotateY(90deg)'; }
       if (rim){ rim.style.width=W+'px'; rim.style.height=rimH+'px';
         rim.style.top=(H-rimH)+'px'; rim.style.transform='translateZ(1px)'; }

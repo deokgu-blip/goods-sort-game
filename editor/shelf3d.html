@@ -31,7 +31,15 @@
   #panel header .t{ font-size:18px; font-weight:900; }
   #panel header .s{ font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4; }
   #controls{ flex:1; overflow-y:auto; padding:12px 16px 8px; }
+  /* labeled SECTION header so the (now large) slider list stays usable. */
+  .section{ font-size:12px; font-weight:900; letter-spacing:.3px; color:var(--accent);
+    text-transform:none; margin:6px 0 10px; padding:7px 10px; border-radius:9px;
+    background:linear-gradient(#161d28,#1a2433); border:1px solid var(--line); }
+  .section:first-child{ margin-top:0; }
   .ctrl{ margin-bottom:14px; }
+  /* native COLOR PICKER (grid wood color) — full-width swatch. */
+  .ctrl input[type=color]{ width:100%; height:34px; padding:0; border:1px solid var(--line);
+    border-radius:9px; background:#161d28; cursor:pointer; }
   .ctrl .row{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:5px; }
   .ctrl label{ font-size:13px; font-weight:700; }
   .ctrl .en{ font-size:10px; color:var(--muted); font-weight:600; }
@@ -85,7 +93,7 @@
   <div id="panel">
     <header>
       <div class="t">선반 3D 설정</div>
-      <div class="s">선반의 입체감·나무틀·조명을 슬라이더로 직접 조절하세요. 시선은 보드 중앙에 하나(전역) — 각 칸은 <b>바깥쪽(OUTER) 옆면</b>만 살짝 보이고 중앙에서 멀수록 더 보입니다(가운데 칸은 정면). 윗면(천장)은 기본 숨김(0), 바닥면은 내려다봐 보입니다. <b>라이트 각도</b>로 빛 방향(기본 왼쪽 위 → 오른쪽 아래 그림자), <b>그림자 진하기</b>·<b>뒷줄 어둡기</b>도 실시간 조절. 모서리는 기본 "각짐(0)".</div>
+      <div class="s">선반의 입체감·나무틀·조명·색상을 섹션별 슬라이더로 직접 조절하세요. <b>📷카메라</b>(전체 기울기·높이), <b>🧱벽면</b>(바깥쪽/중앙쪽 옆면을 따로, 중앙으로 갈수록 사라지는 정도), <b>📐깊이</b>(바닥면·천장면 깊이), <b>💡라이트/그림자</b>, <b>🎨색상</b>(그리드 나무 색 컬러피커), <b>📦굿즈</b>, <b>🪵프레임</b>. 기본값은 현재 보이는 모습 그대로입니다.</div>
     </header>
     <div id="controls"><!-- sliders injected by JS --></div>
     <div id="jsonBox">
@@ -114,32 +122,58 @@
   'use strict';
   var LS_KEY = 'gs_shelf_config';
 
-  // SLIDER SPECS — Korean labels + sensible min/max/step for every shelf param.
-  // (key, korean label, english hint, min, max, step, decimals)
-  var SPECS = [
-    { key:'cubbyAspect',       ko:'칸 비율 (가로/세로)', en:'cubby aspect',        min:0.70, max:1.30, step:0.01, dec:2 },
-    { key:'goodFillHeight',    ko:'굿즈 크기',           en:'good fill height',    min:0.55, max:1.00, step:0.01, dec:2 },
-    { key:'goodGap',           ko:'굿즈 간격',           en:'good gap',            min:0.00, max:0.14, step:0.005, dec:3 },
-    // V18 — DIRECTIONAL LIGHTING (near the top so it's the focus). 라이트 각도(315=왼쪽 위 빛 ->
-    // 오른쪽 아래 그림자), 그림자 진하기, 뒷줄(뒤 굿즈) 어둡기. 모두 실시간 미리보기 반영.
-    { key:'lightAngle',        ko:'라이트 각도',         en:'light angle',         min:0,    max:360,  step:5,    dec:0 },
-    { key:'shadowStrength',    ko:'그림자 진하기',       en:'shadow strength',     min:0.00, max:0.90, step:0.01, dec:2 },
-    { key:'backDim',           ko:'뒷줄 어둡기',         en:'back-row dim',        min:0.30, max:1.00, step:0.01, dec:2 },
-    { key:'topShadow',         ko:'천장 그림자 (얕게)',  en:'top shadow',          min:0.00, max:1.00, step:0.05, dec:2 },
-    { key:'perspective',       ko:'퍼스펙티브 (입체감)', en:'perspective',         min:300,  max:1100, step:10,   dec:0 },
-    { key:'depth',             ko:'선반 깊이',           en:'depth',               min:0.40, max:0.95, step:0.01, dec:2 },
-    { key:'shelfAngle',        ko:'선반 각도',           en:'shelf angle',         min:74,   max:100,  step:1,    dec:0 },
-    // eyeY: SMALLER = eye HIGHER above center = 더 위에서 내려다봄 -> 바닥면(선반)이 더 보임.
-    { key:'eyeY',              ko:'내려다보는 정도 (작을수록↑)', en:'look-down (eye Y)', min:0.10, max:0.50, step:0.01, dec:2 },
-    // ceilingVisibility: 0 = 윗면 숨김(기본). 올리면 윗 벽면이 다시 보임.
-    { key:'ceilingVisibility', ko:'윗면 보이기 (0=숨김)', en:'ceiling vis (0=hide)', min:0.00, max:1.60, step:0.02, dec:2 },
-    // sideReveal: 눈이 보드 중앙에 하나 -> 각 칸은 '바깥쪽(OUTER) 옆면'만 살짝 보임 (중앙에서 멀수록 더).
-    { key:'sideReveal',        ko:'옆면(바깥쪽) 보이기', en:'outer wall reveal',   min:0.20, max:1.30, step:0.02, dec:2 },
-    { key:'postThickness',     ko:'기둥 두께',           en:'post thickness',      min:2,    max:24,   step:1,    dec:0 },
-    { key:'frameThickness',    ko:'프레임 두께',         en:'frame thickness',     min:4,    max:30,   step:1,    dec:0 },
-    { key:'rimH',              ko:'앞 턱 두께',          en:'front rim',           min:0,    max:20,   step:1,    dec:0 },
-    { key:'cornerRadius',      ko:'모서리 둥글기 (0=각짐)', en:'corner radius',    min:0,    max:30,   step:1,    dec:0 }
+  // SLIDER SPECS — Korean labels + sensible min/max/step for every shelf param, organized
+  // into labeled SECTIONS so the now-large list stays usable. gridColor is a COLOR picker.
+  // (key, korean label, english hint, min, max, step, decimals) ; color items use type:'color'.
+  var SECTIONS = [
+    { title:'📷 카메라 / 시점', items:[
+      { key:'perspective',       ko:'퍼스펙티브 (입체감)', en:'perspective',         min:300,  max:1100, step:10,   dec:0 },
+      // eyeY: SMALLER = eye HIGHER above center = 더 위에서 내려다봄 -> 바닥면(선반)이 더 보임.
+      { key:'eyeY',              ko:'칸별 내려다보는 정도 (작을수록↑)', en:'per-cubby look-down', min:0.10, max:0.50, step:0.01, dec:2 },
+      // V20 — GLOBAL board camera (whole shelf), distinct from per-cubby eyeY.
+      { key:'cameraAngle',       ko:'카메라 기울기 (전체)', en:'camera tilt (board)', min:-25,  max:25,   step:1,    dec:0 },
+      { key:'cameraHeight',      ko:'카메라 높이 (전체)',   en:'camera height (board)', min:0.00, max:1.00, step:0.02, dec:2 }
+    ]},
+    { title:'🧱 벽면', items:[
+      // V20 — INDEPENDENT side-wall reveals + falloff.
+      { key:'wallOuterReveal',   ko:'바깥쪽 벽면 (중앙을 등지는)', en:'outer wall reveal',  min:0.00, max:1.30, step:0.02, dec:2 },
+      { key:'wallCenterReveal',  ko:'중앙쪽 벽면 (중앙을 바라보는)', en:'center wall reveal', min:0.00, max:1.30, step:0.02, dec:2 },
+      { key:'wallFalloff',       ko:'중앙으로 벽면 사라지는 정도', en:'wall falloff (exp)', min:0.30, max:3.00, step:0.05, dec:2 }
+    ]},
+    { title:'📐 깊이', items:[
+      { key:'depth',             ko:'선반 깊이 (기본)',     en:'base depth',          min:0.40, max:0.95, step:0.01, dec:2 },
+      { key:'shelfAngle',        ko:'선반 각도',           en:'shelf angle',         min:74,   max:100,  step:1,    dec:0 },
+      // V20 — per-face depth multipliers (× base depth).
+      { key:'floorDepth',        ko:'바닥면 깊이 (각 칸)',  en:'floor face depth',    min:0.20, max:1.50, step:0.05, dec:2 },
+      { key:'frameCeilingDepth', ko:'천장면 깊이 (프레임)', en:'ceiling face depth',  min:0.20, max:1.50, step:0.05, dec:2 },
+      // ceilingVisibility: 0 = 윗면 숨김(기본). 올리면 윗 벽면이 다시 보임.
+      { key:'ceilingVisibility', ko:'윗면 보이기 (0=숨김)', en:'ceiling vis (0=hide)', min:0.00, max:1.60, step:0.02, dec:2 }
+    ]},
+    { title:'💡 라이트 / 그림자', items:[
+      // V18 — DIRECTIONAL LIGHTING. 라이트 각도(315=왼쪽 위 빛 -> 오른쪽 아래 그림자).
+      { key:'lightAngle',        ko:'라이트 각도',         en:'light angle',         min:0,    max:360,  step:5,    dec:0 },
+      { key:'shadowStrength',    ko:'그림자 진하기',       en:'shadow strength',     min:0.00, max:0.90, step:0.01, dec:2 },
+      { key:'backDim',           ko:'뒷줄 어둡기',         en:'back-row dim',        min:0.30, max:1.00, step:0.01, dec:2 },
+      { key:'topShadow',         ko:'천장 그림자 (얕게)',  en:'top shadow',          min:0.00, max:1.00, step:0.05, dec:2 }
+    ]},
+    { title:'🎨 색상', items:[
+      // V20 — wood TINT color (multiply over the grain).
+      { key:'gridColor',         ko:'그리드 나무 색',      en:'grid wood color',     type:'color' }
+    ]},
+    { title:'📦 굿즈', items:[
+      { key:'goodFillHeight',    ko:'굿즈 크기',           en:'good fill height',    min:0.55, max:1.00, step:0.01, dec:2 },
+      { key:'goodGap',           ko:'굿즈 간격',           en:'good gap',            min:0.00, max:0.14, step:0.005, dec:3 }
+    ]},
+    { title:'🪵 프레임', items:[
+      { key:'cubbyAspect',       ko:'칸 비율 (가로/세로)', en:'cubby aspect',        min:0.70, max:1.30, step:0.01, dec:2 },
+      { key:'postThickness',     ko:'기둥 두께',           en:'post thickness',      min:2,    max:24,   step:1,    dec:0 },
+      { key:'frameThickness',    ko:'프레임 두께',         en:'frame thickness',     min:4,    max:30,   step:1,    dec:0 },
+      { key:'rimH',              ko:'앞 턱 두께',          en:'front rim',           min:0,    max:20,   step:1,    dec:0 },
+      { key:'cornerRadius',      ko:'모서리 둥글기 (0=각짐)', en:'corner radius',    min:0,    max:30,   step:1,    dec:0 }
+    ]}
   ];
+  // flat list of all item specs (used by syncInputs/__editor harness).
+  var SPECS = SECTIONS.reduce(function(a,s){ return a.concat(s.items); }, []);
 
   var frame = document.getElementById('preview');
   var controlsEl = document.getElementById('controls');
@@ -152,7 +186,11 @@
     perspective:560, eyeY:0.20, sideReveal:0.5, depth:0.68, shelfAngle:90,
     postThickness:9, frameThickness:12, ceilingVisibility:0, cornerRadius:0,
     goodFillHeight:0.88, cubbyAspect:0.95, rimH:7, goodGap:0.04,
-    lightAngle:315, shadowStrength:0.45, backDim:0.4, topShadow:0.5
+    lightAngle:315, shadowStrength:0.45, backDim:0.4, topShadow:0.5,
+    // V20 — independent walls + falloff, grid color tint, global camera, per-face depths.
+    wallOuterReveal:0.5, wallCenterReveal:0, wallFalloff:1.0,
+    gridColor:'#caa06a', cameraAngle:0, cameraHeight:0.5,
+    floorDepth:1.0, frameCeilingDepth:1.0
   };
   var DEFAULTS = Object.assign({}, FALLBACK_DEFAULTS);
   var cfg = Object.assign({}, DEFAULTS);
@@ -166,49 +204,77 @@
     if (a){ try{ a.applyConfig(cfg); }catch(e){} }
   }
   function fmt(v, dec){ return (dec>0) ? Number(v).toFixed(dec) : String(Math.round(v)); }
+  // canonical key order for the JSON readout/export = the SHELF_DEFAULTS order (V20).
+  var JSON_ORDER = ['perspective','eyeY','sideReveal','wallOuterReveal','wallCenterReveal','wallFalloff',
+    'depth','floorDepth','frameCeilingDepth','shelfAngle','cameraAngle','cameraHeight',
+    'postThickness','frameThickness','ceilingVisibility','cornerRadius','goodFillHeight','cubbyAspect',
+    'rimH','goodGap','lightAngle','shadowStrength','backDim','topShadow','gridColor'];
   function updateJson(){
-    // stable key order = the canonical SHELF_DEFAULTS order for clean copy/commit.
-    var order = ['perspective','eyeY','sideReveal','depth','shelfAngle','postThickness',
-      'frameThickness','ceilingVisibility','cornerRadius','goodFillHeight','cubbyAspect','rimH','goodGap',
-      'lightAngle','shadowStrength','backDim','topShadow'];
     var o = {};
-    order.forEach(function(k){ o[k] = cfg[k]; });
+    JSON_ORDER.forEach(function(k){ if (cfg[k] !== undefined) o[k] = cfg[k]; });
+    // include any extra keys not in JSON_ORDER (forward-compat)
+    Object.keys(cfg).forEach(function(k){ if (o[k] === undefined) o[k] = cfg[k]; });
     jsonEl.value = JSON.stringify(o, null, 2);
   }
   function syncInputs(){
     SPECS.forEach(function(s){
       var io = inputs[s.key]; if (!io) return;
-      io.range.value = cfg[s.key];
-      io.val.textContent = fmt(cfg[s.key], s.dec);
+      if (s.type === 'color'){
+        io.range.value = cfg[s.key];
+        io.val.textContent = String(cfg[s.key]);
+      } else {
+        io.range.value = cfg[s.key];
+        io.val.textContent = fmt(cfg[s.key], s.dec);
+      }
     });
     updateJson();
   }
-  function buildControls(){
-    controlsEl.innerHTML = '';
-    SPECS.forEach(function(s){
-      var wrap = document.createElement('div'); wrap.className='ctrl';
-      var row = document.createElement('div'); row.className='row';
-      var lab = document.createElement('label'); lab.textContent = s.ko;
-      var en  = document.createElement('span'); en.className='en'; en.textContent = s.en;
-      var val = document.createElement('span'); val.className='val';
-      var head = document.createElement('div');
-      head.style.display='flex'; head.style.alignItems='baseline'; head.style.gap='7px';
-      head.appendChild(lab); head.appendChild(en);
-      row.appendChild(head); row.appendChild(val);
-      var range = document.createElement('input');
-      range.type='range'; range.min=s.min; range.max=s.max; range.step=s.step;
-      range.value = cfg[s.key];
-      range.addEventListener('input', function(){
-        var v = parseFloat(range.value);
+  function buildOneCtrl(s){
+    var wrap = document.createElement('div'); wrap.className='ctrl';
+    var row = document.createElement('div'); row.className='row';
+    var lab = document.createElement('label'); lab.textContent = s.ko;
+    var en  = document.createElement('span'); en.className='en'; en.textContent = s.en;
+    var val = document.createElement('span'); val.className='val';
+    var head = document.createElement('div');
+    head.style.display='flex'; head.style.alignItems='baseline'; head.style.gap='7px';
+    head.appendChild(lab); head.appendChild(en);
+    row.appendChild(head); row.appendChild(val);
+    var input;
+    if (s.type === 'color'){
+      // COLOR PICKER — a native CSS color input that tints the grid wood live.
+      input = document.createElement('input');
+      input.type = 'color'; input.className = 'colorpick';
+      input.value = cfg[s.key] || '#caa06a';
+      input.addEventListener('input', function(){
+        cfg[s.key] = input.value;
+        val.textContent = String(input.value);
+        updateJson(); applyToPreview();
+      });
+      wrap.appendChild(row); wrap.appendChild(input);
+      val.textContent = String(cfg[s.key]);
+    } else {
+      input = document.createElement('input');
+      input.type='range'; input.min=s.min; input.max=s.max; input.step=s.step;
+      input.value = cfg[s.key];
+      input.addEventListener('input', function(){
+        var v = parseFloat(input.value);
         cfg[s.key] = (s.dec>0) ? v : Math.round(v);
         val.textContent = fmt(cfg[s.key], s.dec);
-        updateJson();
-        applyToPreview();
+        updateJson(); applyToPreview();
       });
-      wrap.appendChild(row); wrap.appendChild(range);
-      controlsEl.appendChild(wrap);
-      inputs[s.key] = { range:range, val:val };
+      wrap.appendChild(row); wrap.appendChild(input);
       val.textContent = fmt(cfg[s.key], s.dec);
+    }
+    controlsEl.appendChild(wrap);
+    inputs[s.key] = { range:input, val:val };
+  }
+  function buildControls(){
+    controlsEl.innerHTML = '';
+    SECTIONS.forEach(function(sec){
+      var h = document.createElement('div'); h.className = 'section';
+      h.textContent = sec.title;
+      controlsEl.appendChild(h);
+      sec.items.forEach(buildOneCtrl);
     });
   }
   function toast(msg){
@@ -290,7 +356,7 @@
     cfg: function(){ return Object.assign({}, cfg); },
     set: function(k,v){ if (inputs[k]){ inputs[k].range.value=v;
       inputs[k].range.dispatchEvent(new Event('input')); } },
-    api: api, specs: SPECS,
+    api: api, specs: SPECS, sections: SECTIONS,
     exportConfig: exportConfig, json: function(){ return jsonEl.value; }
   };
   window.__editorReady = true;

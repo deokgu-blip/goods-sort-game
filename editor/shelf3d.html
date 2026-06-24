@@ -85,7 +85,7 @@
   <div id="panel">
     <header>
       <div class="t">선반 3D 설정</div>
-      <div class="s">선반의 입체감·나무틀 모양을 슬라이더로 직접 조절하세요. 모서리는 기본 "각짐(0)" 입니다.</div>
+      <div class="s">선반의 입체감·나무틀·조명을 슬라이더로 직접 조절하세요. 시선은 보드 중앙에 하나(전역) — 각 칸은 <b>바깥쪽(OUTER) 옆면</b>만 살짝 보이고 중앙에서 멀수록 더 보입니다(가운데 칸은 정면). 윗면(천장)은 기본 숨김(0), 바닥면은 내려다봐 보입니다. <b>라이트 각도</b>로 빛 방향(기본 왼쪽 위 → 오른쪽 아래 그림자), <b>그림자 진하기</b>·<b>뒷줄 어둡기</b>도 실시간 조절. 모서리는 기본 "각짐(0)".</div>
     </header>
     <div id="controls"><!-- sliders injected by JS --></div>
     <div id="jsonBox">
@@ -120,12 +120,21 @@
     { key:'cubbyAspect',       ko:'칸 비율 (가로/세로)', en:'cubby aspect',        min:0.70, max:1.30, step:0.01, dec:2 },
     { key:'goodFillHeight',    ko:'굿즈 크기',           en:'good fill height',    min:0.55, max:1.00, step:0.01, dec:2 },
     { key:'goodGap',           ko:'굿즈 간격',           en:'good gap',            min:0.00, max:0.14, step:0.005, dec:3 },
+    // V18 — DIRECTIONAL LIGHTING (near the top so it's the focus). 라이트 각도(315=왼쪽 위 빛 ->
+    // 오른쪽 아래 그림자), 그림자 진하기, 뒷줄(뒤 굿즈) 어둡기. 모두 실시간 미리보기 반영.
+    { key:'lightAngle',        ko:'라이트 각도',         en:'light angle',         min:0,    max:360,  step:5,    dec:0 },
+    { key:'shadowStrength',    ko:'그림자 진하기',       en:'shadow strength',     min:0.00, max:0.90, step:0.01, dec:2 },
+    { key:'backDim',           ko:'뒷줄 어둡기',         en:'back-row dim',        min:0.30, max:1.00, step:0.01, dec:2 },
+    { key:'topShadow',         ko:'천장 그림자 (얕게)',  en:'top shadow',          min:0.00, max:1.00, step:0.05, dec:2 },
     { key:'perspective',       ko:'퍼스펙티브 (입체감)', en:'perspective',         min:300,  max:1100, step:10,   dec:0 },
     { key:'depth',             ko:'선반 깊이',           en:'depth',               min:0.40, max:0.95, step:0.01, dec:2 },
     { key:'shelfAngle',        ko:'선반 각도',           en:'shelf angle',         min:74,   max:100,  step:1,    dec:0 },
-    { key:'eyeY',              ko:'시선 높이 (바닥/천장)', en:'eye Y',             min:0.20, max:0.70, step:0.01, dec:2 },
-    { key:'ceilingVisibility', ko:'윗면 보이기',         en:'ceiling visibility',  min:0.50, max:1.60, step:0.02, dec:2 },
-    { key:'sideReveal',        ko:'옆면 보이기',         en:'side reveal',         min:0.50, max:1.60, step:0.02, dec:2 },
+    // eyeY: SMALLER = eye HIGHER above center = 더 위에서 내려다봄 -> 바닥면(선반)이 더 보임.
+    { key:'eyeY',              ko:'내려다보는 정도 (작을수록↑)', en:'look-down (eye Y)', min:0.10, max:0.50, step:0.01, dec:2 },
+    // ceilingVisibility: 0 = 윗면 숨김(기본). 올리면 윗 벽면이 다시 보임.
+    { key:'ceilingVisibility', ko:'윗면 보이기 (0=숨김)', en:'ceiling vis (0=hide)', min:0.00, max:1.60, step:0.02, dec:2 },
+    // sideReveal: 눈이 보드 중앙에 하나 -> 각 칸은 '바깥쪽(OUTER) 옆면'만 살짝 보임 (중앙에서 멀수록 더).
+    { key:'sideReveal',        ko:'옆면(바깥쪽) 보이기', en:'outer wall reveal',   min:0.20, max:1.30, step:0.02, dec:2 },
     { key:'postThickness',     ko:'기둥 두께',           en:'post thickness',      min:2,    max:24,   step:1,    dec:0 },
     { key:'frameThickness',    ko:'프레임 두께',         en:'frame thickness',     min:4,    max:30,   step:1,    dec:0 },
     { key:'rimH',              ko:'앞 턱 두께',          en:'front rim',           min:0,    max:20,   step:1,    dec:0 },
@@ -140,9 +149,10 @@
   // DEFAULTS + current config. DEFAULTS come from the engine itself (single source
   // of truth) once the iframe loads; until then use a local fallback copy.
   var FALLBACK_DEFAULTS = {
-    perspective:560, eyeY:0.45, sideReveal:1.0, depth:0.68, shelfAngle:90,
-    postThickness:9, frameThickness:12, ceilingVisibility:1.0, cornerRadius:0,
-    goodFillHeight:0.88, cubbyAspect:0.95, rimH:7, goodGap:0.04
+    perspective:560, eyeY:0.20, sideReveal:0.5, depth:0.68, shelfAngle:90,
+    postThickness:9, frameThickness:12, ceilingVisibility:0, cornerRadius:0,
+    goodFillHeight:0.88, cubbyAspect:0.95, rimH:7, goodGap:0.04,
+    lightAngle:315, shadowStrength:0.45, backDim:0.4, topShadow:0.5
   };
   var DEFAULTS = Object.assign({}, FALLBACK_DEFAULTS);
   var cfg = Object.assign({}, DEFAULTS);
@@ -159,7 +169,8 @@
   function updateJson(){
     // stable key order = the canonical SHELF_DEFAULTS order for clean copy/commit.
     var order = ['perspective','eyeY','sideReveal','depth','shelfAngle','postThickness',
-      'frameThickness','ceilingVisibility','cornerRadius','goodFillHeight','cubbyAspect','rimH','goodGap'];
+      'frameThickness','ceilingVisibility','cornerRadius','goodFillHeight','cubbyAspect','rimH','goodGap',
+      'lightAngle','shadowStrength','backDim','topShadow'];
     var o = {};
     order.forEach(function(k){ o[k] = cfg[k]; });
     jsonEl.value = JSON.stringify(o, null, 2);

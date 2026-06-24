@@ -62,6 +62,24 @@
        this EXACT value so the whole thing reads as one seamless wall.
        =========================================================== */
     --wallpaper: #f0e2c8;
+    /* ===========================================================
+       V18 — DIRECTIONAL LIGHTING (top-left light -> bottom-right shadows).
+       These are DEFAULTS for the static/offline render; applyShelfCssVars()
+       recomputes them from SHELF.lightAngle / shadowStrength / backDim at runtime.
+       --good-shadow-dx/dy : each good's drop-shadow offset (default bottom-right).
+       --cubby-shade-* : the niche inner-shadow gradient poles (dark toward bottom-right).
+       --back-dim : back-row (peek) goods brightness (in shadow).
+       =========================================================== */
+    --good-shadow-dx: 4.24px;
+    --good-shadow-dy: 4.24px;
+    --good-shadow-blur: 5px;
+    --good-shadow-color: rgba(20,10,2,.45);
+    --back-dim: 0.5;
+    --cubby-shade-dark-x: 79.7%;
+    --cubby-shade-dark-y: 79.7%;
+    --cubby-shade-lit-x: 20.3%;
+    --cubby-shade-lit-y: 20.3%;
+    --cubby-shade-op: 0.248;
   }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body{ margin:0; padding:0; height:100%; overflow:hidden;
@@ -188,10 +206,31 @@
      Sizes/transforms are set per-cubby in JS so the box CLOSES exactly (no step).
      Local 3D space: origin=front-top-left, x→right, y→DOWN, z→toward camera. */
   .cubby .c-back, .cubby .c-wall{ position:absolute; left:0; top:0; }
-  /* BACK WALL — cream plane at z=-D. background-color == page wall (assert V5/V6). */
+  /* BACK WALL — cream plane at z=-D. background-color == page wall (assert V5/V6).
+     V18 — DIRECTIONAL INNER SHADING: a second radial gradient whose DARK pole sits toward
+     the shadow direction (bottom-right by default, driven by --cubby-shade-dark-*) and whose
+     LIT pole is toward the light (top-left). So each niche reads brighter at the upper-left
+     and darker at the lower-right — the cubby gradient/shadow the reference shows. The
+     opacity scales with --cubby-shade-op (from shadowStrength). The FIRST background-image
+     stays first so the back color is still sampled as cream for the seamless-wall assert
+     (the gradients sit ON TOP of the cream base color but the back is mostly cream). */
   .cubby .c-back{ background-color: var(--wallpaper);
     background-image:
-      radial-gradient(135% 130% at 50% 12%, rgba(0,0,0,0) 50%, rgba(70,45,18,.20) 100%);
+      /* V19 — SHALLOW TOP inner-shadow: a faint dark band hugging the TOP edge (ceiling
+         drop-shadow into the recess). SHALLOW = confined to ~top 22% then fades; opacity
+         from --cubby-top-shade-op (a small fraction of shadowStrength). Sits FIRST so it
+         reads at the top, over the cream wall + the directional shading below. */
+      linear-gradient(to bottom,
+        rgba(34,20,6,var(--cubby-top-shade-op,.12)) 0%,
+        rgba(34,20,6,calc(var(--cubby-top-shade-op,.12) * 0.45)) 11%,
+        rgba(34,20,6,0) 22%),
+      radial-gradient(150% 150% at var(--cubby-shade-dark-x,80%) var(--cubby-shade-dark-y,80%),
+        rgba(40,24,8,calc(var(--cubby-shade-op,.25) * 1.7)) 0%,
+        rgba(40,24,8,calc(var(--cubby-shade-op,.25) * 0.7)) 38%,
+        rgba(40,24,8,0) 72%),
+      radial-gradient(140% 140% at var(--cubby-shade-lit-x,20%) var(--cubby-shade-lit-y,20%),
+        rgba(255,248,228,.32) 0%, rgba(255,248,228,0) 50%),
+      radial-gradient(135% 130% at 50% 12%, rgba(0,0,0,0) 50%, rgba(70,45,18,.14) 100%);
     z-index:0; }
   /* the folded WOOD faces — FLOOR (.b), CEILING (.t), LEFT (.l), RIGHT (.r). One
      light (upper-front-left): FLOOR lightest, CEILING darkest, LEFT lit, RIGHT shaded. */
@@ -282,7 +321,10 @@
        transparent sides of the square are clipped by the narrow box) — `contain` would
        wrongly fit a slim box to its WIDTH and shrink the product. center-bottom standing. */
     background-size:auto 100%; background-repeat:no-repeat; background-position:center bottom;
-    filter:drop-shadow(0 3px 3px rgba(0,0,0,.30));
+    /* V18 — DIRECTIONAL drop-shadow: offset toward the shadow direction (bottom-right by
+       default, from the top-left light). dx/dy/blur/color come from --good-shadow-* which
+       applyShelfCssVars() derives from SHELF.lightAngle + shadowStrength. */
+    filter:drop-shadow(var(--good-shadow-dx,4px) var(--good-shadow-dy,4px) var(--good-shadow-blur,5px) var(--good-shadow-color,rgba(20,10,2,.45)));
     transform: translateX(-50%) translateZ(var(--gz,0px)) scale(var(--gs,1));
     transform-origin:bottom center;
     will-change:transform; cursor:grab; touch-action:none; pointer-events:none; }
@@ -296,8 +338,13 @@
   /* PEEKING back-row goods — set DEEPER on the floor (bigger translateZ in JS) so they
      read as a real back row standing behind the front row, peeking above/between it.
      Slightly dimmed so they read one step back (the depth, not a blur smudge). */
+  /* V18 — BACK-ROW goods are DARKER (in shadow behind the front row). brightness comes from
+     --back-dim (SHELF.backDim, default 0.5 = ~half) + slight desaturation (saturate .85), per
+     the reference closeup where the back goods read at roughly half brightness. The directional
+     drop-shadow is softer for the back row (it's already dim + occluded). */
   .good.peek{ cursor:default;
-    filter:drop-shadow(0 3px 3px rgba(0,0,0,.34)) brightness(.84) saturate(.94);
+    filter:drop-shadow(var(--good-shadow-dx,4px) var(--good-shadow-dy,4px) var(--good-shadow-blur,5px) var(--good-shadow-color,rgba(20,10,2,.34)))
+           brightness(var(--back-dim,0.5)) saturate(.85);
     transform: translateX(-50%) translateZ(var(--gz,0px)) scale(var(--gs,1)); }
   .good.peek::after{ background:radial-gradient(closest-side, rgba(20,10,2,.36), rgba(20,10,2,.14) 60%, rgba(20,10,2,0) 80%);
     height:10%; width:74%; }
@@ -552,14 +599,19 @@
   // game in the SAME browser): localStorage['gs_shelf_config'] first, and optionally
   // ./shelf_config.json when served. All values here = the current SETTLED look.
   //   perspective       (px)  : per-niche perspective distance (gentle real depth)
-  //   eyeY              (frac) : perspective-origin Y as a fraction of cubby height
-  //                              (floor/ceiling balance; 0.45 = look INTO the box)
-  //   sideReveal        (mult) : how much the side walls show (subtle; 1.0 = current)
+  //   eyeY              (frac) : perspective-origin Y as a fraction of cubby height. SMALLER
+  //                              = eye HIGHER above center = look DOWN INTO the box so the
+  //                              FLOOR surface shows (0.20 = look-down, floor clearly visible)
+  //   sideReveal        (mult) : how much the (center-facing) side wall shows. The eye is at
+  //                              the GLOBAL board center now, so each cubby reveals only ONE
+  //                              inner wall (the center-facing one); this scales its sliver
+  //                              subtly. 1.0 = current.
   //   depth             (frac) : shelf depth/length — box depth D = depth*min(W,H)
   //   shelfAngle        (deg)  : floor/ceiling plane fold angle (90 = upright box)
   //   postThickness     (px)   : divider/post width between cubbies (the lattice gap)
   //   frameThickness    (px)   : outer cabinet wood frame thickness
-  //   ceilingVisibility (mult) : ceiling band size/visibility (1.0 = current)
+  //   ceilingVisibility (mult) : ceiling band size/visibility. DEFAULT 0 = ceiling HIDDEN
+  //                              (only the floor shows). Editor may raise it > 0 to show it.
   //   cornerRadius      (px)   : 0 = ANGULAR (sharp/squared) frame & niche corners
   //   goodFillHeight    (frac) : good height as a fraction of the cubby interior
   //   cubbyAspect       (frac) : shelf aspect-ratio 1/cubbyAspect -> cubby w:h ratio
@@ -571,20 +623,35 @@
   //                              (preserving its real aspect) to fit within BOTH that slot
   //                              width AND the height budget -> NO good exceeds its slot
   //                              width -> adjacent goods NEVER overlap (consistent gaps).
+  //   lightAngle        (deg)  : DIRECTIONAL light source angle (0=right, 90=down, measured
+  //                              CW from +x). DEFAULT 315 = light from the TOP-LEFT, so every
+  //                              shadow falls toward the BOTTOM-RIGHT (dx>0, dy>0). All shadow
+  //                              offsets (each good's drop-shadow, each cubby's inner shading)
+  //                              derive from this angle so the whole lighting is adjustable.
+  //   shadowStrength    (0..1) : opacity of the directional shadows (good drop-shadow + cubby
+  //                              inner shading). Higher = darker/heavier shadows.
+  //   backDim           (frac) : brightness multiplier for the BACK-row (peeking) goods — they
+  //                              sit in shadow behind the front row. DEFAULT 0.5 = ~half
+  //                              brightness (darker + slightly desaturated, like the reference).
+  //                              Front-row goods stay full brightness.
   var SHELF_DEFAULTS = {
     perspective: 560,
-    eyeY: 0.45,
-    sideReveal: 1.0,
+    eyeY: 0.20,             // V17 — eye HIGH above center -> look DOWN, floor surface shows
+    sideReveal: 0.5,        // V18 — base mult; ACTUAL per-cubby Dside scales by distance from center (outer walls)
     depth: 0.68,
     shelfAngle: 90,
     postThickness: 9,
     frameThickness: 12,
-    ceilingVisibility: 1.0,
+    ceilingVisibility: 0,   // V17 — ceiling HIDDEN by default (only the floor shows)
     cornerRadius: 0,
     goodFillHeight: 0.88,
     cubbyAspect: 0.95,
     rimH: 7,
-    goodGap: 0.04
+    goodGap: 0.04,
+    lightAngle: 315,        // V18 — light from TOP-LEFT -> shadows fall BOTTOM-RIGHT (dx>0,dy>0)
+    shadowStrength: 0.45,   // V18 — directional shadow opacity (good drop-shadow + cubby inner shading)
+    backDim: 0.4,           // V19 — back-row (peek) goods VERY dark (~0.4, deep interior shadow per reference)
+    topShadow: 0.5          // V19 — SHALLOW top inner-shadow band strength (frac of shadowStrength; a faint dark band at the cubby ceiling edge)
   };
   // merge an OVERRIDE over the defaults (shallow; only known keys). Reads
   // localStorage['gs_shelf_config'] (same-browser editor save) + window.__SHELF_OVERRIDE
@@ -617,6 +684,44 @@
     root.setProperty('--cab-pad', SHELF.frameThickness + 'px');
     root.setProperty('--niche-gap', SHELF.postThickness + 'px');
     root.setProperty('--corner-radius', SHELF.cornerRadius + 'px');
+    // ----- V18 DIRECTIONAL LIGHTING (lightAngle -> shadow offsets) -----
+    // lightAngle = the direction TO the light source (deg). Shadows fall AWAY from the light.
+    // We map it to a screen-space shadow direction (x-right, y-DOWN, CW): shadowAngle =
+    // lightAngle - 270. DEFAULT lightAngle=315 -> shadowAngle=45 -> dx=cos45>0, dy=sin45>0
+    // = shadows fall to the BOTTOM-RIGHT (light comes from the TOP-LEFT). Adjusting lightAngle
+    // rotates EVERY shadow (good drop-shadows + each cubby's inner shading) consistently.
+    var la = (SHELF.lightAngle != null ? SHELF.lightAngle : 315);
+    var ss = (SHELF.shadowStrength != null ? SHELF.shadowStrength : 0.45);
+    var backDim = (SHELF.backDim != null ? SHELF.backDim : 0.4);
+    var topShadow = (SHELF.topShadow != null ? SHELF.topShadow : 0.5);
+    var shadowRad = (la - 270) * Math.PI / 180;
+    var ux = Math.cos(shadowRad), uy = Math.sin(shadowRad);   // unit shadow direction (y-down)
+    // GOOD drop-shadow: offset along the shadow direction by a fixed visual magnitude (px),
+    // soft blur, opacity = shadowStrength. dx>0,dy>0 by default -> bottom-right.
+    var GMAG = 6;                                              // good drop-shadow offset magnitude (px)
+    var dx = +(ux * GMAG).toFixed(2), dy = +(uy * GMAG).toFixed(2);
+    root.setProperty('--good-shadow-dx', dx + 'px');
+    root.setProperty('--good-shadow-dy', dy + 'px');
+    root.setProperty('--good-shadow-blur', '5px');
+    root.setProperty('--good-shadow-color', 'rgba(20,10,2,' + ss.toFixed(3) + ')');
+    // back-row (peek) goods brightness (in shadow). Slightly desaturated too.
+    root.setProperty('--back-dim', backDim.toFixed(3));
+    // CUBBY INNER SHADING gradient direction: the niche back wall is darkest toward the
+    // shadow direction (bottom-right by default), lightest toward the light (top-left). We
+    // express the gradient as a position: the DARK pole sits at (50%+ux*40%, 50%+uy*40%).
+    var darkX = (50 + ux * 42).toFixed(1), darkY = (50 + uy * 42).toFixed(1);
+    var litX  = (50 - ux * 42).toFixed(1), litY  = (50 - uy * 42).toFixed(1);
+    root.setProperty('--cubby-shade-dark-x', darkX + '%');
+    root.setProperty('--cubby-shade-dark-y', darkY + '%');
+    root.setProperty('--cubby-shade-lit-x',  litX + '%');
+    root.setProperty('--cubby-shade-lit-y',  litY + '%');
+    // inner-shadow opacity scaled from shadowStrength (a touch lighter than the drop-shadow).
+    root.setProperty('--cubby-shade-op', (ss * 0.55).toFixed(3));
+    // V19 — SHALLOW TOP inner-shadow: a faint dark band along the TOP edge of each cubby
+    // interior (a ceiling drop-shadow into the recess), per the reference. SHALLOW = a thin
+    // band confined to the top; strength = a small fraction of shadowStrength (topShadow mult,
+    // default 0.5) so it stays subtle. (The user: "그리드 윗쪽 천장그림자는 얕은데" — keep it shallow.)
+    root.setProperty('--cubby-top-shade-op', (ss * topShadow * 0.6).toFixed(3));
     // shelf aspect-ratio: 1 / cubbyAspect (cubbyAspect<1 -> wider/landscape)
     var shelf = document.getElementById('shelf');
     if (shelf) shelf.style.aspectRatio = '1 / ' + SHELF.cubbyAspect;
@@ -872,16 +977,19 @@
   //   LEFT  (.c-wall.l): DxH, hinged front-left (x=0), rotateY(-90°) folds back.
   //   RIGHT (.c-wall.r): DxH, hinged front-right (x=W), rotateY(90°) folds back.
   //   FRONT RIM (.c-rim): plank thickness along the front-bottom edge at z=0.
-  // UNIFORM EYE (V13 — reference-balanced): perspective-origin X = EACH cubby's OWN
-  // horizontal center (W/2), NOT the shared grid center. This removes the left/right
-  // horizontal TURN, so every cubby looks identical and its side walls reduce to a thin
-  // symmetric SLIVER from box-depth parallax only (subtle, like the reference) instead
-  // of revealing a big inner wall. perspective-origin Y sits NEAR the cubby center (V15:
-  // 0.45 of H, was 0.28) so the camera looks INTO the box and reveals BOTH the FLOOR's top
-  // surface (receding up) AND the CEILING's underside (receding down) as clear wood planks
-  // — the floor kept a touch more 도톰 than the ceiling (floorProjH > ceilProjH). Box depth
-  // D is bumped a little (0.68 of the shorter dim) so both bands project a clear height; the
-  // side slivers grow only slightly (still subtle). The shelf box is NEVER leaned (upright).
+  // GLOBAL EYE (V17 — single center-facing wall): perspective-origin X = the BOARD's
+  // horizontal CENTER, shared by ALL cubbies (one eye above the board center), expressed
+  // in EACH cubby's LOCAL coords as boardCenterX − cubbyLeft. Effect: cubbies LEFT of
+  // center reveal ONLY their RIGHT inner wall (the center-facing one); cubbies RIGHT of
+  // center reveal ONLY their LEFT inner wall; the center column is ~straight-on (no side
+  // wall). This fixes the old V13 symmetric-sliver look ("양옆면이 모두 보여서 이상해") where
+  // each cubby used its OWN center as the eye X and BOTH walls showed. The revealed wall is
+  // kept a SUBTLE sliver via a modest box depth (the side faces use Dside ≤ D so they stay
+  // slight, not bold). perspective-origin Y sits HIGHER above center now (V17: eyeY≈0.20,
+  // was 0.45) so the camera looks DOWN INTO the box and the wood FLOOR surface (the shelf
+  // the goods stand on) is clearly visible at the bottom of each level. The CEILING face is
+  // HIDDEN by default (ceilingVisibility=0) — "각 층의 상단쪽 벽면은 안보여도돼, 바닥면만 보이면돼".
+  // The shelf box is NEVER leaned (upright).
   var nicheGeom = { D: 57, rimH: 13 };       // cached so goods placement reads the live depth
   function buildNiches(){
     var cs = getComputedStyle(document.documentElement);
@@ -901,27 +1009,58 @@
     nicheGeom.D = D; nicheGeom.rimH = rimH;
     document.documentElement.style.setProperty('--wall-depth', D + 'px'); // legacy assert alias
 
-    // UNIFORM EYE — X at EACH cubby's OWN horizontal center (W/2 in its local coords)
-    // so there is NO horizontal turn (side walls = symmetric thin sliver). V15: eye Y moved
-    // toward the cubby CENTER (0.28->0.45 of H) so the camera looks INTO the box and reveals
-    // BOTH surfaces — the FLOOR's top (receding up) AND the CEILING's underside (receding
-    // down) — as clearly-visible wood planks. Kept just ABOVE center (0.45 < 0.5) so the
-    // FLOOR stays a touch more 도톰 than the ceiling (floorProjH > ceilProjH) per the spec.
-    var oxLocal = W * 0.5;                               // eye X = this cubby's own center (no turn)
-    var EYE_OY  = H * (SHELF.eyeY || 0.45);              // eye Y near center -> look INTO the box (floor + ceiling both show)
+    // GLOBAL EYE — X at the BOARD's horizontal CENTER, shared by every cubby (ONE eye above
+    // the board center). Per cubby we express it in that cubby's LOCAL coords as
+    // boardCenterX − cubbyLeft, so LEFT-of-center cubbies get an eye X > W (eye is to their
+    // RIGHT) and reveal ONLY their RIGHT (center-facing) inner wall; RIGHT-of-center cubbies
+    // get a negative eye X (eye is to their LEFT) and reveal ONLY their LEFT inner wall; the
+    // center column has eye X ≈ W/2 (straight-on, no side wall). boardCenterX is the grid's
+    // horizontal center (we read the grid bounding box once).
+    var gridRect = gridEl.getBoundingClientRect();
+    var boardCenterX = gridRect.left + gridRect.width / 2;
+    // V17: eye Y HIGHER above center (≈0.20 of H, was 0.45) so the camera looks DOWN INTO the
+    // box and the wood FLOOR surface (the shelf the goods stand on) is clearly visible at the
+    // bottom of each level. Smaller fraction = more top-down.
+    var EYE_OY  = H * (SHELF.eyeY != null ? SHELF.eyeY : 0.20); // eye Y above center -> look DOWN, floor shows
     // FOLD ANGLE (선반각도): floor/ceiling rotate by ±shelfAngle (90 = upright box).
     // A smaller angle tilts the planes toward the camera so more surface shows.
     var ang = (SHELF.shelfAngle != null) ? SHELF.shelfAngle : 90;
-    // SIDE REVEAL (옆면 보이기): scale the side-wall depth so the L/R inner walls
-    // project a touch wider/narrower (subtle). 1.0 = current. Floor/ceiling keep D.
-    var Dside = D * (SHELF.sideReveal != null ? SHELF.sideReveal : 1.0);
-    // CEILING VISIBILITY (윗면): scale the ceiling band depth so the top plank shows
-    // more/less. 1.0 = current (ceiling depth = D).
-    var Dceil = D * (SHELF.ceilingVisibility != null ? SHELF.ceilingVisibility : 1.0);
+    // SIDE REVEAL (옆면 보이기): base multiplier for the side-wall depth. The ACTUAL Dside is
+    // computed PER-CUBBY below, SCALED by the cubby's normalized distance from the board center
+    // (distFrac 0..1): center column ≈ 0 (straight-on, no wall), edge columns the full sliver.
+    // Kept SUBTLE — even the edge walls are a slight sliver (sideReveal default 0.5 -> the edge
+    // Dside ≈ 0.5*D, foreshortened by the near-grazing perspective to a thin OUTER-wall band).
+    var sideRev = (SHELF.sideReveal != null ? SHELF.sideReveal : 1.0);
+    var halfBoardW = Math.max(1, gridRect.width / 2);   // for the per-cubby distance normalization
+    // CEILING VISIBILITY (윗면): scale the ceiling band depth. DEFAULT 0 = ceiling HIDDEN
+    // (the user only wants the floor to show). When 0 we both zero the depth AND set the
+    // ceiling face display:none so it never renders. The editor can still toggle it > 0.
+    var ceilVis = (SHELF.ceilingVisibility != null ? SHELF.ceilingVisibility : 0);
+    var Dceil = D * ceilVis;
 
     S.cubbies.forEach(function(cb){
       if (!cb.el) return;
+      // GLOBAL eye X in THIS cubby's local coords. A single eye above the board CENTER,
+      // expressed per cubby as oxLocal = boardCenterX − cubbyLeft (the NON-mirrored form).
+      // CSS sign: an eye to the RIGHT of a recessed box reveals its LEFT interior wall.
+      //   LEFT-of-center cubby : cubbyLeft < boardCenterX -> oxLocal > 0 (often > W, eye to the
+      //     RIGHT) -> reveals its LEFT (OUTER) wall. ✓ outer-wall spec.
+      //   RIGHT-of-center cubby: cubbyLeft > boardCenterX -> oxLocal < 0 (eye to the LEFT) ->
+      //     reveals its RIGHT (OUTER) wall. ✓ outer-wall spec.
+      //   CENTER column        : cubbyLeft ≈ boardCenterX − W/2 -> oxLocal ≈ W/2 (straight-on,
+      //     ≈ no side wall). ✓
+      // So the FARTHER a cubby is from board center, the more its OUTER wall shows; the center
+      // column shows ≈ none. This is the OUTER-WALL reveal the user asked for (reverts the prior
+      // mirror that produced center-facing walls).
+      var thisRect = cb.el.getBoundingClientRect();
+      var oxLocal = boardCenterX - thisRect.left;        // = boardCenterX − cubbyLeft (NON-mirrored)
       cb.el.style.perspectiveOrigin = oxLocal + 'px ' + EYE_OY + 'px';
+      // PER-CUBBY side-wall depth scaled by distance from center: distFrac 0 (center) -> 1 (edge).
+      // center column gets Dside ≈ 0 (no visible wall); edge columns get the full sliver. This is
+      // what makes the reveal SUBTLE + SCALING (center straight-on, edges a slight outer sliver).
+      var cubbyCenterX = thisRect.left + W / 2;
+      var distFrac = Math.min(1, Math.abs(cubbyCenterX - boardCenterX) / halfBoardW);
+      var Dside = D * sideRev * distFrac;
       // size + transform the 6 faces so the box closes exactly (no step / 단차).
       var back = cb.el.querySelector('.c-back');
       var floor = cb.el.querySelector('.c-wall.b');
@@ -934,9 +1073,16 @@
       if (floor){ floor.style.width=W+'px'; floor.style.height=D+'px';
         floor.style.top=(H-D)+'px'; floor.style.transformOrigin='center bottom';
         floor.style.transform='rotateX('+ang+'deg)'; }
-      if (ceil){ ceil.style.width=W+'px'; ceil.style.height=Dceil+'px';
-        ceil.style.top='0px'; ceil.style.transformOrigin='center top';
-        ceil.style.transform='rotateX('+(-ang)+'deg)'; }
+      if (ceil){
+        // CEILING — HIDDEN by default (ceilVis=0). Hide via display:none so it never renders.
+        if (ceilVis <= 0){ ceil.style.display='none'; }
+        else {
+          ceil.style.display='';
+          ceil.style.width=W+'px'; ceil.style.height=Dceil+'px';
+          ceil.style.top='0px'; ceil.style.transformOrigin='center top';
+          ceil.style.transform='rotateX('+(-ang)+'deg)';
+        }
+      }
       if (left){ left.style.width=Dside+'px'; left.style.height=H+'px';
         left.style.transformOrigin='left center'; left.style.transform='rotateY(-90deg)'; }
       if (right){ right.style.width=Dside+'px'; right.style.height=H+'px';
@@ -1186,6 +1332,19 @@
     }
     return best;
   }
+  // same as nearestEmptySlot but treats slot `except` as NOT available (used for a
+  // same-cubby relocate: the good still occupies its source slot, so the source slot is
+  // not a valid target even though its data cell is about to be vacated).
+  function nearestEmptySlotExcept(layer, prefer, except){
+    if (prefer>=0 && prefer<SLOTS && prefer!==except && !layer[prefer]) return prefer;
+    var best=-1, bestD=99;
+    for (var i=0;i<SLOTS;i++){
+      if (i===except || layer[i]) continue;
+      var d = (prefer>=0) ? Math.abs(i-prefer) : i;
+      if (d<bestD){ bestD=d; best=i; }
+    }
+    return best;
+  }
 
   // V4 GRAB RULE — a good is grabbable iff it is a FRONT-layer good (not a peeking
   // back good) living in the floor, and the cubby isn't locked.
@@ -1243,6 +1402,31 @@
     var sFrom = (fromSlot===undefined || fromSlot===null || !ff[fromSlot]) ? firstFilledSlot(ff) : fromSlot;
     if (sFrom < 0) return false;                        // nothing to move
     var type = ff[sFrom];
+
+    // SAME-CUBBY SLOT MOVE — drop back onto the SOURCE cubby relocates the grabbed
+    // good to the nearest EMPTY slot in that same front layer (by the drop's X via
+    // toSlot). Front-layer only; respects no-overlap (uniform cells) + counts. If the
+    // only empty slot is the one it came from (or no other empty), it's a NO-OP (home).
+    if (fromCb === toCb){
+      if (fromCb.locked) return false;
+      var prefer0 = (toSlot===undefined || toSlot===null) ? -1 : toSlot;
+      // never relocate INTO the slot it already occupies — treat the source slot as taken.
+      var sTo0 = nearestEmptySlotExcept(ff, prefer0, sFrom);
+      if (sTo0 < 0 || sTo0 === sFrom) return false;     // only empty slot is home -> no-op
+      ff[sFrom] = null;                                  // vacate source
+      ff[sTo0] = type;                                   // occupy new slot in SAME cubby
+      renderCubby(fromCb);
+      if (fromCb.floor){
+        var lg0 = fromCb.floor.querySelector('.slot.s'+sTo0+' .good');
+        if (lg0){ lg0.classList.add('land');
+          lg0.addEventListener('animationend', function(){ lg0.classList.remove('land'); }, { once:true }); }
+      }
+      haptic('place');
+      // a same-cubby shuffle can complete a CLEAR (3 same) — keep counts/clear/reveal working.
+      if (allSameSlots(ff)){ clearCubby(fromCb); return true; }
+      return false;
+    }
+
     if (!canDrop(fromCb, toCb, type)) return false;
 
     var tf = frontLayer(toCb);
@@ -1413,7 +1597,12 @@
   // DRAG-TO-SORT input (touch + mouse)
   // =============================================================
   var drag = null; // {type, fromIdx, ghostSize}
-  // With CSS-3D the hit element is usually a face (.c-floor/.good/.c-wall);
+  // DRAG LIFT — while dragging, the floating good is rendered OFFSET UPWARD from the
+  // pointer so the finger doesn't cover it (mobile). The ghost's CENTER sits this many
+  // px ABOVE the touch point -> the good reads clearly above the finger. The DROP still
+  // resolves by the pointer's raw X/cubby (the lift is purely visual). ~50px works well
+  // on phones (good base ends up well clear of the fingertip).
+  var DRAG_LIFT = 52;
   // walk up to the owning .cubby. Scan the full hit stack for robustness.
   function cubbyElFromPoint(clientX, clientY){
     var els = document.elementsFromPoint(clientX, clientY);
@@ -1465,8 +1654,11 @@
     moveGhost(clientX, clientY);
   }
   function moveGhost(clientX, clientY){
+    // X tracks the pointer; Y is LIFTED upward by DRAG_LIFT so the good floats ABOVE the
+    // finger (the ghost's transform centers it at this point; the good's base ends up
+    // ~DRAG_LIFT + half-height above the touch). Drop resolution still uses the raw pointer.
     ghostEl.style.left = clientX+'px';
-    ghostEl.style.top  = clientY+'px';
+    ghostEl.style.top  = (clientY - DRAG_LIFT)+'px';
     // highlight target
     clearTargetHL();
     var tEl = cubbyElFromPoint(clientX, clientY);
@@ -1785,6 +1977,61 @@
       var landed = wantSlot;
       for (var i=0;i<SLOTS;i++){ if (!before[i] && after[i]){ landed=i; break; } }
       return { wantSlot:wantSlot, landed:landed, cleared:cleared, before:before, after:after };
+    },
+    // DRAG-LIFT probe: start a drag on a front good, move the ghost to a pointer point,
+    // and report the dragged ghost element's rendered Y (top + center) vs the pointer Y.
+    // Asserts the floating good is LIFTED ABOVE the finger (ghost Y < pointer Y by the
+    // lift offset). Cleans up the drag (does not commit a move).
+    dragLiftProbe: function(cubbyIdx, slot){
+      var cb = S.cubbies[cubbyIdx]; var g = frontGoodDOM(cb, slot);
+      if (!cb || !cb.floor || !g) return null;
+      var gr0 = g.getBoundingClientRect();
+      var px = gr0.left + gr0.width/2, py = gr0.bottom - gr0.height*0.3;  // a touch point on the good
+      startDrag(g, px, py);
+      var started = (ghostEl.style.display === 'block');
+      moveGhost(px, py);
+      var ghostRect = ghostEl.getBoundingClientRect();
+      var out = { started:started, pointerY:py,
+                  ghostTopY: ghostRect.top, ghostCenterY: ghostRect.top + ghostRect.height/2,
+                  ghostBottomY: ghostRect.bottom,
+                  lift: DRAG_LIFT,
+                  ghostAbovePointer: (ghostRect.top + ghostRect.height/2) < py,
+                  centerLiftPx: py - (ghostRect.top + ghostRect.height/2) };
+      // clean up: cancel the drag without moving
+      clearTargetHL(); ghostEl.style.display='none';
+      if (drag && drag.el) drag.el.classList.remove('dragging');
+      renderCubby(cb); drag = null;
+      return out;
+    },
+    // SAME-CUBBY via the REAL pointer path (startDrag -> endDrag over the SAME cubby): proves
+    // the drop-resolution path (onUp/endDrag) relocates within the same cubby, not just doMove.
+    relocateViaDrag: function(idx, fromSlot, dropX, dropY){
+      var cb = S.cubbies[idx]; var g = frontGoodDOM(cb, fromSlot);
+      if (!cb || !cb.floor || !g) return { landed:-1 };
+      var gr = g.getBoundingClientRect();
+      var before = (frontLayer(cb)||[]).slice();
+      var type = before[fromSlot];
+      startDrag(g, gr.left+gr.width/2, gr.bottom - gr.height*0.3);
+      var y = (dropY!=null) ? dropY : (cb.el.getBoundingClientRect().top + cb.el.getBoundingClientRect().height*0.6);
+      endDrag(dropX, y);                                 // resolves by raw pointer X over the SAME cubby
+      var after = (frontLayer(cb)||[]).slice();
+      var landed = -1;
+      for (var i=0;i<SLOTS;i++){ if (i!==fromSlot && after[i]===type && before[i]!==type){ landed=i; break; } }
+      return { landed:landed, before:before, after:after };
+    },
+    // SAME-CUBBY SLOT MOVE probe: relocate the grabbed good (fromSlot) to the empty
+    // slot nearest dropX WITHIN the same cubby. Returns the front before/after + the
+    // slot it actually landed in (-1 if it returned home / no-op).
+    relocateInCubby: function(idx, fromSlot, dropX){
+      var cb = S.cubbies[idx]; if (!cb || !cb.el) return { landed:-1 };
+      var wantSlot = slotFromX(cb.el, dropX);
+      var before = (frontLayer(cb)||[]).slice();
+      var type = before[fromSlot];
+      var cleared = doMove(idx, idx, fromSlot, wantSlot);
+      var after = (frontLayer(cb)||[]).slice();
+      var landed = -1;
+      for (var i=0;i<SLOTS;i++){ if (i!==fromSlot && after[i]===type && before[i]!==type){ landed=i; break; } }
+      return { wantSlot:wantSlot, fromSlot:fromSlot, landed:landed, cleared:cleared, before:before, after:after };
     },
     // --- rule probes (for headless verify) ---
     // DROP RULE: can a FRONT-layer good from fromIdx drop into toIdx? (free slot, any type)
@@ -2297,9 +2544,11 @@
       // lands on the wood sliver, not the cream back wall just inside it.
       pts.push({ kind:'leftwall',  x: r.left + 2,     y: r.top + H*0.50 });
       pts.push({ kind:'rightwall', x: r.right - 2,    y: r.top + H*0.50 });
-      // CEILING underside — RIGHT at the top opening edge (the dim wood ceiling
-      // foreshortens to a thin sliver there; sample the topmost band).
-      pts.push({ kind:'ceiling',   x: r.left + W*0.50, y: r.top + 1 });
+      // CEILING is HIDDEN by default (V17 — display:none) so there is NO ceiling wood band to
+      // sample. Only probe it when the editor has re-enabled it (ceilingVisibility > 0).
+      if (SHELF && SHELF.ceilingVisibility > 0){
+        pts.push({ kind:'ceiling', x: r.left + W*0.50, y: r.top + 1 });
+      }
       // FLOOR — the look-down wood floor PLANE foreshortens to a band at the VERY bottom
       // opening edge (V14: the front rim is now a THIN band BEHIND the goods, so the floor
       // band is the bottommost wood strip — sample 2px above the bottom edge to land on the
@@ -2425,6 +2674,85 @@
     applyShelfConfig: function(partial){
       window.__shelfApi.applyConfig(partial);
       return window.__qa.shelfConfig();
+    },
+    // =====================================================================
+    // V18 — OUTER-WALL probe. For a LEFT-of-center cubby, a CENTER column cubby, and a
+    // RIGHT-of-center cubby, return the projected (rendered) WIDTH of each side wall after
+    // the 3D transform. With the OUTER-wall reveal:
+    //   LEFT cubby  : LEFT (outer) wall > RIGHT wall (≈0)
+    //   RIGHT cubby : RIGHT (outer) wall > LEFT wall (≈0)
+    //   CENTER cubby: both ≈ 0 (straight-on, no side wall)
+    // We pick the cubbies by their center X relative to the board center.
+    // =====================================================================
+    wallsByPosition: function(){
+      var grid = document.getElementById('grid').getBoundingClientRect();
+      var boardCenterX = grid.left + grid.width / 2;
+      var cubs = [].slice.call(document.querySelectorAll('#grid .cubby'));
+      function projW(cub, sel){ var e = cub.querySelector(sel); if (!e) return 0;
+        var r = e.getBoundingClientRect(); return r.width; }
+      function info(cub){
+        var cr = cub.getBoundingClientRect();
+        return { cx: cr.left + cr.width/2,
+          leftW: projW(cub, '.c-wall.l'), rightW: projW(cub, '.c-wall.r') };
+      }
+      // most-left, most-right, and the cubby whose center is closest to the board center.
+      var leftCub = null, rightCub = null, centerCub = null, bestC = Infinity;
+      cubs.forEach(function(c){
+        var cr = c.getBoundingClientRect(); var cx = cr.left + cr.width/2;
+        if (!leftCub || cx < leftCub.getBoundingClientRect().left) leftCub = c;
+        if (!rightCub || cx > rightCub.getBoundingClientRect().left) rightCub = c;
+        var d = Math.abs(cx - boardCenterX);
+        if (d < bestC){ bestC = d; centerCub = c; }
+      });
+      return {
+        boardCenterX: boardCenterX,
+        left:   info(leftCub),
+        center: info(centerCub),
+        right:  info(rightCub)
+      };
+    },
+    // =====================================================================
+    // V18 — LIGHTING probe. Reports the GOOD drop-shadow offset (dx,dy from the CSS vars set
+    // by applyShelfCssVars) so a test can assert it points BOTTOM-RIGHT (dx>0,dy>0), and the
+    // front-vs-back brightness so a test can assert the BACK row is dimmer (backDim < 1, and
+    // the back good's computed filter brightness < the front good's).
+    // =====================================================================
+    lightingProbe: function(){
+      var cs = getComputedStyle(document.documentElement);
+      function pxv(n){ return parseFloat(cs.getPropertyValue(n)) || 0; }
+      var dx = pxv('--good-shadow-dx'), dy = pxv('--good-shadow-dy');
+      var backDim = parseFloat(cs.getPropertyValue('--back-dim')) || 0;
+      // pull a brightness() value out of a computed filter string (heuristic) — front goods
+      // have no brightness() (full), peek goods carry brightness(var(--back-dim)).
+      function brightnessOf(g){
+        if (!g) return null;
+        var f = getComputedStyle(g).filter || '';
+        var m = /brightness\(([0-9.]+)\)/.exec(f);
+        return m ? parseFloat(m[1]) : 1;   // no brightness() => full (1)
+      }
+      var frontG = document.querySelector('#grid .cubby .c-floor .good');
+      var backG  = document.querySelector('#grid .cubby .c-back-layer .good.peek');
+      return {
+        shadowDx: dx, shadowDy: dy,
+        lightAngle: (window.__shelfApi.get().lightAngle),
+        shadowStrength: (window.__shelfApi.get().shadowStrength),
+        backDim: backDim,
+        frontBrightness: brightnessOf(frontG),
+        backBrightness: brightnessOf(backG),
+        // also read the cubby inner-shading gradient dark-pole position (should be bottom-right)
+        shadeDarkX: cs.getPropertyValue('--cubby-shade-dark-x').trim(),
+        shadeDarkY: cs.getPropertyValue('--cubby-shade-dark-y').trim(),
+        // V19 — SHALLOW top inner-shadow band opacity (a small fraction of shadowStrength).
+        topShadow: (window.__shelfApi.get().topShadow),
+        topShadeOp: parseFloat(cs.getPropertyValue('--cubby-top-shade-op')) || 0,
+        // does the back wall's painted gradient stack include the TOP linear band?
+        backHasTopBand: (function(){
+          var b = document.querySelector('#grid .cubby .c-back');
+          if (!b) return false;
+          var bg = getComputedStyle(b).backgroundImage || '';
+          return /linear-gradient/.test(bg);   // the top band is the only linear-gradient on .c-back
+        })()
+      };
     }
   };
   window.__ready = true;

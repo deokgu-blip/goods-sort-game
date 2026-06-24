@@ -202,6 +202,42 @@
   #shelf .wood-layer{ position:absolute; inset:0; z-index:0; pointer-events:none; display:none; }
 
   /* ============================================================
+     V22 — OUTER CABINET TOP FACE (the whole shelf unit's top surface).
+     A horizontal wood plane sitting ON the topmost OUTER frame rail, tilted BACK
+     (rotateX) so under the look-down perspective you see its TOP SURFACE receding
+     up/away (like glancing down at the top of a cabinet). It is the OUTER cabinet
+     top — SEPARATE from the (hidden) per-cubby ceilings.
+       .frame-top-persp : its OWN perspective context (so it projects in 3D even
+                          though #shelf stays flat). Sits ABOVE the frame top edge.
+       .frame-top       : the wood plane; hinged at its FRONT-BOTTOM edge and folded
+                          back via rotateX (set per-frame in buildFrameTop()). Same
+                          unified wood (SOLID --grid-color × grayscale grain) as every
+                          other face, lit a touch LIGHTER (top surface catches light).
+     Sizes/transform/visibility are computed in JS (buildFrameTop) from frameTopDepth.
+     ============================================================ */
+  #shelf .frame-top-persp{ position:absolute; left:0; right:0; top:0;
+    perspective: var(--frame-top-persp, 900px); perspective-origin: 50% 0%;
+    pointer-events:none; z-index:2; display:none; }
+  #shelf .frame-top{ position:absolute; left:0; right:0; bottom:0;
+    transform-origin: center bottom; transform-style:flat;
+    /* unified wood: SOLID --grid-color base × the GRAYSCALE board grain (multiply) so its hue
+       comes ENTIRELY from gridColor -> recolors uniformly with every other face. */
+    background-color: var(--grid-color, #caa06a);
+    background-image:
+      /* top-surface light: a faint lit sheen toward the front edge (it catches the light) */
+      linear-gradient(to bottom, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 46%, rgba(0,0,0,.08) 100%),
+      var(--board-grain),
+      linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
+      var(--board-img);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%; background-repeat:no-repeat;
+    background-blend-mode: normal, multiply, normal, normal;
+    /* LIGHTER than the frame front face (1.04) — a top surface reads brighter. */
+    filter: brightness(1.16);
+    border-top-left-radius: var(--corner-radius, 0px);
+    border-top-right-radius: var(--corner-radius, 0px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.30), inset 0 -2px 5px rgba(40,24,8,.22); }
+
+  /* ============================================================
      A single CUBBY = the GRID CELL that owns the slot hit-regions + holds
      ONE folded 3D wood niche box. The .cubby is the OUTER clip+perspective
      element (overflow:hidden + perspective) so the receding interior is
@@ -413,9 +449,9 @@
   .good.dragging{ opacity:0; }
   .good.land{ animation:land .34s cubic-bezier(.34,1.56,.64,1); }
   @keyframes land{
-    0%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-26%) scaleY(1.18) scaleX(.86) scale(var(--gs,1)); }
-    45%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(.78) scaleX(1.16) scale(var(--gs,1)); }
-    70%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(1.08) scaleX(.94) scale(var(--gs,1)); }
+    0%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-17%) scaleY(1.12) scaleX(.91) scale(var(--gs,1)); }
+    45%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(.86) scaleX(1.10) scale(var(--gs,1)); }
+    70%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(1.05) scaleX(.96) scale(var(--gs,1)); }
     100%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(1) scaleX(1) scale(var(--gs,1)); }
   }
   /* REVEAL — when the front layer empties, the back row comes forward to become the
@@ -535,6 +571,10 @@
 
   <div id="board-wrap">
     <div id="shelf">
+      <!-- V22 — OUTER CABINET TOP face: a horizontal wood plane on the topmost frame rail, tilted
+           back (rotateX) so its TOP SURFACE recedes under the look-down perspective. Its own
+           perspective wrapper keeps it isolated from the flat #shelf. Sized/shown in buildFrameTop(). -->
+      <div class="frame-top-persp" id="frameTopPersp"><div class="frame-top" id="frameTop"></div></div>
       <div class="frame"></div>
       <div class="grid" id="grid"></div>
       <div class="wood-layer" id="woodLayer"></div>
@@ -723,43 +763,57 @@
   //                              (board-level perspective-origin Y). 0.5 = centered.
   //   floorDepth        (mult) : V20 — depth multiplier on EACH cubby's FLOOR face ("각 그리드의
   //                              바닥면 깊이"). Multiplies the base box depth (depth).
-  //   frameCeilingDepth (mult) : V21 — the SINGLE ceiling control ("천장면 깊이/보이기"). 0 = ceiling
-  //                              HIDDEN (default, current look); > 0 = ceiling SHOWS + deepens
-  //                              (ceiling band depth = base box depth × frameCeilingDepth). No longer
-  //                              gated by ceilingVisibility (that made the depth slider a no-op).
+  //   frameCeilingDepth (mult) : V21 — the SINGLE per-cubby ceiling control ("천장면 깊이/보이기"). 0 =
+  //                              ceiling HIDDEN; > 0 = ceiling SHOWS + deepens (ceiling band depth =
+  //                              base box depth × frameCeilingDepth). No longer gated by ceilingVisibility.
+  //   frameTopDepth     (mult) : V22 — the OUTER CABINET TOP face ("프레임 윗면 깊이"). A horizontal
+  //                              wood plane on the OUTER frame's TOP rail, tilted (rotateX) back so its
+  //                              TOP SURFACE shows receding under the look-down perspective (like the
+  //                              cabinet's top you see from slightly above). 0 = HIDDEN; ~1.0 = VISIBLE
+  //                              (default). SEPARATE from the per-cubby ceilings (frameCeilingDepth);
+  //                              same wood/gridColor (grayscale-grain × gridColor) so it recolors
+  //                              uniformly, lit a touch lighter as a top surface.
   var SHELF_DEFAULTS = {
-    perspective: 560,
-    eyeY: 0.20,             // V17 — eye HIGH above center -> look DOWN, floor surface shows
+    // V22 — USER-TUNED DEFAULTS (exported from the editor, _user_shelf_config.json). These are the
+    // NEW shipped look: a strong look-down perspective (1400px / eyeY 0.18), partial side-wall reveal,
+    // a deep floor (floorDepth 1.5), a tilted shelf (shelfAngle 74), the warm #ffbb5c wood, etc. The
+    // single source of truth — shelf_config.json + the editor FALLBACK_DEFAULTS mirror these.
+    perspective: 1400,
+    eyeY: 0.18,             // V17 — eye HIGH above center -> look DOWN, floor surface shows
     sideReveal: 0.5,        // V18 — base mult; back-compat alias for wallOuterReveal (V20)
-    wallOuterReveal: 0.5,   // V20 — OUTER (center-away) side-wall reveal (= old sideReveal default)
-    wallCenterReveal: 0,    // V20 — CENTER-facing side-wall reveal (0 = current OUTER-only look)
-    wallFalloff: 1.0,       // V20 — exponent on center-distance falloff (1 = linear, current)
-    depth: 0.68,
-    floorDepth: 1.0,        // V20 — multiplier on the FLOOR face depth (×base depth)
-    // V21 — FRAME CEILING DEPTH is now the SINGLE intuitive ceiling control: 0 = ceiling HIDDEN
-    // (default, current look), > 0 = ceiling SHOWS + deepens (depth = base D × frameCeilingDepth).
-    // No longer multiplied by ceilingVisibility (that hard dependency made the slider do nothing).
-    frameCeilingDepth: 0,   // V21 — 0 = ceiling hidden (default); raise to SHOW + deepen the ceiling
-    shelfAngle: 90,
+    wallOuterReveal: 0.1,   // V20 — OUTER (center-away) side-wall reveal
+    wallCenterReveal: 0.16, // V20 — CENTER-facing side-wall reveal
+    wallFalloff: 3,         // V20 — exponent on center-distance falloff (walls vanish fast toward center)
+    depth: 0.4,
+    floorDepth: 1.5,        // V20 — multiplier on the FLOOR face depth (×base depth)
+    // V21 — FRAME CEILING DEPTH is the SINGLE intuitive PER-CUBBY ceiling control: 0 = ceiling HIDDEN,
+    // > 0 = ceiling SHOWS + deepens (depth = base D × frameCeilingDepth). Distinct from frameTopDepth
+    // (V22 — the OUTER cabinet top face below).
+    frameCeilingDepth: 0,   // V21 — 0 = per-cubby ceiling hidden (default); raise to SHOW + deepen it
+    // V22 — OUTER CABINET TOP face (the whole shelf unit's top surface, the topmost frame rail's top).
+    // 0 = hidden; ~1.0 = VISIBLE by default (a wood plane tilted back under the look-down). It is the
+    // OUTER top, SEPARATE from the per-cubby ceilings (frameCeilingDepth). Multiplier on its depth.
+    frameTopDepth: 1.0,     // V22 — OUTER frame TOP face depth (0 = hidden, ~1 = visible default)
+    shelfAngle: 74,
     cameraAngle: 0,         // V20 — global board tilt (rotateX on #shelf); 0 = upright
     cameraHeight: 0.5,      // V20 — global board camera height (board perspective-origin Y); 0.5 = center
-    postThickness: 9,
-    frameThickness: 12,
+    postThickness: 7,
+    frameThickness: 7,
     ceilingVisibility: 0,   // LEGACY (V17) — kept for back-compat; folded into frameCeilingDepth (V21)
-    cornerRadius: 0,
-    goodFillHeight: 0.88,
-    cubbyAspect: 0.95,
-    rimH: 7,
-    goodGap: 0.04,
-    lightAngle: 315,        // V18 — light from TOP-LEFT -> shadows fall BOTTOM-RIGHT (dx>0,dy>0)
+    cornerRadius: 4,
+    goodFillHeight: 0.87,
+    cubbyAspect: 0.86,
+    rimH: 0,
+    goodGap: 0,
+    lightAngle: 135,        // V18 — light direction -> shadows fall consistently from it
     // V21 — SPLIT shadow strength: cubbyShadowStrength = frame/cubby interior shading opacity,
     // goodShadowStrength = goods' drop-shadow opacity. Legacy `shadowStrength` migrates to BOTH.
     shadowStrength: 0.45,       // LEGACY — kept; migrates to cubby/good shadow strengths (back-compat)
-    cubbyShadowStrength: 0.45,  // V21 — frame/cubby interior shading opacity (was shadowStrength)
-    goodShadowStrength: 0.45,   // V21 — goods' drop-shadow opacity (was shadowStrength)
-    backDim: 0.4,           // V19 — back-row (peek) goods VERY dark (~0.4, deep interior shadow per reference)
-    topShadow: 0.5,         // V19 — SHALLOW top inner-shadow band strength (frac of cubbyShadowStrength)
-    gridColor: '#caa06a'    // V21 — SINGLE wood hue: every wood face derives its color from this base
+    cubbyShadowStrength: 0.23,  // V21 — frame/cubby interior shading opacity (was shadowStrength)
+    goodShadowStrength: 0.09,   // V21 — goods' drop-shadow opacity (was shadowStrength)
+    backDim: 0.37,          // V19 — back-row (peek) goods darkness (deep interior shadow per reference)
+    topShadow: 0.6,         // V19 — SHALLOW top inner-shadow band strength (frac of cubbyShadowStrength)
+    gridColor: '#ffbb5c'    // V21 — SINGLE wood hue: every wood face derives its color from this base
   };
   // merge an OVERRIDE over the defaults (shallow; only known keys). Reads
   // localStorage['gs_shelf_config'] (same-browser editor save) + window.__SHELF_OVERRIDE
@@ -1047,36 +1101,36 @@
   // W/3 - gap so adjacent goods NEVER overlap regardless of AR. SINGLE SOURCE OF TRUTH =
   // goods_manifest.json (these values are inlined from it for offline single-HTML).
   var GOOD_AR = {
-    "apple":0.777, "avocado":0.645, "bagel":1.243, "banana":1.515,
-    "bell_pepper":0.77, "biscuit_box":0.512, "bread_loaf":1.48, "broccoli":0.883,
-    "bunny":0.621, "butter":0.594, "cactus":0.582, "cake_slice":1.138,
-    "candle":0.398, "candy_bag":0.594, "carrot":0.328, "cat_toy":0.918,
-    "cereal_box":0.563, "chick":0.984, "chip_tube":0.363, "chips":0.605,
-    "chocolate_bar":0.48, "coffee_can":0.492, "coffee_cup":0.449, "cola":0.375,
-    "cookie_box":0.477, "cookie_stack":0.883, "cooking_oil":0.367, "corn":0.477,
-    "cracker_box":0.457, "croissant":1.561, "cupcake_choco":0.754, "cupcake_pink":0.809,
-    "detergent":0.559, "dino_toy":0.801, "donut":1.34, "donut_pink":1.6,
-    "egg":0.719, "eggplant":0.527, "energy_drink":0.398, "flower_vase":0.508,
-    "frog_toy":0.852, "frozen_tub":0.887, "gelato_cup":0.867, "gingerbread":0.813,
-    "grape_soda":0.469, "grapes":0.602, "green_tea":0.418, "gum_pack":0.547,
-    "honey_jar":0.512, "hot_sauce":0.336, "icebar_a":0.402, "icebar_b":0.383,
-    "icebar_blue":0.414, "icebar_choco":0.422, "icebar_orange":0.422, "icecream_cone":0.613,
-    "icecream_cup":0.59, "icecream_sandwich":1.191, "icecream_stick":0.418, "iced_tea":0.332,
-    "jam_jar":0.547, "jelly_bag":0.605, "juice":0.363, "lantern":0.426,
-    "lemon_fruit":1.43, "lemon_soda":0.457, "lemonade":0.395, "lollipop":0.582,
-    "macaron":1.153, "marshmallow_bag":0.699, "mayo":0.426, "milk":0.391,
-    "milkshake":0.453, "muffin":1.053, "mug":1.326, "mushroom_decor":0.887,
-    "mustard":0.332, "nuts_bag":0.621, "orange_fruit":0.945, "orange_soda":0.48,
-    "pancake_stack":0.949, "panda":0.922, "peanut_butter":0.586, "penguin":0.914,
-    "perfume":0.375, "pickle_jar":0.516, "pie_slice":1.399, "popcorn_bag":0.617,
-    "popsicle_twin":0.52, "potted_plant":0.637, "pretzel_bag":0.648, "robot_toy":1.261,
-    "rubber_duck":0.832, "salsa_jar":0.48, "santa":0.738, "sauce":0.406,
-    "shampoo":0.391, "shiba_dog":0.926, "smoothie":0.426, "snack":0.641,
-    "snowcone":0.754, "snowman":0.711, "soap_bar":1.196, "soda":0.48,
-    "sorbet_cup":0.891, "soy_sauce":0.41, "sports_drink":0.363, "spray_cleaner":0.359,
-    "strawberry":0.746, "syrup_bottle":0.422, "teapot":1.299, "teddy_bear":0.855,
-    "tissue_box":0.887, "tomato":1.076, "vinegar":0.371, "waffle":1.829,
-    "water":0.359, "watermelon_slice":1.036, "yogurt":0.672
+    "apple":0.84, "avocado":0.68, "bagel":1.925, "banana":1.506,
+    "bell_pepper":0.828, "biscuit_box":0.563, "bread_loaf":1.79, "broccoli":0.965,
+    "bunny":0.723, "butter":0.863, "cactus":0.672, "cake_slice":1.158,
+    "candle":0.438, "candy_bag":0.613, "carrot":0.398, "cat_toy":1.076,
+    "cereal_box":0.582, "chick":0.914, "chip_tube":0.363, "chips":0.637,
+    "chocolate_bar":0.539, "coffee_can":0.43, "coffee_cup":0.523, "cola":0.375,
+    "cookie_box":0.582, "cookie_stack":1.085, "cooking_oil":0.367, "corn":0.566,
+    "cracker_box":0.516, "croissant":1.695, "cupcake_choco":0.809, "cupcake_pink":0.723,
+    "detergent":0.508, "dino_toy":1.028, "donut":1.533, "donut_pink":1.571,
+    "egg":0.738, "eggplant":0.609, "energy_drink":0.352, "flower_vase":0.461,
+    "frog_toy":0.922, "frozen_tub":0.891, "gelato_cup":0.961, "gingerbread":0.84,
+    "grape_soda":0.363, "grapes":0.676, "green_tea":0.355, "gum_pack":0.559,
+    "honey_jar":0.656, "hot_sauce":0.34, "icebar_a":0.41, "icebar_b":0.398,
+    "icebar_blue":0.367, "icebar_choco":0.387, "icebar_orange":0.457, "icecream_cone":0.578,
+    "icecream_cup":0.633, "icecream_sandwich":1.446, "icecream_stick":0.461, "iced_tea":0.371,
+    "jam_jar":0.633, "jelly_bag":0.629, "juice":0.434, "lantern":0.469,
+    "lemon_fruit":1.376, "lemon_soda":0.355, "lemonade":0.363, "lollipop":0.629,
+    "macaron":1.384, "marshmallow_bag":0.73, "mayo":0.547, "milk":0.422,
+    "milkshake":0.438, "muffin":1.219, "mug":1.306, "mushroom_decor":0.941,
+    "mustard":0.316, "nuts_bag":0.633, "orange_fruit":1.08, "orange_soda":0.465,
+    "pancake_stack":1.202, "panda":0.852, "peanut_butter":0.633, "penguin":0.949,
+    "perfume":0.422, "pickle_jar":0.504, "pie_slice":1.816, "popcorn_bag":0.613,
+    "popsicle_twin":0.496, "potted_plant":0.727, "pretzel_bag":0.68, "robot_toy":0.898,
+    "rubber_duck":0.906, "salsa_jar":0.602, "santa":0.84, "sauce":0.359,
+    "shampoo":0.406, "shiba_dog":0.883, "smoothie":0.398, "snack":0.648,
+    "snowcone":0.758, "snowman":0.75, "soap_bar":1.58, "soda":0.43,
+    "sorbet_cup":0.957, "soy_sauce":0.379, "sports_drink":0.34, "spray_cleaner":0.402,
+    "strawberry":0.848, "syrup_bottle":0.43, "teapot":1.43, "teddy_bear":0.887,
+    "tissue_box":1.138, "tomato":1.085, "vinegar":0.438, "waffle":1.954,
+    "water":0.391, "watermelon_slice":1.108, "yogurt":0.707
   };
   // OPTIONAL runtime override: when SERVED (http/https), fetch goods_manifest.json and
   // override GOOD_AR + default GOOD_SCALE so re-measured tiles update sizing without a
@@ -1310,6 +1364,46 @@
       if (rim){ rim.style.width=W+'px'; rim.style.height=rimH+'px';
         rim.style.top=(H-rimH)+'px'; rim.style.transform='translateZ(1px)'; }
     });
+    // OUTER cabinet top face (depends on the live frame width + frameTopDepth).
+    buildFrameTop();
+  }
+
+  // ---- V22 — OUTER CABINET TOP FACE ----
+  // Build the whole shelf unit's TOP surface: a horizontal wood plane on the OUTER frame's TOP
+  // rail. The plane is hinged at its FRONT-BOTTOM edge (which sits at the shelf's top edge) and
+  // folded BACK via rotateX(ang) so under the LOOK-DOWN perspective its TOP SURFACE recedes
+  // up/away — exactly the cabinet top you see when glancing slightly down (ref_frame_top.png). It
+  // is the OUTER cabinet top, SEPARATE from the per-cubby ceilings (frameCeilingDepth). Depth =
+  // a fraction of the shelf width × frameTopDepth; frameTopDepth==0 -> display:none (hidden).
+  function buildFrameTop(){
+    var persp = document.getElementById('frameTopPersp');
+    var top   = document.getElementById('frameTop');
+    if (!persp || !top || !shelfEl) return;
+    var ftDepth = (SHELF.frameTopDepth != null ? SHELF.frameTopDepth : 1.0);
+    if (!(ftDepth > 0)){ persp.style.display = 'none'; return; }
+    persp.style.display = 'block';   // override the CSS default (display:none -> hidden)
+    var sr = shelfEl.getBoundingClientRect();
+    var SW = sr.width || 1;
+    // BASE band depth: a fraction of the shelf width so it scales with the board, × frameTopDepth.
+    // 0.10 of the width at frameTopDepth=1 gives a clearly visible top band like the reference.
+    var Dtop = Math.max(2, SW * 0.10 * ftDepth);
+    // FOLD ANGLE — the top plane is hinged at its FRONT edge (the shelf's top edge) and folds BACK
+    // (rotateX, top edge recedes away/up) so under the look-down eye (perspective-origin above) you
+    // see its lit TOP SURFACE receding, like a floor but ABOVE. We reuse the shelf fold angle (선반
+    // 각도): a SMALLER shelfAngle (stronger look-down) lays the plane flatter -> MORE top surface
+    // shows. shelfAngle 90 = plane lays flat (pure look-down band); 74 = tilts a touch toward the eye.
+    var ang = (SHELF.shelfAngle != null) ? SHELF.shelfAngle : 90;
+    var fold = ang;   // hinge at front edge; rotateX(ang) folds the top edge back -> top surface shows
+    // perspective for the top face — reuse the same px the cubbies use (look-down feel), but a
+    // touch farther so the top band doesn't distort. Clamp to the same safe floor as the niches.
+    var perspPx = Math.max(150, Math.min(4000, (SHELF.perspective != null ? +SHELF.perspective : 560)));
+    document.documentElement.style.setProperty('--frame-top-persp', (perspPx * 1.4).toFixed(0) + 'px');
+    // size + place: the wrapper hugs the shelf's top edge; the plane is Dtop tall, hinged at its
+    // bottom (the shelf top edge) and folded back so it rises up/away from the camera.
+    persp.style.height = Dtop + 'px';
+    persp.style.top = (-Dtop) + 'px';     // sits ABOVE the shelf top edge; hinge meets the edge
+    top.style.height = Dtop + 'px';
+    top.style.transform = 'rotateX(' + fold + 'deg)';
   }
 
   // ---- FIT GOODS (V8) ----
@@ -2551,6 +2645,38 @@
         frontGz: frontGz, backGz: backGz,
         depthOK: (frontGz != null && backGz != null) ? (frontGz > backGz) : null,
         bodyBg: bodyBg, backBg: backBg
+      };
+    },
+    // =====================================================================
+    // V22 — OUTER CABINET TOP FACE probe. The OUTER frame's TOP rail wood plane is tilted back so
+    // its TOP SURFACE projects a visible BAND above the shelf under the look-down perspective.
+    // Returns: whether it's shown (display != none), its PROJECTED band height (rendered px after the
+    // 3D fold — > 0 = a visible band), where it sits relative to the shelf top edge, and a SAMPLE
+    // point on its top surface (viewport px) so the verifier can screenshot it for the wood/recolor
+    // hue check. frameTopDepth=0 -> hidden (projH ~0, display:none).
+    // =====================================================================
+    frameTop: function(){
+      var persp = document.getElementById('frameTopPersp');
+      var top   = document.getElementById('frameTop');
+      var shelf = document.getElementById('shelf');
+      if (!persp || !top || !shelf) return { present:false };
+      var disp = getComputedStyle(persp).display;
+      var tr = top.getBoundingClientRect();          // PROJECTED (post-3D-transform) rect
+      var sr = shelf.getBoundingClientRect();
+      // a sample point ~mid of the projected top band (clamped inside it) for a pixel/hue read.
+      var sampleX = tr.left + tr.width * 0.5;
+      var sampleY = tr.top + Math.max(1, tr.height * 0.4);
+      return {
+        present: true,
+        shown: disp !== 'none',
+        display: disp,
+        projH: tr.height,                            // projected band height (>0 = visible band)
+        projW: tr.width,
+        // the band sits ABOVE the shelf's top edge (its bottom hinge meets the edge).
+        bandBottom: tr.bottom, shelfTop: sr.top,
+        aboveShelf: tr.bottom <= sr.top + 2,
+        frameTopDepth: (SHELF.frameTopDepth != null ? SHELF.frameTopDepth : 1.0),
+        sample: { x: sampleX, y: sampleY }
       };
     },
     // =====================================================================

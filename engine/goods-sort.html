@@ -2290,24 +2290,37 @@
     fl.style.left = x+'px'; fl.style.top = y+'px';
     fl.style.transform = 'translate(-50%,-50%) scale(0)';
     document.body.appendChild(fl);
-    var HOLD = 520, RISE = 950;
-    // 1) POP IN at the clear spot, then HOLD a beat in place
+    var HOLD = 200, RISE = 700;
+    // 1) POP IN at the clear spot (overshoot), then HOLD a beat in place
     requestAnimationFrame(function(){
-      fl.style.transition = 'transform .26s cubic-bezier(.34,1.7,.5,1)';
-      fl.style.transform = 'translate(-50%,-50%) scale(1)';
+      fl.style.transition = 'transform .2s cubic-bezier(.34,1.75,.5,1)';
+      fl.style.transform = 'translate(-50%,-50%) scale(1.12)';
     });
-    // 2) after the hold, rise up SLOWLY into the top flame pill
+    // 2) after the hold, SWOOP up along a dynamic ARC into the top flame pill (rAF):
+    //    bow the path up+sideways + add a rotation wobble + horizontal sway + shrink/fade.
     setTimeout(function(){
-      fl.style.transition = 'left '+RISE+'ms cubic-bezier(.45,0,.55,1), top '+RISE+'ms cubic-bezier(.45,0,.55,1), transform '+RISE+'ms ease-in, opacity '+RISE+'ms ease-in';
-      fl.style.left = tx+'px'; fl.style.top = ty+'px';
-      fl.style.transform = 'translate(-50%,-50%) scale(.3)';
-      fl.style.opacity = '0.12';
+      fl.style.transition = 'none';
+      var side = (tx >= x ? 1 : -1);
+      var cx = (x + tx)/2 + side*46;          // control point: bow SIDEWAYS
+      var cy = Math.min(y, ty) - 72;          // ... and UP above both ends (arc)
+      var t0 = performance.now();
+      function step(now){
+        var p = Math.min(1, (now - t0)/RISE);
+        var e = p<0.5 ? 2*p*p : 1 - Math.pow(-2*p+2,2)/2;   // easeInOutQuad
+        var u = 1 - e;
+        var px = u*u*x + 2*u*e*cx + e*e*tx;                 // quadratic-bezier arc
+        var py = u*u*y + 2*u*e*cy + e*e*ty;
+        var scale = 1.12 - e*0.85;
+        var rot  = Math.sin(p*Math.PI*3) * 20;              // flicker/wobble
+        var sway = Math.sin(p*Math.PI*4) * 7 * u;           // horizontal sway (fades out)
+        fl.style.left = px+'px'; fl.style.top = py+'px';
+        fl.style.transform = 'translate(calc(-50% + '+sway.toFixed(1)+'px),-50%) scale('+scale.toFixed(3)+') rotate('+rot.toFixed(1)+'deg)';
+        fl.style.opacity = (1 - e*0.85).toFixed(2);
+        if (p < 1) requestAnimationFrame(step);
+        else { fl.remove(); if (comboCountEl){ comboCountEl.classList.remove('bump'); void comboCountEl.offsetWidth; comboCountEl.classList.add('bump'); } }
+      }
+      requestAnimationFrame(step);
     }, HOLD);
-    // 3) cleanup + the top flame pill pops as the flame enters it
-    setTimeout(function(){
-      fl.remove();
-      if (comboCountEl){ comboCountEl.classList.remove('bump'); void comboCountEl.offsetWidth; comboCountEl.classList.add('bump'); }
-    }, HOLD + RISE);
   }
 
   // praise IMAGE (praise_*.png) — escalates by combo tier -----

@@ -571,6 +571,16 @@
     70%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(1.05) scaleX(.96) scale(var(--gs,1)); }
     100%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(1) scaleX(1) scale(var(--gs,1)); }
   }
+  /* CLEAR POP (뿅) — the 3 matched goods BOUNCE up + grow, then pop out together.
+     Preserves the good's base transform (centering / depth z / per-type scale). */
+  .good.popping{ animation:goodPop .36s cubic-bezier(.34,1.7,.5,1) forwards;
+    will-change:transform,opacity; filter:none; z-index:9; }
+  @keyframes goodPop{
+    0%  { transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0)    scale(calc(var(--gs,1) * 1)); }
+    35% { transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-14%) scale(calc(var(--gs,1) * 1.32)); }  /* bounce up + grow */
+    58% { transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-8%)  scale(calc(var(--gs,1) * 1.12)); }
+    100%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-26%) scale(calc(var(--gs,1) * 0.05)); opacity:0; }  /* 뿅 */
+  }
   /* REVEAL — when the front layer empties, the back row comes forward to become the
      new front: it slides forward (smaller z -> 0) + scales up, then settles. */
   .good.revealing{ animation:revealForward .5s cubic-bezier(.25,1.3,.5,1) both; }
@@ -2193,14 +2203,10 @@
     }
     haptic('clear');
 
-    // pop the current front goods visually (quick scale-out)
+    // BOUNCE + POP (뿅): the 3 matched goods bounce up together then pop out (CSS goodPop).
     if (cb.floor){
       var goods = cb.floor.querySelectorAll('.good');
-      goods.forEach(function(g){
-        g.style.transition = 'transform .22s ease, opacity .22s ease';
-        g.style.transform = 'scale(.2) translateY(-30%)';
-        g.style.opacity = '0';
-      });
+      goods.forEach(function(g){ g.classList.add('popping'); });
     }
     // DATA is updated SYNCHRONOUSLY (single source of truth): null out all 3 front
     // slots, then if a back layer exists drop the empty front so the back becomes the
@@ -2211,10 +2217,10 @@
     if (willReveal) cb.layers.shift();                  // back layer -> front (data, now)
     decrementLocks();                                    // LOCK: every clear counts ALL locks down by 1
     setTimeout(function(){
-      // re-render after the pop: if a back layer slid up, animate the reveal.
+      // re-render after the pop completes: if a back layer slid up, animate the reveal.
       renderCubby(cb, willReveal ? { reveal:true } : {});
       checkWin();
-    }, 200);
+    }, 340);
   }
 
   // combo logic ----------------------------------------------
@@ -2751,11 +2757,20 @@
   // state, trigger the NO SPACE game-over. Bounded node budget -> never hangs.
   function isDeadlocked(){
     if (totalGoods() === 0) return false;        // already won, not a deadlock
+    // CHEAP GATE (perf): the mixing-aware solver is costly when there are many empty
+    // slots (huge branching) — but that's exactly the case with PLENTY of maneuver room,
+    // i.e. NOT a deadlock. A true deadlock needs a near-full board. So skip the solver
+    // whenever >=3 front slots are open; only run it when the board is genuinely TIGHT.
+    // This removes the per-move 70ms+ hitch the deadlock check used to cause.
+    var empties = 0;
+    for (var i=0;i<S.cubbies.length;i++){ var cb=S.cubbies[i]; if(cb.lock>0) continue;
+      var fl=frontLayer(cb); if(!fl) continue;
+      for (var s=0;s<SLOTS;s++) if(!fl[s]){ empties++; if(empties>=3) return false; }
+    }
     var st = Model.snapshot();
-    var r = Model.anyClearReachable(st, 60000, Model.snapshotLocks());
-    // if the search EXHAUSTED its budget without proving reachability, do NOT cry
-    // deadlock (avoid false positives on huge boards) — only a fully-searched "no
-    // clear" is a real deadlock.
+    var r = Model.anyClearReachable(st, 20000, Model.snapshotLocks());
+    // EXHAUSTED budget without proving reachability -> do NOT cry deadlock (no false
+    // positive). Only a fully-searched "no clear reachable" is a real deadlock.
     return (!r.reachable && !r.exhausted);
   }
   function maybeDeadlock(){

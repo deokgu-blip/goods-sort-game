@@ -733,7 +733,12 @@
   // buildNiches() which reads the SAME SHELF object. Call before buildNiches().
   function applyShelfCssVars(){
     var root = document.documentElement.style;
-    root.setProperty('--niche-persp', SHELF.perspective + 'px');
+    // SAFE-FLOOR CLAMP on perspective: SMALLER px = STRONGER 3D depth. The editor now lets the
+    // user reach a STRONG 입체감 (down to ~180px), but an extremely tiny perspective inverts/
+    // distorts the niche catastrophically, so the engine clamps the ACCEPTED value to >= 150px
+    // (and a sane flat ceiling) before it drives the per-cubby perspective. Default stays 560.
+    var perspPx = Math.max(150, Math.min(4000, (SHELF.perspective != null ? +SHELF.perspective : 560)));
+    root.setProperty('--niche-persp', perspPx + 'px');
     root.setProperty('--rim-h', SHELF.rimH + 'px');
     root.setProperty('--cab-pad', SHELF.frameThickness + 'px');
     root.setProperty('--niche-gap', SHELF.postThickness + 'px');

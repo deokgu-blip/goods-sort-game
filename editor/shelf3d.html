@@ -127,7 +127,10 @@
   // (key, korean label, english hint, min, max, step, decimals) ; color items use type:'color'.
   var SECTIONS = [
     { title:'📷 카메라 / 시점', items:[
-      { key:'perspective',       ko:'퍼스펙티브 (입체감)', en:'perspective',         min:300,  max:1100, step:10,   dec:0 },
+      // 입체감 = CSS perspective distance (px). SMALLER px = STRONGER 3D depth, LARGER px = flatter.
+      // INVERTED slider so it's intuitive: LEFT end = flat (max px), RIGHT end = strong 입체감 (min px).
+      // Range widened to reach MUCH stronger depth (down to 180px) and very flat (1400px).
+      { key:'perspective',       ko:'입체감 (퍼스펙티브)', en:'depth — left flat / right strong', min:180, max:1400, step:10, dec:0, invert:true },
       // eyeY: SMALLER = eye HIGHER above center = 더 위에서 내려다봄 -> 바닥면(선반)이 더 보임.
       { key:'eyeY',              ko:'칸별 내려다보는 정도 (작을수록↑)', en:'per-cubby look-down', min:0.10, max:0.50, step:0.01, dec:2 },
       // V20 — GLOBAL board camera (whole shelf), distinct from per-cubby eyeY.
@@ -223,7 +226,8 @@
         io.range.value = cfg[s.key];
         io.val.textContent = String(cfg[s.key]);
       } else {
-        io.range.value = cfg[s.key];
+        // INVERTED slider: mirror the px value back to a slider position (min+max-px).
+        io.range.value = s.invert ? (s.min + s.max - cfg[s.key]) : cfg[s.key];
         io.val.textContent = fmt(cfg[s.key], s.dec);
       }
     });
@@ -255,9 +259,13 @@
     } else {
       input = document.createElement('input');
       input.type='range'; input.min=s.min; input.max=s.max; input.step=s.step;
-      input.value = cfg[s.key];
+      // INVERTED slider (e.g. 입체감): the slider POSITION is mirrored around (min+max) so
+      // dragging RIGHT lowers the actual px (= stronger 3D). The stored cfg[key] stays the
+      // REAL px value; only the slider's track position is flipped. mirror(x)=min+max-x.
+      input.value = s.invert ? (s.min + s.max - cfg[s.key]) : cfg[s.key];
       input.addEventListener('input', function(){
-        var v = parseFloat(input.value);
+        var raw = parseFloat(input.value);
+        var v = s.invert ? (s.min + s.max - raw) : raw;
         cfg[s.key] = (s.dec>0) ? v : Math.round(v);
         val.textContent = fmt(cfg[s.key], s.dec);
         updateJson(); applyToPreview();
@@ -354,7 +362,10 @@
   // expose for headless verification (editor screenshot/test harness)
   window.__editor = {
     cfg: function(){ return Object.assign({}, cfg); },
-    set: function(k,v){ if (inputs[k]){ inputs[k].range.value=v;
+    // set(key, REAL value). For an INVERTED slider (e.g. perspective/입체감) we mirror the
+    // real px back into the slider position so callers always pass the real cfg value.
+    set: function(k,v){ if (inputs[k]){ var s = SPECS.filter(function(x){return x.key===k;})[0];
+      inputs[k].range.value = (s && s.invert) ? (s.min + s.max - v) : v;
       inputs[k].range.dispatchEvent(new Event('input')); } },
     api: api, specs: SPECS, sections: SECTIONS,
     exportConfig: exportConfig, json: function(){ return jsonEl.value; }

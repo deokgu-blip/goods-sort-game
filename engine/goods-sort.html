@@ -139,14 +139,24 @@
   body.tut-clean #shelf .frame-top-persp{ display:none !important; }
   body.tut-clean #shelf .grid{ background:none !important; filter:none !important;
     box-shadow:none !important; border-radius:0 !important; }
-  /* TUTORIAL: each filled cubby gets its OWN wood FRAME (a grid-color ring + 3D edge + drop shadow)
-     so it reads as a framed bookshelf niche floating on the background (user: "프레임이 없는데?"). */
-  body.tut-clean .cubby:not(.tut-empty){ border-radius:6px;
+  /* TUTORIAL: each filled cubby is wrapped in a .tut-frame using the SAME wood material as the
+     cabinet (--grid-color × grayscale grain, brightness, 3D inset highlight/shadow + drop shadow),
+     with padding = the frame thickness — so the isolated niche has the IDENTICAL frame to the rest
+     of the game (user: "프레임이 다른곳에서 쓰는 프레임하고 다르잖아"). */
+  body.tut-clean .tut-frame{ position:relative; box-sizing:border-box; padding:13px; border-radius:9px;
+    background-color: var(--grid-color, #caa06a);
+    background-image:
+      var(--board-grain),
+      linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
+      var(--board-img);
+    background-size:100% 100%,100% 100%,100% 100%; background-repeat:no-repeat;
+    background-blend-mode:multiply,normal,normal;
+    filter:brightness(1.04);
     box-shadow:
-      0 0 0 8px var(--grid-color,#caa06a),
-      0 0 0 9px rgba(255,255,255,.18),
-      0 0 0 12px rgba(40,24,8,.30),
-      0 10px 16px rgba(60,38,16,.42); }
+      inset 0 3px 0 rgba(255,255,255,.22),
+      inset 0 -5px 10px rgba(40,24,8,.42),
+      0 12px 18px rgba(60,38,16,.46); }
+  body.tut-clean .tut-frame .cubby{ width:100%; height:100%; border-radius:4px; }
 
   /* ---------------- HUD (reference: a WOOD FRAME bar wrapping the row) ----------------
      [ Lv ]   ·   [ TIMER ]   ·   [ ⏸ ]   +  COMBO gauge overlapping the frame's bottom.
@@ -1656,7 +1666,7 @@
     var cs = getComputedStyle(document.documentElement);
     function pxv(name){ return parseFloat(cs.getPropertyValue(name)) || 0; }
     // live cell (cubby opening) size — read one real cubby (all are equal in the grid).
-    var anyCubby = gridEl.querySelector('.cubby');
+    var anyCubby = gridEl.querySelector('.cubby:not(.tut-empty)') || gridEl.querySelector('.cubby');
     if (!anyCubby) return;
     var cr = anyCubby.getBoundingClientRect();
     var W = cr.width || 1, H = cr.height || 1;
@@ -1902,7 +1912,7 @@
   // budget * PEEK_H_FRAC keeps the back row non-overlapping too).
   var fitState = { interiorH: 0, slotBudgetPx: 0, heightPx: {} };   // heightPx[type] = front good box height (px)
   function fitGoods(){
-    var anyCubby = gridEl.querySelector('.cubby');
+    var anyCubby = gridEl.querySelector('.cubby:not(.tut-empty)') || gridEl.querySelector('.cubby');
     if (!anyCubby) return;
     var cr = anyCubby.getBoundingClientRect();
     var W = cr.width || 1, H = cr.height || 1;
@@ -1993,7 +2003,14 @@
             '<div class="c-lock-badge"><span class="c-lock-num"></span></div>' +
           '</div>';
         if (cb){ cb.el = el; cb.floor = el.querySelector('.c-floor'); cb.backEl = el.querySelector('.c-back-layer'); cb.lockEl = el.querySelector('.c-lock'); }
-        gridEl.appendChild(el);
+        // TUTORIAL: wrap each filled cubby in a wood FRAME (same grid-color+grain material as the
+        // cabinet) so the isolated niche reads with the SAME frame as the rest of the game.
+        if (cb && cfg.tutorial){
+          var fr = document.createElement('div'); fr.className = 'tut-frame';
+          fr.appendChild(el); gridEl.appendChild(fr);
+        } else {
+          gridEl.appendChild(el);
+        }
       }
     }
     buildNiches();        // V12 — fold each cubby's 3D wood box (faces + shared eye)

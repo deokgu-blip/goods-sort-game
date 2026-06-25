@@ -5,14 +5,19 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "bagel",
-    "butter",
-    "coffee_can",
-    "cracker_long",
-    "grapes",
+    "banana_bunch",
+    "biscuit_box",
+    "bread_loaf",
+    "corn_cob",
+    "flower_vase",
+    "hand_soap",
     "hot_dog",
-    "icecream_sandwich",
-    "tissue_box"
+    "icebar_blue",
+    "lipstick",
+    "oil_can",
+    "plum",
+    "sushi_tray",
+    "tea_tin_round"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -22,15 +27,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 8,
+    "distinct": 13,
     "depthRange": [
       3,
       4
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 2,
     "totalGoods": 102,
-    "attempt": 1
+    "attempt": 3
   },
   "cubbies": [
     {
@@ -38,19 +43,24 @@
       "c": 0,
       "layers": [
         [
-          "hot_dog",
-          "hot_dog",
-          "hot_dog"
+          "lipstick",
+          "plum",
+          "sushi_tray"
         ],
         [
-          "bagel",
-          "bagel",
-          "grapes"
+          "hot_dog",
+          "oil_can",
+          "plum"
         ],
         [
-          "grapes",
-          "butter",
-          "icecream_sandwich"
+          "bread_loaf",
+          "hot_dog",
+          "corn_cob"
+        ],
+        [
+          "hot_dog",
+          "lipstick",
+          "bread_loaf"
         ]
       ]
     },
@@ -59,67 +69,57 @@
       "c": 1,
       "layers": [
         [
-          "grapes",
-          "cracker_long",
-          "cracker_long"
+          "tea_tin_round",
+          "bread_loaf",
+          "lipstick"
         ],
         [
-          "coffee_can",
-          "tissue_box",
-          "butter"
+          "sushi_tray",
+          "corn_cob",
+          "corn_cob"
         ],
         [
-          "butter",
-          "tissue_box",
-          "bagel"
+          "biscuit_box",
+          "sushi_tray",
+          "tea_tin_round"
+        ],
+        [
+          "banana_bunch",
+          "icebar_blue",
+          "hand_soap"
         ]
       ]
     },
     {
       "r": 0,
       "c": 2,
+      "lock": 1,
       "layers": [
         [
-          "cracker_long",
-          "grapes",
-          "bagel"
+          "sushi_tray",
+          "banana_bunch",
+          "corn_cob"
         ],
         [
-          "grapes",
-          "butter",
-          "cracker_long"
-        ],
-        [
-          "tissue_box",
           "hot_dog",
-          "grapes"
+          "tea_tin_round",
+          "flower_vase"
+        ],
+        [
+          "icebar_blue",
+          "sushi_tray",
+          "plum"
+        ],
+        [
+          "oil_can",
+          "flower_vase",
+          "tea_tin_round"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
-      "layers": [
-        [
-          "icecream_sandwich",
-          "hot_dog",
-          "bagel"
-        ],
-        [
-          "tissue_box",
-          "coffee_can",
-          "hot_dog"
-        ],
-        [
-          "butter",
-          "grapes",
-          "grapes"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
       "layers": [
         [
           null,
@@ -130,6 +130,106 @@
     },
     {
       "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "lipstick",
+          "biscuit_box",
+          "hand_soap"
+        ],
+        [
+          "lipstick",
+          "oil_can",
+          "biscuit_box"
+        ],
+        [
+          "bread_loaf",
+          "flower_vase",
+          "icebar_blue"
+        ],
+        [
+          "tea_tin_round",
+          "oil_can",
+          "hot_dog"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 2,
+      "layers": [
+        [
+          "banana_bunch",
+          "hand_soap",
+          "banana_bunch"
+        ],
+        [
+          "icebar_blue",
+          "hand_soap",
+          "hand_soap"
+        ],
+        [
+          "plum",
+          "hand_soap",
+          "icebar_blue"
+        ],
+        [
+          "biscuit_box",
+          "icebar_blue",
+          "biscuit_box"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "banana_bunch",
+          "oil_can",
+          "hot_dog"
+        ],
+        [
+          "oil_can",
+          "corn_cob",
+          "corn_cob"
+        ],
+        [
+          "icebar_blue",
+          "hand_soap",
+          "banana_bunch"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "corn_cob",
+          "hot_dog",
+          "biscuit_box"
+        ],
+        [
+          "hand_soap",
+          "hot_dog",
+          "sushi_tray"
+        ],
+        [
+          "biscuit_box",
+          "tea_tin_round",
+          "oil_can"
+        ],
+        [
+          "biscuit_box",
+          "bread_loaf",
+          "flower_vase"
+        ]
+      ]
+    },
+    {
+      "r": 2,
       "c": 2,
       "layers": [
         [
@@ -140,103 +240,13 @@
       ]
     },
     {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "butter",
-          "coffee_can",
-          "cracker_long"
-        ],
-        [
-          "cracker_long",
-          "coffee_can",
-          "hot_dog"
-        ],
-        [
-          "cracker_long",
-          "coffee_can",
-          "butter"
-        ],
-        [
-          "cracker_long",
-          "coffee_can",
-          "hot_dog"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "lock": 3,
-      "layers": [
-        [
-          "bagel",
-          "icecream_sandwich",
-          "icecream_sandwich"
-        ],
-        [
-          "hot_dog",
-          "icecream_sandwich",
-          "tissue_box"
-        ],
-        [
-          "cracker_long",
-          "cracker_long",
-          "grapes"
-        ],
-        [
-          "tissue_box",
-          "icecream_sandwich",
-          "bagel"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "tissue_box",
-          "tissue_box",
-          "coffee_can"
-        ],
-        [
-          "grapes",
-          "bagel",
-          "coffee_can"
-        ],
-        [
-          "grapes",
-          "cracker_long",
-          "icecream_sandwich"
-        ],
-        [
-          "bagel",
-          "cracker_long",
-          "hot_dog"
-        ]
-      ]
-    },
-    {
       "r": 3,
       "c": 0,
-      "lock": 3,
       "layers": [
         [
-          "coffee_can",
-          "icecream_sandwich",
-          "bagel"
-        ],
-        [
-          "icecream_sandwich",
-          "butter",
-          "butter"
-        ],
-        [
-          "bagel",
-          "coffee_can",
-          "tissue_box"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -245,19 +255,19 @@
       "c": 1,
       "layers": [
         [
-          "tissue_box",
-          "cracker_long",
-          "hot_dog"
+          "corn_cob",
+          "hand_soap",
+          "bread_loaf"
         ],
         [
-          "butter",
-          "grapes",
-          "grapes"
+          "bread_loaf",
+          "icebar_blue",
+          "oil_can"
         ],
         [
-          "butter",
-          "tissue_box",
-          "cracker_long"
+          "flower_vase",
+          "tea_tin_round",
+          "bread_loaf"
         ]
       ]
     },
@@ -266,24 +276,24 @@
       "c": 2,
       "layers": [
         [
-          "grapes",
-          "icecream_sandwich",
-          "coffee_can"
-        ],
-        [
-          "tissue_box",
-          "cracker_long",
-          "icecream_sandwich"
-        ],
-        [
-          "bagel",
-          "coffee_can",
-          "butter"
-        ],
-        [
-          "grapes",
-          "icecream_sandwich",
+          "plum",
+          "corn_cob",
           "hot_dog"
+        ],
+        [
+          "icebar_blue",
+          "tea_tin_round",
+          "oil_can"
+        ],
+        [
+          "plum",
+          "biscuit_box",
+          "lipstick"
+        ],
+        [
+          "bread_loaf",
+          "tea_tin_round",
+          "flower_vase"
         ]
       ]
     }

@@ -5,12 +5,19 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "cake_slice",
-    "chips",
-    "chocolate_tablet",
-    "donut_pink",
-    "kebab_skewer",
-    "strawberry",
+    "cheese_wheel",
+    "chocolate_bar",
+    "crayon_box",
+    "cupcake_choco",
+    "dino_toy",
+    "eggplant_long",
+    "garlic",
+    "jelly_bag",
+    "pancake_stack",
+    "pie_slice",
+    "santa",
+    "sushi_tray",
+    "turtle_toy",
     "yogurt"
   ],
   "combo": {
@@ -21,15 +28,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 7,
+    "distinct": 14,
     "depthRange": [
       2,
       3
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 2,
-    "totalGoods": 69,
-    "attempt": 0
+    "totalGoods": 75,
+    "attempt": 4
   },
   "cubbies": [
     {
@@ -37,19 +44,14 @@
       "c": 0,
       "layers": [
         [
-          "chocolate_tablet",
-          "yogurt",
-          "strawberry"
+          "jelly_bag",
+          "chocolate_bar",
+          "crayon_box"
         ],
         [
-          "kebab_skewer",
-          "chocolate_tablet",
-          "cake_slice"
-        ],
-        [
-          "cake_slice",
-          "donut_pink",
-          "donut_pink"
+          "crayon_box",
+          "chocolate_bar",
+          "eggplant_long"
         ]
       ]
     },
@@ -58,14 +60,19 @@
       "c": 1,
       "layers": [
         [
-          "yogurt",
-          "donut_pink",
-          "yogurt"
+          "santa",
+          "dino_toy",
+          "pie_slice"
         ],
         [
-          "strawberry",
-          "chocolate_tablet",
-          "cake_slice"
+          "pie_slice",
+          "chocolate_bar",
+          "santa"
+        ],
+        [
+          "pancake_stack",
+          "crayon_box",
+          "pancake_stack"
         ]
       ]
     },
@@ -74,19 +81,19 @@
       "c": 2,
       "layers": [
         [
-          "strawberry",
-          "chips",
-          "strawberry"
+          "pancake_stack",
+          "pie_slice",
+          "cupcake_choco"
         ],
         [
-          "kebab_skewer",
-          "kebab_skewer",
-          "donut_pink"
+          "eggplant_long",
+          "jelly_bag",
+          "turtle_toy"
         ],
         [
-          "chips",
-          "yogurt",
-          "cake_slice"
+          "crayon_box",
+          "crayon_box",
+          "jelly_bag"
         ]
       ]
     },
@@ -95,19 +102,19 @@
       "c": 0,
       "layers": [
         [
-          "chips",
-          "strawberry",
-          "chocolate_tablet"
+          "pie_slice",
+          "cupcake_choco",
+          "cupcake_choco"
         ],
         [
-          "cake_slice",
-          "strawberry",
-          "yogurt"
+          "crayon_box",
+          "dino_toy",
+          "sushi_tray"
         ],
         [
-          "donut_pink",
-          "cake_slice",
-          "kebab_skewer"
+          "pancake_stack",
+          "cheese_wheel",
+          "santa"
         ]
       ]
     },
@@ -116,14 +123,19 @@
       "c": 1,
       "layers": [
         [
-          "cake_slice",
-          "strawberry",
-          "cake_slice"
+          "cheese_wheel",
+          "dino_toy",
+          "turtle_toy"
         ],
         [
-          "yogurt",
-          "chips",
-          "kebab_skewer"
+          "garlic",
+          "cupcake_choco",
+          "yogurt"
+        ],
+        [
+          "cupcake_choco",
+          "pancake_stack",
+          "dino_toy"
         ]
       ]
     },
@@ -132,85 +144,45 @@
       "c": 2,
       "layers": [
         [
-          "chocolate_tablet",
-          "chocolate_tablet",
-          "yogurt"
+          "eggplant_long",
+          "jelly_bag",
+          "dino_toy"
         ],
         [
-          "yogurt",
-          "kebab_skewer",
-          "donut_pink"
+          "jelly_bag",
+          "turtle_toy",
+          "sushi_tray"
+        ],
+        [
+          "eggplant_long",
+          "santa",
+          "santa"
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
-      "lock": 2,
       "layers": [
         [
-          "strawberry",
-          "chips",
-          "donut_pink"
+          "sushi_tray",
+          "chocolate_bar",
+          "chocolate_bar"
         ],
         [
-          "strawberry",
+          "jelly_bag",
           "yogurt",
-          "chips"
+          "turtle_toy"
+        ],
+        [
+          "pancake_stack",
+          "cheese_wheel",
+          "eggplant_long"
         ]
       ]
     },
     {
       "r": 2,
-      "c": 1,
-      "lock": 2,
-      "layers": [
-        [
-          "kebab_skewer",
-          "yogurt",
-          "donut_pink"
-        ],
-        [
-          "kebab_skewer",
-          "chocolate_tablet",
-          "chips"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "kebab_skewer",
-          "kebab_skewer",
-          "yogurt"
-        ],
-        [
-          "chocolate_tablet",
-          "chips",
-          "kebab_skewer"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "donut_pink",
-          "chips",
-          "kebab_skewer"
-        ],
-        [
-          "cake_slice",
-          "yogurt",
-          "chocolate_tablet"
-        ]
-      ]
-    },
-    {
-      "r": 3,
       "c": 1,
       "layers": [
         [
@@ -221,13 +193,63 @@
       ]
     },
     {
-      "r": 3,
+      "r": 2,
       "c": 2,
       "layers": [
         [
           null,
           null,
           null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "lock": 2,
+      "layers": [
+        [
+          "cheese_wheel",
+          "turtle_toy",
+          "pie_slice"
+        ],
+        [
+          "garlic",
+          "dino_toy",
+          "turtle_toy"
+        ],
+        [
+          "yogurt",
+          "cheese_wheel",
+          "santa"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          "cupcake_choco",
+          "pie_slice",
+          "cheese_wheel"
+        ],
+        [
+          "eggplant_long",
+          "garlic",
+          "chocolate_bar"
         ]
       ]
     }

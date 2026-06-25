@@ -2,14 +2,22 @@
   "level": 10,
   "timeLimit": 360,
   "cols": 3,
-  "rows": 3,
+  "rows": 4,
   "cellCap": 3,
   "goods": [
-    "biscuit_box",
-    "broccoli",
-    "cheese_wedge",
-    "chocolate_bar",
-    "pie_slice"
+    "blueberry_box",
+    "cake_roll_pink",
+    "chestnut",
+    "chocolate_tablet",
+    "cinnamon_roll",
+    "flatbread",
+    "honey_pot_round",
+    "monkey_toy",
+    "pizza_slice",
+    "snack",
+    "soap_dispenser",
+    "soy_sauce",
+    "starfruit"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -19,14 +27,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 5,
+    "distinct": 13,
     "depthRange": [
-      1,
+      2,
       2
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 0,
-    "totalGoods": 30,
+    "totalGoods": 54,
     "attempt": 0
   },
   "cubbies": [
@@ -35,14 +43,14 @@
       "c": 0,
       "layers": [
         [
-          "chocolate_bar",
-          "pie_slice",
-          "biscuit_box"
+          "soap_dispenser",
+          "cinnamon_roll",
+          "monkey_toy"
         ],
         [
-          "broccoli",
-          "cheese_wedge",
-          "chocolate_bar"
+          "monkey_toy",
+          "soap_dispenser",
+          "soy_sauce"
         ]
       ]
     },
@@ -51,9 +59,14 @@
       "c": 1,
       "layers": [
         [
-          "biscuit_box",
-          "broccoli",
-          "pie_slice"
+          "soap_dispenser",
+          "flatbread",
+          "cake_roll_pink"
+        ],
+        [
+          "honey_pot_round",
+          "chestnut",
+          "blueberry_box"
         ]
       ]
     },
@@ -62,14 +75,14 @@
       "c": 2,
       "layers": [
         [
-          "biscuit_box",
-          "pie_slice",
-          "chocolate_bar"
+          "snack",
+          "soap_dispenser",
+          "soy_sauce"
         ],
         [
-          "biscuit_box",
-          "pie_slice",
-          "pie_slice"
+          "blueberry_box",
+          "starfruit",
+          "starfruit"
         ]
       ]
     },
@@ -78,9 +91,14 @@
       "c": 0,
       "layers": [
         [
-          "broccoli",
-          "chocolate_bar",
-          "cheese_wedge"
+          "snack",
+          "chocolate_tablet",
+          "monkey_toy"
+        ],
+        [
+          "chocolate_tablet",
+          "soap_dispenser",
+          "honey_pot_round"
         ]
       ]
     },
@@ -89,9 +107,14 @@
       "c": 1,
       "layers": [
         [
-          "biscuit_box",
-          "pie_slice",
-          "chocolate_bar"
+          "starfruit",
+          "monkey_toy",
+          "cake_roll_pink"
+        ],
+        [
+          "chocolate_tablet",
+          "pizza_slice",
+          "honey_pot_round"
         ]
       ]
     },
@@ -111,14 +134,14 @@
       "c": 0,
       "layers": [
         [
-          "broccoli",
-          "broccoli",
-          "chocolate_bar"
+          "soy_sauce",
+          "soap_dispenser",
+          "blueberry_box"
         ],
         [
-          "cheese_wedge",
-          "cheese_wedge",
-          "cheese_wedge"
+          "cinnamon_roll",
+          "chestnut",
+          "cake_roll_pink"
         ]
       ]
     },
@@ -138,9 +161,57 @@
       "c": 2,
       "layers": [
         [
-          "broccoli",
-          "cheese_wedge",
-          "biscuit_box"
+          "flatbread",
+          "blueberry_box",
+          "honey_pot_round"
+        ],
+        [
+          "pizza_slice",
+          "flatbread",
+          "cinnamon_roll"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "blueberry_box",
+          "chestnut",
+          "flatbread"
+        ],
+        [
+          "flatbread",
+          "blueberry_box",
+          "pizza_slice"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "flatbread",
+          "honey_pot_round",
+          "monkey_toy"
+        ],
+        [
+          "honey_pot_round",
+          "monkey_toy",
+          "snack"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
         ]
       ]
     }

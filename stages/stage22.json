@@ -5,13 +5,20 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "banana",
-    "bunny",
-    "cheese_wedge",
-    "cracker_long",
-    "nuts_bag",
-    "shiba_dog",
-    "watering_can_item"
+    "air_freshener",
+    "carrot_bunch",
+    "cheese_wheel",
+    "cookie_tube",
+    "cucumber",
+    "cupcake_tray",
+    "eclair",
+    "eggplant",
+    "muffin",
+    "pie_slice",
+    "smoothie",
+    "turtle_toy",
+    "watermelon_slice",
+    "whip_can"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -21,15 +28,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 7,
+    "distinct": 14,
     "depthRange": [
       2,
       3
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 2,
-    "totalGoods": 78,
-    "attempt": 1
+    "totalGoods": 66,
+    "attempt": 0
   },
   "cubbies": [
     {
@@ -37,141 +44,19 @@
       "c": 0,
       "layers": [
         [
-          "banana",
-          "shiba_dog",
-          "watering_can_item"
+          "eclair",
+          "smoothie",
+          "pie_slice"
         ],
         [
-          "nuts_bag",
-          "shiba_dog",
-          "cracker_long"
-        ],
-        [
-          "banana",
-          "cracker_long",
-          "watering_can_item"
+          "cheese_wheel",
+          "watermelon_slice",
+          "turtle_toy"
         ]
       ]
     },
     {
       "r": 0,
-      "c": 1,
-      "layers": [
-        [
-          "nuts_bag",
-          "cheese_wedge",
-          "cheese_wedge"
-        ],
-        [
-          "banana",
-          "nuts_bag",
-          "bunny"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "watering_can_item",
-          "banana",
-          "cheese_wedge"
-        ],
-        [
-          "cheese_wedge",
-          "nuts_bag",
-          "shiba_dog"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "bunny",
-          "shiba_dog",
-          "banana"
-        ],
-        [
-          "nuts_bag",
-          "shiba_dog",
-          "cracker_long"
-        ],
-        [
-          "banana",
-          "watering_can_item",
-          "nuts_bag"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "shiba_dog",
-          "nuts_bag",
-          "cheese_wedge"
-        ],
-        [
-          "bunny",
-          "cracker_long",
-          "watering_can_item"
-        ],
-        [
-          "cracker_long",
-          "cheese_wedge",
-          "cracker_long"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "lock": 1,
-      "layers": [
-        [
-          "bunny",
-          "shiba_dog",
-          "cheese_wedge"
-        ],
-        [
-          "cheese_wedge",
-          "bunny",
-          "shiba_dog"
-        ],
-        [
-          "nuts_bag",
-          "cheese_wedge",
-          "cheese_wedge"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "bunny",
-          "nuts_bag",
-          "watering_can_item"
-        ],
-        [
-          "cheese_wedge",
-          "banana",
-          "cracker_long"
-        ],
-        [
-          "watering_can_item",
-          "watering_can_item",
-          "nuts_bag"
-        ]
-      ]
-    },
-    {
-      "r": 2,
       "c": 1,
       "layers": [
         [
@@ -182,35 +67,142 @@
       ]
     },
     {
-      "r": 2,
+      "r": 0,
       "c": 2,
       "layers": [
         [
-          "cracker_long",
-          "bunny",
-          "banana"
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "carrot_bunch",
+          "muffin",
+          "cookie_tube"
         ],
         [
-          "banana",
-          "bunny",
-          "banana"
+          "eclair",
+          "turtle_toy",
+          "carrot_bunch"
+        ],
+        [
+          "smoothie",
+          "eggplant",
+          "watermelon_slice"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "eclair",
+          "cookie_tube",
+          "air_freshener"
+        ],
+        [
+          "eggplant",
+          "cupcake_tray",
+          "eggplant"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "pie_slice",
+          "smoothie",
+          "pie_slice"
+        ],
+        [
+          "air_freshener",
+          "muffin",
+          "cupcake_tray"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "air_freshener",
+          "pie_slice",
+          "eggplant"
+        ],
+        [
+          "whip_can",
+          "carrot_bunch",
+          "cookie_tube"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "watermelon_slice",
+          "cucumber",
+          "watermelon_slice"
+        ],
+        [
+          "whip_can",
+          "watermelon_slice",
+          "whip_can"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "lock": 2,
+      "layers": [
+        [
+          "cheese_wheel",
+          "air_freshener",
+          "air_freshener"
+        ],
+        [
+          "cucumber",
+          "turtle_toy",
+          "eggplant"
+        ],
+        [
+          "cookie_tube",
+          "cheese_wheel",
+          "cupcake_tray"
         ]
       ]
     },
     {
       "r": 3,
       "c": 0,
-      "lock": 3,
       "layers": [
         [
-          "bunny",
-          "banana",
-          "cracker_long"
+          "muffin",
+          "cheese_wheel",
+          "cookie_tube"
         ],
         [
-          "cracker_long",
-          "bunny",
-          "nuts_bag"
+          "cupcake_tray",
+          "cupcake_tray",
+          "pie_slice"
+        ],
+        [
+          "cheese_wheel",
+          "cupcake_tray",
+          "cookie_tube"
         ]
       ]
     },
@@ -219,19 +211,19 @@
       "c": 1,
       "layers": [
         [
-          "shiba_dog",
-          "cracker_long",
-          "cheese_wedge"
+          "pie_slice",
+          "turtle_toy",
+          "cheese_wheel"
         ],
         [
-          "watering_can_item",
-          "bunny",
-          "nuts_bag"
+          "cucumber",
+          "air_freshener",
+          "watermelon_slice"
         ],
         [
-          "banana",
-          "cracker_long",
-          "bunny"
+          "turtle_toy",
+          "turtle_toy",
+          "eggplant"
         ]
       ]
     },

@@ -5,12 +5,20 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "butter",
-    "chip_tube",
-    "chocolate_log",
-    "dino_toy",
-    "donut_pink",
-    "sausage_link"
+    "chick",
+    "corn_dog",
+    "cracker_long",
+    "croissant",
+    "donut",
+    "donut_box",
+    "glass_cleaner",
+    "hand_soap",
+    "mustard",
+    "owl_toy",
+    "pie_slice",
+    "sausage_link",
+    "tortilla_chips",
+    "watermelon_slice"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -20,15 +28,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 6,
+    "distinct": 14,
     "depthRange": [
       2,
       3
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 2,
-    "totalGoods": 75,
-    "attempt": 3
+    "totalGoods": 69,
+    "attempt": 1
   },
   "cubbies": [
     {
@@ -36,175 +44,160 @@
       "c": 0,
       "layers": [
         [
-          "chocolate_log",
-          "donut_pink",
-          "chocolate_log"
+          "tortilla_chips",
+          "hand_soap",
+          "watermelon_slice"
         ],
         [
-          "chocolate_log",
-          "chocolate_log",
-          "sausage_link"
+          "watermelon_slice",
+          "chick",
+          "donut"
         ],
         [
-          "chip_tube",
-          "donut_pink",
-          "sausage_link"
+          "donut",
+          "pie_slice",
+          "chick"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
-      "layers": [
-        [
-          "chip_tube",
-          "chip_tube",
-          "dino_toy"
-        ],
-        [
-          "chocolate_log",
-          "donut_pink",
-          "chocolate_log"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "lock": 3,
-      "layers": [
-        [
-          "donut_pink",
-          "butter",
-          "dino_toy"
-        ],
-        [
-          "butter",
-          "butter",
-          "donut_pink"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "sausage_link",
-          "dino_toy",
-          "chocolate_log"
-        ],
-        [
-          "chip_tube",
-          "butter",
-          "chocolate_log"
-        ],
-        [
-          "donut_pink",
-          "butter",
-          "chip_tube"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "chip_tube",
-          "sausage_link",
-          "donut_pink"
-        ],
-        [
-          "chip_tube",
-          "dino_toy",
-          "sausage_link"
-        ],
-        [
-          "chip_tube",
-          "sausage_link",
-          "dino_toy"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "chip_tube",
-          "butter",
-          "dino_toy"
-        ],
-        [
-          "dino_toy",
-          "donut_pink",
-          "chocolate_log"
-        ],
-        [
-          "donut_pink",
-          "donut_pink",
-          "sausage_link"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "chip_tube",
-          "chip_tube",
-          "butter"
-        ],
-        [
-          "chocolate_log",
-          "chip_tube",
-          "chip_tube"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "donut_pink",
-          "sausage_link",
-          "chip_tube"
-        ],
-        [
-          "dino_toy",
-          "sausage_link",
-          "sausage_link"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
       "lock": 1,
       "layers": [
         [
-          "donut_pink",
-          "butter",
-          "chocolate_log"
+          "corn_dog",
+          "donut",
+          "owl_toy"
         ],
         [
-          "dino_toy",
+          "corn_dog",
+          "mustard",
+          "mustard"
+        ],
+        [
+          "mustard",
+          "cracker_long",
+          "glass_cleaner"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "corn_dog",
+          "owl_toy",
+          "chick"
+        ],
+        [
+          "watermelon_slice",
+          "glass_cleaner",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "hand_soap",
+          "owl_toy",
+          "donut"
+        ],
+        [
+          "tortilla_chips",
+          "owl_toy",
+          "mustard"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "hand_soap",
+          "pie_slice",
+          "glass_cleaner"
+        ],
+        [
+          "mustard",
+          "hand_soap",
+          "donut_box"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "pie_slice",
+          "chick",
+          "watermelon_slice"
+        ],
+        [
+          "donut_box",
           "sausage_link",
-          "butter"
+          "owl_toy"
+        ],
+        [
+          "hand_soap",
+          "donut",
+          "chick"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "pie_slice",
+          "pie_slice",
+          "corn_dog"
+        ],
+        [
+          "sausage_link",
+          "cracker_long",
+          "cracker_long"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -213,19 +206,19 @@
       "c": 1,
       "layers": [
         [
+          "donut_box",
+          "owl_toy",
+          "watermelon_slice"
+        ],
+        [
+          "tortilla_chips",
+          "pie_slice",
+          "cracker_long"
+        ],
+        [
           "sausage_link",
-          "dino_toy",
-          "butter"
-        ],
-        [
-          "dino_toy",
-          "chip_tube",
-          "dino_toy"
-        ],
-        [
-          "butter",
-          "butter",
-          "chocolate_log"
+          "hand_soap",
+          "corn_dog"
         ]
       ]
     },
@@ -234,9 +227,19 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "croissant",
+          "croissant",
+          "chick"
+        ],
+        [
+          "cracker_long",
+          "cracker_long",
+          "watermelon_slice"
+        ],
+        [
+          "corn_dog",
+          "mustard",
+          "donut"
         ]
       ]
     }

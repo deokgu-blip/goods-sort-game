@@ -5,14 +5,19 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "icebar_choco",
-    "lemonade",
-    "muffin_tray",
-    "peanut_butter",
+    "butter",
+    "cake_roll_pink",
+    "chocolate_log",
+    "cooking_oil",
+    "corn_cob",
+    "icecream_stick",
+    "juice_box",
+    "leek",
+    "muffin",
     "penguin",
-    "pie_slice",
-    "taco",
-    "tomato"
+    "pudding_cup_squat",
+    "snack",
+    "tea_tin_round"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -22,35 +27,36 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 8,
+    "distinct": 13,
     "depthRange": [
       3,
       4
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 2,
-    "totalGoods": 102,
-    "attempt": 6
+    "totalGoods": 96,
+    "attempt": 2
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
+      "lock": 3,
       "layers": [
         [
-          "peanut_butter",
-          "lemonade",
-          "pie_slice"
+          "icecream_stick",
+          "icecream_stick",
+          "corn_cob"
         ],
         [
-          "penguin",
-          "pie_slice",
-          "muffin_tray"
-        ],
-        [
-          "tomato",
-          "lemonade",
+          "pudding_cup_squat",
+          "butter",
           "penguin"
+        ],
+        [
+          "muffin",
+          "icecream_stick",
+          "icecream_stick"
         ]
       ]
     },
@@ -59,19 +65,19 @@
       "c": 1,
       "layers": [
         [
-          "lemonade",
-          "lemonade",
-          "taco"
+          "juice_box",
+          "chocolate_log",
+          "cake_roll_pink"
         ],
         [
-          "taco",
-          "pie_slice",
-          "taco"
+          "cooking_oil",
+          "cooking_oil",
+          "corn_cob"
         ],
         [
-          "lemonade",
-          "icebar_choco",
-          "muffin_tray"
+          "tea_tin_round",
+          "corn_cob",
+          "chocolate_log"
         ]
       ]
     },
@@ -80,29 +86,161 @@
       "c": 2,
       "layers": [
         [
-          "tomato",
-          "pie_slice",
-          "peanut_butter"
+          "tea_tin_round",
+          "juice_box",
+          "butter"
         ],
         [
+          "muffin",
+          "pudding_cup_squat",
+          "chocolate_log"
+        ],
+        [
+          "chocolate_log",
+          "corn_cob",
+          "cooking_oil"
+        ],
+        [
+          "cake_roll_pink",
           "penguin",
-          "tomato",
-          "icebar_choco"
-        ],
-        [
-          "penguin",
-          "lemonade",
-          "taco"
-        ],
-        [
-          "lemonade",
-          "muffin_tray",
-          "tomato"
+          "corn_cob"
         ]
       ]
     },
     {
       "r": 1,
+      "c": 0,
+      "lock": 3,
+      "layers": [
+        [
+          "icecream_stick",
+          "leek",
+          "pudding_cup_squat"
+        ],
+        [
+          "snack",
+          "juice_box",
+          "snack"
+        ],
+        [
+          "pudding_cup_squat",
+          "tea_tin_round",
+          "penguin"
+        ],
+        [
+          "butter",
+          "penguin",
+          "muffin"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "muffin",
+          "butter",
+          "chocolate_log"
+        ],
+        [
+          "muffin",
+          "butter",
+          "cooking_oil"
+        ],
+        [
+          "snack",
+          "pudding_cup_squat",
+          "tea_tin_round"
+        ],
+        [
+          "snack",
+          "cake_roll_pink",
+          "snack"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "penguin",
+          "juice_box",
+          "tea_tin_round"
+        ],
+        [
+          "cake_roll_pink",
+          "penguin",
+          "cake_roll_pink"
+        ],
+        [
+          "snack",
+          "chocolate_log",
+          "butter"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "chocolate_log",
+          "cooking_oil",
+          "leek"
+        ],
+        [
+          "chocolate_log",
+          "butter",
+          "penguin"
+        ],
+        [
+          "leek",
+          "snack",
+          "cooking_oil"
+        ],
+        [
+          "juice_box",
+          "juice_box",
+          "pudding_cup_squat"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "butter",
+          "leek",
+          "penguin"
+        ],
+        [
+          "leek",
+          "leek",
+          "muffin"
+        ],
+        [
+          "pudding_cup_squat",
+          "penguin",
+          "pudding_cup_squat"
+        ]
+      ]
+    },
+    {
+      "r": 3,
       "c": 0,
       "layers": [
         [
@@ -113,177 +251,39 @@
       ]
     },
     {
-      "r": 1,
+      "r": 3,
       "c": 1,
+      "layers": [
+        [
+          "corn_cob",
+          "pudding_cup_squat",
+          "chocolate_log"
+        ],
+        [
+          "snack",
+          "corn_cob",
+          "icecream_stick"
+        ],
+        [
+          "corn_cob",
+          "corn_cob",
+          "cake_roll_pink"
+        ],
+        [
+          "snack",
+          "tea_tin_round",
+          "butter"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
       "layers": [
         [
           null,
           null,
           null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "pie_slice",
-          "taco",
-          "icebar_choco"
-        ],
-        [
-          "taco",
-          "tomato",
-          "taco"
-        ],
-        [
-          "icebar_choco",
-          "peanut_butter",
-          "peanut_butter"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "lock": 2,
-      "layers": [
-        [
-          "taco",
-          "tomato",
-          "muffin_tray"
-        ],
-        [
-          "lemonade",
-          "pie_slice",
-          "icebar_choco"
-        ],
-        [
-          "lemonade",
-          "pie_slice",
-          "penguin"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "icebar_choco",
-          "pie_slice",
-          "pie_slice"
-        ],
-        [
-          "tomato",
-          "peanut_butter",
-          "taco"
-        ],
-        [
-          "penguin",
-          "peanut_butter",
-          "muffin_tray"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "lock": 2,
-      "layers": [
-        [
-          "tomato",
-          "penguin",
-          "peanut_butter"
-        ],
-        [
-          "taco",
-          "tomato",
-          "lemonade"
-        ],
-        [
-          "tomato",
-          "peanut_butter",
-          "muffin_tray"
-        ],
-        [
-          "icebar_choco",
-          "muffin_tray",
-          "lemonade"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "pie_slice",
-          "lemonade",
-          "pie_slice"
-        ],
-        [
-          "icebar_choco",
-          "taco",
-          "peanut_butter"
-        ],
-        [
-          "lemonade",
-          "penguin",
-          "peanut_butter"
-        ],
-        [
-          "muffin_tray",
-          "tomato",
-          "penguin"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          "taco",
-          "tomato",
-          "pie_slice"
-        ],
-        [
-          "muffin_tray",
-          "muffin_tray",
-          "icebar_choco"
-        ],
-        [
-          "lemonade",
-          "penguin",
-          "muffin_tray"
-        ],
-        [
-          "taco",
-          "taco",
-          "taco"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
-        [
-          "penguin",
-          "peanut_butter",
-          "icebar_choco"
-        ],
-        [
-          "muffin_tray",
-          "penguin",
-          "icebar_choco"
-        ],
-        [
-          "icebar_choco",
-          "lemonade",
-          "peanut_butter"
         ]
       ]
     }

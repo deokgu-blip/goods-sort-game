@@ -2,14 +2,22 @@
   "level": 11,
   "timeLimit": 340,
   "cols": 3,
-  "rows": 3,
+  "rows": 4,
   "cellCap": 3,
   "goods": [
-    "cookie_disc",
-    "corn_cob",
-    "icebar_a",
-    "lantern",
-    "muffin_tray"
+    "apple",
+    "bell_pepper",
+    "cake_slice",
+    "chip_can_tall",
+    "coffee_cup",
+    "cream_cheese_tub",
+    "egg_carton",
+    "green_tea",
+    "hot_dog",
+    "juice_6pack",
+    "muffin_tray",
+    "mug",
+    "red_onion"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -19,15 +27,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 5,
+    "distinct": 13,
     "depthRange": [
       2,
       3
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 1,
-    "totalGoods": 57,
-    "attempt": 0
+    "totalGoods": 66,
+    "attempt": 3
   },
   "cubbies": [
     {
@@ -35,136 +43,19 @@
       "c": 0,
       "layers": [
         [
-          "corn_cob",
-          "cookie_disc",
-          "muffin_tray"
+          "red_onion",
+          "red_onion",
+          "egg_carton"
         ],
         [
-          "corn_cob",
-          "corn_cob",
-          "muffin_tray"
-        ],
-        [
-          "muffin_tray",
-          "cookie_disc",
-          "cookie_disc"
+          "green_tea",
+          "green_tea",
+          "mug"
         ]
       ]
     },
     {
       "r": 0,
-      "c": 1,
-      "layers": [
-        [
-          "lantern",
-          "cookie_disc",
-          "icebar_a"
-        ],
-        [
-          "icebar_a",
-          "cookie_disc",
-          "corn_cob"
-        ],
-        [
-          "lantern",
-          "icebar_a",
-          "lantern"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "lock": 1,
-      "layers": [
-        [
-          "muffin_tray",
-          "lantern",
-          "corn_cob"
-        ],
-        [
-          "corn_cob",
-          "icebar_a",
-          "cookie_disc"
-        ],
-        [
-          "icebar_a",
-          "corn_cob",
-          "lantern"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "cookie_disc",
-          "corn_cob",
-          "icebar_a"
-        ],
-        [
-          "cookie_disc",
-          "lantern",
-          "lantern"
-        ],
-        [
-          "lantern",
-          "corn_cob",
-          "icebar_a"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "muffin_tray",
-          "icebar_a",
-          "icebar_a"
-        ],
-        [
-          "cookie_disc",
-          "lantern",
-          "lantern"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "corn_cob",
-          "lantern",
-          "muffin_tray"
-        ],
-        [
-          "icebar_a",
-          "cookie_disc",
-          "muffin_tray"
-        ],
-        [
-          "muffin_tray",
-          "corn_cob",
-          "cookie_disc"
-        ]
-      ]
-    },
-    {
-      "r": 2,
       "c": 1,
       "layers": [
         [
@@ -175,18 +66,173 @@
       ]
     },
     {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "green_tea",
+          "red_onion",
+          "mug"
+        ],
+        [
+          "muffin_tray",
+          "mug",
+          "cake_slice"
+        ],
+        [
+          "egg_carton",
+          "cake_slice",
+          "red_onion"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "apple",
+          "chip_can_tall",
+          "mug"
+        ],
+        [
+          "hot_dog",
+          "apple",
+          "chip_can_tall"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "hot_dog",
+          "apple",
+          "mug"
+        ],
+        [
+          "cake_slice",
+          "muffin_tray",
+          "mug"
+        ],
+        [
+          "bell_pepper",
+          "red_onion",
+          "coffee_cup"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "chip_can_tall",
+          "red_onion",
+          "green_tea"
+        ],
+        [
+          "muffin_tray",
+          "apple",
+          "muffin_tray"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "green_tea",
+          "juice_6pack",
+          "egg_carton"
+        ],
+        [
+          "bell_pepper",
+          "egg_carton",
+          "cream_cheese_tub"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "lock": 2,
+      "layers": [
+        [
+          "cake_slice",
+          "apple",
+          "cream_cheese_tub"
+        ],
+        [
+          "hot_dog",
+          "coffee_cup",
+          "hot_dog"
+        ],
+        [
+          "hot_dog",
+          "egg_carton",
+          "muffin_tray"
+        ]
+      ]
+    },
+    {
       "r": 2,
       "c": 2,
       "layers": [
         [
-          "icebar_a",
-          "icebar_a",
-          "lantern"
+          "chip_can_tall",
+          "cake_slice",
+          "cake_slice"
         ],
         [
-          "cookie_disc",
-          "corn_cob",
+          "chip_can_tall",
+          "hot_dog",
+          "bell_pepper"
+        ],
+        [
+          "apple",
+          "cream_cheese_tub",
+          "green_tea"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "juice_6pack",
+          "juice_6pack",
+          "coffee_cup"
+        ],
+        [
+          "egg_carton",
+          "chip_can_tall",
           "muffin_tray"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
         ]
       ]
     }

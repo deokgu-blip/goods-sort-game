@@ -5,15 +5,19 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "avocado",
-    "broccoli",
-    "cracker_long",
-    "hot_sauce",
-    "muffin_tray",
+    "bagel",
+    "cabbage",
+    "cheese_wedge",
+    "cookie_box",
+    "corn_cob",
+    "flower_vase",
+    "jam_jar",
+    "milk",
+    "mushroom_decor",
+    "panda",
+    "penguin",
     "pie_slice",
-    "tea_tin_round",
-    "whale_toy",
-    "whip_can"
+    "potato"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -23,209 +27,168 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 13,
     "depthRange": [
       3,
       4
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 3,
-    "totalGoods": 108,
+    "totalGoods": 99,
     "attempt": 9
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
-      "lock": 3,
       "layers": [
         [
-          "broccoli",
-          "avocado",
-          "hot_sauce"
+          "bagel",
+          "mushroom_decor",
+          "mushroom_decor"
         ],
         [
-          "hot_sauce",
-          "pie_slice",
-          "muffin_tray"
+          "jam_jar",
+          "cookie_box",
+          "milk"
         ],
         [
-          "broccoli",
-          "cracker_long",
-          "whale_toy"
+          "cabbage",
+          "penguin",
+          "cabbage"
         ]
       ]
     },
     {
       "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "milk",
+          "potato",
+          "bagel"
+        ],
+        [
+          "cookie_box",
+          "penguin",
+          "potato"
+        ],
+        [
+          "penguin",
+          "cookie_box",
+          "corn_cob"
+        ],
+        [
+          "panda",
+          "milk",
+          "bagel"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "jam_jar",
+          "pie_slice",
+          "penguin"
+        ],
+        [
+          "panda",
+          "cookie_box",
+          "cookie_box"
+        ],
+        [
+          "penguin",
+          "penguin",
+          "cabbage"
+        ],
+        [
+          "mushroom_decor",
+          "cheese_wedge",
+          "corn_cob"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "milk",
+          "cabbage",
+          "corn_cob"
+        ],
+        [
+          "jam_jar",
+          "milk",
+          "penguin"
+        ],
+        [
+          "bagel",
+          "mushroom_decor",
+          "jam_jar"
+        ],
+        [
+          "corn_cob",
+          "potato",
+          "pie_slice"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
       "c": 1,
       "lock": 2,
       "layers": [
         [
-          "avocado",
-          "tea_tin_round",
-          "whale_toy"
+          "milk",
+          "bagel",
+          "flower_vase"
         ],
         [
-          "cracker_long",
-          "muffin_tray",
-          "pie_slice"
+          "penguin",
+          "potato",
+          "flower_vase"
         ],
         [
-          "whale_toy",
-          "whip_can",
-          "pie_slice"
-        ],
-        [
-          "cracker_long",
-          "hot_sauce",
-          "whale_toy"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "avocado",
-          "whip_can",
-          "muffin_tray"
-        ],
-        [
-          "tea_tin_round",
-          "avocado",
-          "muffin_tray"
-        ],
-        [
-          "whip_can",
-          "cracker_long",
-          "avocado"
-        ],
-        [
-          "whip_can",
-          "broccoli",
-          "broccoli"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "pie_slice",
-          "broccoli",
-          "tea_tin_round"
-        ],
-        [
-          "hot_sauce",
-          "pie_slice",
-          "pie_slice"
-        ],
-        [
-          "pie_slice",
-          "tea_tin_round",
-          "whip_can"
-        ],
-        [
-          "broccoli",
-          "avocado",
-          "whale_toy"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "whip_can",
-          "cracker_long",
-          "cracker_long"
-        ],
-        [
-          "broccoli",
-          "hot_sauce",
-          "tea_tin_round"
-        ],
-        [
-          "hot_sauce",
-          "muffin_tray",
-          "broccoli"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "whale_toy",
-          "avocado",
-          "pie_slice"
-        ],
-        [
-          "muffin_tray",
-          "pie_slice",
-          "whip_can"
-        ],
-        [
-          "tea_tin_round",
-          "muffin_tray",
-          "broccoli"
-        ],
-        [
-          "muffin_tray",
-          "whale_toy",
-          "hot_sauce"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "pie_slice",
-          "muffin_tray",
-          "broccoli"
-        ],
-        [
-          "whale_toy",
-          "whip_can",
-          "tea_tin_round"
-        ],
-        [
-          "muffin_tray",
-          "whale_toy",
-          "hot_sauce"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "whip_can",
-          "whale_toy",
-          "cracker_long"
-        ],
-        [
-          "tea_tin_round",
-          "whale_toy",
-          "cracker_long"
-        ],
-        [
-          "broccoli",
-          "broccoli",
-          "avocado"
-        ],
-        [
-          "whip_can",
-          "hot_sauce",
-          "avocado"
+          "corn_cob",
+          "jam_jar",
+          "corn_cob"
         ]
       ]
     },
@@ -234,68 +197,99 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "cookie_box",
+          "cabbage",
+          "cheese_wedge"
+        ],
+        [
+          "mushroom_decor",
+          "flower_vase",
+          "panda"
+        ],
+        [
+          "pie_slice",
+          "mushroom_decor",
+          "corn_cob"
+        ],
+        [
+          "cookie_box",
+          "flower_vase",
+          "potato"
         ]
       ]
     },
     {
       "r": 3,
       "c": 0,
+      "lock": 1,
       "layers": [
         [
-          null,
-          null,
-          null
+          "cookie_box",
+          "flower_vase",
+          "jam_jar"
+        ],
+        [
+          "cookie_box",
+          "panda",
+          "jam_jar"
+        ],
+        [
+          "corn_cob",
+          "cheese_wedge",
+          "pie_slice"
         ]
       ]
     },
     {
       "r": 3,
       "c": 1,
-      "lock": 3,
       "layers": [
         [
-          "hot_sauce",
-          "whale_toy",
-          "cracker_long"
+          "bagel",
+          "cheese_wedge",
+          "bagel"
         ],
         [
-          "avocado",
-          "cracker_long",
-          "avocado"
-        ],
-        [
-          "hot_sauce",
           "pie_slice",
-          "avocado"
+          "panda",
+          "flower_vase"
         ],
         [
-          "hot_sauce",
-          "pie_slice",
-          "cracker_long"
+          "panda",
+          "milk",
+          "jam_jar"
+        ],
+        [
+          "bagel",
+          "milk",
+          "bagel"
         ]
       ]
     },
     {
       "r": 3,
       "c": 2,
+      "lock": 2,
       "layers": [
         [
-          "muffin_tray",
-          "tea_tin_round",
-          "tea_tin_round"
+          "penguin",
+          "cheese_wedge",
+          "mushroom_decor"
         ],
         [
-          "whip_can",
-          "cracker_long",
-          "tea_tin_round"
+          "cabbage",
+          "mushroom_decor",
+          "pie_slice"
         ],
         [
-          "muffin_tray",
-          "tea_tin_round",
-          "whip_can"
+          "cheese_wedge",
+          "jam_jar",
+          "corn_cob"
+        ],
+        [
+          "mushroom_decor",
+          "potato",
+          "milk"
         ]
       ]
     }

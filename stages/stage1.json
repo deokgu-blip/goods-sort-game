@@ -5,9 +5,18 @@
   "rows": 3,
   "cellCap": 3,
   "goods": [
-    "chocolate_log",
-    "red_onion",
-    "snowcone"
+    "cinnamon_roll",
+    "cookie_tin_round",
+    "crayon_box",
+    "cream_cheese_tub",
+    "eggplant",
+    "icebar_a",
+    "icebar_b",
+    "juice_6pack",
+    "leek",
+    "monkey_toy",
+    "muffin",
+    "whale_toy"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -17,14 +26,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 3,
+    "distinct": 12,
     "depthRange": [
-      1,
-      1
+      2,
+      2
     ],
     "workspaces": 3,
     "lockCubbies": 0,
-    "totalGoods": 18,
+    "totalGoods": 36,
     "attempt": 0
   },
   "cubbies": [
@@ -33,9 +42,14 @@
       "c": 0,
       "layers": [
         [
-          "chocolate_log",
-          "snowcone",
-          "red_onion"
+          "cream_cheese_tub",
+          "cookie_tin_round",
+          "muffin"
+        ],
+        [
+          "whale_toy",
+          "crayon_box",
+          "leek"
         ]
       ]
     },
@@ -44,9 +58,14 @@
       "c": 1,
       "layers": [
         [
-          "red_onion",
-          "red_onion",
-          "chocolate_log"
+          "juice_6pack",
+          "icebar_b",
+          "leek"
+        ],
+        [
+          "eggplant",
+          "icebar_b",
+          "cream_cheese_tub"
         ]
       ]
     },
@@ -55,9 +74,14 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "cookie_tin_round",
+          "cinnamon_roll",
+          "icebar_a"
+        ],
+        [
+          "monkey_toy",
+          "whale_toy",
+          "cinnamon_roll"
         ]
       ]
     },
@@ -66,9 +90,14 @@
       "c": 0,
       "layers": [
         [
-          "chocolate_log",
-          "red_onion",
-          "chocolate_log"
+          "monkey_toy",
+          "cinnamon_roll",
+          "whale_toy"
+        ],
+        [
+          "crayon_box",
+          "icebar_a",
+          "muffin"
         ]
       ]
     },
@@ -77,9 +106,14 @@
       "c": 1,
       "layers": [
         [
-          "snowcone",
-          "red_onion",
-          "snowcone"
+          "icebar_a",
+          "muffin",
+          "juice_6pack"
+        ],
+        [
+          "leek",
+          "icebar_b",
+          "cream_cheese_tub"
         ]
       ]
     },
@@ -88,9 +122,14 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "juice_6pack",
+          "cookie_tin_round",
+          "monkey_toy"
+        ],
+        [
+          "crayon_box",
+          "eggplant",
+          "eggplant"
         ]
       ]
     },
@@ -110,9 +149,9 @@
       "c": 1,
       "layers": [
         [
-          "chocolate_log",
-          "chocolate_log",
-          "snowcone"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -121,9 +160,9 @@
       "c": 2,
       "layers": [
         [
-          "snowcone",
-          "red_onion",
-          "snowcone"
+          null,
+          null,
+          null
         ]
       ]
     }

@@ -5,17 +5,20 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "butter",
-    "candle",
-    "cheese_wedge",
-    "corn_cob",
-    "cracker_long",
-    "donut_box",
-    "gelato_cup",
-    "green_tea",
-    "santa",
-    "soap_bar",
-    "sub_sandwich"
+    "banana_bunch",
+    "butter_tub",
+    "cabbage",
+    "chips",
+    "chocolate_tablet",
+    "eclair",
+    "energy_drink",
+    "gingerbread",
+    "icecream_sandwich",
+    "kebab_skewer",
+    "pizza_slice",
+    "pringle_purple",
+    "turtle_toy",
+    "whip_can"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -25,20 +28,52 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 11,
+    "distinct": 14,
     "depthRange": [
       3,
       5
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 4,
-    "totalGoods": 117,
+    "totalGoods": 105,
     "attempt": 2
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
+      "lock": 4,
+      "layers": [
+        [
+          "banana_bunch",
+          "pizza_slice",
+          "kebab_skewer"
+        ],
+        [
+          "chips",
+          "kebab_skewer",
+          "chocolate_tablet"
+        ],
+        [
+          "eclair",
+          "whip_can",
+          "turtle_toy"
+        ],
+        [
+          "pizza_slice",
+          "gingerbread",
+          "turtle_toy"
+        ],
+        [
+          "whip_can",
+          "kebab_skewer",
+          "chips"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
       "layers": [
         [
           null,
@@ -49,97 +84,65 @@
     },
     {
       "r": 0,
-      "c": 1,
-      "lock": 1,
+      "c": 2,
       "layers": [
         [
-          "gelato_cup",
-          "corn_cob",
-          "donut_box"
+          "chips",
+          "chips",
+          "turtle_toy"
         ],
         [
-          "gelato_cup",
-          "sub_sandwich",
-          "cracker_long"
+          "whip_can",
+          "cabbage",
+          "banana_bunch"
         ],
         [
-          "candle",
-          "soap_bar",
-          "cracker_long"
-        ],
-        [
-          "green_tea",
-          "santa",
-          "donut_box"
-        ],
-        [
-          "corn_cob",
-          "sub_sandwich",
-          "candle"
+          "pringle_purple",
+          "kebab_skewer",
+          "energy_drink"
         ]
       ]
     },
     {
-      "r": 0,
-      "c": 2,
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "chips",
+          "chips",
+          "chocolate_tablet"
+        ],
+        [
+          "turtle_toy",
+          "icecream_sandwich",
+          "chocolate_tablet"
+        ],
+        [
+          "icecream_sandwich",
+          "chips",
+          "kebab_skewer"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
       "lock": 3,
       "layers": [
         [
-          "butter",
-          "butter",
-          "santa"
+          "kebab_skewer",
+          "chocolate_tablet",
+          "pizza_slice"
         ],
         [
-          "santa",
-          "butter",
-          "sub_sandwich"
+          "pringle_purple",
+          "banana_bunch",
+          "pizza_slice"
         ],
         [
-          "soap_bar",
-          "gelato_cup",
-          "sub_sandwich"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "soap_bar",
-          "corn_cob",
-          "gelato_cup"
-        ],
-        [
-          "santa",
-          "candle",
-          "donut_box"
-        ],
-        [
-          "cheese_wedge",
-          "cheese_wedge",
-          "corn_cob"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "donut_box",
-          "cracker_long",
-          "donut_box"
-        ],
-        [
-          "corn_cob",
-          "donut_box",
-          "butter"
-        ],
-        [
-          "gelato_cup",
-          "gelato_cup",
-          "cracker_long"
+          "gingerbread",
+          "icecream_sandwich",
+          "gingerbread"
         ]
       ]
     },
@@ -148,82 +151,82 @@
       "c": 2,
       "layers": [
         [
-          "corn_cob",
-          "cheese_wedge",
-          "donut_box"
+          "energy_drink",
+          "chocolate_tablet",
+          "chips"
         ],
         [
-          "green_tea",
-          "sub_sandwich",
-          "green_tea"
+          "butter_tub",
+          "icecream_sandwich",
+          "pringle_purple"
         ],
         [
-          "cracker_long",
-          "soap_bar",
-          "donut_box"
+          "banana_bunch",
+          "pringle_purple",
+          "whip_can"
         ],
         [
-          "sub_sandwich",
-          "corn_cob",
-          "gelato_cup"
+          "turtle_toy",
+          "cabbage",
+          "butter_tub"
         ],
         [
-          "butter",
-          "cheese_wedge",
-          "cracker_long"
+          "cabbage",
+          "pizza_slice",
+          "cabbage"
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
-      "lock": 1,
       "layers": [
         [
-          "butter",
-          "candle",
-          "sub_sandwich"
+          "gingerbread",
+          "gingerbread",
+          "icecream_sandwich"
         ],
         [
-          "santa",
-          "santa",
-          "cracker_long"
+          "icecream_sandwich",
+          "gingerbread",
+          "butter_tub"
         ],
         [
-          "green_tea",
-          "candle",
-          "corn_cob"
+          "pringle_purple",
+          "turtle_toy",
+          "cabbage"
         ]
       ]
     },
     {
       "r": 2,
       "c": 1,
+      "lock": 3,
       "layers": [
         [
-          "soap_bar",
-          "donut_box",
-          "gelato_cup"
+          "whip_can",
+          "whip_can",
+          "chocolate_tablet"
         ],
         [
-          "donut_box",
-          "butter",
-          "butter"
+          "whip_can",
+          "turtle_toy",
+          "gingerbread"
         ],
         [
-          "gelato_cup",
-          "soap_bar",
-          "soap_bar"
+          "eclair",
+          "gingerbread",
+          "energy_drink"
         ],
         [
-          "cheese_wedge",
-          "green_tea",
-          "sub_sandwich"
+          "chocolate_tablet",
+          "chips",
+          "eclair"
         ],
         [
-          "soap_bar",
-          "cracker_long",
-          "santa"
+          "chocolate_tablet",
+          "cabbage",
+          "cabbage"
         ]
       ]
     },
@@ -241,53 +244,38 @@
     {
       "r": 3,
       "c": 0,
+      "lock": 4,
       "layers": [
         [
-          "corn_cob",
-          "santa",
-          "santa"
+          "icecream_sandwich",
+          "icecream_sandwich",
+          "energy_drink"
         ],
         [
-          "soap_bar",
-          "sub_sandwich",
-          "butter"
+          "gingerbread",
+          "banana_bunch",
+          "icecream_sandwich"
         ],
         [
-          "donut_box",
-          "butter",
-          "donut_box"
+          "whip_can",
+          "turtle_toy",
+          "energy_drink"
         ],
         [
-          "candle",
-          "butter",
-          "corn_cob"
+          "eclair",
+          "turtle_toy",
+          "cabbage"
         ]
       ]
     },
     {
       "r": 3,
       "c": 1,
-      "lock": 3,
       "layers": [
         [
-          "corn_cob",
-          "gelato_cup",
-          "gelato_cup"
-        ],
-        [
-          "candle",
-          "gelato_cup",
-          "sub_sandwich"
-        ],
-        [
-          "sub_sandwich",
-          "santa",
-          "sub_sandwich"
-        ],
-        [
-          "cheese_wedge",
-          "cheese_wedge",
-          "santa"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -296,24 +284,24 @@
       "c": 2,
       "layers": [
         [
-          "corn_cob",
-          "green_tea",
-          "green_tea"
+          "butter_tub",
+          "pizza_slice",
+          "butter_tub"
         ],
         [
-          "green_tea",
-          "cracker_long",
-          "butter"
+          "energy_drink",
+          "chocolate_tablet",
+          "eclair"
         ],
         [
-          "cheese_wedge",
-          "candle",
-          "cheese_wedge"
+          "banana_bunch",
+          "eclair",
+          "whip_can"
         ],
         [
-          "santa",
-          "candle",
-          "green_tea"
+          "pringle_purple",
+          "butter_tub",
+          "cabbage"
         ]
       ]
     }

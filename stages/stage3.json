@@ -2,12 +2,21 @@
   "level": 3,
   "timeLimit": 360,
   "cols": 3,
-  "rows": 3,
+  "rows": 4,
   "cellCap": 3,
   "goods": [
-    "gelato_cup",
-    "hot_dog",
-    "pretzel_bag"
+    "blueberry_box",
+    "cheese_wedge",
+    "chestnut",
+    "elephant_toy",
+    "frog_plush",
+    "grape_soda",
+    "ice_cream_tub_choco",
+    "muffin_tray",
+    "pie_slice",
+    "salsa_jar",
+    "starfruit",
+    "whale_toy"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -17,15 +26,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 3,
+    "distinct": 12,
     "depthRange": [
-      1,
-      1
+      2,
+      2
     ],
     "workspaces": 3,
     "lockCubbies": 0,
-    "totalGoods": 18,
-    "attempt": 0
+    "totalGoods": 54,
+    "attempt": 2
   },
   "cubbies": [
     {
@@ -33,9 +42,9 @@
       "c": 0,
       "layers": [
         [
-          "hot_dog",
-          "hot_dog",
-          "hot_dog"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -44,9 +53,14 @@
       "c": 1,
       "layers": [
         [
-          "pretzel_bag",
-          "gelato_cup",
-          "gelato_cup"
+          "grape_soda",
+          "chestnut",
+          "chestnut"
+        ],
+        [
+          "whale_toy",
+          "grape_soda",
+          "muffin_tray"
         ]
       ]
     },
@@ -55,9 +69,14 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "pie_slice",
+          "grape_soda",
+          "muffin_tray"
+        ],
+        [
+          "blueberry_box",
+          "grape_soda",
+          "elephant_toy"
         ]
       ]
     },
@@ -66,14 +85,110 @@
       "c": 0,
       "layers": [
         [
-          "gelato_cup",
-          "gelato_cup",
-          "gelato_cup"
+          "chestnut",
+          "whale_toy",
+          "cheese_wedge"
+        ],
+        [
+          "elephant_toy",
+          "whale_toy",
+          "starfruit"
         ]
       ]
     },
     {
       "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "starfruit",
+          "grape_soda",
+          "chestnut"
+        ],
+        [
+          "elephant_toy",
+          "salsa_jar",
+          "blueberry_box"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "cheese_wedge",
+          "salsa_jar",
+          "starfruit"
+        ],
+        [
+          "ice_cream_tub_choco",
+          "chestnut",
+          "starfruit"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "cheese_wedge",
+          "grape_soda",
+          "ice_cream_tub_choco"
+        ],
+        [
+          "cheese_wedge",
+          "chestnut",
+          "cheese_wedge"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "pie_slice",
+          "frog_plush",
+          "ice_cream_tub_choco"
+        ],
+        [
+          "frog_plush",
+          "muffin_tray",
+          "starfruit"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "salsa_jar",
+          "starfruit",
+          "cheese_wedge"
+        ],
+        [
+          "frog_plush",
+          "muffin_tray",
+          "ice_cream_tub_choco"
+        ]
+      ]
+    },
+    {
+      "r": 3,
       "c": 1,
       "layers": [
         [
@@ -84,46 +199,18 @@
       ]
     },
     {
-      "r": 1,
+      "r": 3,
       "c": 2,
       "layers": [
         [
-          "pretzel_bag",
-          "hot_dog",
-          "pretzel_bag"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
+          "muffin_tray",
+          "ice_cream_tub_choco",
+          "muffin_tray"
+        ],
         [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "pretzel_bag",
-          "hot_dog",
-          "hot_dog"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "pretzel_bag",
-          "gelato_cup",
-          "pretzel_bag"
+          "ice_cream_tub_choco",
+          "blueberry_box",
+          "pie_slice"
         ]
       ]
     }

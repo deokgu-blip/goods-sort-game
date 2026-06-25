@@ -5,9 +5,18 @@
   "rows": 3,
   "cellCap": 3,
   "goods": [
-    "bagel",
-    "glass_cleaner",
-    "penguin"
+    "butter_tub",
+    "carrot_bunch",
+    "dino_toy",
+    "grapes",
+    "gum_blister",
+    "jelly_bag",
+    "orange_fruit",
+    "pie_slice",
+    "salsa_jar",
+    "taco",
+    "water",
+    "wheel_of_lime"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -17,14 +26,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 3,
+    "distinct": 12,
     "depthRange": [
-      1,
-      1
+      2,
+      2
     ],
     "workspaces": 3,
     "lockCubbies": 0,
-    "totalGoods": 18,
+    "totalGoods": 36,
     "attempt": 0
   },
   "cubbies": [
@@ -44,9 +53,14 @@
       "c": 1,
       "layers": [
         [
-          "penguin",
-          "penguin",
-          "glass_cleaner"
+          "wheel_of_lime",
+          "butter_tub",
+          "grapes"
+        ],
+        [
+          "jelly_bag",
+          "salsa_jar",
+          "pie_slice"
         ]
       ]
     },
@@ -55,9 +69,14 @@
       "c": 2,
       "layers": [
         [
-          "bagel",
-          "penguin",
-          "glass_cleaner"
+          "orange_fruit",
+          "pie_slice",
+          "dino_toy"
+        ],
+        [
+          "orange_fruit",
+          "water",
+          "taco"
         ]
       ]
     },
@@ -77,9 +96,14 @@
       "c": 1,
       "layers": [
         [
-          "penguin",
-          "glass_cleaner",
-          "bagel"
+          "grapes",
+          "carrot_bunch",
+          "carrot_bunch"
+        ],
+        [
+          "water",
+          "butter_tub",
+          "dino_toy"
         ]
       ]
     },
@@ -88,9 +112,14 @@
       "c": 2,
       "layers": [
         [
-          "penguin",
-          "bagel",
-          "glass_cleaner"
+          "wheel_of_lime",
+          "taco",
+          "gum_blister"
+        ],
+        [
+          "water",
+          "pie_slice",
+          "gum_blister"
         ]
       ]
     },
@@ -110,9 +139,14 @@
       "c": 1,
       "layers": [
         [
-          "glass_cleaner",
-          "penguin",
-          "glass_cleaner"
+          "carrot_bunch",
+          "grapes",
+          "wheel_of_lime"
+        ],
+        [
+          "taco",
+          "jelly_bag",
+          "salsa_jar"
         ]
       ]
     },
@@ -121,9 +155,14 @@
       "c": 2,
       "layers": [
         [
-          "bagel",
-          "bagel",
-          "bagel"
+          "butter_tub",
+          "jelly_bag",
+          "salsa_jar"
+        ],
+        [
+          "orange_fruit",
+          "gum_blister",
+          "dino_toy"
         ]
       ]
     }

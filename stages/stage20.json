@@ -5,12 +5,20 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "chocolate_tablet",
+    "chick",
+    "coffee_can",
+    "cooking_oil",
+    "croissant",
+    "eclair",
     "egg_carton",
-    "lantern",
-    "lion_toy",
-    "melon_green",
-    "sorbet_cup"
+    "eggplant_long",
+    "hand_soap",
+    "kebab_skewer",
+    "plum",
+    "popsicle_twin",
+    "pretzel_soft",
+    "pumpkin",
+    "yogurt"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -20,14 +28,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 6,
+    "distinct": 14,
     "depthRange": [
       2,
       3
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 2,
-    "totalGoods": 72,
+    "totalGoods": 66,
     "attempt": 0
   },
   "cubbies": [
@@ -36,19 +44,127 @@
       "c": 0,
       "layers": [
         [
-          "sorbet_cup",
-          "egg_carton",
-          "lion_toy"
-        ],
-        [
-          "egg_carton",
-          "egg_carton",
-          "lantern"
+          null,
+          null,
+          null
         ]
       ]
     },
     {
       "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "coffee_can",
+          "yogurt",
+          "popsicle_twin"
+        ],
+        [
+          "hand_soap",
+          "chick",
+          "eggplant_long"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          "hand_soap",
+          "chick",
+          "chick"
+        ],
+        [
+          "eggplant_long",
+          "croissant",
+          "coffee_can"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "lock": 3,
+      "layers": [
+        [
+          "pretzel_soft",
+          "hand_soap",
+          "pumpkin"
+        ],
+        [
+          "coffee_can",
+          "kebab_skewer",
+          "pretzel_soft"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "egg_carton",
+          "chick",
+          "plum"
+        ],
+        [
+          "egg_carton",
+          "hand_soap",
+          "eggplant_long"
+        ],
+        [
+          "hand_soap",
+          "popsicle_twin",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "popsicle_twin",
+          "yogurt",
+          "coffee_can"
+        ],
+        [
+          "eclair",
+          "egg_carton",
+          "chick"
+        ],
+        [
+          "popsicle_twin",
+          "kebab_skewer",
+          "eggplant_long"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "coffee_can",
+          "popsicle_twin",
+          "croissant"
+        ],
+        [
+          "eggplant_long",
+          "croissant",
+          "croissant"
+        ],
+        [
+          "cooking_oil",
+          "eclair",
+          "egg_carton"
+        ]
+      ]
+    },
+    {
+      "r": 2,
       "c": 1,
       "layers": [
         [
@@ -59,179 +175,66 @@
       ]
     },
     {
-      "r": 0,
+      "r": 2,
       "c": 2,
       "layers": [
         [
-          "lion_toy",
-          "lion_toy",
+          "eggplant_long",
+          "egg_carton",
+          "plum"
+        ],
+        [
+          "cooking_oil",
+          "pumpkin",
+          "eclair"
+        ],
+        [
+          "croissant",
+          "chick",
+          "popsicle_twin"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "coffee_can",
+          "plum",
           "egg_carton"
         ],
         [
-          "melon_green",
-          "lantern",
-          "lantern"
+          "pumpkin",
+          "pretzel_soft",
+          "pretzel_soft"
         ]
       ]
     },
     {
-      "r": 1,
-      "c": 0,
-      "lock": 2,
+      "r": 3,
+      "c": 1,
       "layers": [
         [
-          "egg_carton",
-          "sorbet_cup",
-          "chocolate_tablet"
+          "kebab_skewer",
+          "pretzel_soft",
+          "yogurt"
         ],
         [
-          "sorbet_cup",
-          "melon_green",
-          "lantern"
+          "cooking_oil",
+          "pretzel_soft",
+          "hand_soap"
         ]
       ]
     },
     {
-      "r": 1,
-      "c": 1,
+      "r": 3,
+      "c": 2,
       "layers": [
         [
           null,
           null,
           null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "chocolate_tablet",
-          "lion_toy",
-          "sorbet_cup"
-        ],
-        [
-          "egg_carton",
-          "sorbet_cup",
-          "sorbet_cup"
-        ],
-        [
-          "chocolate_tablet",
-          "chocolate_tablet",
-          "egg_carton"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "melon_green",
-          "lion_toy",
-          "lantern"
-        ],
-        [
-          "lion_toy",
-          "lantern",
-          "melon_green"
-        ],
-        [
-          "chocolate_tablet",
-          "lion_toy",
-          "lantern"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "chocolate_tablet",
-          "lantern",
-          "lantern"
-        ],
-        [
-          "egg_carton",
-          "melon_green",
-          "egg_carton"
-        ],
-        [
-          "sorbet_cup",
-          "sorbet_cup",
-          "sorbet_cup"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "lock": 1,
-      "layers": [
-        [
-          "chocolate_tablet",
-          "melon_green",
-          "lantern"
-        ],
-        [
-          "chocolate_tablet",
-          "melon_green",
-          "lion_toy"
-        ],
-        [
-          "egg_carton",
-          "melon_green",
-          "lantern"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "sorbet_cup",
-          "egg_carton",
-          "melon_green"
-        ],
-        [
-          "chocolate_tablet",
-          "chocolate_tablet",
-          "egg_carton"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          "melon_green",
-          "lion_toy",
-          "chocolate_tablet"
-        ],
-        [
-          "lantern",
-          "melon_green",
-          "lion_toy"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
-        [
-          "melon_green",
-          "sorbet_cup",
-          "lion_toy"
-        ],
-        [
-          "sorbet_cup",
-          "chocolate_tablet",
-          "lion_toy"
         ]
       ]
     }

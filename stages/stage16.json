@@ -2,15 +2,22 @@
   "level": 16,
   "timeLimit": 336,
   "cols": 3,
-  "rows": 3,
+  "rows": 4,
   "cellCap": 3,
   "goods": [
-    "banana_bunch",
-    "cracker_long",
-    "eggplant",
-    "hot_sauce",
-    "sub_sandwich",
-    "teapot"
+    "asparagus_bunch",
+    "eclair",
+    "egg_carton",
+    "frozen_tub",
+    "hot_dog",
+    "ladybug_toy",
+    "pitcher_juice",
+    "potato",
+    "rubber_duck",
+    "snack",
+    "snowcone",
+    "soda",
+    "watermelon_slice"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -20,20 +27,79 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 6,
+    "distinct": 13,
     "depthRange": [
       2,
       3
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 1,
-    "totalGoods": 57,
+    "totalGoods": 75,
     "attempt": 0
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
+      "lock": 1,
+      "layers": [
+        [
+          "potato",
+          "ladybug_toy",
+          "snowcone"
+        ],
+        [
+          "frozen_tub",
+          "snack",
+          "frozen_tub"
+        ],
+        [
+          "egg_carton",
+          "snack",
+          "watermelon_slice"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "rubber_duck",
+          "asparagus_bunch",
+          "ladybug_toy"
+        ],
+        [
+          "snowcone",
+          "soda",
+          "eclair"
+        ],
+        [
+          "soda",
+          "snowcone",
+          "snack"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "potato",
+          "eclair",
+          "asparagus_bunch"
+        ],
+        [
+          "ladybug_toy",
+          "watermelon_slice",
+          "hot_dog"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
       "layers": [
         [
           null,
@@ -43,103 +109,44 @@
       ]
     },
     {
-      "r": 0,
-      "c": 1,
-      "layers": [
-        [
-          "banana_bunch",
-          "teapot",
-          "cracker_long"
-        ],
-        [
-          "eggplant",
-          "sub_sandwich",
-          "hot_sauce"
-        ],
-        [
-          "eggplant",
-          "teapot",
-          "sub_sandwich"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "banana_bunch",
-          "eggplant",
-          "teapot"
-        ],
-        [
-          "banana_bunch",
-          "hot_sauce",
-          "eggplant"
-        ],
-        [
-          "eggplant",
-          "cracker_long",
-          "banana_bunch"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "cracker_long",
-          "eggplant",
-          "hot_sauce"
-        ],
-        [
-          "cracker_long",
-          "sub_sandwich",
-          "teapot"
-        ]
-      ]
-    },
-    {
       "r": 1,
       "c": 1,
       "layers": [
         [
-          "teapot",
-          "sub_sandwich",
-          "hot_sauce"
+          "pitcher_juice",
+          "potato",
+          "frozen_tub"
         ],
         [
-          "cracker_long",
-          "eggplant",
-          "teapot"
+          "snowcone",
+          "snack",
+          "ladybug_toy"
         ],
         [
-          "cracker_long",
-          "eggplant",
-          "eggplant"
+          "eclair",
+          "eclair",
+          "egg_carton"
         ]
       ]
     },
     {
       "r": 1,
       "c": 2,
-      "lock": 2,
       "layers": [
         [
-          "banana_bunch",
-          "teapot",
-          "eggplant"
+          "watermelon_slice",
+          "hot_dog",
+          "soda"
         ],
         [
-          "sub_sandwich",
-          "cracker_long",
-          "hot_sauce"
+          "soda",
+          "ladybug_toy",
+          "rubber_duck"
         ],
         [
-          "eggplant",
-          "banana_bunch",
-          "cracker_long"
+          "snowcone",
+          "hot_dog",
+          "frozen_tub"
         ]
       ]
     },
@@ -148,20 +155,41 @@
       "c": 0,
       "layers": [
         [
-          "sub_sandwich",
-          "cracker_long",
-          "banana_bunch"
+          "snack",
+          "asparagus_bunch",
+          "eclair"
         ],
         [
-          "hot_sauce",
-          "sub_sandwich",
-          "eggplant"
+          "egg_carton",
+          "potato",
+          "asparagus_bunch"
         ]
       ]
     },
     {
       "r": 2,
       "c": 1,
+      "layers": [
+        [
+          "soda",
+          "watermelon_slice",
+          "potato"
+        ],
+        [
+          "hot_dog",
+          "snowcone",
+          "frozen_tub"
+        ],
+        [
+          "pitcher_juice",
+          "watermelon_slice",
+          "hot_dog"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
       "layers": [
         [
           null,
@@ -171,23 +199,55 @@
       ]
     },
     {
-      "r": 2,
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "asparagus_bunch",
+          "rubber_duck",
+          "watermelon_slice"
+        ],
+        [
+          "rubber_duck",
+          "snack",
+          "rubber_duck"
+        ],
+        [
+          "asparagus_bunch",
+          "egg_carton",
+          "egg_carton"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "soda",
+          "hot_dog",
+          "frozen_tub"
+        ],
+        [
+          "egg_carton",
+          "eclair",
+          "rubber_duck"
+        ],
+        [
+          "pitcher_juice",
+          "ladybug_toy",
+          "potato"
+        ]
+      ]
+    },
+    {
+      "r": 3,
       "c": 2,
       "layers": [
         [
-          "banana_bunch",
-          "hot_sauce",
-          "sub_sandwich"
-        ],
-        [
-          "teapot",
-          "teapot",
-          "hot_sauce"
-        ],
-        [
-          "banana_bunch",
-          "sub_sandwich",
-          "hot_sauce"
+          null,
+          null,
+          null
         ]
       ]
     }

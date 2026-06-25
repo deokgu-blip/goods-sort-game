@@ -2,15 +2,22 @@
   "level": 17,
   "timeLimit": 336,
   "cols": 3,
-  "rows": 3,
+  "rows": 4,
   "cellCap": 3,
   "goods": [
-    "croissant",
-    "dino_toy",
-    "frozen_tub",
-    "grapes",
-    "teapot",
-    "waffle"
+    "air_freshener",
+    "cat_toy",
+    "cheese_wedge",
+    "chip_tube",
+    "chocolate_tablet",
+    "cracker_long",
+    "donut_box",
+    "dragon_fruit",
+    "eggplant_long",
+    "icecream_cone",
+    "lotion_pump",
+    "lychee",
+    "tomato"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -20,15 +27,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 6,
+    "distinct": 13,
     "depthRange": [
       2,
       3
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 1,
-    "totalGoods": 54,
-    "attempt": 0
+    "totalGoods": 69,
+    "attempt": 3
   },
   "cubbies": [
     {
@@ -36,126 +43,24 @@
       "c": 0,
       "layers": [
         [
-          "frozen_tub",
-          "waffle",
-          "dino_toy"
+          "chocolate_tablet",
+          "air_freshener",
+          "chip_tube"
         ],
         [
-          "frozen_tub",
-          "dino_toy",
-          "teapot"
+          "chip_tube",
+          "cheese_wedge",
+          "donut_box"
+        ],
+        [
+          "cat_toy",
+          "air_freshener",
+          "air_freshener"
         ]
       ]
     },
     {
       "r": 0,
-      "c": 1,
-      "layers": [
-        [
-          "grapes",
-          "croissant",
-          "croissant"
-        ],
-        [
-          "grapes",
-          "frozen_tub",
-          "croissant"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "teapot",
-          "grapes",
-          "croissant"
-        ],
-        [
-          "waffle",
-          "frozen_tub",
-          "croissant"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "grapes",
-          "dino_toy",
-          "croissant"
-        ],
-        [
-          "grapes",
-          "dino_toy",
-          "waffle"
-        ],
-        [
-          "waffle",
-          "dino_toy",
-          "waffle"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "grapes",
-          "grapes",
-          "croissant"
-        ],
-        [
-          "frozen_tub",
-          "grapes",
-          "dino_toy"
-        ],
-        [
-          "waffle",
-          "teapot",
-          "teapot"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "lock": 2,
-      "layers": [
-        [
-          "waffle",
-          "frozen_tub",
-          "teapot"
-        ],
-        [
-          "dino_toy",
-          "dino_toy",
-          "waffle"
-        ],
-        [
-          "croissant",
-          "frozen_tub",
-          "croissant"
-        ]
-      ]
-    },
-    {
-      "r": 2,
       "c": 1,
       "layers": [
         [
@@ -166,23 +71,173 @@
       ]
     },
     {
-      "r": 2,
+      "r": 0,
       "c": 2,
       "layers": [
         [
-          "grapes",
-          "waffle",
-          "teapot"
+          "cheese_wedge",
+          "cracker_long",
+          "donut_box"
         ],
         [
-          "frozen_tub",
-          "frozen_tub",
-          "teapot"
+          "eggplant_long",
+          "chocolate_tablet",
+          "lychee"
         ],
         [
-          "dino_toy",
-          "teapot",
-          "teapot"
+          "cracker_long",
+          "lotion_pump",
+          "tomato"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "lotion_pump",
+          "icecream_cone",
+          "chip_tube"
+        ],
+        [
+          "dragon_fruit",
+          "donut_box",
+          "lychee"
+        ],
+        [
+          "icecream_cone",
+          "eggplant_long",
+          "icecream_cone"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "eggplant_long",
+          "cheese_wedge",
+          "dragon_fruit"
+        ],
+        [
+          "cat_toy",
+          "cat_toy",
+          "cat_toy"
+        ],
+        [
+          "icecream_cone",
+          "donut_box",
+          "donut_box"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "chocolate_tablet",
+          "tomato",
+          "lychee"
+        ],
+        [
+          "chocolate_tablet",
+          "cheese_wedge",
+          "air_freshener"
+        ],
+        [
+          "chip_tube",
+          "lychee",
+          "eggplant_long"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "cracker_long",
+          "chip_tube",
+          "lotion_pump"
+        ],
+        [
+          "cat_toy",
+          "cheese_wedge",
+          "eggplant_long"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "lychee",
+          "dragon_fruit",
+          "cat_toy"
+        ],
+        [
+          "air_freshener",
+          "lotion_pump",
+          "chip_tube"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "chocolate_tablet",
+          "tomato",
+          "icecream_cone"
+        ],
+        [
+          "eggplant_long",
+          "lychee",
+          "lotion_pump"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "lotion_pump",
+          "air_freshener",
+          "cheese_wedge"
+        ],
+        [
+          "donut_box",
+          "chocolate_tablet",
+          "icecream_cone"
         ]
       ]
     }

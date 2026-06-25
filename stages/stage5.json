@@ -2,13 +2,21 @@
   "level": 5,
   "timeLimit": 360,
   "cols": 3,
-  "rows": 3,
+  "rows": 4,
   "cellCap": 3,
   "goods": [
-    "burrito",
-    "elephant_toy",
+    "bagel",
+    "beet",
+    "blueberry_box",
     "gelato_cup",
-    "icebar_choco"
+    "gum_pack",
+    "hot_dog",
+    "icebar_choco",
+    "juice_6pack",
+    "potato",
+    "pudding_cup_squat",
+    "swiss_roll",
+    "yogurt"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -18,14 +26,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 4,
+    "distinct": 12,
     "depthRange": [
-      1,
+      2,
       2
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 0,
-    "totalGoods": 30,
+    "totalGoods": 54,
     "attempt": 0
   },
   "cubbies": [
@@ -34,15 +42,132 @@
       "c": 0,
       "layers": [
         [
-          "gelato_cup",
-          "icebar_choco",
-          "icebar_choco"
+          "yogurt",
+          "potato",
+          "bagel"
+        ],
+        [
+          "juice_6pack",
+          "swiss_roll",
+          "potato"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "layers": [
+        [
+          "hot_dog",
+          "bagel",
+          "yogurt"
+        ],
+        [
+          "blueberry_box",
+          "beet",
+          "potato"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "icebar_choco",
+          "potato",
+          "blueberry_box"
+        ],
+        [
+          "juice_6pack",
+          "hot_dog",
+          "potato"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "pudding_cup_squat",
+          "hot_dog",
+          "bagel"
+        ],
+        [
+          "beet",
+          "gelato_cup",
+          "yogurt"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "juice_6pack",
+          "swiss_roll",
+          "juice_6pack"
+        ],
+        [
+          "gum_pack",
+          "gelato_cup",
+          "beet"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "hot_dog",
+          "swiss_roll",
+          "gelato_cup"
+        ],
+        [
+          "yogurt",
+          "yogurt",
+          "pudding_cup_squat"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "hot_dog",
+          "gelato_cup",
+          "gelato_cup"
+        ],
+        [
+          "gelato_cup",
+          "yogurt",
+          "pudding_cup_squat"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "hot_dog",
+          "blueberry_box",
+          "icebar_choco"
+        ],
+        [
+          "gum_pack",
+          "juice_6pack",
+          "beet"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
       "layers": [
         [
           null,
@@ -52,23 +177,7 @@
       ]
     },
     {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "burrito",
-          "gelato_cup",
-          "gelato_cup"
-        ],
-        [
-          "elephant_toy",
-          "elephant_toy",
-          "elephant_toy"
-        ]
-      ]
-    },
-    {
-      "r": 1,
+      "r": 3,
       "c": 0,
       "layers": [
         [
@@ -79,67 +188,29 @@
       ]
     },
     {
-      "r": 1,
+      "r": 3,
       "c": 1,
       "layers": [
         [
-          "icebar_choco",
-          "burrito",
-          "burrito"
-        ],
-        [
-          "icebar_choco",
-          "burrito",
+          "beet",
+          "gum_pack",
           "icebar_choco"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "elephant_toy",
-          "elephant_toy",
-          "burrito"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "gelato_cup",
-          "burrito",
-          "burrito"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "elephant_toy",
-          "elephant_toy",
-          "gelato_cup"
         ],
         [
-          "gelato_cup",
-          "elephant_toy",
-          "elephant_toy"
+          "potato",
+          "beet",
+          "juice_6pack"
         ]
       ]
     },
     {
-      "r": 2,
+      "r": 3,
       "c": 2,
       "layers": [
         [
-          "burrito",
-          "icebar_choco",
-          "burrito"
+          null,
+          null,
+          null
         ]
       ]
     }

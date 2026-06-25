@@ -2,14 +2,22 @@
   "level": 12,
   "timeLimit": 339,
   "cols": 3,
-  "rows": 3,
+  "rows": 4,
   "cellCap": 3,
   "goods": [
-    "butter",
-    "cracker_long",
-    "lemon_soda",
-    "muffin_tray",
-    "mug"
+    "broccoli",
+    "burrito",
+    "cactus",
+    "candy_bag",
+    "cantaloupe",
+    "carrot_bunch",
+    "chocolate_log",
+    "cookie_disc",
+    "hot_sauce",
+    "pie_slice",
+    "salt_grinder",
+    "snowcone",
+    "turtle_toy"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -19,15 +27,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 5,
+    "distinct": 13,
     "depthRange": [
       2,
       3
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 1,
-    "totalGoods": 48,
-    "attempt": 0
+    "totalGoods": 66,
+    "attempt": 2
   },
   "cubbies": [
     {
@@ -35,36 +43,25 @@
       "c": 0,
       "layers": [
         [
-          "lemon_soda",
-          "muffin_tray",
-          "cracker_long"
+          "pie_slice",
+          "pie_slice",
+          "cookie_disc"
         ],
         [
-          "lemon_soda",
-          "lemon_soda",
-          "butter"
+          "burrito",
+          "pie_slice",
+          "turtle_toy"
+        ],
+        [
+          "carrot_bunch",
+          "cactus",
+          "chocolate_log"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
-      "layers": [
-        [
-          "mug",
-          "lemon_soda",
-          "butter"
-        ],
-        [
-          "muffin_tray",
-          "muffin_tray",
-          "lemon_soda"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
       "layers": [
         [
           null,
@@ -74,18 +71,35 @@
       ]
     },
     {
-      "r": 1,
-      "c": 0,
+      "r": 0,
+      "c": 2,
       "layers": [
         [
-          "mug",
-          "lemon_soda",
-          "cracker_long"
+          "carrot_bunch",
+          "turtle_toy",
+          "chocolate_log"
         ],
         [
-          "muffin_tray",
-          "cracker_long",
-          "muffin_tray"
+          "hot_sauce",
+          "turtle_toy",
+          "hot_sauce"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "burrito",
+          "snowcone",
+          "cantaloupe"
+        ],
+        [
+          "hot_sauce",
+          "cactus",
+          "chocolate_log"
         ]
       ]
     },
@@ -94,19 +108,14 @@
       "c": 1,
       "layers": [
         [
-          "cracker_long",
-          "butter",
-          "butter"
+          "broccoli",
+          "pie_slice",
+          "cookie_disc"
         ],
         [
-          "butter",
-          "muffin_tray",
-          "cracker_long"
-        ],
-        [
-          "lemon_soda",
-          "lemon_soda",
-          "cracker_long"
+          "hot_sauce",
+          "cantaloupe",
+          "candy_bag"
         ]
       ]
     },
@@ -115,36 +124,30 @@
       "c": 2,
       "layers": [
         [
-          "cracker_long",
-          "muffin_tray",
-          "butter"
+          "cactus",
+          "carrot_bunch",
+          "salt_grinder"
         ],
         [
-          "cracker_long",
-          "lemon_soda",
-          "mug"
+          "cantaloupe",
+          "turtle_toy",
+          "chocolate_log"
+        ],
+        [
+          "carrot_bunch",
+          "pie_slice",
+          "broccoli"
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
-      "lock": 2,
       "layers": [
         [
-          "butter",
-          "muffin_tray",
-          "mug"
-        ],
-        [
-          "mug",
-          "butter",
-          "butter"
-        ],
-        [
-          "mug",
-          "cracker_long",
-          "butter"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -153,19 +156,77 @@
       "c": 1,
       "layers": [
         [
-          "mug",
-          "butter",
-          "butter"
+          "cookie_disc",
+          "hot_sauce",
+          "turtle_toy"
         ],
         [
-          "muffin_tray",
-          "mug",
-          "mug"
+          "pie_slice",
+          "burrito",
+          "snowcone"
+        ],
+        [
+          "cantaloupe",
+          "broccoli",
+          "broccoli"
         ]
       ]
     },
     {
       "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "hot_sauce",
+          "chocolate_log",
+          "cactus"
+        ],
+        [
+          "broccoli",
+          "carrot_bunch",
+          "carrot_bunch"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "salt_grinder",
+          "broccoli",
+          "cactus"
+        ],
+        [
+          "candy_bag",
+          "candy_bag",
+          "cactus"
+        ],
+        [
+          "chocolate_log",
+          "candy_bag",
+          "candy_bag"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "salt_grinder",
+          "turtle_toy",
+          "snowcone"
+        ],
+        [
+          "cantaloupe",
+          "candy_bag",
+          "cantaloupe"
+        ]
+      ]
+    },
+    {
+      "r": 3,
       "c": 2,
       "layers": [
         [

@@ -2,13 +2,22 @@
   "level": 7,
   "timeLimit": 360,
   "cols": 3,
-  "rows": 3,
+  "rows": 4,
   "cellCap": 3,
   "goods": [
-    "cake_slice",
-    "candy_bag",
-    "gravy_boat",
-    "teddy_bear"
+    "asparagus_bunch",
+    "baguette",
+    "bubble_tea",
+    "candle_tin",
+    "cookie_tin_round",
+    "corn",
+    "icebar_orange",
+    "juice_box",
+    "oil_can",
+    "penguin",
+    "pudding_cup_squat",
+    "soda",
+    "sub_sandwich"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -18,14 +27,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 4,
+    "distinct": 13,
     "depthRange": [
-      1,
+      2,
       2
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 0,
-    "totalGoods": 30,
+    "totalGoods": 54,
     "attempt": 0
   },
   "cubbies": [
@@ -34,17 +43,6 @@
       "c": 0,
       "layers": [
         [
-          "cake_slice",
-          "teddy_bear",
-          "teddy_bear"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 1,
-      "layers": [
-        [
           null,
           null,
           null
@@ -53,49 +51,22 @@
     },
     {
       "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "gravy_boat",
-          "gravy_boat",
-          "cake_slice"
-        ],
-        [
-          "gravy_boat",
-          "candy_bag",
-          "gravy_boat"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "gravy_boat",
-          "teddy_bear",
-          "cake_slice"
-        ]
-      ]
-    },
-    {
-      "r": 1,
       "c": 1,
       "layers": [
         [
-          "teddy_bear",
-          "candy_bag",
-          "cake_slice"
+          "penguin",
+          "sub_sandwich",
+          "oil_can"
         ],
         [
-          "gravy_boat",
-          "candy_bag",
-          "candy_bag"
+          "juice_box",
+          "cookie_tin_round",
+          "juice_box"
         ]
       ]
     },
     {
-      "r": 1,
+      "r": 0,
       "c": 2,
       "layers": [
         [
@@ -106,13 +77,66 @@
       ]
     },
     {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "sub_sandwich",
+          "soda",
+          "bubble_tea"
+        ],
+        [
+          "candle_tin",
+          "juice_box",
+          "icebar_orange"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "baguette",
+          "oil_can",
+          "candle_tin"
+        ],
+        [
+          "corn",
+          "pudding_cup_squat",
+          "bubble_tea"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "bubble_tea",
+          "sub_sandwich",
+          "pudding_cup_squat"
+        ],
+        [
+          "juice_box",
+          "asparagus_bunch",
+          "icebar_orange"
+        ]
+      ]
+    },
+    {
       "r": 2,
       "c": 0,
       "layers": [
         [
-          "candy_bag",
-          "gravy_boat",
-          "teddy_bear"
+          "cookie_tin_round",
+          "cookie_tin_round",
+          "asparagus_bunch"
+        ],
+        [
+          "soda",
+          "penguin",
+          "juice_box"
         ]
       ]
     },
@@ -121,14 +145,14 @@
       "c": 1,
       "layers": [
         [
-          "gravy_boat",
-          "cake_slice",
-          "teddy_bear"
+          "corn",
+          "cookie_tin_round",
+          "asparagus_bunch"
         ],
         [
-          "teddy_bear",
-          "candy_bag",
-          "teddy_bear"
+          "cookie_tin_round",
+          "candle_tin",
+          "baguette"
         ]
       ]
     },
@@ -137,9 +161,57 @@
       "c": 2,
       "layers": [
         [
-          "teddy_bear",
-          "cake_slice",
-          "gravy_boat"
+          "corn",
+          "cookie_tin_round",
+          "juice_box"
+        ],
+        [
+          "sub_sandwich",
+          "penguin",
+          "icebar_orange"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "corn",
+          "corn",
+          "baguette"
+        ],
+        [
+          "corn",
+          "penguin",
+          "oil_can"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "pudding_cup_squat",
+          "sub_sandwich",
+          "sub_sandwich"
+        ],
+        [
+          "soda",
+          "penguin",
+          "penguin"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
         ]
       ]
     }

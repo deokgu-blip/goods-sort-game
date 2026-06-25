@@ -2,14 +2,22 @@
   "level": 13,
   "timeLimit": 339,
   "cols": 3,
-  "rows": 3,
+  "rows": 4,
   "cellCap": 3,
   "goods": [
-    "chocolate_bar",
-    "donut",
-    "eggplant",
-    "fish_whole",
-    "yogurt_4pack"
+    "caviar_tin",
+    "chick",
+    "coffee_can",
+    "cooking_oil",
+    "corn_dog",
+    "cupcake_tray",
+    "frog_plush",
+    "gift_box",
+    "ice_cream_tub_choco",
+    "milkshake",
+    "peach",
+    "pie_slice",
+    "pitcher_juice"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -19,15 +27,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 5,
+    "distinct": 13,
     "depthRange": [
-      3,
+      2,
       3
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 1,
-    "totalGoods": 63,
-    "attempt": 0
+    "totalGoods": 75,
+    "attempt": 1
   },
   "cubbies": [
     {
@@ -35,9 +43,19 @@
       "c": 0,
       "layers": [
         [
-          null,
-          null,
-          null
+          "gift_box",
+          "chick",
+          "peach"
+        ],
+        [
+          "gift_box",
+          "caviar_tin",
+          "coffee_can"
+        ],
+        [
+          "corn_dog",
+          "frog_plush",
+          "gift_box"
         ]
       ]
     },
@@ -46,19 +64,19 @@
       "c": 1,
       "layers": [
         [
-          "yogurt_4pack",
-          "yogurt_4pack",
-          "eggplant"
+          "peach",
+          "pie_slice",
+          "cooking_oil"
         ],
         [
-          "yogurt_4pack",
-          "yogurt_4pack",
-          "chocolate_bar"
+          "pitcher_juice",
+          "caviar_tin",
+          "chick"
         ],
         [
-          "chocolate_bar",
-          "fish_whole",
-          "donut"
+          "cooking_oil",
+          "ice_cream_tub_choco",
+          "pie_slice"
         ]
       ]
     },
@@ -67,19 +85,14 @@
       "c": 2,
       "layers": [
         [
-          "donut",
-          "yogurt_4pack",
-          "donut"
+          "cupcake_tray",
+          "peach",
+          "milkshake"
         ],
         [
-          "fish_whole",
-          "chocolate_bar",
-          "chocolate_bar"
-        ],
-        [
-          "fish_whole",
-          "donut",
-          "eggplant"
+          "corn_dog",
+          "caviar_tin",
+          "caviar_tin"
         ]
       ]
     },
@@ -88,19 +101,19 @@
       "c": 0,
       "layers": [
         [
-          "eggplant",
-          "chocolate_bar",
-          "yogurt_4pack"
+          "pitcher_juice",
+          "pitcher_juice",
+          "ice_cream_tub_choco"
         ],
         [
-          "donut",
-          "donut",
-          "eggplant"
+          "chick",
+          "cooking_oil",
+          "cupcake_tray"
         ],
         [
-          "fish_whole",
-          "fish_whole",
-          "chocolate_bar"
+          "corn_dog",
+          "ice_cream_tub_choco",
+          "gift_box"
         ]
       ]
     },
@@ -109,9 +122,19 @@
       "c": 1,
       "layers": [
         [
-          null,
-          null,
-          null
+          "chick",
+          "gift_box",
+          "frog_plush"
+        ],
+        [
+          "chick",
+          "peach",
+          "ice_cream_tub_choco"
+        ],
+        [
+          "cupcake_tray",
+          "ice_cream_tub_choco",
+          "cupcake_tray"
         ]
       ]
     },
@@ -120,83 +143,111 @@
       "c": 2,
       "layers": [
         [
-          "eggplant",
-          "donut",
-          "chocolate_bar"
+          "pie_slice",
+          "chick",
+          "caviar_tin"
         ],
         [
-          "donut",
-          "chocolate_bar",
-          "fish_whole"
+          "pie_slice",
+          "ice_cream_tub_choco",
+          "cupcake_tray"
         ],
         [
-          "donut",
-          "fish_whole",
-          "eggplant"
+          "frog_plush",
+          "coffee_can",
+          "cooking_oil"
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "corn_dog",
+          "gift_box",
+          "milkshake"
+        ],
+        [
+          "caviar_tin",
+          "milkshake",
+          "pie_slice"
+        ],
+        [
+          "milkshake",
+          "milkshake",
+          "cooking_oil"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "frog_plush",
+          "frog_plush",
+          "cooking_oil"
+        ],
+        [
+          "pitcher_juice",
+          "milkshake",
+          "peach"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
       "lock": 2,
       "layers": [
         [
-          "yogurt_4pack",
-          "fish_whole",
-          "eggplant"
+          "corn_dog",
+          "pitcher_juice",
+          "cupcake_tray"
         ],
         [
-          "eggplant",
-          "yogurt_4pack",
-          "donut"
+          "pie_slice",
+          "frog_plush",
+          "corn_dog"
         ],
         [
-          "eggplant",
-          "donut",
-          "yogurt_4pack"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "fish_whole",
-          "eggplant",
-          "chocolate_bar"
-        ],
-        [
-          "eggplant",
-          "yogurt_4pack",
-          "chocolate_bar"
-        ],
-        [
-          "chocolate_bar",
-          "chocolate_bar",
-          "yogurt_4pack"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "donut",
-          "eggplant",
-          "chocolate_bar"
-        ],
-        [
-          "chocolate_bar",
-          "chocolate_bar",
-          "fish_whole"
-        ],
-        [
-          "fish_whole",
-          "yogurt_4pack",
-          "fish_whole"
+          "coffee_can",
+          "peach",
+          "pitcher_juice"
         ]
       ]
     }

@@ -720,7 +720,7 @@ function rgbDist(p, c){
   // MAX COMBO readout (panel_result.png card + "xN" from S.maxCombo + a NEXT button).
   await page.evaluate(() => new Promise(res => setTimeout(res, 1600)));   // let fireworks + result card appear
   const clearScreen = await page.evaluate(() => {
-    const fwNow = document.querySelectorAll('#fireworks .fw, #fireworks .confetti').length;
+    const fwNow = document.querySelectorAll('#fireworks .fw, #fireworks .confetti, #fireworks .confetti-p').length;
     const rc = window.__qa.resultCard();
     return { fwNow, rc, maxCombo: window.__qa.maxComboVal() };
   });

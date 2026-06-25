@@ -403,8 +403,16 @@
       /* SAFARI-SAFE FLOOR — the niche's 3D floor face (blend-mode + rotateX fold) can fail to
          composite on iOS Safari, leaving the shelf bottom cream (user: "모바일에서 선반 바닥 안보여").
          So paint a WOOD shelf-FLOOR band onto the BACK WALL bottom (which ALWAYS renders): the
-         niche bottom reads as a wood floor surface on every browser. Recolors with gridColor. */
-      linear-gradient(to top, var(--grid-color,#caa06a) 0%, var(--grid-color,#caa06a) 23%, rgba(0,0,0,0) 40%),
+         niche bottom reads as a wood floor surface on every browser. Recolors with gridColor.
+         A THIN, DEFINED strip with a crisp top edge (a short fade) — NOT a tall soft glow that
+         bleeds up the wall (user: "그리드 뒤에 번지는 영역이있어"). A faint seam shadow sits just
+         above it so the floor reads as a plane meeting the back wall. */
+      linear-gradient(to top,
+        rgba(54,33,12,.16) 13%, rgba(54,33,12,0) 17%),
+      linear-gradient(to top,
+        var(--grid-color,#caa06a) 0%,
+        var(--grid-color,#caa06a) 11%,
+        rgba(0,0,0,0) 14.5%),
       /* V19 — SHALLOW TOP inner-shadow: a faint dark band hugging the TOP edge (ceiling
          drop-shadow into the recess). SHALLOW = confined to ~top 22% then fades; opacity
          from --cubby-top-shade-op (a small fraction of shadowStrength). Sits FIRST so it
@@ -2442,26 +2450,48 @@
       })(i);
     }
   }
-  // CONFETTI burst (fx_confetti.png) on clear — a few sprites that fan out + fall
-  function confettiBurst(x, y){
-    for (var i=0;i<5;i++){
-      (function(i){
-        var c = document.createElement('div'); c.className='confetti';
-        c.style.left=x+'px'; c.style.top=y+'px';
-        c.style.transform='translate(-50%,-50%) scale(.6)';
-        fxEl.appendChild(c);
-        var ang = -Math.PI/2 + (i-2)*0.5 + (Math.random()-0.5)*0.3;
-        var dist = 60 + Math.random()*50;
-        var dx = Math.cos(ang)*dist, dy = Math.sin(ang)*dist;
-        requestAnimationFrame(function(){
-          c.style.transition='transform .7s cubic-bezier(.3,.7,.5,1), opacity .7s ease-out';
-          c.style.transform='translate(calc(-50% + '+dx+'px), calc(-50% + '+(dy+70)+'px)) scale(1) rotate('+((Math.random()*180)|0)+'deg)';
-          c.style.opacity='0';
-        });
-        setTimeout(function(){ c.remove(); }, 720);
-      })(i);
+  // =============================================================
+  // PARTICLE CONFETTI — procedural colored pieces (NO image sprite). Each piece bursts out,
+  // then falls with gravity + spin + side-to-side flutter, fading near the end. One shared
+  // rAF loop drives every live piece (cheap on mobile). (user: "컴패티를 이미지로 그리지말고 파티클로")
+  // =============================================================
+  var CONFETTI_COLORS = ['#ff5d73','#ffd23f','#3fd0ff','#7af06e','#c77dff','#ff9f43','#ff6fb5','#ffffff'];
+  var _conf = [], _confRAF = 0;
+  function _confTick(){
+    for (var i=_conf.length-1;i>=0;i--){
+      var p=_conf[i]; p.life++;
+      p.vy += p.grav;
+      p.px += p.vx + Math.sin(p.sway + p.life*0.12)*p.swayAmp;
+      p.py += p.vy; p.rot += p.vr;
+      // flutter: squash the width as it spins (a tumbling paper read)
+      var sx = 0.55 + 0.45*Math.abs(Math.cos((p.rot)*Math.PI/180));
+      p.el.style.transform = 'translate('+p.px.toFixed(1)+'px,'+p.py.toFixed(1)+'px) rotate('+p.rot.toFixed(0)+'deg) scaleX('+sx.toFixed(2)+')';
+      if (p.life > p.fade) p.el.style.opacity = String(Math.max(0, 1-(p.life-p.fade)/(p.max-p.fade)));
+      if (p.life >= p.max){ p.el.remove(); _conf.splice(i,1); }
     }
+    _confRAF = _conf.length ? requestAnimationFrame(_confTick) : 0;
   }
+  // spawn `n` confetti pieces at (x,y). up=true → burst upward/outward (firework-style);
+  // up=false → drift mostly downward (top-of-screen rain). layer defaults to the fireworks layer.
+  function spawnConfetti(x, y, n, up, spd, layer){
+    layer = layer || fwEl || fxEl; if (!layer) return;
+    for (var i=0;i<n;i++){
+      var el=document.createElement('div'); el.className='confetti-p';
+      var w=6+Math.random()*6, h=9+Math.random()*8;
+      el.style.cssText='position:fixed;z-index:96;pointer-events:none;width:'+w.toFixed(0)+'px;height:'+h.toFixed(0)+'px;left:'+x+'px;top:'+y+'px;border-radius:'+(Math.random()<0.3?'50%':'1px')+';background:'+CONFETTI_COLORS[(Math.random()*CONFETTI_COLORS.length)|0]+';will-change:transform,opacity';
+      layer.appendChild(el);
+      var ang = up ? (-Math.PI/2 + (Math.random()-0.5)*Math.PI*0.95) : (Math.PI/2 + (Math.random()-0.5)*0.7);
+      var s = (spd||3) * (0.6 + Math.random()*0.9);
+      _conf.push({ el:el, px:0, py:0,
+        vx:Math.cos(ang)*s, vy:Math.sin(ang)*s - (up ? (2.6+Math.random()*2.2) : 0),
+        rot:Math.random()*360, vr:(Math.random()-0.5)*20, grav:0.11+Math.random()*0.06,
+        sway:Math.random()*6.28, swayAmp:0.5+Math.random()*1.0,
+        life:0, fade:(48+Math.random()*30)|0, max:(78+Math.random()*48)|0 });
+    }
+    if (!_confRAF) _confRAF = requestAnimationFrame(_confTick);
+  }
+  // back-compat: clear-spot confetti now = a small upward particle burst.
+  function confettiBurst(x, y){ spawnConfetti(x, y, 7, true, 3.2, fxEl); }
 
   // =============================================================
   // ALL-SIDES FIREWORKS (clear celebration) — Phase 2b
@@ -2495,6 +2525,7 @@
   function launchFireworks(){
     if (!fwEl) return 1700;
     var W = window.innerWidth, H = window.innerHeight;
+    confettiRain(6);                                   // particle confetti shower from the top
     // edge + corner anchor points (x,y in viewport px) — all 4 sides + 4 corners.
     var anchors = [
       [W*0.10, H*0.16],[W*0.50, H*0.10],[W*0.90, H*0.16],   // top: L / C / R
@@ -2521,25 +2552,19 @@
     });
     return t + 600;  // total show duration
   }
-  // a confetti puff for the fireworks layer (separate z-index than the clear bursts)
-  function confettiBurstFW(x, y){
-    for (var i=0;i<3;i++){
-      (function(i){
-        var c = document.createElement('div'); c.className='confetti';
-        c.style.zIndex = '96';
-        c.style.left=x+'px'; c.style.top=y+'px';
-        c.style.transform='translate(-50%,-50%) scale(.6)';
-        fwEl.appendChild(c);
-        var ang = Math.random()*Math.PI*2;
-        var dist = 50 + Math.random()*60;
-        var dx = Math.cos(ang)*dist, dy = Math.sin(ang)*dist;
-        requestAnimationFrame(function(){
-          c.style.transition='transform .9s cubic-bezier(.3,.7,.5,1), opacity .9s ease-out';
-          c.style.transform='translate(calc(-50% + '+dx+'px), calc(-50% + '+(dy+50)+'px)) scale(1) rotate('+((Math.random()*220)|0)+'deg)';
-          c.style.opacity='0';
-        });
-        setTimeout(function(){ c.remove(); }, 920);
-      })(i);
+  // fireworks-layer confetti = a particle burst at the firework anchor.
+  function confettiBurstFW(x, y){ spawnConfetti(x, y, 8, true, 4.2); }
+  // TOP-OF-SCREEN confetti rain — pieces drift down across the width, staggered, for a
+  // sustained celebratory shower on the clear/result screen.
+  function confettiRain(waves){
+    var W = window.innerWidth;
+    waves = waves || 5;
+    for (var w=0; w<waves; w++){
+      (function(w){
+        setTimeout(function(){
+          for (var k=0;k<11;k++){ spawnConfetti(Math.random()*W, -12 - Math.random()*30, 1, false, 1.6); }
+        }, w*260);
+      })(w);
     }
   }
 
@@ -4149,7 +4174,7 @@
       var v = document.querySelector('#popupBox #maxComboVal');
       var nb = document.querySelector('#popupBox #nextBtn');
       var pr = document.querySelector('#popupBox .cb-praise');
-      var fw = document.querySelectorAll('#fireworks .fw, #fireworks .confetti').length;
+      var fw = document.querySelectorAll('#fireworks .fw, #fireworks .confetti, #fireworks .confetti-p').length;
       return { shown:!!c, on: overlay.classList.contains('on'), dim: overlay.classList.contains('clear'),
                maxComboText: v ? v.textContent.trim() : null,
                hasNext: !!nb, fireworksDom: fw,

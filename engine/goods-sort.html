@@ -139,6 +139,14 @@
   body.tut-clean #shelf .frame-top-persp{ display:none !important; }
   body.tut-clean #shelf .grid{ background:none !important; filter:none !important;
     box-shadow:none !important; border-radius:0 !important; }
+  /* TUTORIAL: each filled cubby gets its OWN wood FRAME (a grid-color ring + 3D edge + drop shadow)
+     so it reads as a framed bookshelf niche floating on the background (user: "프레임이 없는데?"). */
+  body.tut-clean .cubby:not(.tut-empty){ border-radius:6px;
+    box-shadow:
+      0 0 0 8px var(--grid-color,#caa06a),
+      0 0 0 9px rgba(255,255,255,.18),
+      0 0 0 12px rgba(40,24,8,.30),
+      0 10px 16px rgba(60,38,16,.42); }
 
   /* ---------------- HUD (reference: a WOOD FRAME bar wrapping the row) ----------------
      [ Lv ]   ·   [ TIMER ]   ·   [ ⏸ ]   +  COMBO gauge overlapping the frame's bottom.
@@ -2356,7 +2364,20 @@
   // COMBO flame — a small 🔥 pops at the clear spot and flies INTO the top flame pill (#comboCount).
   function flyFlameToCombo(x, y){
     var dest = comboCountEl || comboEl;
-    var t = dest.getBoundingClientRect();
+    var t = dest ? dest.getBoundingClientRect() : null;
+    // TUTORIAL / hidden HUD: the combo pill is display:none -> rect is all-zero. Don't fly the flame
+    // to the top-left corner (0,0); just pop it at the clear spot and let it fade in place.
+    if (!t || (t.width === 0 && t.height === 0)){
+      var flp = document.createElement('div'); flp.className='fly-flame'; flp.textContent='🔥';
+      flp.style.left=x+'px'; flp.style.top=y+'px'; flp.style.transform='translate(-50%,-50%) scale(0)';
+      document.body.appendChild(flp);
+      requestAnimationFrame(function(){
+        flp.style.transition='transform .22s cubic-bezier(.34,1.75,.5,1), opacity .5s ease .25s';
+        flp.style.transform='translate(-50%,-60%) scale(1.05)'; flp.style.opacity='0';
+      });
+      setTimeout(function(){ flp.remove(); }, 820);
+      return;
+    }
     var tx = t.left + t.width*0.5, ty = t.top + t.height/2;
     var fl = document.createElement('div'); fl.className='fly-flame'; fl.textContent='🔥';
     fl.style.left = x+'px'; fl.style.top = y+'px';
@@ -2557,12 +2578,8 @@
       for (var w = 0; w < 2; w++){
         (function(ax, ay, delay){
           setTimeout(function(){
-            if (Math.random() < 0.6) fireworkRise(ax, ay + 30);
-            var sprite = FW_BURSTS[(Math.random()*FW_BURSTS.length)|0];
-            var size = 120 + Math.random()*120;
-            setTimeout(function(){ fireworkBurst(ax, ay, size, sprite); }, 180);
-            // a small confetti puff riding the same burst
-            confettiBurstFW(ax, ay);
+            // PARTICLE confetti burst (no image firework sprites — user wants confetti, not fireworks)
+            spawnConfetti(ax, ay, 16, true, 5.2);
           }, delay);
         })(a[0] + (Math.random()-0.5)*40, a[1] + (Math.random()-0.5)*40, t);
         t += 70; count++;
@@ -2732,8 +2749,10 @@
     return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
   }
   function tick(now){
-    if (!S.running){ S.lastTick = now; return; }
-    if (!S.paused && !S.over){
+    // The loop must ALWAYS reschedule — it has to survive win/lose (S.running=false) so the NEXT
+    // level's timer ticks again. (Bug: returning here without rescheduling froze the timer on every
+    // level after the first clear.) Only DECREMENT while actually running + not paused/over/frozen.
+    if (S.running && !S.paused && !S.over){
       var dt = (now - S.lastTick)/1000;
       S.lastTick = now;
       if (now >= freezeUntil) S.timeLeft -= dt;        // TIME FREEZE: skip decrement while frozen

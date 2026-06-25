@@ -400,6 +400,11 @@
      (the gradients sit ON TOP of the cream base color but the back is mostly cream). */
   .cubby .c-back{ background-color: var(--wallpaper);
     background-image:
+      /* SAFARI-SAFE FLOOR — the niche's 3D floor face (blend-mode + rotateX fold) can fail to
+         composite on iOS Safari, leaving the shelf bottom cream (user: "모바일에서 선반 바닥 안보여").
+         So paint a WOOD shelf-FLOOR band onto the BACK WALL bottom (which ALWAYS renders): the
+         niche bottom reads as a wood floor surface on every browser. Recolors with gridColor. */
+      linear-gradient(to top, var(--grid-color,#caa06a) 0%, var(--grid-color,#caa06a) 23%, rgba(0,0,0,0) 40%),
       /* V19 — SHALLOW TOP inner-shadow: a faint dark band hugging the TOP edge (ceiling
          drop-shadow into the recess). SHALLOW = confined to ~top 22% then fades; opacity
          from --cubby-top-shade-op (a small fraction of shadowStrength). Sits FIRST so it

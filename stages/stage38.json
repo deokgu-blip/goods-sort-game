@@ -5,19 +5,19 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "apple",
-    "caviar_tin",
-    "coconut_macaroon",
-    "cracker_long",
-    "dragon_fruit",
-    "flatbread",
-    "gravy_boat",
-    "mayo",
-    "melon_green",
-    "penguin",
+    "crayon_box",
+    "croissant",
+    "dino_toy",
+    "eggplant",
+    "garlic",
+    "gum_blister",
+    "honey_jar",
+    "iced_tea",
+    "marshmallow_bag",
     "pie_slice",
-    "spray_cleaner",
-    "unicorn_toy",
+    "sheep_toy",
+    "waffle",
+    "water",
     "watering_can_item"
   ],
   "combo": {
@@ -33,10 +33,11 @@
       3,
       4
     ],
-    "workspaces": 3,
+    "emptyCubbies": 1,
+    "frontGaps": 6,
     "lockCubbies": 3,
-    "totalGoods": 93,
-    "attempt": 2
+    "totalGoods": 111,
+    "attempt": 10
   },
   "cubbies": [
     {
@@ -45,29 +46,40 @@
       "layers": [
         [
           null,
-          null,
-          null
+          "garlic",
+          "croissant"
+        ],
+        [
+          "waffle",
+          "marshmallow_bag",
+          "sheep_toy"
+        ],
+        [
+          "crayon_box",
+          "dino_toy",
+          "garlic"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "lock": 1,
       "layers": [
         [
-          "watering_can_item",
-          "melon_green",
-          "gravy_boat"
-        ],
-        [
-          "flatbread",
-          "caviar_tin",
+          "marshmallow_bag",
+          "pie_slice",
           "pie_slice"
         ],
         [
-          "pie_slice",
-          "spray_cleaner",
-          "apple"
+          "dino_toy",
+          "watering_can_item",
+          "honey_jar"
+        ],
+        [
+          "dino_toy",
+          "garlic",
+          "waffle"
         ]
       ]
     },
@@ -76,36 +88,45 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "crayon_box",
+          "dino_toy",
+          "gum_blister"
+        ],
+        [
+          "water",
+          "croissant",
+          "honey_jar"
+        ],
+        [
+          "garlic",
+          "gum_blister",
+          "garlic"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
-      "lock": 1,
       "layers": [
         [
-          "gravy_boat",
-          "cracker_long",
-          "melon_green"
+          "eggplant",
+          "garlic",
+          "honey_jar"
         ],
         [
-          "mayo",
-          "flatbread",
-          "apple"
+          "sheep_toy",
+          "croissant",
+          "croissant"
         ],
         [
-          "gravy_boat",
-          "unicorn_toy",
-          "apple"
+          "marshmallow_bag",
+          "pie_slice",
+          "iced_tea"
         ],
         [
-          "dragon_fruit",
-          "cracker_long",
-          "flatbread"
+          "garlic",
+          "watering_can_item",
+          "croissant"
         ]
       ]
     },
@@ -115,24 +136,102 @@
       "lock": 3,
       "layers": [
         [
-          "cracker_long",
-          "penguin",
-          "unicorn_toy"
+          "gum_blister",
+          null,
+          "pie_slice"
         ],
         [
-          "coconut_macaroon",
-          "dragon_fruit",
-          "apple"
+          "dino_toy",
+          "marshmallow_bag",
+          "eggplant"
         ],
         [
-          "mayo",
-          "spray_cleaner",
-          "penguin"
+          "eggplant",
+          "eggplant",
+          "sheep_toy"
+        ],
+        [
+          "honey_jar",
+          "crayon_box",
+          "waffle"
         ]
       ]
     },
     {
       "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "eggplant",
+          "iced_tea",
+          null
+        ],
+        [
+          "gum_blister",
+          "honey_jar",
+          "pie_slice"
+        ],
+        [
+          "water",
+          "waffle",
+          "water"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "marshmallow_bag",
+          "watering_can_item",
+          "gum_blister"
+        ],
+        [
+          "eggplant",
+          "dino_toy",
+          "pie_slice"
+        ],
+        [
+          "eggplant",
+          "garlic",
+          "iced_tea"
+        ],
+        [
+          "honey_jar",
+          "marshmallow_bag",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          "dino_toy"
+        ],
+        [
+          "honey_jar",
+          "sheep_toy",
+          "water"
+        ],
+        [
+          "dino_toy",
+          "water",
+          "sheep_toy"
+        ],
+        [
+          "water",
+          "pie_slice",
+          "waffle"
+        ]
+      ]
+    },
+    {
+      "r": 2,
       "c": 2,
       "layers": [
         [
@@ -143,144 +242,76 @@
       ]
     },
     {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "gravy_boat",
-          "flatbread",
-          "gravy_boat"
-        ],
-        [
-          "unicorn_toy",
-          "coconut_macaroon",
-          "unicorn_toy"
-        ],
-        [
-          "dragon_fruit",
-          "watering_can_item",
-          "penguin"
-        ],
-        [
-          "apple",
-          "coconut_macaroon",
-          "penguin"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "dragon_fruit",
-          "cracker_long",
-          "cracker_long"
-        ],
-        [
-          "caviar_tin",
-          "flatbread",
-          "flatbread"
-        ],
-        [
-          "mayo",
-          "flatbread",
-          "melon_green"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "spray_cleaner",
-          "flatbread",
-          "flatbread"
-        ],
-        [
-          "penguin",
-          "caviar_tin",
-          "unicorn_toy"
-        ],
-        [
-          "pie_slice",
-          "caviar_tin",
-          "spray_cleaner"
-        ],
-        [
-          "mayo",
-          "caviar_tin",
-          "penguin"
-        ]
-      ]
-    },
-    {
       "r": 3,
       "c": 0,
-      "layers": [
-        [
-          "melon_green",
-          "mayo",
-          "unicorn_toy"
-        ],
-        [
-          "pie_slice",
-          "caviar_tin",
-          "dragon_fruit"
-        ],
-        [
-          "apple",
-          "watering_can_item",
-          "melon_green"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          "watering_can_item",
-          "penguin",
-          "cracker_long"
-        ],
-        [
-          "unicorn_toy",
-          "coconut_macaroon",
-          "coconut_macaroon"
-        ],
-        [
-          "pie_slice",
-          "pie_slice",
-          "spray_cleaner"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
       "lock": 1,
       "layers": [
         [
-          "coconut_macaroon",
-          "dragon_fruit",
-          "penguin"
-        ],
-        [
-          "gravy_boat",
+          "eggplant",
           "watering_can_item",
           "watering_can_item"
         ],
         [
-          "unicorn_toy",
-          "penguin",
-          "melon_green"
+          "pie_slice",
+          "iced_tea",
+          "marshmallow_bag"
         ],
         [
-          "unicorn_toy",
-          "mayo",
-          "spray_cleaner"
+          "iced_tea",
+          "watering_can_item",
+          "watering_can_item"
+        ],
+        [
+          "pie_slice",
+          "gum_blister",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "marshmallow_bag",
+          "gum_blister",
+          "gum_blister"
+        ],
+        [
+          "marshmallow_bag",
+          "crayon_box",
+          "crayon_box"
+        ],
+        [
+          "eggplant",
+          "dino_toy",
+          "gum_blister"
+        ],
+        [
+          "waffle",
+          "honey_jar",
+          "honey_jar"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "watering_can_item",
+          "watering_can_item",
+          null
+        ],
+        [
+          "garlic",
+          "iced_tea",
+          "sheep_toy"
+        ],
+        [
+          "crayon_box",
+          "croissant",
+          "croissant"
         ]
       ]
     }

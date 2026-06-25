@@ -5,20 +5,20 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "banana_bunch",
-    "butter_tub",
-    "cabbage",
-    "chips",
+    "cantaloupe",
+    "caviar_tin",
+    "cereal_box",
     "chocolate_tablet",
-    "eclair",
-    "energy_drink",
-    "gingerbread",
-    "icecream_sandwich",
-    "kebab_skewer",
-    "pizza_slice",
-    "pringle_purple",
-    "turtle_toy",
-    "whip_can"
+    "cupcake_tray",
+    "egg",
+    "egg_carton",
+    "eggplant_long",
+    "gelato_cup",
+    "glass_cleaner",
+    "kettle_item",
+    "monkey_toy",
+    "oil_can",
+    "potted_plant"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -33,52 +33,59 @@
       3,
       5
     ],
-    "workspaces": 3,
+    "emptyCubbies": 1,
+    "frontGaps": 6,
     "lockCubbies": 4,
-    "totalGoods": 105,
-    "attempt": 2
+    "totalGoods": 129,
+    "attempt": 36
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
-      "lock": 4,
+      "lock": 1,
       "layers": [
         [
-          "banana_bunch",
-          "pizza_slice",
-          "kebab_skewer"
+          null,
+          "caviar_tin",
+          null
         ],
         [
-          "chips",
-          "kebab_skewer",
-          "chocolate_tablet"
+          "chocolate_tablet",
+          "egg",
+          "cantaloupe"
         ],
         [
-          "eclair",
-          "whip_can",
-          "turtle_toy"
-        ],
-        [
-          "pizza_slice",
-          "gingerbread",
-          "turtle_toy"
-        ],
-        [
-          "whip_can",
-          "kebab_skewer",
-          "chips"
+          "egg",
+          "potted_plant",
+          "glass_cleaner"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "lock": 3,
       "layers": [
         [
-          null,
-          null,
-          null
+          "cantaloupe",
+          "cereal_box",
+          "cantaloupe"
+        ],
+        [
+          "kettle_item",
+          "caviar_tin",
+          "gelato_cup"
+        ],
+        [
+          "egg_carton",
+          "oil_can",
+          "oil_can"
+        ],
+        [
+          "cupcake_tray",
+          "chocolate_tablet",
+          "glass_cleaner"
         ]
       ]
     },
@@ -87,93 +94,119 @@
       "c": 2,
       "layers": [
         [
-          "chips",
-          "chips",
-          "turtle_toy"
+          "cupcake_tray",
+          "egg_carton",
+          "kettle_item"
         ],
         [
-          "whip_can",
-          "cabbage",
-          "banana_bunch"
+          "kettle_item",
+          "chocolate_tablet",
+          "chocolate_tablet"
         ],
         [
-          "pringle_purple",
-          "kebab_skewer",
-          "energy_drink"
+          "caviar_tin",
+          "chocolate_tablet",
+          "egg_carton"
+        ],
+        [
+          "eggplant_long",
+          "chocolate_tablet",
+          "egg"
+        ],
+        [
+          "kettle_item",
+          "potted_plant",
+          "caviar_tin"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
+      "lock": 3,
       "layers": [
         [
-          "chips",
-          "chips",
-          "chocolate_tablet"
+          "cantaloupe",
+          "chocolate_tablet",
+          null
         ],
         [
-          "turtle_toy",
-          "icecream_sandwich",
-          "chocolate_tablet"
+          "glass_cleaner",
+          "eggplant_long",
+          "eggplant_long"
         ],
         [
-          "icecream_sandwich",
-          "chips",
-          "kebab_skewer"
+          "potted_plant",
+          "eggplant_long",
+          "potted_plant"
+        ],
+        [
+          "potted_plant",
+          "egg",
+          "oil_can"
+        ],
+        [
+          "cereal_box",
+          "egg_carton",
+          "egg"
         ]
       ]
     },
     {
       "r": 1,
       "c": 1,
-      "lock": 3,
       "layers": [
         [
-          "kebab_skewer",
-          "chocolate_tablet",
-          "pizza_slice"
+          "potted_plant",
+          "gelato_cup",
+          "potted_plant"
         ],
         [
-          "pringle_purple",
-          "banana_bunch",
-          "pizza_slice"
+          "gelato_cup",
+          "oil_can",
+          "cereal_box"
         ],
         [
-          "gingerbread",
-          "icecream_sandwich",
-          "gingerbread"
+          "cupcake_tray",
+          "potted_plant",
+          "monkey_toy"
+        ],
+        [
+          "cereal_box",
+          "egg_carton",
+          "oil_can"
         ]
       ]
     },
     {
       "r": 1,
       "c": 2,
+      "lock": 2,
       "layers": [
         [
-          "energy_drink",
-          "chocolate_tablet",
-          "chips"
+          "potted_plant",
+          "cupcake_tray",
+          null
         ],
         [
-          "butter_tub",
-          "icecream_sandwich",
-          "pringle_purple"
+          "egg",
+          "glass_cleaner",
+          "gelato_cup"
         ],
         [
-          "banana_bunch",
-          "pringle_purple",
-          "whip_can"
+          "cereal_box",
+          "cereal_box",
+          "eggplant_long"
         ],
         [
-          "turtle_toy",
-          "cabbage",
-          "butter_tub"
+          "monkey_toy",
+          "egg_carton",
+          "kettle_item"
         ],
         [
-          "cabbage",
-          "pizza_slice",
-          "cabbage"
+          "caviar_tin",
+          "monkey_toy",
+          "cereal_box"
         ]
       ]
     },
@@ -182,51 +215,50 @@
       "c": 0,
       "layers": [
         [
-          "gingerbread",
-          "gingerbread",
-          "icecream_sandwich"
+          "cantaloupe",
+          "cupcake_tray",
+          "eggplant_long"
         ],
         [
-          "icecream_sandwich",
-          "gingerbread",
-          "butter_tub"
+          "gelato_cup",
+          "eggplant_long",
+          "cupcake_tray"
         ],
         [
-          "pringle_purple",
-          "turtle_toy",
-          "cabbage"
+          "monkey_toy",
+          "monkey_toy",
+          "kettle_item"
         ]
       ]
     },
     {
       "r": 2,
       "c": 1,
-      "lock": 3,
       "layers": [
         [
-          "whip_can",
-          "whip_can",
-          "chocolate_tablet"
+          "egg_carton",
+          "eggplant_long",
+          "monkey_toy"
         ],
         [
-          "whip_can",
-          "turtle_toy",
-          "gingerbread"
+          "monkey_toy",
+          "glass_cleaner",
+          "cereal_box"
         ],
         [
-          "eclair",
-          "gingerbread",
-          "energy_drink"
+          "oil_can",
+          "cantaloupe",
+          "glass_cleaner"
         ],
         [
-          "chocolate_tablet",
-          "chips",
-          "eclair"
+          "potted_plant",
+          "gelato_cup",
+          "caviar_tin"
         ],
         [
-          "chocolate_tablet",
-          "cabbage",
-          "cabbage"
+          "cupcake_tray",
+          "glass_cleaner",
+          "kettle_item"
         ]
       ]
     },
@@ -244,27 +276,21 @@
     {
       "r": 3,
       "c": 0,
-      "lock": 4,
       "layers": [
         [
-          "icecream_sandwich",
-          "icecream_sandwich",
-          "energy_drink"
+          "monkey_toy",
+          "egg",
+          "oil_can"
         ],
         [
-          "gingerbread",
-          "banana_bunch",
-          "icecream_sandwich"
+          "kettle_item",
+          "caviar_tin",
+          "egg"
         ],
         [
-          "whip_can",
-          "turtle_toy",
-          "energy_drink"
-        ],
-        [
-          "eclair",
-          "turtle_toy",
-          "cabbage"
+          "caviar_tin",
+          "potted_plant",
+          "caviar_tin"
         ]
       ]
     },
@@ -275,7 +301,17 @@
         [
           null,
           null,
-          null
+          "gelato_cup"
+        ],
+        [
+          "chocolate_tablet",
+          "glass_cleaner",
+          "gelato_cup"
+        ],
+        [
+          "oil_can",
+          "eggplant_long",
+          "egg"
         ]
       ]
     },
@@ -284,24 +320,29 @@
       "c": 2,
       "layers": [
         [
-          "butter_tub",
-          "pizza_slice",
-          "butter_tub"
+          "cupcake_tray",
+          "potted_plant",
+          "egg_carton"
         ],
         [
-          "energy_drink",
+          "cupcake_tray",
           "chocolate_tablet",
-          "eclair"
+          "monkey_toy"
         ],
         [
-          "banana_bunch",
-          "eclair",
-          "whip_can"
+          "gelato_cup",
+          "oil_can",
+          "cantaloupe"
         ],
         [
-          "pringle_purple",
-          "butter_tub",
-          "cabbage"
+          "cantaloupe",
+          "glass_cleaner",
+          "cantaloupe"
+        ],
+        [
+          "egg_carton",
+          "cereal_box",
+          "kettle_item"
         ]
       ]
     }

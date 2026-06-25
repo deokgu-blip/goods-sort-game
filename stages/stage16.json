@@ -5,19 +5,19 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "asparagus_bunch",
-    "eclair",
-    "egg_carton",
-    "frozen_tub",
-    "hot_dog",
-    "ladybug_toy",
-    "pitcher_juice",
-    "potato",
-    "rubber_duck",
+    "cabbage",
+    "chocolate_tablet",
+    "cracker_long",
+    "eggplant",
+    "gum_blister",
+    "honey_jar",
+    "icebar_b",
+    "marmalade_jar",
+    "pancake_stack",
+    "pumpkin_mini",
     "snack",
-    "snowcone",
-    "soda",
-    "watermelon_slice"
+    "turtle_toy",
+    "watering_can_item"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -32,10 +32,11 @@
       2,
       3
     ],
-    "workspaces": 3,
+    "emptyCubbies": 1,
+    "frontGaps": 6,
     "lockCubbies": 1,
-    "totalGoods": 75,
-    "attempt": 0
+    "totalGoods": 78,
+    "attempt": 4
   },
   "cubbies": [
     {
@@ -44,40 +45,35 @@
       "lock": 1,
       "layers": [
         [
-          "potato",
-          "ladybug_toy",
-          "snowcone"
-        ],
-        [
-          "frozen_tub",
-          "snack",
-          "frozen_tub"
-        ],
-        [
-          "egg_carton",
-          "snack",
-          "watermelon_slice"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 1,
-      "layers": [
-        [
-          "rubber_duck",
-          "asparagus_bunch",
-          "ladybug_toy"
-        ],
-        [
-          "snowcone",
-          "soda",
-          "eclair"
-        ],
-        [
-          "soda",
-          "snowcone",
+          "cabbage",
+          "marmalade_jar",
           "snack"
+        ],
+        [
+          "pumpkin_mini",
+          "watering_can_item",
+          "eggplant"
+        ],
+        [
+          "turtle_toy",
+          "turtle_toy",
+          "cabbage"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "eggplant",
+          null,
+          null
+        ],
+        [
+          "watering_can_item",
+          "pancake_stack",
+          "cracker_long"
         ]
       ]
     },
@@ -86,14 +82,9 @@
       "c": 2,
       "layers": [
         [
-          "potato",
-          "eclair",
-          "asparagus_bunch"
-        ],
-        [
-          "ladybug_toy",
-          "watermelon_slice",
-          "hot_dog"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -104,7 +95,12 @@
         [
           null,
           null,
-          null
+          "cracker_long"
+        ],
+        [
+          "gum_blister",
+          "chocolate_tablet",
+          "marmalade_jar"
         ]
       ]
     },
@@ -113,19 +109,19 @@
       "c": 1,
       "layers": [
         [
-          "pitcher_juice",
-          "potato",
-          "frozen_tub"
-        ],
-        [
-          "snowcone",
+          "pumpkin_mini",
           "snack",
-          "ladybug_toy"
+          "snack"
         ],
         [
-          "eclair",
-          "eclair",
-          "egg_carton"
+          "pumpkin_mini",
+          "chocolate_tablet",
+          "snack"
+        ],
+        [
+          "gum_blister",
+          "chocolate_tablet",
+          "eggplant"
         ]
       ]
     },
@@ -134,19 +130,19 @@
       "c": 2,
       "layers": [
         [
-          "watermelon_slice",
-          "hot_dog",
-          "soda"
+          null,
+          "pancake_stack",
+          "watering_can_item"
         ],
         [
-          "soda",
-          "ladybug_toy",
-          "rubber_duck"
+          "honey_jar",
+          "pancake_stack",
+          "cracker_long"
         ],
         [
-          "snowcone",
-          "hot_dog",
-          "frozen_tub"
+          "pumpkin_mini",
+          "icebar_b",
+          "turtle_toy"
         ]
       ]
     },
@@ -155,14 +151,19 @@
       "c": 0,
       "layers": [
         [
-          "snack",
-          "asparagus_bunch",
-          "eclair"
+          "icebar_b",
+          "chocolate_tablet",
+          "cabbage"
         ],
         [
-          "egg_carton",
-          "potato",
-          "asparagus_bunch"
+          "pancake_stack",
+          "cracker_long",
+          "marmalade_jar"
+        ],
+        [
+          "cracker_long",
+          "cabbage",
+          "turtle_toy"
         ]
       ]
     },
@@ -171,19 +172,14 @@
       "c": 1,
       "layers": [
         [
-          "soda",
-          "watermelon_slice",
-          "potato"
+          "turtle_toy",
+          "pancake_stack",
+          "cabbage"
         ],
         [
-          "hot_dog",
-          "snowcone",
-          "frozen_tub"
-        ],
-        [
-          "pitcher_juice",
-          "watermelon_slice",
-          "hot_dog"
+          "eggplant",
+          "pumpkin_mini",
+          "honey_jar"
         ]
       ]
     },
@@ -192,9 +188,19 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "watering_can_item",
+          "watering_can_item",
+          "icebar_b"
+        ],
+        [
+          "gum_blister",
+          "snack",
+          "chocolate_tablet"
+        ],
+        [
+          "gum_blister",
+          "pumpkin_mini",
+          "honey_jar"
         ]
       ]
     },
@@ -203,19 +209,14 @@
       "c": 0,
       "layers": [
         [
-          "asparagus_bunch",
-          "rubber_duck",
-          "watermelon_slice"
+          "cabbage",
+          "chocolate_tablet",
+          "icebar_b"
         ],
         [
-          "rubber_duck",
-          "snack",
-          "rubber_duck"
-        ],
-        [
-          "asparagus_bunch",
-          "egg_carton",
-          "egg_carton"
+          "eggplant",
+          "honey_jar",
+          "honey_jar"
         ]
       ]
     },
@@ -224,19 +225,19 @@
       "c": 1,
       "layers": [
         [
-          "soda",
-          "hot_dog",
-          "frozen_tub"
+          "cracker_long",
+          "eggplant",
+          null
         ],
         [
-          "egg_carton",
-          "eclair",
-          "rubber_duck"
+          "watering_can_item",
+          "marmalade_jar",
+          "snack"
         ],
         [
-          "pitcher_juice",
-          "ladybug_toy",
-          "potato"
+          "honey_jar",
+          "gum_blister",
+          "pancake_stack"
         ]
       ]
     },
@@ -245,9 +246,14 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "icebar_b",
+          "icebar_b",
+          "gum_blister"
+        ],
+        [
+          "marmalade_jar",
+          "turtle_toy",
+          "marmalade_jar"
         ]
       ]
     }

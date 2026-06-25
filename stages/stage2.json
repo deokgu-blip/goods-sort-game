@@ -2,7 +2,7 @@
   "level": 2,
   "timeLimit": 360,
   "cols": 3,
-  "rows": 3,
+  "rows": 4,
   "cellCap": 3,
   "goods": [
     "butter_tub",
@@ -28,12 +28,13 @@
   "_gen": {
     "distinct": 12,
     "depthRange": [
-      2,
+      1,
       2
     ],
-    "workspaces": 3,
+    "emptyCubbies": 1,
+    "frontGaps": 6,
     "lockCubbies": 0,
-    "totalGoods": 36,
+    "totalGoods": 42,
     "attempt": 0
   },
   "cubbies": [
@@ -42,9 +43,14 @@
       "c": 0,
       "layers": [
         [
-          null,
-          null,
+          "carrot_bunch",
+          "salsa_jar",
           null
+        ],
+        [
+          "orange_fruit",
+          "carrot_bunch",
+          "jelly_bag"
         ]
       ]
     },
@@ -53,14 +59,9 @@
       "c": 1,
       "layers": [
         [
-          "wheel_of_lime",
           "butter_tub",
-          "grapes"
-        ],
-        [
-          "jelly_bag",
-          "salsa_jar",
-          "pie_slice"
+          "water",
+          "wheel_of_lime"
         ]
       ]
     },
@@ -69,100 +70,128 @@
       "c": 2,
       "layers": [
         [
-          "orange_fruit",
-          "pie_slice",
-          "dino_toy"
+          null,
+          "gum_blister",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "grapes",
+          "dino_toy",
+          "pie_slice"
         ],
         [
           "orange_fruit",
+          "taco",
+          "carrot_bunch"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "salsa_jar",
+          "salsa_jar",
+          "salsa_jar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "salsa_jar",
+          "pie_slice",
+          null
+        ],
+        [
+          "dino_toy",
+          "butter_tub",
+          "grapes"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "jelly_bag",
           "water",
           "taco"
         ]
       ]
     },
     {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "grapes",
-          "carrot_bunch",
-          "carrot_bunch"
-        ],
-        [
-          "water",
-          "butter_tub",
-          "dino_toy"
-        ]
-      ]
-    },
-    {
-      "r": 1,
+      "r": 2,
       "c": 2,
       "layers": [
         [
-          "wheel_of_lime",
-          "taco",
-          "gum_blister"
-        ],
+          null,
+          "butter_tub",
+          "taco"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
         [
-          "water",
           "pie_slice",
-          "gum_blister"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
+          "butter_tub",
+          "butter_tub"
+        ],
         [
-          null,
-          null,
-          null
+          "gum_blister",
+          "water",
+          "wheel_of_lime"
         ]
       ]
     },
     {
-      "r": 2,
+      "r": 3,
       "c": 1,
       "layers": [
         [
-          "carrot_bunch",
           "grapes",
-          "wheel_of_lime"
-        ],
-        [
-          "taco",
-          "jelly_bag",
-          "salsa_jar"
+          null,
+          "jelly_bag"
         ]
       ]
     },
     {
-      "r": 2,
+      "r": 3,
       "c": 2,
       "layers": [
         [
-          "butter_tub",
-          "jelly_bag",
-          "salsa_jar"
+          "gum_blister",
+          "wheel_of_lime",
+          "dino_toy"
         ],
         [
-          "orange_fruit",
-          "gum_blister",
-          "dino_toy"
+          "butter_tub",
+          "salsa_jar",
+          "orange_fruit"
         ]
       ]
     }

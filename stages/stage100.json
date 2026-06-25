@@ -5,22 +5,22 @@
   "rows": 5,
   "cellCap": 3,
   "goods": [
-    "bagel",
-    "cherry_tomato_box",
-    "chocolate_tablet",
-    "gum_pack",
-    "honey_jar",
-    "icebar_blue",
-    "orange_fruit",
-    "penguin",
+    "berry_punnet",
+    "biscuit_box",
+    "butter",
+    "cabbage",
+    "cookie_tin_round",
+    "flatbread",
+    "frog_plush",
+    "grapes",
+    "hand_soap",
+    "pickle_jar",
     "pie_slice",
-    "pitcher_juice",
-    "pretzel_bag",
-    "sheep_toy",
-    "taco",
-    "tea_tin_round",
-    "watermelon_slice",
-    "yogurt"
+    "potted_plant",
+    "sushi_tray",
+    "tomato",
+    "turtle_toy",
+    "watermelon_slice"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -33,38 +33,38 @@
     "distinct": 16,
     "depthRange": [
       4,
-      4
+      5
     ],
-    "workspaces": 6,
+    "emptyCubbies": 1,
+    "frontGaps": 12,
     "lockCubbies": 8,
-    "totalGoods": 168,
-    "attempt": 105
+    "totalGoods": 249,
+    "attempt": 56
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
-      "lock": 1,
       "layers": [
         [
-          "cherry_tomato_box",
           "pie_slice",
-          "gum_pack"
+          "tomato",
+          "grapes"
         ],
         [
-          "pitcher_juice",
-          "taco",
-          "pretzel_bag"
+          "potted_plant",
+          "pie_slice",
+          "biscuit_box"
         ],
         [
-          "tea_tin_round",
-          "tea_tin_round",
-          "yogurt"
+          "flatbread",
+          "tomato",
+          "cabbage"
         ],
         [
-          "cherry_tomato_box",
-          "bagel",
-          "cherry_tomato_box"
+          "pickle_jar",
+          "cookie_tin_round",
+          "frog_plush"
         ]
       ]
     },
@@ -74,397 +74,513 @@
       "lock": 5,
       "layers": [
         [
-          "bagel",
-          "chocolate_tablet",
-          "yogurt"
-        ],
-        [
-          "yogurt",
-          "pretzel_bag",
-          "pitcher_juice"
-        ],
-        [
-          "yogurt",
-          "cherry_tomato_box",
-          "yogurt"
-        ],
-        [
-          "gum_pack",
-          "yogurt",
-          "penguin"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "pretzel_bag",
-          "orange_fruit",
-          "sheep_toy"
-        ],
-        [
-          "cherry_tomato_box",
-          "sheep_toy",
-          "chocolate_tablet"
-        ],
-        [
-          "orange_fruit",
-          "icebar_blue",
-          "yogurt"
-        ],
-        [
-          "bagel",
-          "orange_fruit",
-          "icebar_blue"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 3,
-      "lock": 2,
-      "layers": [
-        [
+          "butter",
           "watermelon_slice",
-          "honey_jar",
-          "icebar_blue"
-        ],
-        [
-          "bagel",
-          "icebar_blue",
-          "icebar_blue"
-        ],
-        [
-          "sheep_toy",
-          "orange_fruit",
-          "honey_jar"
-        ],
-        [
-          "pie_slice",
-          "watermelon_slice",
-          "pitcher_juice"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "lock": 5,
-      "layers": [
-        [
-          "chocolate_tablet",
-          "tea_tin_round",
-          "yogurt"
-        ],
-        [
-          "taco",
-          "pie_slice",
-          "watermelon_slice"
-        ],
-        [
-          "icebar_blue",
-          "sheep_toy",
-          "orange_fruit"
-        ],
-        [
-          "honey_jar",
-          "sheep_toy",
-          "pretzel_bag"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "pretzel_bag",
-          "icebar_blue",
-          "sheep_toy"
-        ],
-        [
-          "icebar_blue",
-          "chocolate_tablet",
-          "pretzel_bag"
-        ],
-        [
-          "tea_tin_round",
-          "sheep_toy",
-          "watermelon_slice"
-        ],
-        [
-          "sheep_toy",
-          "pie_slice",
-          "pitcher_juice"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "penguin",
-          "pie_slice",
-          "gum_pack"
-        ],
-        [
-          "pie_slice",
-          "taco",
           "pie_slice"
         ],
         [
-          "taco",
-          "bagel",
-          "chocolate_tablet"
+          "pie_slice",
+          "frog_plush",
+          "flatbread"
         ],
         [
-          "bagel",
-          "tea_tin_round",
-          "orange_fruit"
+          "grapes",
+          "frog_plush",
+          "potted_plant"
+        ],
+        [
+          "pickle_jar",
+          "turtle_toy",
+          "cookie_tin_round"
+        ],
+        [
+          "butter",
+          "flatbread",
+          "biscuit_box"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "watermelon_slice",
+          "flatbread",
+          "flatbread"
+        ],
+        [
+          "butter",
+          "pie_slice",
+          "biscuit_box"
+        ],
+        [
+          "flatbread",
+          "cabbage",
+          "berry_punnet"
+        ],
+        [
+          "berry_punnet",
+          "tomato",
+          "watermelon_slice"
+        ],
+        [
+          "turtle_toy",
+          "pickle_jar",
+          "grapes"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "layers": [
+        [
+          "frog_plush",
+          "biscuit_box",
+          "watermelon_slice"
+        ],
+        [
+          "pie_slice",
+          "frog_plush",
+          "hand_soap"
+        ],
+        [
+          "hand_soap",
+          "grapes",
+          "potted_plant"
+        ],
+        [
+          "turtle_toy",
+          "watermelon_slice",
+          "berry_punnet"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "frog_plush",
+          "biscuit_box",
+          null
+        ],
+        [
+          "flatbread",
+          "pickle_jar",
+          "turtle_toy"
+        ],
+        [
+          "hand_soap",
+          "grapes",
+          "cookie_tin_round"
+        ],
+        [
+          "flatbread",
+          "tomato",
+          "frog_plush"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "lock": 1,
+      "layers": [
+        [
+          "butter",
+          null,
+          "pickle_jar"
+        ],
+        [
+          "pie_slice",
+          "pickle_jar",
+          "pie_slice"
+        ],
+        [
+          "potted_plant",
+          "tomato",
+          "frog_plush"
+        ],
+        [
+          "cabbage",
+          "watermelon_slice",
+          "turtle_toy"
+        ],
+        [
+          "berry_punnet",
+          "pickle_jar",
+          "frog_plush"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 4,
+      "layers": [
+        [
+          "butter",
+          "berry_punnet",
+          "biscuit_box"
+        ],
+        [
+          "pickle_jar",
+          "frog_plush",
+          "grapes"
+        ],
+        [
+          "cabbage",
+          "cookie_tin_round",
+          "sushi_tray"
+        ],
+        [
+          "potted_plant",
+          "flatbread",
+          "cookie_tin_round"
+        ],
+        [
+          "cabbage",
+          "pie_slice",
+          "potted_plant"
         ]
       ]
     },
     {
       "r": 1,
       "c": 3,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "chocolate_tablet",
-          "honey_jar",
-          "gum_pack"
-        ],
-        [
-          "orange_fruit",
-          "watermelon_slice",
-          "bagel"
-        ],
-        [
-          "sheep_toy",
-          "gum_pack",
-          "watermelon_slice"
-        ],
-        [
-          "chocolate_tablet",
-          "icebar_blue",
-          "watermelon_slice"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "lock": 4,
-      "layers": [
-        [
-          "cherry_tomato_box",
-          "watermelon_slice",
-          "honey_jar"
-        ],
-        [
-          "pretzel_bag",
-          "tea_tin_round",
-          "orange_fruit"
-        ],
-        [
-          "penguin",
-          "sheep_toy",
-          "pitcher_juice"
-        ],
-        [
-          "icebar_blue",
-          "taco",
-          "taco"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 3,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "gum_pack",
-          "pitcher_juice",
-          "pitcher_juice"
-        ],
-        [
-          "bagel",
-          "pretzel_bag",
-          "pitcher_juice"
-        ],
-        [
-          "taco",
-          "taco",
-          "chocolate_tablet"
-        ],
-        [
-          "chocolate_tablet",
-          "gum_pack",
-          "orange_fruit"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
-        [
-          "sheep_toy",
-          "icebar_blue",
-          "watermelon_slice"
-        ],
-        [
-          "pie_slice",
-          "bagel",
-          "tea_tin_round"
-        ],
-        [
-          "yogurt",
-          "pretzel_bag",
-          "tea_tin_round"
-        ],
-        [
-          "penguin",
-          "honey_jar",
-          "gum_pack"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 3,
-      "lock": 3,
-      "layers": [
-        [
-          "penguin",
-          "chocolate_tablet",
-          "pretzel_bag"
-        ],
-        [
-          "pie_slice",
-          "bagel",
-          "pretzel_bag"
-        ],
-        [
-          "cherry_tomato_box",
-          "yogurt",
-          "taco"
-        ],
-        [
-          "honey_jar",
-          "chocolate_tablet",
-          "honey_jar"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 1,
-      "lock": 5,
-      "layers": [
-        [
-          "honey_jar",
-          "penguin",
-          "penguin"
-        ],
-        [
-          "sheep_toy",
-          "pitcher_juice",
-          "pretzel_bag"
-        ],
-        [
-          "taco",
-          "penguin",
-          "chocolate_tablet"
-        ],
-        [
-          "icebar_blue",
-          "bagel",
-          "orange_fruit"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 2,
       "lock": 1,
       "layers": [
         [
-          "tea_tin_round",
-          "gum_pack",
-          "yogurt"
+          "flatbread",
+          "watermelon_slice",
+          null
         ],
         [
-          "cherry_tomato_box",
-          "taco",
-          "orange_fruit"
+          "flatbread",
+          "tomato",
+          "frog_plush"
         ],
         [
-          "yogurt",
-          "bagel",
-          "taco"
+          "cookie_tin_round",
+          "sushi_tray",
+          "frog_plush"
         ],
         [
-          "penguin",
-          "cherry_tomato_box",
-          "orange_fruit"
+          "turtle_toy",
+          "butter",
+          "butter"
+        ],
+        [
+          "tomato",
+          "turtle_toy",
+          "berry_punnet"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 3,
+      "layers": [
+        [
+          "tomato",
+          null,
+          "sushi_tray"
+        ],
+        [
+          "tomato",
+          "frog_plush",
+          "cabbage"
+        ],
+        [
+          "butter",
+          "butter",
+          "grapes"
+        ],
+        [
+          "hand_soap",
+          "flatbread",
+          "biscuit_box"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "hand_soap",
+          "turtle_toy",
+          "pickle_jar"
+        ],
+        [
+          "potted_plant",
+          "berry_punnet",
+          "hand_soap"
+        ],
+        [
+          "pie_slice",
+          "cookie_tin_round",
+          "flatbread"
+        ],
+        [
+          "tomato",
+          "pickle_jar",
+          "biscuit_box"
+        ],
+        [
+          "biscuit_box",
+          "pickle_jar",
+          "pickle_jar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "lock": 4,
+      "layers": [
+        [
+          "berry_punnet",
+          "butter",
+          "pie_slice"
+        ],
+        [
+          "sushi_tray",
+          "sushi_tray",
+          "cabbage"
+        ],
+        [
+          "watermelon_slice",
+          "hand_soap",
+          "hand_soap"
+        ],
+        [
+          "potted_plant",
+          "cookie_tin_round",
+          "tomato"
+        ],
+        [
+          "grapes",
+          "tomato",
+          "cabbage"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "layers": [
+        [
+          "grapes",
+          "flatbread",
+          null
+        ],
+        [
+          "butter",
+          "pie_slice",
+          "frog_plush"
+        ],
+        [
+          "cabbage",
+          "pie_slice",
+          "butter"
+        ],
+        [
+          "sushi_tray",
+          "hand_soap",
+          "cookie_tin_round"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "berry_punnet",
+          "hand_soap",
+          "hand_soap"
+        ],
+        [
+          "pie_slice",
+          "cookie_tin_round",
+          "sushi_tray"
+        ],
+        [
+          "turtle_toy",
+          "watermelon_slice",
+          "grapes"
+        ],
+        [
+          "cookie_tin_round",
+          "turtle_toy",
+          "pie_slice"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          "turtle_toy",
+          null
+        ],
+        [
+          "sushi_tray",
+          "grapes",
+          "cookie_tin_round"
+        ],
+        [
+          "biscuit_box",
+          "butter",
+          "potted_plant"
+        ],
+        [
+          "watermelon_slice",
+          "berry_punnet",
+          "watermelon_slice"
+        ],
+        [
+          "cabbage",
+          "pickle_jar",
+          "potted_plant"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "biscuit_box",
+          null,
+          "tomato"
+        ],
+        [
+          "cabbage",
+          "pickle_jar",
+          "sushi_tray"
+        ],
+        [
+          "cabbage",
+          "biscuit_box",
+          "berry_punnet"
+        ],
+        [
+          "grapes",
+          "frog_plush",
+          "frog_plush"
+        ],
+        [
+          "watermelon_slice",
+          "pie_slice",
+          "biscuit_box"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 3,
+      "layers": [
+        [
+          null,
+          null,
+          "turtle_toy"
+        ],
+        [
+          "pie_slice",
+          "frog_plush",
+          "biscuit_box"
+        ],
+        [
+          "pickle_jar",
+          "grapes",
+          "cookie_tin_round"
+        ],
+        [
+          "butter",
+          "watermelon_slice",
+          "sushi_tray"
+        ],
+        [
+          "tomato",
+          "turtle_toy",
+          "berry_punnet"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 1,
+      "layers": [
+        [
+          "sushi_tray",
+          "hand_soap",
+          null
+        ],
+        [
+          "hand_soap",
+          "pie_slice",
+          "turtle_toy"
+        ],
+        [
+          "potted_plant",
+          "hand_soap",
+          "sushi_tray"
+        ],
+        [
+          "watermelon_slice",
+          "sushi_tray",
+          "cookie_tin_round"
+        ],
+        [
+          "berry_punnet",
+          "berry_punnet",
+          "cabbage"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          null,
+          "cabbage",
+          "biscuit_box"
+        ],
+        [
+          "butter",
+          "hand_soap",
+          "sushi_tray"
+        ],
+        [
+          "cookie_tin_round",
+          "frog_plush",
+          "berry_punnet"
+        ],
+        [
+          "flatbread",
+          "cabbage",
+          "grapes"
         ]
       ]
     },
@@ -473,9 +589,24 @@
       "c": 3,
       "layers": [
         [
-          null,
-          null,
-          null
+          "butter",
+          "potted_plant",
+          "tomato"
+        ],
+        [
+          "potted_plant",
+          "grapes",
+          "sushi_tray"
+        ],
+        [
+          "potted_plant",
+          "turtle_toy",
+          "potted_plant"
+        ],
+        [
+          "watermelon_slice",
+          "butter",
+          "butter"
         ]
       ]
     }

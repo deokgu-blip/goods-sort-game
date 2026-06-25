@@ -33,9 +33,10 @@
       2,
       3
     ],
-    "workspaces": 3,
+    "emptyCubbies": 1,
+    "frontGaps": 6,
     "lockCubbies": 2,
-    "totalGoods": 66,
+    "totalGoods": 75,
     "attempt": 0
   },
   "cubbies": [
@@ -44,9 +45,14 @@
       "c": 0,
       "layers": [
         [
-          null,
-          null,
-          null
+          "egg_carton",
+          "cooking_oil",
+          "eclair"
+        ],
+        [
+          "yogurt",
+          "popsicle_twin",
+          "plum"
         ]
       ]
     },
@@ -55,69 +61,74 @@
       "c": 1,
       "layers": [
         [
-          "coffee_can",
-          "yogurt",
-          "popsicle_twin"
+          null,
+          "plum",
+          null
         ],
         [
           "hand_soap",
-          "chick",
-          "eggplant_long"
+          "pretzel_soft",
+          "hand_soap"
         ]
       ]
     },
     {
       "r": 0,
       "c": 2,
-      "lock": 3,
+      "lock": 1,
       "layers": [
         [
-          "hand_soap",
-          "chick",
-          "chick"
+          "pretzel_soft",
+          null,
+          "coffee_can"
         ],
         [
-          "eggplant_long",
+          "pretzel_soft",
           "croissant",
-          "coffee_can"
+          "chick"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
-      "lock": 3,
+      "lock": 1,
       "layers": [
         [
-          "pretzel_soft",
-          "hand_soap",
+          "chick",
+          "chick",
+          null
+        ],
+        [
+          "popsicle_twin",
+          "eggplant_long",
+          "croissant"
+        ],
+        [
+          "croissant",
+          "pumpkin",
+          "pumpkin"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "coffee_can",
+          null,
           "pumpkin"
         ],
         [
           "coffee_can",
-          "kebab_skewer",
-          "pretzel_soft"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "egg_carton",
-          "chick",
-          "plum"
-        ],
-        [
-          "egg_carton",
-          "hand_soap",
-          "eggplant_long"
-        ],
-        [
-          "hand_soap",
           "popsicle_twin",
-          "croissant"
+          "pretzel_soft"
+        ],
+        [
+          "coffee_can",
+          "croissant",
+          "kebab_skewer"
         ]
       ]
     },
@@ -126,19 +137,19 @@
       "c": 2,
       "layers": [
         [
-          "popsicle_twin",
-          "yogurt",
-          "coffee_can"
-        ],
-        [
-          "eclair",
-          "egg_carton",
-          "chick"
-        ],
-        [
-          "popsicle_twin",
+          "eggplant_long",
           "kebab_skewer",
+          "pretzel_soft"
+        ],
+        [
+          "hand_soap",
+          "plum",
           "eggplant_long"
+        ],
+        [
+          "egg_carton",
+          "kebab_skewer",
+          "yogurt"
         ]
       ]
     },
@@ -147,25 +158,57 @@
       "c": 0,
       "layers": [
         [
-          "coffee_can",
-          "popsicle_twin",
-          "croissant"
-        ],
-        [
-          "eggplant_long",
-          "croissant",
-          "croissant"
-        ],
-        [
           "cooking_oil",
-          "eclair",
-          "egg_carton"
+          "pretzel_soft",
+          "cooking_oil"
+        ],
+        [
+          "kebab_skewer",
+          "chick",
+          "cooking_oil"
+        ],
+        [
+          "popsicle_twin",
+          "hand_soap",
+          "plum"
         ]
       ]
     },
     {
       "r": 2,
       "c": 1,
+      "layers": [
+        [
+          null,
+          "kebab_skewer",
+          "eclair"
+        ],
+        [
+          "egg_carton",
+          "croissant",
+          "hand_soap"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "cooking_oil",
+          "egg_carton",
+          "eggplant_long"
+        ],
+        [
+          "eggplant_long",
+          "eclair",
+          "kebab_skewer"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
       "layers": [
         [
           null,
@@ -175,54 +218,17 @@
       ]
     },
     {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "eggplant_long",
-          "egg_carton",
-          "plum"
-        ],
-        [
-          "cooking_oil",
-          "pumpkin",
-          "eclair"
-        ],
-        [
-          "croissant",
-          "chick",
-          "popsicle_twin"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "coffee_can",
-          "plum",
-          "egg_carton"
-        ],
-        [
-          "pumpkin",
-          "pretzel_soft",
-          "pretzel_soft"
-        ]
-      ]
-    },
-    {
       "r": 3,
       "c": 1,
       "layers": [
         [
-          "kebab_skewer",
-          "pretzel_soft",
-          "yogurt"
+          "coffee_can",
+          "coffee_can",
+          "cooking_oil"
         ],
         [
-          "cooking_oil",
-          "pretzel_soft",
+          "egg_carton",
+          "plum",
           "hand_soap"
         ]
       ]
@@ -232,9 +238,19 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "plum",
+          "chick",
+          "chick"
+        ],
+        [
+          "egg_carton",
+          "popsicle_twin",
+          "eggplant_long"
+        ],
+        [
+          "popsicle_twin",
+          "yogurt",
+          "croissant"
         ]
       ]
     }

@@ -5,20 +5,20 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "bagel",
-    "chocolate_bar",
-    "gum_pack",
-    "kebab_skewer",
-    "leek",
+    "cherry_tomato_box",
+    "chocolate_log",
+    "cotton_candy",
+    "crayon_box",
+    "cream_cheese_tub",
+    "gelato_cup",
+    "green_tea",
     "muffin",
-    "mustard",
-    "panda",
-    "pie_slice",
-    "potato",
-    "ribs_rack",
-    "sauce",
-    "sheep_toy",
-    "swiss_roll"
+    "muffin_tray",
+    "oil_can",
+    "shiba_dog",
+    "sub_sandwich",
+    "vinegar",
+    "water"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -33,10 +33,11 @@
       3,
       4
     ],
-    "workspaces": 3,
+    "emptyCubbies": 1,
+    "frontGaps": 9,
     "lockCubbies": 4,
-    "totalGoods": 99,
-    "attempt": 2
+    "totalGoods": 102,
+    "attempt": 57
   },
   "cubbies": [
     {
@@ -45,131 +46,140 @@
       "layers": [
         [
           null,
-          null,
-          null
+          "shiba_dog",
+          "muffin"
+        ],
+        [
+          "cotton_candy",
+          "sub_sandwich",
+          "green_tea"
+        ],
+        [
+          "cream_cheese_tub",
+          "cotton_candy",
+          "crayon_box"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "lock": 1,
       "layers": [
         [
-          "leek",
-          "mustard",
-          "leek"
+          null,
+          "oil_can",
+          "green_tea"
         ],
         [
-          "muffin",
-          "muffin",
-          "sheep_toy"
+          "oil_can",
+          "crayon_box",
+          "crayon_box"
         ],
         [
-          "chocolate_bar",
-          "mustard",
-          "kebab_skewer"
+          "gelato_cup",
+          "chocolate_log",
+          "water"
         ],
         [
-          "sheep_toy",
-          "muffin",
-          "ribs_rack"
+          "cotton_candy",
+          "cherry_tomato_box",
+          "muffin"
         ]
       ]
     },
     {
       "r": 0,
       "c": 2,
-      "lock": 1,
       "layers": [
         [
-          "mustard",
-          "panda",
-          "mustard"
+          null,
+          "muffin_tray",
+          "water"
         ],
         [
-          "sauce",
-          "leek",
-          "potato"
+          "muffin",
+          "gelato_cup",
+          "muffin_tray"
         ],
         [
-          "ribs_rack",
-          "panda",
-          "bagel"
+          "oil_can",
+          "crayon_box",
+          "sub_sandwich"
         ],
         [
-          "sauce",
-          "chocolate_bar",
-          "chocolate_bar"
+          "green_tea",
+          "green_tea",
+          "vinegar"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
-      "lock": 3,
       "layers": [
         [
-          "potato",
-          "chocolate_bar",
-          "ribs_rack"
+          "muffin_tray",
+          "muffin",
+          "gelato_cup"
         ],
         [
-          "sheep_toy",
-          "sauce",
-          "pie_slice"
+          "gelato_cup",
+          "water",
+          "cream_cheese_tub"
         ],
         [
-          "bagel",
-          "gum_pack",
-          "potato"
+          "cherry_tomato_box",
+          "muffin",
+          "cherry_tomato_box"
         ]
       ]
     },
     {
       "r": 1,
       "c": 1,
-      "lock": 3,
       "layers": [
         [
-          "kebab_skewer",
-          "bagel",
-          "mustard"
+          "green_tea",
+          "muffin_tray",
+          "cherry_tomato_box"
         ],
         [
-          "bagel",
-          "pie_slice",
-          "potato"
+          "oil_can",
+          "green_tea",
+          "gelato_cup"
         ],
         [
-          "mustard",
-          "sheep_toy",
-          "mustard"
-        ],
-        [
-          "pie_slice",
-          "chocolate_bar",
-          "panda"
+          "shiba_dog",
+          "sub_sandwich",
+          "sub_sandwich"
         ]
       ]
     },
     {
       "r": 1,
       "c": 2,
+      "lock": 4,
       "layers": [
         [
-          "ribs_rack",
-          "potato",
-          "kebab_skewer"
+          "crayon_box",
+          "muffin_tray",
+          null
         ],
         [
-          "potato",
-          "kebab_skewer",
-          "leek"
+          "cream_cheese_tub",
+          "shiba_dog",
+          "vinegar"
         ],
         [
-          "gum_pack",
-          "swiss_roll",
-          "bagel"
+          "gelato_cup",
+          "cream_cheese_tub",
+          "muffin_tray"
+        ],
+        [
+          "muffin_tray",
+          "shiba_dog",
+          "green_tea"
         ]
       ]
     },
@@ -178,24 +188,19 @@
       "c": 0,
       "layers": [
         [
-          "pie_slice",
-          "potato",
-          "panda"
+          "muffin_tray",
+          "oil_can",
+          "crayon_box"
         ],
         [
-          "panda",
-          "sauce",
-          "leek"
+          "cotton_candy",
+          "shiba_dog",
+          "chocolate_log"
         ],
         [
-          "bagel",
-          "potato",
-          "bagel"
-        ],
-        [
-          "sheep_toy",
-          "chocolate_bar",
-          "gum_pack"
+          "chocolate_log",
+          "shiba_dog",
+          "cotton_candy"
         ]
       ]
     },
@@ -205,35 +210,46 @@
       "lock": 2,
       "layers": [
         [
-          "ribs_rack",
-          "chocolate_bar",
-          "muffin"
+          "green_tea",
+          null,
+          "shiba_dog"
         ],
         [
-          "gum_pack",
-          "kebab_skewer",
-          "sauce"
+          "cherry_tomato_box",
+          "oil_can",
+          "oil_can"
         ],
         [
-          "gum_pack",
-          "muffin",
-          "panda"
+          "chocolate_log",
+          "oil_can",
+          "cream_cheese_tub"
         ],
         [
-          "mustard",
-          "pie_slice",
-          "swiss_roll"
+          "gelato_cup",
+          "green_tea",
+          "vinegar"
         ]
       ]
     },
     {
       "r": 2,
       "c": 2,
+      "lock": 4,
       "layers": [
         [
           null,
           null,
-          null
+          "vinegar"
+        ],
+        [
+          "cherry_tomato_box",
+          "gelato_cup",
+          "water"
+        ],
+        [
+          "vinegar",
+          "cream_cheese_tub",
+          "muffin"
         ]
       ]
     },
@@ -253,24 +269,19 @@
       "c": 1,
       "layers": [
         [
-          "sauce",
-          "sheep_toy",
-          "ribs_rack"
+          "sub_sandwich",
+          "water",
+          "sub_sandwich"
         ],
         [
-          "swiss_roll",
-          "bagel",
-          "ribs_rack"
+          "cotton_candy",
+          "shiba_dog",
+          "gelato_cup"
         ],
         [
-          "ribs_rack",
-          "ribs_rack",
-          "mustard"
-        ],
-        [
-          "bagel",
-          "leek",
-          "swiss_roll"
+          "chocolate_log",
+          "muffin_tray",
+          "sub_sandwich"
         ]
       ]
     },
@@ -279,19 +290,19 @@
       "c": 2,
       "layers": [
         [
-          "potato",
-          "chocolate_bar",
-          "pie_slice"
+          null,
+          "shiba_dog",
+          null
         ],
         [
-          "chocolate_bar",
-          "swiss_roll",
-          "swiss_roll"
+          "sub_sandwich",
+          "sub_sandwich",
+          "water"
         ],
         [
-          "kebab_skewer",
-          "gum_pack",
-          "muffin"
+          "oil_can",
+          "chocolate_log",
+          "vinegar"
         ]
       ]
     }

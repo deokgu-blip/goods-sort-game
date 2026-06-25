@@ -6,18 +6,18 @@
   "cellCap": 3,
   "goods": [
     "broccoli",
-    "burrito",
-    "cactus",
-    "candy_bag",
-    "cantaloupe",
-    "carrot_bunch",
-    "chocolate_log",
-    "cookie_disc",
-    "hot_sauce",
+    "bunny",
+    "cauliflower",
+    "cheese_wheel",
+    "cucumber",
+    "gift_box",
+    "glass_cleaner",
+    "gum_blister",
+    "hot_dog",
+    "melon_green",
     "pie_slice",
     "salt_grinder",
-    "snowcone",
-    "turtle_toy"
+    "smoothie"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -32,36 +32,65 @@
       2,
       3
     ],
-    "workspaces": 3,
+    "emptyCubbies": 1,
+    "frontGaps": 6,
     "lockCubbies": 1,
-    "totalGoods": 66,
-    "attempt": 2
+    "totalGoods": 72,
+    "attempt": 0
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
+      "lock": 1,
       "layers": [
         [
-          "pie_slice",
-          "pie_slice",
-          "cookie_disc"
+          "smoothie",
+          "cauliflower",
+          "glass_cleaner"
         ],
         [
-          "burrito",
-          "pie_slice",
-          "turtle_toy"
-        ],
-        [
-          "carrot_bunch",
-          "cactus",
-          "chocolate_log"
+          "cheese_wheel",
+          "cucumber",
+          "melon_green"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "layers": [
+        [
+          "gift_box",
+          null,
+          "melon_green"
+        ],
+        [
+          "glass_cleaner",
+          "cucumber",
+          "cauliflower"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "hot_dog",
+          "cheese_wheel",
+          "cheese_wheel"
+        ],
+        [
+          "cauliflower",
+          "salt_grinder",
+          "pie_slice"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
       "layers": [
         [
           null,
@@ -71,72 +100,39 @@
       ]
     },
     {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "carrot_bunch",
-          "turtle_toy",
-          "chocolate_log"
-        ],
-        [
-          "hot_sauce",
-          "turtle_toy",
-          "hot_sauce"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "lock": 2,
-      "layers": [
-        [
-          "burrito",
-          "snowcone",
-          "cantaloupe"
-        ],
-        [
-          "hot_sauce",
-          "cactus",
-          "chocolate_log"
-        ]
-      ]
-    },
-    {
       "r": 1,
       "c": 1,
       "layers": [
         [
-          "broccoli",
-          "pie_slice",
-          "cookie_disc"
+          "gum_blister",
+          null,
+          "bunny"
         ],
         [
-          "hot_sauce",
-          "cantaloupe",
-          "candy_bag"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
+          "hot_dog",
+          "bunny",
+          "melon_green"
+        ],
         [
-          "cactus",
-          "carrot_bunch",
+          "hot_dog",
+          "pie_slice",
           "salt_grinder"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "hot_dog",
+          null,
+          "cauliflower"
         ],
         [
-          "cantaloupe",
-          "turtle_toy",
-          "chocolate_log"
-        ],
-        [
-          "carrot_bunch",
-          "pie_slice",
-          "broccoli"
+          "salt_grinder",
+          "smoothie",
+          "pie_slice"
         ]
       ]
     },
@@ -145,9 +141,19 @@
       "c": 0,
       "layers": [
         [
-          null,
-          null,
+          "hot_dog",
+          "cucumber",
           null
+        ],
+        [
+          "bunny",
+          "glass_cleaner",
+          "pie_slice"
+        ],
+        [
+          "gum_blister",
+          "cheese_wheel",
+          "gum_blister"
         ]
       ]
     },
@@ -156,19 +162,14 @@
       "c": 1,
       "layers": [
         [
-          "cookie_disc",
-          "hot_sauce",
-          "turtle_toy"
-        ],
-        [
-          "pie_slice",
-          "burrito",
-          "snowcone"
-        ],
-        [
-          "cantaloupe",
+          null,
           "broccoli",
-          "broccoli"
+          "smoothie"
+        ],
+        [
+          "hot_dog",
+          "glass_cleaner",
+          "smoothie"
         ]
       ]
     },
@@ -177,14 +178,19 @@
       "c": 2,
       "layers": [
         [
-          "hot_sauce",
-          "chocolate_log",
-          "cactus"
+          "glass_cleaner",
+          "melon_green",
+          "gum_blister"
         ],
         [
-          "broccoli",
-          "carrot_bunch",
-          "carrot_bunch"
+          "salt_grinder",
+          "cauliflower",
+          "broccoli"
+        ],
+        [
+          "gift_box",
+          "salt_grinder",
+          "smoothie"
         ]
       ]
     },
@@ -193,19 +199,19 @@
       "c": 0,
       "layers": [
         [
-          "salt_grinder",
-          "broccoli",
-          "cactus"
+          "melon_green",
+          "cucumber",
+          "melon_green"
         ],
         [
-          "candy_bag",
-          "candy_bag",
-          "cactus"
+          "pie_slice",
+          "gift_box",
+          "cheese_wheel"
         ],
         [
-          "chocolate_log",
-          "candy_bag",
-          "candy_bag"
+          "cauliflower",
+          "pie_slice",
+          "broccoli"
         ]
       ]
     },
@@ -214,14 +220,14 @@
       "c": 1,
       "layers": [
         [
-          "salt_grinder",
-          "turtle_toy",
-          "snowcone"
+          "gum_blister",
+          "cucumber",
+          null
         ],
         [
-          "cantaloupe",
-          "candy_bag",
-          "cantaloupe"
+          "glass_cleaner",
+          "smoothie",
+          "cheese_wheel"
         ]
       ]
     },
@@ -230,9 +236,14 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "bunny",
+          "cucumber",
+          "bunny"
+        ],
+        [
+          "bunny",
+          "gum_blister",
+          "salt_grinder"
         ]
       ]
     }

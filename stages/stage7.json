@@ -5,19 +5,19 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "asparagus_bunch",
-    "baguette",
-    "bubble_tea",
-    "candle_tin",
-    "cookie_tin_round",
-    "corn",
-    "icebar_orange",
-    "juice_box",
-    "oil_can",
-    "penguin",
-    "pudding_cup_squat",
-    "soda",
-    "sub_sandwich"
+    "air_freshener",
+    "bread_loaf",
+    "cake_roll_pink",
+    "cake_slice",
+    "cheese_wedge",
+    "cookie_stack",
+    "dino_toy",
+    "dragon_fruit",
+    "kimchi_jar",
+    "persimmon",
+    "santa",
+    "tea_box",
+    "waffle"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -29,13 +29,14 @@
   "_gen": {
     "distinct": 13,
     "depthRange": [
-      2,
+      1,
       2
     ],
-    "workspaces": 3,
+    "emptyCubbies": 1,
+    "frontGaps": 6,
     "lockCubbies": 0,
-    "totalGoods": 54,
-    "attempt": 0
+    "totalGoods": 42,
+    "attempt": 4
   },
   "cubbies": [
     {
@@ -54,14 +55,14 @@
       "c": 1,
       "layers": [
         [
-          "penguin",
-          "sub_sandwich",
-          "oil_can"
+          "air_freshener",
+          "waffle",
+          "kimchi_jar"
         ],
         [
-          "juice_box",
-          "cookie_tin_round",
-          "juice_box"
+          "bread_loaf",
+          "cheese_wedge",
+          "cheese_wedge"
         ]
       ]
     },
@@ -70,8 +71,8 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
+          "kimchi_jar",
+          "tea_box",
           null
         ]
       ]
@@ -81,14 +82,14 @@
       "c": 0,
       "layers": [
         [
-          "sub_sandwich",
-          "soda",
-          "bubble_tea"
+          "cheese_wedge",
+          "dragon_fruit",
+          "cake_slice"
         ],
         [
-          "candle_tin",
-          "juice_box",
-          "icebar_orange"
+          "cookie_stack",
+          "dino_toy",
+          "tea_box"
         ]
       ]
     },
@@ -97,14 +98,9 @@
       "c": 1,
       "layers": [
         [
-          "baguette",
-          "oil_can",
-          "candle_tin"
-        ],
-        [
-          "corn",
-          "pudding_cup_squat",
-          "bubble_tea"
+          "kimchi_jar",
+          "cookie_stack",
+          "santa"
         ]
       ]
     },
@@ -113,14 +109,14 @@
       "c": 2,
       "layers": [
         [
-          "bubble_tea",
-          "sub_sandwich",
-          "pudding_cup_squat"
+          "air_freshener",
+          "persimmon",
+          "bread_loaf"
         ],
         [
-          "juice_box",
-          "asparagus_bunch",
-          "icebar_orange"
+          "cake_roll_pink",
+          "cookie_stack",
+          "dino_toy"
         ]
       ]
     },
@@ -129,14 +125,9 @@
       "c": 0,
       "layers": [
         [
-          "cookie_tin_round",
-          "cookie_tin_round",
-          "asparagus_bunch"
-        ],
-        [
-          "soda",
-          "penguin",
-          "juice_box"
+          "dino_toy",
+          "santa",
+          "bread_loaf"
         ]
       ]
     },
@@ -145,14 +136,9 @@
       "c": 1,
       "layers": [
         [
-          "corn",
-          "cookie_tin_round",
-          "asparagus_bunch"
-        ],
-        [
-          "cookie_tin_round",
-          "candle_tin",
-          "baguette"
+          "tea_box",
+          "waffle",
+          "cake_slice"
         ]
       ]
     },
@@ -161,14 +147,9 @@
       "c": 2,
       "layers": [
         [
-          "corn",
-          "cookie_tin_round",
-          "juice_box"
-        ],
-        [
-          "sub_sandwich",
-          "penguin",
-          "icebar_orange"
+          "santa",
+          null,
+          "santa"
         ]
       ]
     },
@@ -177,41 +158,41 @@
       "c": 0,
       "layers": [
         [
-          "corn",
-          "corn",
-          "baguette"
-        ],
-        [
-          "corn",
-          "penguin",
-          "oil_can"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          "pudding_cup_squat",
-          "sub_sandwich",
-          "sub_sandwich"
-        ],
-        [
-          "soda",
-          "penguin",
-          "penguin"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
-        [
           null,
-          null,
+          "cake_roll_pink",
           null
+        ],
+        [
+          "santa",
+          "dragon_fruit",
+          "dragon_fruit"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "santa",
+          null,
+          "waffle"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          "cake_roll_pink",
+          "air_freshener"
+        ],
+        [
+          "persimmon",
+          "cake_slice",
+          "persimmon"
         ]
       ]
     }

@@ -126,6 +126,19 @@
 
   #game{ position:fixed; inset:0; z-index:1; display:flex; flex-direction:column;
     align-items:center; }
+  /* TUTORIAL stage (level 1): show ONLY the background + the grid — hide top HUD & bottom item bar
+     (user: "레벨1에서는 상하단 UI를 표시하지말고 배경과 그리드만"). The board-wrap (flex:1) then
+     centers the board on the bare background. */
+  body.tut-clean #hud, body.tut-clean #boosters{ display:none !important; }
+  /* TUTORIAL bare empty cells: grid positions with no cubby render NOTHING (no wood frame),
+     so only the filled cubbies float on the background (like the reference mockup). */
+  .cubby.tut-empty{ background:none !important; box-shadow:none !important; visibility:hidden; }
+  /* TUTORIAL: hide the OUTER cabinet (frame + cabinet top) AND the grid's wood lattice background
+     so the filled cubbies float ISOLATED on the bare page background (per-cubby niche walls remain). */
+  body.tut-clean #shelf .frame,
+  body.tut-clean #shelf .frame-top-persp{ display:none !important; }
+  body.tut-clean #shelf .grid{ background:none !important; filter:none !important;
+    box-shadow:none !important; border-radius:0 !important; }
 
   /* ---------------- HUD (reference: a WOOD FRAME bar wrapping the row) ----------------
      [ Lv ]   ·   [ TIMER ]   ·   [ ⏸ ]   +  COMBO gauge overlapping the frame's bottom.
@@ -1943,6 +1956,11 @@
     for (var r=0; r<cfg.rows; r++){
       for (var c=0; c<cfg.cols; c++){
         var cb = byRC[r+'_'+c];
+        // TUTORIAL: empty grid positions render as bare placeholders (keep grid sizing, no frame).
+        if (!cb && cfg.tutorial){
+          var ph = document.createElement('div'); ph.className = 'cubby tut-empty'; ph.dataset.idx = -1;
+          gridEl.appendChild(ph); continue;
+        }
         var el = document.createElement('div');
         el.className = 'cubby';
         el.dataset.idx = cb ? S.cubbies.indexOf(cb) : -1;
@@ -3175,6 +3193,7 @@
     lvNumEl.textContent = level;
     updateComboPill(false);     // reset combo pill to "x0"
     setUrgent(false);           // clear any red-urgency from a prior level
+    document.body.classList.toggle('tut-clean', !!S.cfg.tutorial);   // L1 tutorial: hide HUD/item bar
     closePopup();
     buildBoard();
     updateTimer();
@@ -3318,6 +3337,9 @@
     if (S.level !== 1 || S.over) return;
     if (tutorialDone()) return;
     setTutorialDone();
+    // DEDICATED clean tutorial stage (cfg.tutorial: no HUD, isolated cubbies) — no welcome card,
+    // just the finger coachmark demonstrating the drag right on the board (matches the mockup).
+    if (S.cfg.tutorial){ setTimeout(startTutorHand, 450); return; }
     S.paused = true;                                   // hold the timer during the welcome card
     popupBox.innerHTML =
       '<div class="card onboard tut">' +

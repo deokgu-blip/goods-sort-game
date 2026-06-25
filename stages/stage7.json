@@ -5,9 +5,10 @@
   "rows": 3,
   "cellCap": 3,
   "goods": [
-    "bagel",
-    "cheese_wedge",
-    "snack"
+    "cake_slice",
+    "candy_bag",
+    "gravy_boat",
+    "teddy_bear"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -17,14 +18,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 3,
+    "distinct": 4,
     "depthRange": [
-      2,
+      1,
       2
     ],
     "workspaces": 2,
     "lockCubbies": 0,
-    "totalGoods": 42,
+    "totalGoods": 30,
     "attempt": 0
   },
   "cubbies": [
@@ -33,47 +34,15 @@
       "c": 0,
       "layers": [
         [
-          null,
-          null,
-          null
+          "cake_slice",
+          "teddy_bear",
+          "teddy_bear"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
-      "layers": [
-        [
-          "bagel",
-          "cheese_wedge",
-          "snack"
-        ],
-        [
-          "snack",
-          "bagel",
-          "cheese_wedge"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "bagel",
-          "snack",
-          "snack"
-        ],
-        [
-          "cheese_wedge",
-          "snack",
-          "bagel"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
       "layers": [
         [
           null,
@@ -83,18 +52,45 @@
       ]
     },
     {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "gravy_boat",
+          "gravy_boat",
+          "cake_slice"
+        ],
+        [
+          "gravy_boat",
+          "candy_bag",
+          "gravy_boat"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "gravy_boat",
+          "teddy_bear",
+          "cake_slice"
+        ]
+      ]
+    },
+    {
       "r": 1,
       "c": 1,
       "layers": [
         [
-          "bagel",
-          "bagel",
-          "cheese_wedge"
+          "teddy_bear",
+          "candy_bag",
+          "cake_slice"
         ],
         [
-          "cheese_wedge",
-          "cheese_wedge",
-          "snack"
+          "gravy_boat",
+          "candy_bag",
+          "candy_bag"
         ]
       ]
     },
@@ -103,14 +99,9 @@
       "c": 2,
       "layers": [
         [
-          "bagel",
-          "bagel",
-          "bagel"
-        ],
-        [
-          "bagel",
-          "snack",
-          "bagel"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -119,14 +110,9 @@
       "c": 0,
       "layers": [
         [
-          "cheese_wedge",
-          "cheese_wedge",
-          "snack"
-        ],
-        [
-          "snack",
-          "cheese_wedge",
-          "snack"
+          "candy_bag",
+          "gravy_boat",
+          "teddy_bear"
         ]
       ]
     },
@@ -135,14 +121,14 @@
       "c": 1,
       "layers": [
         [
-          "snack",
-          "bagel",
-          "cheese_wedge"
+          "gravy_boat",
+          "cake_slice",
+          "teddy_bear"
         ],
         [
-          "bagel",
-          "bagel",
-          "cheese_wedge"
+          "teddy_bear",
+          "candy_bag",
+          "teddy_bear"
         ]
       ]
     },
@@ -151,14 +137,9 @@
       "c": 2,
       "layers": [
         [
-          "cheese_wedge",
-          "snack",
-          "cheese_wedge"
-        ],
-        [
-          "cheese_wedge",
-          "bagel",
-          "cheese_wedge"
+          "teddy_bear",
+          "cake_slice",
+          "gravy_boat"
         ]
       ]
     }

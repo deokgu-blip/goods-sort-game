@@ -90,6 +90,7 @@ async function makePage(){
   await page.evaluateOnNewDocument(() => {
     window.__emits = [];
     window.__NO_STAGE_FETCH = true;   // pin the EMBEDDED V17 stage (skip the live 100-stage fetch)
+    window.__NO_TUTORIAL = true;      // skip the first-play coachmark (it would pause level 1)
     window.flutter_inappwebview = {
       callHandler: function(handler, msg){ window.__emits.push({ handler, msg }); return Promise.resolve(); }
     };

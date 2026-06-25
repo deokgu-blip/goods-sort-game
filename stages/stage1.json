@@ -1,12 +1,13 @@
 {
   "level": 1,
   "timeLimit": 360,
-  "cols": 2,
-  "rows": 2,
+  "cols": 3,
+  "rows": 3,
   "cellCap": 3,
   "goods": [
-    "muffin",
-    "tomato"
+    "chocolate_log",
+    "red_onion",
+    "snowcone"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -16,14 +17,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 2,
+    "distinct": 3,
     "depthRange": [
-      2,
-      2
+      1,
+      1
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 0,
-    "totalGoods": 12,
+    "totalGoods": 18,
     "attempt": 0
   },
   "cubbies": [
@@ -32,9 +33,9 @@
       "c": 0,
       "layers": [
         [
-          null,
-          null,
-          null
+          "chocolate_log",
+          "snowcone",
+          "red_onion"
         ]
       ]
     },
@@ -43,19 +44,58 @@
       "c": 1,
       "layers": [
         [
-          "tomato",
-          "muffin",
-          "muffin"
-        ],
+          "red_onion",
+          "red_onion",
+          "chocolate_log"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
         [
-          "muffin",
-          "muffin",
-          "tomato"
+          null,
+          null,
+          null
         ]
       ]
     },
     {
       "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "chocolate_log",
+          "red_onion",
+          "chocolate_log"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "snowcone",
+          "red_onion",
+          "snowcone"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
       "c": 0,
       "layers": [
         [
@@ -66,18 +106,24 @@
       ]
     },
     {
-      "r": 1,
+      "r": 2,
       "c": 1,
       "layers": [
         [
-          "tomato",
-          "tomato",
-          "tomato"
-        ],
+          "chocolate_log",
+          "chocolate_log",
+          "snowcone"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
         [
-          "tomato",
-          "muffin",
-          "muffin"
+          "snowcone",
+          "red_onion",
+          "snowcone"
         ]
       ]
     }

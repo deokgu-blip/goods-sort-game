@@ -1,12 +1,13 @@
 {
   "level": 2,
   "timeLimit": 360,
-  "cols": 2,
-  "rows": 2,
+  "cols": 3,
+  "rows": 3,
   "cellCap": 3,
   "goods": [
-    "frozen_tub",
-    "pretzel_bag"
+    "bagel",
+    "glass_cleaner",
+    "penguin"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -16,14 +17,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 2,
+    "distinct": 3,
     "depthRange": [
-      2,
-      2
+      1,
+      1
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 0,
-    "totalGoods": 12,
+    "totalGoods": 18,
     "attempt": 0
   },
   "cubbies": [
@@ -32,14 +33,9 @@
       "c": 0,
       "layers": [
         [
-          "pretzel_bag",
-          "frozen_tub",
-          "pretzel_bag"
-        ],
-        [
-          "frozen_tub",
-          "pretzel_bag",
-          "pretzel_bag"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -48,9 +44,20 @@
       "c": 1,
       "layers": [
         [
-          null,
-          null,
-          null
+          "penguin",
+          "penguin",
+          "glass_cleaner"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "bagel",
+          "penguin",
+          "glass_cleaner"
         ]
       ]
     },
@@ -70,14 +77,53 @@
       "c": 1,
       "layers": [
         [
-          "frozen_tub",
-          "pretzel_bag",
-          "frozen_tub"
-        ],
+          "penguin",
+          "glass_cleaner",
+          "bagel"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
         [
-          "frozen_tub",
-          "frozen_tub",
-          "pretzel_bag"
+          "penguin",
+          "bagel",
+          "glass_cleaner"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "glass_cleaner",
+          "penguin",
+          "glass_cleaner"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "bagel",
+          "bagel",
+          "bagel"
         ]
       ]
     }

@@ -5,10 +5,11 @@
   "rows": 3,
   "cellCap": 3,
   "goods": [
-    "banana",
-    "cookie_box",
-    "gingerbread",
-    "whale_toy"
+    "bunny",
+    "butter_tub",
+    "coffee_can",
+    "hot_dog",
+    "pumpkin"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -18,14 +19,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 4,
+    "distinct": 5,
     "depthRange": [
-      2,
+      1,
       2
     ],
     "workspaces": 2,
     "lockCubbies": 0,
-    "totalGoods": 42,
+    "totalGoods": 36,
     "attempt": 0
   },
   "cubbies": [
@@ -34,22 +35,6 @@
       "c": 0,
       "layers": [
         [
-          "whale_toy",
-          "banana",
-          "gingerbread"
-        ],
-        [
-          "whale_toy",
-          "banana",
-          "whale_toy"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 1,
-      "layers": [
-        [
           null,
           null,
           null
@@ -58,17 +43,28 @@
     },
     {
       "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "hot_dog",
+          "bunny",
+          "pumpkin"
+        ],
+        [
+          "coffee_can",
+          "butter_tub",
+          "pumpkin"
+        ]
+      ]
+    },
+    {
+      "r": 0,
       "c": 2,
       "layers": [
         [
-          "gingerbread",
-          "cookie_box",
-          "banana"
-        ],
-        [
-          "cookie_box",
-          "banana",
-          "whale_toy"
+          "bunny",
+          "coffee_can",
+          "bunny"
         ]
       ]
     },
@@ -77,14 +73,14 @@
       "c": 0,
       "layers": [
         [
-          "gingerbread",
-          "banana",
-          "banana"
+          "bunny",
+          "hot_dog",
+          "coffee_can"
         ],
         [
-          "banana",
-          "whale_toy",
-          "gingerbread"
+          "hot_dog",
+          "hot_dog",
+          "bunny"
         ]
       ]
     },
@@ -93,14 +89,14 @@
       "c": 1,
       "layers": [
         [
-          "cookie_box",
-          "cookie_box",
-          "banana"
+          "hot_dog",
+          "pumpkin",
+          "hot_dog"
         ],
         [
-          "cookie_box",
-          "gingerbread",
-          "whale_toy"
+          "coffee_can",
+          "coffee_can",
+          "bunny"
         ]
       ]
     },
@@ -109,57 +105,52 @@
       "c": 2,
       "layers": [
         [
-          "whale_toy",
-          "cookie_box",
-          "gingerbread"
-        ],
-        [
-          "cookie_box",
-          "whale_toy",
-          "banana"
+          "pumpkin",
+          "hot_dog",
+          "bunny"
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
+      "layers": [
+        [
+          "butter_tub",
+          "coffee_can",
+          "bunny"
+        ],
+        [
+          "bunny",
+          "hot_dog",
+          "butter_tub"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "hot_dog",
+          "butter_tub",
+          "butter_tub"
+        ],
+        [
+          "butter_tub",
+          "pumpkin",
+          "pumpkin"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
       "layers": [
         [
           null,
           null,
           null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "whale_toy",
-          "banana",
-          "banana"
-        ],
-        [
-          "banana",
-          "whale_toy",
-          "cookie_box"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "whale_toy",
-          "gingerbread",
-          "cookie_box"
-        ],
-        [
-          "gingerbread",
-          "whale_toy",
-          "gingerbread"
         ]
       ]
     }

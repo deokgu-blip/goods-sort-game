@@ -588,6 +588,14 @@
     58% { transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-4%)  scale(calc(var(--gs,1) * 1.04)); }
     100%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-16%) scale(calc(var(--gs,1) * 0.05)); opacity:0; }  /* 뿅 */
   }
+  /* "뿅" POOF — a small, soft white puff (+ a few tiny dots) at each good's vanish point.
+     Deliberately subtle: small, fast, semi-transparent — reads as a gentle pop, not a burst. */
+  .pop-puff{ position:fixed; width:40px; height:40px; margin:-20px 0 0 -20px; border-radius:50%;
+    pointer-events:none; z-index:38;
+    background:radial-gradient(circle, rgba(255,255,255,.9) 0%, rgba(255,248,228,.46) 46%, rgba(255,240,210,0) 72%); }
+  @keyframes popPuff{ 0%{ transform:scale(.35); opacity:0; } 26%{ opacity:.78; } 100%{ transform:scale(1.15); opacity:0; } }
+  .pop-dot{ position:fixed; width:6px; height:6px; margin:-3px 0 0 -3px; border-radius:50%; pointer-events:none; z-index:38;
+    background:#fff7e0; box-shadow:0 0 4px rgba(255,228,164,.85); opacity:.9; }
   /* REVEAL (스르륵) — when the front layer empties, the back row glides FORWARD smoothly:
      it starts deeper/smaller/dimmer (behind) and slides forward to the front, brightening,
      with a soft ease-out (no bounce) so it reads as a gentle forward slide. */
@@ -871,6 +879,15 @@
   @keyframes obPop{ 0%{transform:scale(.3) rotate(-12deg); opacity:0;} 100%{transform:scale(1);} }
   .card.onboard .ob-name{ font-weight:900; font-size:21px; color:#5a3a14; }
   .card.onboard .ob-desc{ font-size:14px; color:#7a5a32; text-align:center; line-height:1.35; }
+  .card.onboard .tut-emoji{ font-size:60px; line-height:1; margin:2px 0 0;
+    animation:obPop .5s cubic-bezier(.34,1.56,.64,1); }
+  /* first-play coachmark: a finger that demonstrates the drag + a caption bubble */
+  .tutor-hand{ position:fixed; z-index:55; pointer-events:none; font-size:38px; line-height:1;
+    filter:drop-shadow(0 3px 3px rgba(0,0,0,.4)); will-change:left,top,transform,opacity; opacity:0; }
+  .tutor-cap{ position:fixed; left:50%; bottom:132px; transform:translateX(-50%); z-index:55; pointer-events:none;
+    background:rgba(42,27,12,.88); color:#ffe9c2; font-weight:800; font-size:14px; padding:9px 16px; border-radius:18px;
+    box-shadow:0 4px 12px rgba(0,0,0,.32); white-space:nowrap; animation:capFade .3s ease-out; }
+  @keyframes capFade{ 0%{opacity:0; transform:translateX(-50%) translateY(8px);} 100%{opacity:1; transform:translateX(-50%) translateY(0);} }
   .card.onboard .ob-ok{ margin-top:8px; width:64%; height:48px; border-radius:24px; cursor:pointer; pointer-events:auto;
     display:flex; align-items:center; justify-content:center;
     background:linear-gradient(#82dd5a,#4cae31); border:3px solid #fff;
@@ -1504,21 +1521,26 @@
   // present (the test harness pins the EMBEDDED V17 stage for its assertions) and offline.
   // On resolve, rebuild the CURRENT level from the freshly-loaded set (the initial board
   // builds synchronously from EMBEDDED, then swaps to the fetched stage).
+  // __stagesSettled: true once the live stage data is in place (or known absent). The first-play
+  // tutorial waits for this so it shows on the LIVE stage, not the throwaway embedded boot stage.
   var __stagesReady = (function(){
+    function settle(n){
+      window.__stagesSettled = true;
+      if (typeof startLevelFn === 'function' && typeof S !== 'undefined' && !S.over){ try { startLevelFn(S.level); } catch(e){} }
+      return n > 0;
+    }
     try {
-      if (window.__NO_STAGE_FETCH || /[?&]embed\b/.test(location.search)) return Promise.resolve(false);
-      if (location.protocol !== 'http:' && location.protocol !== 'https:') return Promise.resolve(false);
+      if (window.__NO_STAGE_FETCH || /[?&]embed\b/.test(location.search)){ window.__stagesSettled = true; return Promise.resolve(false); }
+      if (location.protocol !== 'http:' && location.protocol !== 'https:'){ window.__stagesSettled = true; return Promise.resolve(false); }
       return fetch('../stages/all_stages.json', { cache: 'no-store' })
         .then(function(r){ return r.ok ? r.json() : null; })
         .then(function(m){
-          if (!m || typeof m !== 'object') return false;
-          window.__STAGES = window.__STAGES || {};
-          var n = 0; for (var k in m){ if (m[k] && m[k].cubbies){ window.__STAGES[k] = m[k]; n++; } }
-          if (n && typeof startLevelFn === 'function' && typeof S !== 'undefined' && !S.over){ try { startLevelFn(S.level); } catch(e){} }
-          return n > 0;
+          var n = 0;
+          if (m && typeof m === 'object'){ window.__STAGES = window.__STAGES || {}; for (var k in m){ if (m[k] && m[k].cubbies){ window.__STAGES[k] = m[k]; n++; } } }
+          return settle(n);
         })
-        .catch(function(){ return false; });
-    } catch(e){ return Promise.resolve(false); }
+        .catch(function(){ return settle(0); });
+    } catch(e){ window.__stagesSettled = true; return Promise.resolve(false); }
   })();
 
   // =============================================================
@@ -2224,7 +2246,12 @@
     // BOUNCE + POP (뿅): the 3 matched goods bounce up together then pop out (CSS goodPop).
     if (cb.floor){
       var goods = cb.floor.querySelectorAll('.good');
-      goods.forEach(function(g){ g.classList.add('popping'); });
+      goods.forEach(function(g){
+        g.classList.add('popping');
+        var gr = g.getBoundingClientRect();                 // resting position (captured at frame 0)
+        var px = gr.left + gr.width/2, py = gr.top + gr.height*0.46;
+        setTimeout(function(){ popPuff(px, py); }, 175);     // poof exactly at the "뿅" vanish moment
+      });
     }
     // DATA is updated SYNCHRONOUSLY (single source of truth): null out all 3 front
     // slots, then if a back layer exists drop the empty front so the back becomes the
@@ -2369,6 +2396,29 @@
     fxEl.appendChild(b);
     setTimeout(function(){ b.remove(); }, 1150);
   }
+  // subtle "뿅" poof at a single good's vanish point: a soft puff + a few tiny dots.
+  function popPuff(x, y){
+    var p = document.createElement('div'); p.className='pop-puff';
+    p.style.left=x+'px'; p.style.top=y+'px';
+    p.style.animation='popPuff .32s ease-out forwards';
+    fxEl.appendChild(p);
+    setTimeout(function(){ p.remove(); }, 340);
+    for (var i=0;i<4;i++){
+      (function(i){
+        var d = document.createElement('div'); d.className='pop-dot';
+        d.style.left=x+'px'; d.style.top=y+'px';
+        fxEl.appendChild(d);
+        var ang = (Math.PI*2)*(i/4) + 0.5, dist = 13 + Math.random()*9;
+        requestAnimationFrame(function(){
+          d.style.transition='transform .3s ease-out, opacity .3s ease-out';
+          d.style.transform='translate('+Math.cos(ang)*dist+'px,'+Math.sin(ang)*dist+'px) scale(.3)';
+          d.style.opacity='0';
+        });
+        setTimeout(function(){ d.remove(); }, 320);
+      })(i);
+    }
+  }
+  window.__firePuff = popPuff;   // QA/screenshot hook (engine fires it on real clears)
   function sparkleRing(x, y){
     var ring = document.createElement('div'); ring.className='spark-ring';
     ring.style.left=x+'px'; ring.style.top=y+'px';
@@ -2602,6 +2652,7 @@
   // pointer handlers
   function onDown(ev){
     if (S.paused || S.over) return;
+    if (tutorHandEl) clearTutorHand();                 // first interaction dismisses the coachmark
     var p = pt(ev);
     // HIT-TEST by SLOT (Fix #2): map the pointer to the slot column under it and
     // grab THAT slot's FRONT good — never a visually-overlapping neighbor/back good.
@@ -3108,6 +3159,7 @@
     document.body.classList.remove('frozen');
     renderItems();
     maybeOnboard();
+    maybeGameTutorial();
   }
 
   // =============================================================
@@ -3222,6 +3274,86 @@
     document.getElementById('obOk').addEventListener('click', function(){
       haptic('btn'); closePopup(); S.paused=false; S.lastTick=performance.now();
     });
+  }
+
+  // ---- FIRST-PLAY gameplay tutorial (stage 1 only, once) -------------------
+  // A welcome card explains the goal, then a looping finger coachmark demonstrates
+  // the drag on the real board. Auto-dismisses on first interaction or after 3 loops.
+  function tutorialDone(){ try{ return localStorage.getItem('gs_tutorial_done')==='1'; }catch(e){ return false; } }
+  function setTutorialDone(){ try{ localStorage.setItem('gs_tutorial_done','1'); }catch(e){} }
+  var tutorHandEl=null, tutorCapEl=null, tutorLoop=null;
+  function clearTutorHand(){
+    if (tutorLoop){ clearTimeout(tutorLoop); tutorLoop=null; }
+    if (tutorHandEl){ tutorHandEl.remove(); tutorHandEl=null; }
+    if (tutorCapEl){ tutorCapEl.remove(); tutorCapEl=null; }
+  }
+  function maybeGameTutorial(){
+    if (window.__NO_TUTORIAL) return;                  // verify/screenshot harnesses skip the coachmark
+    if (!window.__stagesSettled) return;               // wait for the LIVE stage (skip the embedded boot pass)
+    if (S.level !== 1 || S.over) return;
+    if (tutorialDone()) return;
+    setTutorialDone();
+    S.paused = true;                                   // hold the timer during the welcome card
+    popupBox.innerHTML =
+      '<div class="card onboard tut">' +
+        '<div class="ob-title">HOW TO PLAY</div>' +
+        '<div class="tut-emoji">🛒</div>' +
+        '<div class="ob-name">같은 굿즈 3개 모으기!</div>' +
+        '<div class="ob-desc">굿즈를 끌어다 <b>같은 굿즈</b> 위에 올려<br>한 칸에 <b>3개</b>를 채우면 정리돼요.<br>빈 칸을 잘 써서 모두 정리해 보세요!</div>' +
+        '<div class="ibtn ob-ok" id="tutOk">시작하기</div>' +
+      '</div>';
+    overlay.classList.add('on');
+    document.getElementById('tutOk').addEventListener('click', function(){
+      haptic('btn'); closePopup(); S.paused=false; S.lastTick=performance.now();
+      setTimeout(startTutorHand, 250);
+    });
+  }
+  function tutorFrontTop(cb){ var f=frontLayer(cb); if(!f) return null; for(var i=0;i<SLOTS;i++) if(f[i]) return f[i]; return null; }
+  function tutorHintPair(){
+    var cbs = S.cubbies, src=null, tgt=null, i;
+    for (i=0;i<cbs.length;i++){ if (cbs[i].el && tutorFrontTop(cbs[i])){ src=cbs[i]; break; } }
+    if (!src) return null;
+    var g = tutorFrontTop(src);
+    for (i=0;i<cbs.length;i++){ if (cbs[i]!==src && cbs[i].el && tutorFrontTop(cbs[i])===g){ tgt=cbs[i]; break; } }
+    if (!tgt){ for (i=0;i<cbs.length;i++){ if (cbs[i]!==src && cbs[i].el){ tgt=cbs[i]; break; } } }
+    return tgt ? { src:src, tgt:tgt } : null;
+  }
+  function startTutorHand(){
+    if (S.over || S.level!==1) return;
+    var pair = tutorHintPair(); if (!pair) return;
+    clearTutorHand();
+    var hand = document.createElement('div'); hand.className='tutor-hand'; hand.textContent='👆';
+    fxEl.appendChild(hand); tutorHandEl=hand;
+    var cap = document.createElement('div'); cap.className='tutor-cap'; cap.textContent='끌어서 같은 굿즈끼리 모아요';
+    document.body.appendChild(cap); tutorCapEl=cap;
+    var n=0;
+    function center(el){ var r=el.getBoundingClientRect(); return { x:r.left+r.width/2, y:r.top+r.height/2 }; }
+    function playOnce(){
+      if (!tutorHandEl) return;
+      var a=center(pair.src.el), b=center(pair.tgt.el);
+      hand.style.transition='none'; hand.style.opacity='0';
+      hand.style.left=a.x+'px'; hand.style.top=a.y+'px';
+      hand.style.transform='translate(-28%,2%) scale(1)';
+      requestAnimationFrame(function(){
+        hand.style.transition='opacity .2s ease-out';
+        hand.style.opacity='1';
+        setTimeout(function(){                         // press down
+          hand.style.transition='transform .16s ease-out';
+          hand.style.transform='translate(-28%,2%) scale(.84)';
+          setTimeout(function(){                        // drag to target
+            hand.style.transition='left .72s cubic-bezier(.4,.1,.3,1), top .72s cubic-bezier(.4,.1,.3,1)';
+            hand.style.left=b.x+'px'; hand.style.top=b.y+'px';
+            setTimeout(function(){                       // release + fade out
+              hand.style.transition='transform .15s ease-out, opacity .3s ease-out';
+              hand.style.transform='translate(-28%,2%) scale(1)';
+              hand.style.opacity='0';
+              tutorLoop=setTimeout(function(){ if (++n<3 && tutorHandEl) playOnce(); else clearTutorHand(); }, 520);
+            }, 760);
+          }, 250);
+        }, 260);
+      });
+    }
+    playOnce();
   }
 
   // host -> game

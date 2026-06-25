@@ -1,12 +1,13 @@
 {
   "level": 3,
   "timeLimit": 360,
-  "cols": 2,
-  "rows": 2,
+  "cols": 3,
+  "rows": 3,
   "cellCap": 3,
   "goods": [
-    "icebar_choco",
-    "pomegranate"
+    "gelato_cup",
+    "hot_dog",
+    "pretzel_bag"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -16,14 +17,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 2,
+    "distinct": 3,
     "depthRange": [
-      2,
-      2
+      1,
+      1
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 0,
-    "totalGoods": 12,
+    "totalGoods": 18,
     "attempt": 0
   },
   "cubbies": [
@@ -32,9 +33,9 @@
       "c": 0,
       "layers": [
         [
-          null,
-          null,
-          null
+          "hot_dog",
+          "hot_dog",
+          "hot_dog"
         ]
       ]
     },
@@ -43,19 +44,58 @@
       "c": 1,
       "layers": [
         [
-          "pomegranate",
-          "icebar_choco",
-          "pomegranate"
-        ],
+          "pretzel_bag",
+          "gelato_cup",
+          "gelato_cup"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
         [
-          "icebar_choco",
-          "pomegranate",
-          "icebar_choco"
+          null,
+          null,
+          null
         ]
       ]
     },
     {
       "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "gelato_cup",
+          "gelato_cup",
+          "gelato_cup"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "pretzel_bag",
+          "hot_dog",
+          "pretzel_bag"
+        ]
+      ]
+    },
+    {
+      "r": 2,
       "c": 0,
       "layers": [
         [
@@ -66,18 +106,24 @@
       ]
     },
     {
-      "r": 1,
+      "r": 2,
       "c": 1,
       "layers": [
         [
-          "pomegranate",
-          "icebar_choco",
-          "pomegranate"
-        ],
+          "pretzel_bag",
+          "hot_dog",
+          "hot_dog"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
         [
-          "icebar_choco",
-          "pomegranate",
-          "icebar_choco"
+          "pretzel_bag",
+          "gelato_cup",
+          "pretzel_bag"
         ]
       ]
     }

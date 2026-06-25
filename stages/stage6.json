@@ -5,9 +5,10 @@
   "rows": 3,
   "cellCap": 3,
   "goods": [
-    "icecream_cup",
-    "pretzel_bag",
-    "tea_tin_round"
+    "cupcake_choco",
+    "icebar_a",
+    "muffin_tray",
+    "penguin"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -17,14 +18,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 3,
+    "distinct": 4,
     "depthRange": [
-      2,
+      1,
       2
     ],
     "workspaces": 2,
     "lockCubbies": 0,
-    "totalGoods": 42,
+    "totalGoods": 33,
     "attempt": 0
   },
   "cubbies": [
@@ -33,20 +34,80 @@
       "c": 0,
       "layers": [
         [
-          "tea_tin_round",
-          "pretzel_bag",
-          "tea_tin_round"
-        ],
-        [
-          "pretzel_bag",
-          "pretzel_bag",
-          "tea_tin_round"
+          null,
+          null,
+          null
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "layers": [
+        [
+          "muffin_tray",
+          "muffin_tray",
+          "cupcake_choco"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "cupcake_choco",
+          "muffin_tray",
+          "penguin"
+        ],
+        [
+          "penguin",
+          "icebar_a",
+          "penguin"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "muffin_tray",
+          "muffin_tray",
+          "icebar_a"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "penguin",
+          "cupcake_choco",
+          "cupcake_choco"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "penguin",
+          "cupcake_choco",
+          "icebar_a"
+        ],
+        [
+          "cupcake_choco",
+          "icebar_a",
+          "muffin_tray"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
       "layers": [
         [
           null,
@@ -56,93 +117,18 @@
       ]
     },
     {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "tea_tin_round",
-          "icecream_cup",
-          "tea_tin_round"
-        ],
-        [
-          "icecream_cup",
-          "icecream_cup",
-          "pretzel_bag"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "pretzel_bag",
-          "pretzel_bag",
-          "icecream_cup"
-        ],
-        [
-          "icecream_cup",
-          "pretzel_bag",
-          "icecream_cup"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "icecream_cup",
-          "pretzel_bag",
-          "pretzel_bag"
-        ],
-        [
-          "icecream_cup",
-          "icecream_cup",
-          "icecream_cup"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "tea_tin_round",
-          "icecream_cup",
-          "pretzel_bag"
-        ],
-        [
-          "icecream_cup",
-          "tea_tin_round",
-          "pretzel_bag"
-        ]
-      ]
-    },
-    {
       "r": 2,
       "c": 1,
       "layers": [
         [
-          "icecream_cup",
-          "tea_tin_round",
-          "tea_tin_round"
+          "cupcake_choco",
+          "icebar_a",
+          "penguin"
         ],
         [
-          "pretzel_bag",
-          "tea_tin_round",
-          "icecream_cup"
+          "muffin_tray",
+          "icebar_a",
+          "cupcake_choco"
         ]
       ]
     },
@@ -151,14 +137,14 @@
       "c": 2,
       "layers": [
         [
-          "pretzel_bag",
-          "tea_tin_round",
-          "pretzel_bag"
+          "muffin_tray",
+          "penguin",
+          "penguin"
         ],
         [
-          "pretzel_bag",
-          "icecream_cup",
-          "tea_tin_round"
+          "muffin_tray",
+          "cupcake_choco",
+          "penguin"
         ]
       ]
     }

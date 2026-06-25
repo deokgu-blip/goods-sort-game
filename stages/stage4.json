@@ -1,13 +1,14 @@
 {
   "level": 4,
   "timeLimit": 360,
-  "cols": 2,
-  "rows": 2,
+  "cols": 3,
+  "rows": 3,
   "cellCap": 3,
   "goods": [
-    "banana_bunch",
-    "icebar_a",
-    "octopus_toy"
+    "bagel",
+    "elephant_toy",
+    "green_tea",
+    "soap_bar"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -17,14 +18,14 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 3,
+    "distinct": 4,
     "depthRange": [
-      2,
-      2
+      1,
+      1
     ],
-    "workspaces": 2,
+    "workspaces": 3,
     "lockCubbies": 0,
-    "totalGoods": 12,
+    "totalGoods": 18,
     "attempt": 0
   },
   "cubbies": [
@@ -33,9 +34,9 @@
       "c": 0,
       "layers": [
         [
-          null,
-          null,
-          null
+          "bagel",
+          "green_tea",
+          "elephant_toy"
         ]
       ]
     },
@@ -44,9 +45,20 @@
       "c": 1,
       "layers": [
         [
-          null,
-          null,
-          null
+          "green_tea",
+          "bagel",
+          "bagel"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "elephant_toy",
+          "soap_bar",
+          "soap_bar"
         ]
       ]
     },
@@ -55,14 +67,9 @@
       "c": 0,
       "layers": [
         [
-          "icebar_a",
-          "icebar_a",
-          "octopus_toy"
-        ],
-        [
-          "banana_bunch",
-          "icebar_a",
-          "octopus_toy"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -71,14 +78,53 @@
       "c": 1,
       "layers": [
         [
-          "icebar_a",
-          "banana_bunch",
-          "banana_bunch"
-        ],
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
         [
-          "icebar_a",
-          "octopus_toy",
-          "icebar_a"
+          "bagel",
+          "bagel",
+          "green_tea"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "elephant_toy",
+          "green_tea",
+          "green_tea"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "bagel",
+          "green_tea",
+          "soap_bar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
         ]
       ]
     }

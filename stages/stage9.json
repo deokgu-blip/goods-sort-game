@@ -5,10 +5,11 @@
   "rows": 3,
   "cellCap": 3,
   "goods": [
-    "bagel",
-    "popcorn_bag",
-    "robot_toy",
-    "yogurt"
+    "bread_loaf",
+    "chocolate_log",
+    "icebar_choco",
+    "macaron",
+    "teddy_bear"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -18,15 +19,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 4,
+    "distinct": 5,
     "depthRange": [
-      2,
+      1,
       2
     ],
     "workspaces": 2,
     "lockCubbies": 0,
-    "totalGoods": 42,
-    "attempt": 0
+    "totalGoods": 33,
+    "attempt": 1
   },
   "cubbies": [
     {
@@ -34,14 +35,9 @@
       "c": 0,
       "layers": [
         [
-          "yogurt",
-          "robot_toy",
-          "popcorn_bag"
-        ],
-        [
-          "popcorn_bag",
-          "robot_toy",
-          "robot_toy"
+          "icebar_choco",
+          "teddy_bear",
+          "chocolate_log"
         ]
       ]
     },
@@ -61,14 +57,14 @@
       "c": 2,
       "layers": [
         [
-          "bagel",
-          "bagel",
-          "bagel"
+          "teddy_bear",
+          "bread_loaf",
+          "icebar_choco"
         ],
         [
-          "robot_toy",
-          "bagel",
-          "robot_toy"
+          "icebar_choco",
+          "macaron",
+          "icebar_choco"
         ]
       ]
     },
@@ -77,14 +73,9 @@
       "c": 0,
       "layers": [
         [
-          "popcorn_bag",
-          "robot_toy",
-          "popcorn_bag"
-        ],
-        [
-          "bagel",
-          "robot_toy",
-          "robot_toy"
+          "teddy_bear",
+          "macaron",
+          "macaron"
         ]
       ]
     },
@@ -93,36 +84,15 @@
       "c": 1,
       "layers": [
         [
-          "robot_toy",
-          "popcorn_bag",
-          "popcorn_bag"
-        ],
-        [
-          "yogurt",
-          "bagel",
-          "yogurt"
+          "bread_loaf",
+          "teddy_bear",
+          "teddy_bear"
         ]
       ]
     },
     {
       "r": 1,
       "c": 2,
-      "layers": [
-        [
-          "popcorn_bag",
-          "popcorn_bag",
-          "popcorn_bag"
-        ],
-        [
-          "popcorn_bag",
-          "yogurt",
-          "robot_toy"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
       "layers": [
         [
           null,
@@ -133,17 +103,33 @@
     },
     {
       "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "bread_loaf",
+          "chocolate_log",
+          "icebar_choco"
+        ],
+        [
+          "chocolate_log",
+          "icebar_choco",
+          "bread_loaf"
+        ]
+      ]
+    },
+    {
+      "r": 2,
       "c": 1,
       "layers": [
         [
-          "yogurt",
-          "robot_toy",
-          "bagel"
+          "icebar_choco",
+          "icebar_choco",
+          "macaron"
         ],
         [
-          "yogurt",
-          "popcorn_bag",
-          "popcorn_bag"
+          "chocolate_log",
+          "bread_loaf",
+          "chocolate_log"
         ]
       ]
     },
@@ -152,14 +138,14 @@
       "c": 2,
       "layers": [
         [
-          "yogurt",
-          "bagel",
-          "yogurt"
+          "teddy_bear",
+          "icebar_choco",
+          "macaron"
         ],
         [
-          "robot_toy",
-          "yogurt",
-          "bagel"
+          "chocolate_log",
+          "macaron",
+          "bread_loaf"
         ]
       ]
     }

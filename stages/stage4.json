@@ -1,12 +1,13 @@
 {
-  "level": 1,
+  "level": 4,
   "timeLimit": 360,
   "cols": 2,
   "rows": 2,
   "cellCap": 3,
   "goods": [
-    "muffin",
-    "tomato"
+    "banana_bunch",
+    "icebar_a",
+    "octopus_toy"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -16,7 +17,7 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 2,
+    "distinct": 3,
     "depthRange": [
       2,
       2
@@ -43,22 +44,6 @@
       "c": 1,
       "layers": [
         [
-          "tomato",
-          "muffin",
-          "muffin"
-        ],
-        [
-          "muffin",
-          "muffin",
-          "tomato"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
           null,
           null,
           null
@@ -67,17 +52,33 @@
     },
     {
       "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "icebar_a",
+          "icebar_a",
+          "octopus_toy"
+        ],
+        [
+          "banana_bunch",
+          "icebar_a",
+          "octopus_toy"
+        ]
+      ]
+    },
+    {
+      "r": 1,
       "c": 1,
       "layers": [
         [
-          "tomato",
-          "tomato",
-          "tomato"
+          "icebar_a",
+          "banana_bunch",
+          "banana_bunch"
         ],
         [
-          "tomato",
-          "muffin",
-          "muffin"
+          "icebar_a",
+          "octopus_toy",
+          "icebar_a"
         ]
       ]
     }

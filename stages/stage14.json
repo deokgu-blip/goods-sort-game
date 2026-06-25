@@ -1,0 +1,189 @@
+{
+  "level": 14,
+  "timeLimit": 338,
+  "cols": 3,
+  "rows": 3,
+  "cellCap": 3,
+  "goods": [
+    "bread_loaf",
+    "cupcake_choco",
+    "icecream_cup",
+    "peanut_butter",
+    "potted_plant"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 5,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 1,
+    "totalGoods": 54,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "cupcake_choco",
+          "peanut_butter",
+          "peanut_butter"
+        ],
+        [
+          "potted_plant",
+          "peanut_butter",
+          "cupcake_choco"
+        ],
+        [
+          "icecream_cup",
+          "peanut_butter",
+          "icecream_cup"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "bread_loaf",
+          "peanut_butter",
+          "peanut_butter"
+        ],
+        [
+          "cupcake_choco",
+          "icecream_cup",
+          "bread_loaf"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "potted_plant",
+          "icecream_cup",
+          "potted_plant"
+        ],
+        [
+          "bread_loaf",
+          "peanut_butter",
+          "cupcake_choco"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "peanut_butter",
+          "cupcake_choco",
+          "bread_loaf"
+        ],
+        [
+          "potted_plant",
+          "potted_plant",
+          "cupcake_choco"
+        ],
+        [
+          "icecream_cup",
+          "bread_loaf",
+          "peanut_butter"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "peanut_butter",
+          "peanut_butter",
+          "potted_plant"
+        ],
+        [
+          "bread_loaf",
+          "cupcake_choco",
+          "potted_plant"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "icecream_cup",
+          "bread_loaf",
+          "bread_loaf"
+        ],
+        [
+          "icecream_cup",
+          "bread_loaf",
+          "bread_loaf"
+        ],
+        [
+          "cupcake_choco",
+          "cupcake_choco",
+          "potted_plant"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "bread_loaf",
+          "icecream_cup",
+          "icecream_cup"
+        ],
+        [
+          "potted_plant",
+          "potted_plant",
+          "bread_loaf"
+        ],
+        [
+          "potted_plant",
+          "peanut_butter",
+          "potted_plant"
+        ]
+      ]
+    }
+  ]
+}

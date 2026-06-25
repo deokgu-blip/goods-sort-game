@@ -1,0 +1,195 @@
+{
+  "level": 16,
+  "timeLimit": 336,
+  "cols": 3,
+  "rows": 3,
+  "cellCap": 3,
+  "goods": [
+    "apple",
+    "chip_tube",
+    "grape_soda",
+    "hot_sauce",
+    "owl_toy",
+    "popsicle_twin"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 6,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 1,
+    "totalGoods": 57,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "popsicle_twin",
+          "chip_tube",
+          "grape_soda"
+        ],
+        [
+          "apple",
+          "hot_sauce",
+          "owl_toy"
+        ],
+        [
+          "apple",
+          "chip_tube",
+          "hot_sauce"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "popsicle_twin",
+          "apple",
+          "chip_tube"
+        ],
+        [
+          "popsicle_twin",
+          "owl_toy",
+          "apple"
+        ],
+        [
+          "apple",
+          "grape_soda",
+          "popsicle_twin"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "grape_soda",
+          "apple",
+          "owl_toy"
+        ],
+        [
+          "grape_soda",
+          "hot_sauce",
+          "chip_tube"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "chip_tube",
+          "hot_sauce",
+          "owl_toy"
+        ],
+        [
+          "grape_soda",
+          "apple",
+          "chip_tube"
+        ],
+        [
+          "grape_soda",
+          "apple",
+          "apple"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 2,
+      "layers": [
+        [
+          "popsicle_twin",
+          "chip_tube",
+          "apple"
+        ],
+        [
+          "hot_sauce",
+          "grape_soda",
+          "owl_toy"
+        ],
+        [
+          "apple",
+          "popsicle_twin",
+          "grape_soda"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "hot_sauce",
+          "grape_soda",
+          "popsicle_twin"
+        ],
+        [
+          "owl_toy",
+          "hot_sauce",
+          "apple"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "popsicle_twin",
+          "owl_toy",
+          "hot_sauce"
+        ],
+        [
+          "chip_tube",
+          "chip_tube",
+          "owl_toy"
+        ],
+        [
+          "popsicle_twin",
+          "hot_sauce",
+          "owl_toy"
+        ]
+      ]
+    }
+  ]
+}

@@ -89,6 +89,7 @@ async function makePage(){
   page.on('requestfailed', r => { if (!/favicon\.ico$/.test(r.url())) pageErrors.push('REQ_FAIL ' + r.url() + ' ' + (r.failure()?.errorText||'')); });
   await page.evaluateOnNewDocument(() => {
     window.__emits = [];
+    window.__NO_STAGE_FETCH = true;   // pin the EMBEDDED V17 stage (skip the live 100-stage fetch)
     window.flutter_inappwebview = {
       callHandler: function(handler, msg){ window.__emits.push({ handler, msg }); return Promise.resolve(); }
     };

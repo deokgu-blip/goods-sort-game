@@ -1,0 +1,321 @@
+{
+  "level": 57,
+  "timeLimit": 294,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "banana_bunch",
+    "carrot",
+    "detergent",
+    "gingerbread",
+    "gum_pack",
+    "hot_dog",
+    "icecream_cup",
+    "milk",
+    "mustard",
+    "peanut_butter",
+    "pomegranate"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 11,
+    "depthRange": [
+      3,
+      5
+    ],
+    "workspaces": 2,
+    "lockCubbies": 4,
+    "totalGoods": 117,
+    "attempt": 2
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "lock": 1,
+      "layers": [
+        [
+          "pomegranate",
+          "milk",
+          "icecream_cup"
+        ],
+        [
+          "pomegranate",
+          "mustard",
+          "gum_pack"
+        ],
+        [
+          "peanut_butter",
+          "gingerbread",
+          "gum_pack"
+        ],
+        [
+          "carrot",
+          "banana_bunch",
+          "icecream_cup"
+        ],
+        [
+          "milk",
+          "mustard",
+          "peanut_butter"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          "hot_dog",
+          "hot_dog",
+          "banana_bunch"
+        ],
+        [
+          "banana_bunch",
+          "hot_dog",
+          "mustard"
+        ],
+        [
+          "gingerbread",
+          "pomegranate",
+          "mustard"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "gingerbread",
+          "milk",
+          "pomegranate"
+        ],
+        [
+          "banana_bunch",
+          "peanut_butter",
+          "icecream_cup"
+        ],
+        [
+          "detergent",
+          "detergent",
+          "milk"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "icecream_cup",
+          "gum_pack",
+          "icecream_cup"
+        ],
+        [
+          "milk",
+          "icecream_cup",
+          "hot_dog"
+        ],
+        [
+          "pomegranate",
+          "pomegranate",
+          "gum_pack"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "milk",
+          "detergent",
+          "icecream_cup"
+        ],
+        [
+          "carrot",
+          "mustard",
+          "carrot"
+        ],
+        [
+          "gum_pack",
+          "gingerbread",
+          "icecream_cup"
+        ],
+        [
+          "mustard",
+          "milk",
+          "pomegranate"
+        ],
+        [
+          "hot_dog",
+          "detergent",
+          "gum_pack"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 1,
+      "layers": [
+        [
+          "hot_dog",
+          "peanut_butter",
+          "mustard"
+        ],
+        [
+          "banana_bunch",
+          "banana_bunch",
+          "gum_pack"
+        ],
+        [
+          "carrot",
+          "peanut_butter",
+          "milk"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "gingerbread",
+          "icecream_cup",
+          "pomegranate"
+        ],
+        [
+          "icecream_cup",
+          "hot_dog",
+          "hot_dog"
+        ],
+        [
+          "pomegranate",
+          "gingerbread",
+          "gingerbread"
+        ],
+        [
+          "detergent",
+          "carrot",
+          "mustard"
+        ],
+        [
+          "gingerbread",
+          "gum_pack",
+          "banana_bunch"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "milk",
+          "banana_bunch",
+          "banana_bunch"
+        ],
+        [
+          "gingerbread",
+          "mustard",
+          "hot_dog"
+        ],
+        [
+          "icecream_cup",
+          "hot_dog",
+          "icecream_cup"
+        ],
+        [
+          "peanut_butter",
+          "hot_dog",
+          "milk"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "lock": 3,
+      "layers": [
+        [
+          "milk",
+          "pomegranate",
+          "pomegranate"
+        ],
+        [
+          "peanut_butter",
+          "pomegranate",
+          "mustard"
+        ],
+        [
+          "mustard",
+          "banana_bunch",
+          "mustard"
+        ],
+        [
+          "detergent",
+          "detergent",
+          "banana_bunch"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "milk",
+          "carrot",
+          "carrot"
+        ],
+        [
+          "carrot",
+          "gum_pack",
+          "hot_dog"
+        ],
+        [
+          "detergent",
+          "peanut_butter",
+          "detergent"
+        ],
+        [
+          "banana_bunch",
+          "peanut_butter",
+          "carrot"
+        ]
+      ]
+    }
+  ]
+}

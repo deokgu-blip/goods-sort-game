@@ -1,0 +1,239 @@
+{
+  "level": 20,
+  "timeLimit": 334,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "baguette",
+    "broccoli",
+    "cookie_disc",
+    "donut_box",
+    "popsicle_twin",
+    "shiba_dog"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 6,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 2,
+    "totalGoods": 72,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "popsicle_twin",
+          "broccoli",
+          "baguette"
+        ],
+        [
+          "broccoli",
+          "broccoli",
+          "donut_box"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "baguette",
+          "baguette",
+          "broccoli"
+        ],
+        [
+          "shiba_dog",
+          "donut_box",
+          "donut_box"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "broccoli",
+          "popsicle_twin",
+          "cookie_disc"
+        ],
+        [
+          "popsicle_twin",
+          "shiba_dog",
+          "donut_box"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "cookie_disc",
+          "baguette",
+          "popsicle_twin"
+        ],
+        [
+          "broccoli",
+          "popsicle_twin",
+          "popsicle_twin"
+        ],
+        [
+          "cookie_disc",
+          "cookie_disc",
+          "broccoli"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "shiba_dog",
+          "baguette",
+          "donut_box"
+        ],
+        [
+          "baguette",
+          "donut_box",
+          "shiba_dog"
+        ],
+        [
+          "cookie_disc",
+          "baguette",
+          "donut_box"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "cookie_disc",
+          "donut_box",
+          "donut_box"
+        ],
+        [
+          "broccoli",
+          "shiba_dog",
+          "broccoli"
+        ],
+        [
+          "popsicle_twin",
+          "popsicle_twin",
+          "popsicle_twin"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "cookie_disc",
+          "shiba_dog",
+          "donut_box"
+        ],
+        [
+          "cookie_disc",
+          "shiba_dog",
+          "baguette"
+        ],
+        [
+          "broccoli",
+          "shiba_dog",
+          "donut_box"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "popsicle_twin",
+          "broccoli",
+          "shiba_dog"
+        ],
+        [
+          "cookie_disc",
+          "cookie_disc",
+          "broccoli"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "shiba_dog",
+          "baguette",
+          "cookie_disc"
+        ],
+        [
+          "donut_box",
+          "shiba_dog",
+          "baguette"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "shiba_dog",
+          "popsicle_twin",
+          "baguette"
+        ],
+        [
+          "popsicle_twin",
+          "cookie_disc",
+          "baguette"
+        ]
+      ]
+    }
+  ]
+}

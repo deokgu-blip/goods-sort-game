@@ -1,0 +1,229 @@
+{
+  "level": 19,
+  "timeLimit": 334,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "cookie_stack",
+    "donut_pink",
+    "icecream_cone",
+    "lemon_soda",
+    "panda",
+    "peanut_butter"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 6,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 2,
+    "totalGoods": 66,
+    "attempt": 1
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "peanut_butter",
+          "peanut_butter",
+          "icecream_cone"
+        ],
+        [
+          "panda",
+          "lemon_soda",
+          "icecream_cone"
+        ],
+        [
+          "panda",
+          "cookie_stack",
+          "icecream_cone"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "lock": 2,
+      "layers": [
+        [
+          "panda",
+          "peanut_butter",
+          "cookie_stack"
+        ],
+        [
+          "cookie_stack",
+          "panda",
+          "panda"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "lemon_soda",
+          "peanut_butter",
+          "cookie_stack"
+        ],
+        [
+          "donut_pink",
+          "peanut_butter",
+          "donut_pink"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "cookie_stack",
+          "peanut_butter",
+          "donut_pink"
+        ],
+        [
+          "cookie_stack",
+          "cookie_stack",
+          "icecream_cone"
+        ],
+        [
+          "peanut_butter",
+          "panda",
+          "panda"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "icecream_cone",
+          "donut_pink",
+          "cookie_stack"
+        ],
+        [
+          "icecream_cone",
+          "panda",
+          "donut_pink"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "peanut_butter",
+          "cookie_stack",
+          "icecream_cone"
+        ],
+        [
+          "donut_pink",
+          "lemon_soda",
+          "icecream_cone"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "lemon_soda",
+          "cookie_stack",
+          "panda"
+        ],
+        [
+          "donut_pink",
+          "donut_pink",
+          "donut_pink"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "cookie_stack",
+          "icecream_cone",
+          "lemon_soda"
+        ],
+        [
+          "icecream_cone",
+          "lemon_soda",
+          "cookie_stack"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "lock": 1,
+      "layers": [
+        [
+          "panda",
+          "lemon_soda",
+          "donut_pink"
+        ],
+        [
+          "icecream_cone",
+          "icecream_cone",
+          "donut_pink"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "panda",
+          "lemon_soda",
+          "peanut_butter"
+        ],
+        [
+          "panda",
+          "lemon_soda",
+          "donut_pink"
+        ]
+      ]
+    }
+  ]
+}

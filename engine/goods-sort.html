@@ -1499,6 +1499,28 @@
     } catch(e){ return Promise.resolve(false); }
   })();
 
+  // Fetch the 100-STAGE set (stages/all_stages.json) into window.__STAGES — the live game's
+  // real difficulty-curved stages. loadStage() prefers __STAGES. Gated OFF when ?embed is
+  // present (the test harness pins the EMBEDDED V17 stage for its assertions) and offline.
+  // On resolve, rebuild the CURRENT level from the freshly-loaded set (the initial board
+  // builds synchronously from EMBEDDED, then swaps to the fetched stage).
+  var __stagesReady = (function(){
+    try {
+      if (window.__NO_STAGE_FETCH || /[?&]embed\b/.test(location.search)) return Promise.resolve(false);
+      if (location.protocol !== 'http:' && location.protocol !== 'https:') return Promise.resolve(false);
+      return fetch('../stages/all_stages.json', { cache: 'no-store' })
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(m){
+          if (!m || typeof m !== 'object') return false;
+          window.__STAGES = window.__STAGES || {};
+          var n = 0; for (var k in m){ if (m[k] && m[k].cubbies){ window.__STAGES[k] = m[k]; n++; } }
+          if (n && typeof startLevelFn === 'function' && typeof S !== 'undefined' && !S.over){ try { startLevelFn(S.level); } catch(e){} }
+          return n > 0;
+        })
+        .catch(function(){ return false; });
+    } catch(e){ return Promise.resolve(false); }
+  })();
+
   // =============================================================
   // STATE
   // =============================================================

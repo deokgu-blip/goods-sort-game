@@ -1,0 +1,179 @@
+{
+  "level": 12,
+  "timeLimit": 339,
+  "cols": 3,
+  "rows": 3,
+  "cellCap": 3,
+  "goods": [
+    "croissant",
+    "dino_toy",
+    "lemonade",
+    "lollipop",
+    "unicorn_toy"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 5,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 1,
+    "totalGoods": 48,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "lollipop",
+          "unicorn_toy",
+          "lemonade"
+        ],
+        [
+          "lollipop",
+          "lollipop",
+          "dino_toy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "croissant",
+          "lollipop",
+          "dino_toy"
+        ],
+        [
+          "unicorn_toy",
+          "unicorn_toy",
+          "lollipop"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "croissant",
+          "lollipop",
+          "lemonade"
+        ],
+        [
+          "unicorn_toy",
+          "lemonade",
+          "unicorn_toy"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "lemonade",
+          "dino_toy",
+          "dino_toy"
+        ],
+        [
+          "dino_toy",
+          "unicorn_toy",
+          "lemonade"
+        ],
+        [
+          "lollipop",
+          "lollipop",
+          "lemonade"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "lemonade",
+          "unicorn_toy",
+          "dino_toy"
+        ],
+        [
+          "lemonade",
+          "lollipop",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "dino_toy",
+          "unicorn_toy",
+          "croissant"
+        ],
+        [
+          "croissant",
+          "dino_toy",
+          "dino_toy"
+        ],
+        [
+          "croissant",
+          "lemonade",
+          "dino_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "croissant",
+          "dino_toy",
+          "dino_toy"
+        ],
+        [
+          "unicorn_toy",
+          "croissant",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

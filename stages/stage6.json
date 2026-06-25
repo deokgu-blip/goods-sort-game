@@ -1,0 +1,166 @@
+{
+  "level": 6,
+  "timeLimit": 360,
+  "cols": 3,
+  "rows": 3,
+  "cellCap": 3,
+  "goods": [
+    "icecream_cup",
+    "pretzel_bag",
+    "tea_tin_round"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 3,
+    "depthRange": [
+      2,
+      2
+    ],
+    "workspaces": 2,
+    "lockCubbies": 0,
+    "totalGoods": 42,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "tea_tin_round",
+          "pretzel_bag",
+          "tea_tin_round"
+        ],
+        [
+          "pretzel_bag",
+          "pretzel_bag",
+          "tea_tin_round"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "tea_tin_round",
+          "icecream_cup",
+          "tea_tin_round"
+        ],
+        [
+          "icecream_cup",
+          "icecream_cup",
+          "pretzel_bag"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "pretzel_bag",
+          "pretzel_bag",
+          "icecream_cup"
+        ],
+        [
+          "icecream_cup",
+          "pretzel_bag",
+          "icecream_cup"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "icecream_cup",
+          "pretzel_bag",
+          "pretzel_bag"
+        ],
+        [
+          "icecream_cup",
+          "icecream_cup",
+          "icecream_cup"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "tea_tin_round",
+          "icecream_cup",
+          "pretzel_bag"
+        ],
+        [
+          "icecream_cup",
+          "tea_tin_round",
+          "pretzel_bag"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "icecream_cup",
+          "tea_tin_round",
+          "tea_tin_round"
+        ],
+        [
+          "pretzel_bag",
+          "tea_tin_round",
+          "icecream_cup"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "pretzel_bag",
+          "tea_tin_round",
+          "pretzel_bag"
+        ],
+        [
+          "pretzel_bag",
+          "icecream_cup",
+          "tea_tin_round"
+        ]
+      ]
+    }
+  ]
+}

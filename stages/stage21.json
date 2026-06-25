@@ -1,0 +1,244 @@
+{
+  "level": 21,
+  "timeLimit": 333,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "gingerbread",
+    "pear",
+    "popsicle_twin",
+    "snack",
+    "watermelon_slice",
+    "yogurt"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 6,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 2,
+    "totalGoods": 75,
+    "attempt": 3
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "yogurt",
+          "popsicle_twin",
+          "yogurt"
+        ],
+        [
+          "yogurt",
+          "yogurt",
+          "pear"
+        ],
+        [
+          "watermelon_slice",
+          "popsicle_twin",
+          "pear"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "watermelon_slice",
+          "watermelon_slice",
+          "snack"
+        ],
+        [
+          "yogurt",
+          "popsicle_twin",
+          "yogurt"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          "popsicle_twin",
+          "gingerbread",
+          "snack"
+        ],
+        [
+          "gingerbread",
+          "gingerbread",
+          "popsicle_twin"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "pear",
+          "snack",
+          "yogurt"
+        ],
+        [
+          "watermelon_slice",
+          "gingerbread",
+          "yogurt"
+        ],
+        [
+          "popsicle_twin",
+          "gingerbread",
+          "watermelon_slice"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "watermelon_slice",
+          "pear",
+          "popsicle_twin"
+        ],
+        [
+          "watermelon_slice",
+          "snack",
+          "pear"
+        ],
+        [
+          "watermelon_slice",
+          "pear",
+          "snack"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "watermelon_slice",
+          "gingerbread",
+          "snack"
+        ],
+        [
+          "snack",
+          "popsicle_twin",
+          "yogurt"
+        ],
+        [
+          "popsicle_twin",
+          "popsicle_twin",
+          "pear"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "watermelon_slice",
+          "watermelon_slice",
+          "gingerbread"
+        ],
+        [
+          "yogurt",
+          "watermelon_slice",
+          "watermelon_slice"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "popsicle_twin",
+          "pear",
+          "watermelon_slice"
+        ],
+        [
+          "snack",
+          "pear",
+          "pear"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "lock": 1,
+      "layers": [
+        [
+          "popsicle_twin",
+          "gingerbread",
+          "yogurt"
+        ],
+        [
+          "snack",
+          "pear",
+          "gingerbread"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "pear",
+          "snack",
+          "gingerbread"
+        ],
+        [
+          "snack",
+          "watermelon_slice",
+          "snack"
+        ],
+        [
+          "gingerbread",
+          "gingerbread",
+          "yogurt"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

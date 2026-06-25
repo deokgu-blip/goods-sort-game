@@ -1,0 +1,310 @@
+{
+  "level": 44,
+  "timeLimit": 308,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "bagel",
+    "banana_bunch",
+    "frozen_tub",
+    "hot_dog",
+    "lemon_soda",
+    "mustard",
+    "panda",
+    "snack",
+    "tomato",
+    "unicorn_toy"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 10,
+    "depthRange": [
+      3,
+      4
+    ],
+    "workspaces": 2,
+    "lockCubbies": 4,
+    "totalGoods": 111,
+    "attempt": 7
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "tomato",
+          "hot_dog",
+          "banana_bunch"
+        ],
+        [
+          "unicorn_toy",
+          "lemon_soda",
+          "banana_bunch"
+        ],
+        [
+          "lemon_soda",
+          "panda",
+          "snack"
+        ],
+        [
+          "panda",
+          "mustard",
+          "tomato"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "banana_bunch",
+          "snack",
+          "mustard"
+        ],
+        [
+          "snack",
+          "panda",
+          "hot_dog"
+        ],
+        [
+          "snack",
+          "lemon_soda",
+          "frozen_tub"
+        ],
+        [
+          "frozen_tub",
+          "snack",
+          "bagel"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          "unicorn_toy",
+          "mustard",
+          "frozen_tub"
+        ],
+        [
+          "banana_bunch",
+          "banana_bunch",
+          "lemon_soda"
+        ],
+        [
+          "mustard",
+          "lemon_soda",
+          "unicorn_toy"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "unicorn_toy",
+          "tomato",
+          "bagel"
+        ],
+        [
+          "bagel",
+          "panda",
+          "hot_dog"
+        ],
+        [
+          "hot_dog",
+          "banana_bunch",
+          "bagel"
+        ],
+        [
+          "mustard",
+          "frozen_tub",
+          "frozen_tub"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "panda",
+          "snack",
+          "bagel"
+        ],
+        [
+          "bagel",
+          "bagel",
+          "banana_bunch"
+        ],
+        [
+          "lemon_soda",
+          "snack",
+          "snack"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 4,
+      "layers": [
+        [
+          "panda",
+          "bagel",
+          "banana_bunch"
+        ],
+        [
+          "banana_bunch",
+          "frozen_tub",
+          "tomato"
+        ],
+        [
+          "hot_dog",
+          "panda",
+          "panda"
+        ],
+        [
+          "panda",
+          "mustard",
+          "hot_dog"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "lemon_soda",
+          "panda",
+          "lemon_soda"
+        ],
+        [
+          "unicorn_toy",
+          "unicorn_toy",
+          "lemon_soda"
+        ],
+        [
+          "mustard",
+          "unicorn_toy",
+          "mustard"
+        ],
+        [
+          "unicorn_toy",
+          "hot_dog",
+          "snack"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "lock": 1,
+      "layers": [
+        [
+          "mustard",
+          "tomato",
+          "lemon_soda"
+        ],
+        [
+          "tomato",
+          "mustard",
+          "tomato"
+        ],
+        [
+          "frozen_tub",
+          "unicorn_toy",
+          "frozen_tub"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "unicorn_toy",
+          "banana_bunch",
+          "lemon_soda"
+        ],
+        [
+          "banana_bunch",
+          "hot_dog",
+          "hot_dog"
+        ],
+        [
+          "mustard",
+          "hot_dog",
+          "frozen_tub"
+        ],
+        [
+          "bagel",
+          "frozen_tub",
+          "unicorn_toy"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "panda",
+          "tomato",
+          "lemon_soda"
+        ],
+        [
+          "mustard",
+          "hot_dog",
+          "tomato"
+        ],
+        [
+          "frozen_tub",
+          "banana_bunch",
+          "hot_dog"
+        ],
+        [
+          "panda",
+          "unicorn_toy",
+          "frozen_tub"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

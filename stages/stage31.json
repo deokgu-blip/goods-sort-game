@@ -1,0 +1,301 @@
+{
+  "level": 31,
+  "timeLimit": 324,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "bagel",
+    "chip_tube",
+    "coffee_can",
+    "egg",
+    "grapes",
+    "icecream_sandwich",
+    "robot_toy",
+    "snowcone"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 8,
+    "depthRange": [
+      3,
+      4
+    ],
+    "workspaces": 2,
+    "lockCubbies": 2,
+    "totalGoods": 108,
+    "attempt": 3
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "bagel",
+          "icecream_sandwich",
+          "robot_toy"
+        ],
+        [
+          "robot_toy",
+          "bagel",
+          "icecream_sandwich"
+        ],
+        [
+          "bagel",
+          "bagel",
+          "robot_toy"
+        ],
+        [
+          "egg",
+          "grapes",
+          "chip_tube"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "chip_tube",
+          "icecream_sandwich",
+          "grapes"
+        ],
+        [
+          "chip_tube",
+          "snowcone",
+          "coffee_can"
+        ],
+        [
+          "egg",
+          "grapes",
+          "icecream_sandwich"
+        ],
+        [
+          "icecream_sandwich",
+          "grapes",
+          "bagel"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "snowcone",
+          "icecream_sandwich",
+          "grapes"
+        ],
+        [
+          "grapes",
+          "coffee_can",
+          "snowcone"
+        ],
+        [
+          "robot_toy",
+          "egg",
+          "bagel"
+        ],
+        [
+          "bagel",
+          "robot_toy",
+          "robot_toy"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "snowcone",
+          "snowcone",
+          "egg"
+        ],
+        [
+          "egg",
+          "chip_tube",
+          "bagel"
+        ],
+        [
+          "robot_toy",
+          "coffee_can",
+          "grapes"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "lock": 2,
+      "layers": [
+        [
+          "grapes",
+          "coffee_can",
+          "coffee_can"
+        ],
+        [
+          "bagel",
+          "coffee_can",
+          "egg"
+        ],
+        [
+          "robot_toy",
+          "snowcone",
+          "snowcone"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "icecream_sandwich",
+          "bagel",
+          "egg"
+        ],
+        [
+          "robot_toy",
+          "egg",
+          "icecream_sandwich"
+        ],
+        [
+          "icecream_sandwich",
+          "robot_toy",
+          "robot_toy"
+        ],
+        [
+          "robot_toy",
+          "grapes",
+          "bagel"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "egg",
+          "chip_tube",
+          "bagel"
+        ],
+        [
+          "coffee_can",
+          "egg",
+          "chip_tube"
+        ],
+        [
+          "snowcone",
+          "chip_tube",
+          "robot_toy"
+        ],
+        [
+          "icecream_sandwich",
+          "coffee_can",
+          "coffee_can"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "snowcone",
+          "snowcone",
+          "bagel"
+        ],
+        [
+          "grapes",
+          "chip_tube",
+          "snowcone"
+        ],
+        [
+          "chip_tube",
+          "robot_toy",
+          "icecream_sandwich"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "egg",
+          "coffee_can",
+          "snowcone"
+        ],
+        [
+          "icecream_sandwich",
+          "snowcone",
+          "snowcone"
+        ],
+        [
+          "chip_tube",
+          "coffee_can",
+          "coffee_can"
+        ],
+        [
+          "coffee_can",
+          "egg",
+          "grapes"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "bagel",
+          "coffee_can",
+          "snowcone"
+        ],
+        [
+          "robot_toy",
+          "chip_tube",
+          "chip_tube"
+        ],
+        [
+          "grapes",
+          "bagel",
+          "coffee_can"
+        ]
+      ]
+    }
+  ]
+}

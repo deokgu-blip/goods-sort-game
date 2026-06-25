@@ -1,0 +1,501 @@
+{
+  "level": 66,
+  "timeLimit": 284,
+  "cols": 4,
+  "rows": 5,
+  "cellCap": 3,
+  "goods": [
+    "bagel",
+    "broccoli",
+    "bunny",
+    "cucumber",
+    "cupcake_choco",
+    "gelato_cup",
+    "icecream_cup",
+    "lemon_soda",
+    "lotion_pump",
+    "pig_toy",
+    "sauce",
+    "strawberry"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 12,
+    "depthRange": [
+      3,
+      5
+    ],
+    "workspaces": 4,
+    "lockCubbies": 5,
+    "totalGoods": 189,
+    "attempt": 42
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "cucumber",
+          "bunny",
+          "icecream_cup"
+        ],
+        [
+          "cupcake_choco",
+          "strawberry",
+          "sauce"
+        ],
+        [
+          "cucumber",
+          "cucumber",
+          "broccoli"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "bagel",
+          "broccoli",
+          "lemon_soda"
+        ],
+        [
+          "gelato_cup",
+          "pig_toy",
+          "pig_toy"
+        ],
+        [
+          "cucumber",
+          "lemon_soda",
+          "lemon_soda"
+        ],
+        [
+          "sauce",
+          "bagel",
+          "bunny"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "lock": 3,
+      "layers": [
+        [
+          "pig_toy",
+          "icecream_cup",
+          "cucumber"
+        ],
+        [
+          "lotion_pump",
+          "bagel",
+          "lemon_soda"
+        ],
+        [
+          "broccoli",
+          "cucumber",
+          "bagel"
+        ],
+        [
+          "cucumber",
+          "lotion_pump",
+          "bunny"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "bagel",
+          "cupcake_choco",
+          "bunny"
+        ],
+        [
+          "pig_toy",
+          "lemon_soda",
+          "strawberry"
+        ],
+        [
+          "bunny",
+          "lotion_pump",
+          "strawberry"
+        ],
+        [
+          "cupcake_choco",
+          "gelato_cup",
+          "broccoli"
+        ],
+        [
+          "cupcake_choco",
+          "cupcake_choco",
+          "cupcake_choco"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "icecream_cup",
+          "bunny",
+          "icecream_cup"
+        ],
+        [
+          "broccoli",
+          "bagel",
+          "gelato_cup"
+        ],
+        [
+          "pig_toy",
+          "icecream_cup",
+          "lotion_pump"
+        ],
+        [
+          "sauce",
+          "bagel",
+          "sauce"
+        ],
+        [
+          "icecream_cup",
+          "gelato_cup",
+          "gelato_cup"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "layers": [
+        [
+          "broccoli",
+          "cupcake_choco",
+          "lotion_pump"
+        ],
+        [
+          "lotion_pump",
+          "bunny",
+          "icecream_cup"
+        ],
+        [
+          "bagel",
+          "gelato_cup",
+          "cupcake_choco"
+        ],
+        [
+          "broccoli",
+          "lemon_soda",
+          "broccoli"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "cucumber",
+          "cupcake_choco",
+          "sauce"
+        ],
+        [
+          "strawberry",
+          "strawberry",
+          "broccoli"
+        ],
+        [
+          "cucumber",
+          "gelato_cup",
+          "bunny"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "lock": 4,
+      "layers": [
+        [
+          "cupcake_choco",
+          "cucumber",
+          "icecream_cup"
+        ],
+        [
+          "lotion_pump",
+          "sauce",
+          "lotion_pump"
+        ],
+        [
+          "cupcake_choco",
+          "icecream_cup",
+          "pig_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          "sauce",
+          "cucumber",
+          "pig_toy"
+        ],
+        [
+          "sauce",
+          "sauce",
+          "bagel"
+        ],
+        [
+          "bagel",
+          "bunny",
+          "sauce"
+        ],
+        [
+          "pig_toy",
+          "cucumber",
+          "gelato_cup"
+        ],
+        [
+          "broccoli",
+          "lemon_soda",
+          "lotion_pump"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "lock": 3,
+      "layers": [
+        [
+          "broccoli",
+          "broccoli",
+          "lotion_pump"
+        ],
+        [
+          "pig_toy",
+          "sauce",
+          "cupcake_choco"
+        ],
+        [
+          "sauce",
+          "broccoli",
+          "pig_toy"
+        ],
+        [
+          "pig_toy",
+          "lotion_pump",
+          "strawberry"
+        ],
+        [
+          "lemon_soda",
+          "broccoli",
+          "bunny"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "sauce",
+          "lemon_soda",
+          "strawberry"
+        ],
+        [
+          "strawberry",
+          "strawberry",
+          "bagel"
+        ],
+        [
+          "cucumber",
+          "cucumber",
+          "icecream_cup"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "bagel",
+          "icecream_cup",
+          "gelato_cup"
+        ],
+        [
+          "bunny",
+          "icecream_cup",
+          "gelato_cup"
+        ],
+        [
+          "sauce",
+          "lemon_soda",
+          "lemon_soda"
+        ],
+        [
+          "sauce",
+          "icecream_cup",
+          "lotion_pump"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 3,
+      "layers": [
+        [
+          "icecream_cup",
+          "bunny",
+          "cucumber"
+        ],
+        [
+          "lotion_pump",
+          "cucumber",
+          "cupcake_choco"
+        ],
+        [
+          "lemon_soda",
+          "gelato_cup",
+          "strawberry"
+        ],
+        [
+          "lemon_soda",
+          "gelato_cup",
+          "pig_toy"
+        ],
+        [
+          "cucumber",
+          "bunny",
+          "icecream_cup"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
+      "layers": [
+        [
+          "broccoli",
+          "gelato_cup",
+          "strawberry"
+        ],
+        [
+          "strawberry",
+          "broccoli",
+          "icecream_cup"
+        ],
+        [
+          "strawberry",
+          "pig_toy",
+          "cucumber"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 1,
+      "layers": [
+        [
+          "cupcake_choco",
+          "icecream_cup",
+          "pig_toy"
+        ],
+        [
+          "bagel",
+          "strawberry",
+          "lotion_pump"
+        ],
+        [
+          "gelato_cup",
+          "lemon_soda",
+          "cupcake_choco"
+        ],
+        [
+          "broccoli",
+          "broccoli",
+          "bagel"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 3,
+      "layers": [
+        [
+          "lemon_soda",
+          "pig_toy",
+          "gelato_cup"
+        ],
+        [
+          "strawberry",
+          "bunny",
+          "icecream_cup"
+        ],
+        [
+          "bagel",
+          "lotion_pump",
+          "bunny"
+        ]
+      ]
+    }
+  ]
+}

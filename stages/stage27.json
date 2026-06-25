@@ -1,0 +1,291 @@
+{
+  "level": 27,
+  "timeLimit": 329,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "avocado",
+    "chocolate_bar",
+    "detergent",
+    "honey_jar",
+    "icecream_cone",
+    "lion_toy",
+    "muffin",
+    "pretzel_bag"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 8,
+    "depthRange": [
+      3,
+      4
+    ],
+    "workspaces": 2,
+    "lockCubbies": 2,
+    "totalGoods": 102,
+    "attempt": 6
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "detergent",
+          "pretzel_bag",
+          "muffin"
+        ],
+        [
+          "honey_jar",
+          "muffin",
+          "icecream_cone"
+        ],
+        [
+          "lion_toy",
+          "pretzel_bag",
+          "honey_jar"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "pretzel_bag",
+          "pretzel_bag",
+          "chocolate_bar"
+        ],
+        [
+          "chocolate_bar",
+          "muffin",
+          "chocolate_bar"
+        ],
+        [
+          "pretzel_bag",
+          "avocado",
+          "icecream_cone"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "lion_toy",
+          "muffin",
+          "detergent"
+        ],
+        [
+          "honey_jar",
+          "lion_toy",
+          "avocado"
+        ],
+        [
+          "honey_jar",
+          "pretzel_bag",
+          "chocolate_bar"
+        ],
+        [
+          "pretzel_bag",
+          "icecream_cone",
+          "lion_toy"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "muffin",
+          "chocolate_bar",
+          "avocado"
+        ],
+        [
+          "chocolate_bar",
+          "lion_toy",
+          "chocolate_bar"
+        ],
+        [
+          "avocado",
+          "detergent",
+          "detergent"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "chocolate_bar",
+          "lion_toy",
+          "icecream_cone"
+        ],
+        [
+          "pretzel_bag",
+          "muffin",
+          "avocado"
+        ],
+        [
+          "pretzel_bag",
+          "muffin",
+          "honey_jar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "avocado",
+          "muffin",
+          "muffin"
+        ],
+        [
+          "lion_toy",
+          "detergent",
+          "chocolate_bar"
+        ],
+        [
+          "honey_jar",
+          "detergent",
+          "icecream_cone"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "lock": 2,
+      "layers": [
+        [
+          "lion_toy",
+          "honey_jar",
+          "detergent"
+        ],
+        [
+          "chocolate_bar",
+          "lion_toy",
+          "pretzel_bag"
+        ],
+        [
+          "lion_toy",
+          "detergent",
+          "icecream_cone"
+        ],
+        [
+          "avocado",
+          "icecream_cone",
+          "pretzel_bag"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "muffin",
+          "pretzel_bag",
+          "muffin"
+        ],
+        [
+          "avocado",
+          "chocolate_bar",
+          "detergent"
+        ],
+        [
+          "pretzel_bag",
+          "honey_jar",
+          "detergent"
+        ],
+        [
+          "icecream_cone",
+          "lion_toy",
+          "honey_jar"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "chocolate_bar",
+          "lion_toy",
+          "muffin"
+        ],
+        [
+          "icecream_cone",
+          "icecream_cone",
+          "avocado"
+        ],
+        [
+          "pretzel_bag",
+          "honey_jar",
+          "icecream_cone"
+        ],
+        [
+          "chocolate_bar",
+          "chocolate_bar",
+          "chocolate_bar"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "honey_jar",
+          "detergent",
+          "avocado"
+        ],
+        [
+          "icecream_cone",
+          "honey_jar",
+          "avocado"
+        ],
+        [
+          "avocado",
+          "pretzel_bag",
+          "detergent"
+        ]
+      ]
+    }
+  ]
+}

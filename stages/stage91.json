@@ -1,0 +1,496 @@
+{
+  "level": 91,
+  "timeLimit": 240,
+  "cols": 4,
+  "rows": 5,
+  "cellCap": 3,
+  "goods": [
+    "candy_bag",
+    "chips",
+    "corn_dog",
+    "croissant",
+    "egg_carton",
+    "icecream_sandwich",
+    "jam_jar",
+    "koala_toy",
+    "lemon_fruit",
+    "milkshake",
+    "sausage_link",
+    "sorbet_cup",
+    "teddy_bear",
+    "vinegar",
+    "watermelon_slice"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 15,
+    "depthRange": [
+      4,
+      4
+    ],
+    "workspaces": 5,
+    "lockCubbies": 7,
+    "totalGoods": 180,
+    "attempt": 80
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "milkshake",
+          "chips",
+          "lemon_fruit"
+        ],
+        [
+          "watermelon_slice",
+          "koala_toy",
+          "candy_bag"
+        ],
+        [
+          "watermelon_slice",
+          "vinegar",
+          "koala_toy"
+        ],
+        [
+          "koala_toy",
+          "vinegar",
+          "koala_toy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "lock": 2,
+      "layers": [
+        [
+          "jam_jar",
+          "milkshake",
+          "sorbet_cup"
+        ],
+        [
+          "corn_dog",
+          "egg_carton",
+          "candy_bag"
+        ],
+        [
+          "watermelon_slice",
+          "chips",
+          "jam_jar"
+        ],
+        [
+          "lemon_fruit",
+          "chips",
+          "sorbet_cup"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "teddy_bear",
+          "croissant",
+          "vinegar"
+        ],
+        [
+          "jam_jar",
+          "vinegar",
+          "teddy_bear"
+        ],
+        [
+          "egg_carton",
+          "jam_jar",
+          "watermelon_slice"
+        ],
+        [
+          "lemon_fruit",
+          "watermelon_slice",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "lock": 4,
+      "layers": [
+        [
+          "chips",
+          "milkshake",
+          "jam_jar"
+        ],
+        [
+          "vinegar",
+          "sausage_link",
+          "chips"
+        ],
+        [
+          "corn_dog",
+          "lemon_fruit",
+          "sorbet_cup"
+        ],
+        [
+          "chips",
+          "sorbet_cup",
+          "chips"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "egg_carton",
+          "icecream_sandwich",
+          "icecream_sandwich"
+        ],
+        [
+          "icecream_sandwich",
+          "croissant",
+          "jam_jar"
+        ],
+        [
+          "vinegar",
+          "sausage_link",
+          "corn_dog"
+        ],
+        [
+          "lemon_fruit",
+          "lemon_fruit",
+          "sausage_link"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "chips",
+          "jam_jar",
+          "lemon_fruit"
+        ],
+        [
+          "corn_dog",
+          "sorbet_cup",
+          "sorbet_cup"
+        ],
+        [
+          "croissant",
+          "egg_carton",
+          "icecream_sandwich"
+        ],
+        [
+          "sorbet_cup",
+          "jam_jar",
+          "candy_bag"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "lock": 1,
+      "layers": [
+        [
+          "watermelon_slice",
+          "candy_bag",
+          "teddy_bear"
+        ],
+        [
+          "croissant",
+          "sausage_link",
+          "corn_dog"
+        ],
+        [
+          "watermelon_slice",
+          "icecream_sandwich",
+          "milkshake"
+        ],
+        [
+          "corn_dog",
+          "vinegar",
+          "lemon_fruit"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "sausage_link",
+          "teddy_bear",
+          "croissant"
+        ],
+        [
+          "corn_dog",
+          "milkshake",
+          "koala_toy"
+        ],
+        [
+          "corn_dog",
+          "candy_bag",
+          "jam_jar"
+        ],
+        [
+          "icecream_sandwich",
+          "sausage_link",
+          "teddy_bear"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "milkshake",
+          "teddy_bear",
+          "corn_dog"
+        ],
+        [
+          "egg_carton",
+          "milkshake",
+          "jam_jar"
+        ],
+        [
+          "milkshake",
+          "croissant",
+          "egg_carton"
+        ],
+        [
+          "milkshake",
+          "sausage_link",
+          "icecream_sandwich"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "lock": 2,
+      "layers": [
+        [
+          "egg_carton",
+          "croissant",
+          "koala_toy"
+        ],
+        [
+          "icecream_sandwich",
+          "lemon_fruit",
+          "croissant"
+        ],
+        [
+          "sorbet_cup",
+          "corn_dog",
+          "egg_carton"
+        ],
+        [
+          "icecream_sandwich",
+          "sausage_link",
+          "teddy_bear"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "croissant",
+          "egg_carton",
+          "teddy_bear"
+        ],
+        [
+          "koala_toy",
+          "lemon_fruit",
+          "candy_bag"
+        ],
+        [
+          "milkshake",
+          "sausage_link",
+          "watermelon_slice"
+        ],
+        [
+          "candy_bag",
+          "sorbet_cup",
+          "corn_dog"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "lock": 2,
+      "layers": [
+        [
+          "egg_carton",
+          "croissant",
+          "jam_jar"
+        ],
+        [
+          "icecream_sandwich",
+          "candy_bag",
+          "candy_bag"
+        ],
+        [
+          "sausage_link",
+          "watermelon_slice",
+          "sausage_link"
+        ],
+        [
+          "teddy_bear",
+          "koala_toy",
+          "koala_toy"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          "icecream_sandwich",
+          "candy_bag",
+          "teddy_bear"
+        ],
+        [
+          "watermelon_slice",
+          "koala_toy",
+          "vinegar"
+        ],
+        [
+          "sausage_link",
+          "candy_bag",
+          "milkshake"
+        ],
+        [
+          "chips",
+          "jam_jar",
+          "vinegar"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 3,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 1,
+      "layers": [
+        [
+          "milkshake",
+          "watermelon_slice",
+          "vinegar"
+        ],
+        [
+          "koala_toy",
+          "lemon_fruit",
+          "sorbet_cup"
+        ],
+        [
+          "corn_dog",
+          "teddy_bear",
+          "koala_toy"
+        ],
+        [
+          "vinegar",
+          "egg_carton",
+          "vinegar"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 3,
+      "layers": [
+        [
+          "chips",
+          "candy_bag",
+          "icecream_sandwich"
+        ],
+        [
+          "sorbet_cup",
+          "chips",
+          "croissant"
+        ],
+        [
+          "lemon_fruit",
+          "watermelon_slice",
+          "sorbet_cup"
+        ],
+        [
+          "chips",
+          "teddy_bear",
+          "egg_carton"
+        ]
+      ]
+    }
+  ]
+}

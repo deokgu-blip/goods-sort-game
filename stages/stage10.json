@@ -1,0 +1,167 @@
+{
+  "level": 10,
+  "timeLimit": 360,
+  "cols": 3,
+  "rows": 3,
+  "cellCap": 3,
+  "goods": [
+    "fig",
+    "koala_toy",
+    "popcorn_bag",
+    "sorbet_cup"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 4,
+    "depthRange": [
+      2,
+      2
+    ],
+    "workspaces": 2,
+    "lockCubbies": 0,
+    "totalGoods": 42,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "fig",
+          "sorbet_cup",
+          "koala_toy"
+        ],
+        [
+          "koala_toy",
+          "fig",
+          "sorbet_cup"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "fig",
+          "fig",
+          "sorbet_cup"
+        ],
+        [
+          "sorbet_cup",
+          "fig",
+          "koala_toy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "popcorn_bag",
+          "sorbet_cup",
+          "popcorn_bag"
+        ],
+        [
+          "sorbet_cup",
+          "fig",
+          "sorbet_cup"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "popcorn_bag",
+          "popcorn_bag",
+          "popcorn_bag"
+        ],
+        [
+          "sorbet_cup",
+          "koala_toy",
+          "sorbet_cup"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "fig",
+          "koala_toy",
+          "fig"
+        ],
+        [
+          "koala_toy",
+          "koala_toy",
+          "fig"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "popcorn_bag",
+          "popcorn_bag",
+          "sorbet_cup"
+        ],
+        [
+          "popcorn_bag",
+          "popcorn_bag",
+          "sorbet_cup"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "popcorn_bag",
+          "sorbet_cup",
+          "popcorn_bag"
+        ],
+        [
+          "koala_toy",
+          "popcorn_bag",
+          "koala_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

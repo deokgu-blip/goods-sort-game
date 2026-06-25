@@ -1,0 +1,553 @@
+{
+  "level": 83,
+  "timeLimit": 240,
+  "cols": 4,
+  "rows": 5,
+  "cellCap": 3,
+  "goods": [
+    "banana",
+    "chocolate_bar",
+    "croissant",
+    "gelato_cup",
+    "gingerbread",
+    "gravy_boat",
+    "lemon_soda",
+    "mustard",
+    "pineapple",
+    "popcorn_bag",
+    "santa",
+    "sorbet_cup",
+    "yogurt"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 13,
+    "depthRange": [
+      4,
+      5
+    ],
+    "workspaces": 3,
+    "lockCubbies": 6,
+    "totalGoods": 222,
+    "attempt": 1
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "gelato_cup",
+          "gingerbread",
+          "yogurt"
+        ],
+        [
+          "santa",
+          "gelato_cup",
+          "sorbet_cup"
+        ],
+        [
+          "yogurt",
+          "gelato_cup",
+          "yogurt"
+        ],
+        [
+          "sorbet_cup",
+          "yogurt",
+          "mustard"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "chocolate_bar",
+          "santa",
+          "popcorn_bag"
+        ],
+        [
+          "chocolate_bar",
+          "sorbet_cup",
+          "pineapple"
+        ],
+        [
+          "yogurt",
+          "chocolate_bar",
+          "sorbet_cup"
+        ],
+        [
+          "sorbet_cup",
+          "gingerbread",
+          "mustard"
+        ],
+        [
+          "pineapple",
+          "gravy_boat",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 5,
+      "layers": [
+        [
+          "lemon_soda",
+          "banana",
+          "mustard"
+        ],
+        [
+          "pineapple",
+          "gingerbread",
+          "banana"
+        ],
+        [
+          "gingerbread",
+          "popcorn_bag",
+          "gingerbread"
+        ],
+        [
+          "gelato_cup",
+          "gravy_boat",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "lock": 2,
+      "layers": [
+        [
+          "yogurt",
+          "croissant",
+          "lemon_soda"
+        ],
+        [
+          "gravy_boat",
+          "pineapple",
+          "chocolate_bar"
+        ],
+        [
+          "popcorn_bag",
+          "gelato_cup",
+          "croissant"
+        ],
+        [
+          "banana",
+          "sorbet_cup",
+          "chocolate_bar"
+        ],
+        [
+          "mustard",
+          "banana",
+          "gravy_boat"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "pineapple",
+          "chocolate_bar",
+          "pineapple"
+        ],
+        [
+          "banana",
+          "santa",
+          "gelato_cup"
+        ],
+        [
+          "croissant",
+          "chocolate_bar",
+          "banana"
+        ],
+        [
+          "sorbet_cup",
+          "croissant",
+          "sorbet_cup"
+        ],
+        [
+          "banana",
+          "lemon_soda",
+          "gravy_boat"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 4,
+      "layers": [
+        [
+          "popcorn_bag",
+          "banana",
+          "pineapple"
+        ],
+        [
+          "lemon_soda",
+          "sorbet_cup",
+          "banana"
+        ],
+        [
+          "santa",
+          "gravy_boat",
+          "sorbet_cup"
+        ],
+        [
+          "popcorn_bag",
+          "mustard",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "layers": [
+        [
+          "yogurt",
+          "gravy_boat",
+          "sorbet_cup"
+        ],
+        [
+          "pineapple",
+          "banana",
+          "lemon_soda"
+        ],
+        [
+          "gravy_boat",
+          "chocolate_bar",
+          "chocolate_bar"
+        ],
+        [
+          "gelato_cup",
+          "pineapple",
+          "gelato_cup"
+        ],
+        [
+          "gingerbread",
+          "sorbet_cup",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 5,
+      "layers": [
+        [
+          "gravy_boat",
+          "banana",
+          "chocolate_bar"
+        ],
+        [
+          "pineapple",
+          "gelato_cup",
+          "gingerbread"
+        ],
+        [
+          "popcorn_bag",
+          "gelato_cup",
+          "mustard"
+        ],
+        [
+          "mustard",
+          "mustard",
+          "chocolate_bar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "santa",
+          "yogurt",
+          "popcorn_bag"
+        ],
+        [
+          "gravy_boat",
+          "santa",
+          "banana"
+        ],
+        [
+          "banana",
+          "popcorn_bag",
+          "gravy_boat"
+        ],
+        [
+          "yogurt",
+          "sorbet_cup",
+          "gelato_cup"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "gravy_boat",
+          "santa",
+          "pineapple"
+        ],
+        [
+          "yogurt",
+          "lemon_soda",
+          "chocolate_bar"
+        ],
+        [
+          "pineapple",
+          "santa",
+          "mustard"
+        ],
+        [
+          "popcorn_bag",
+          "yogurt",
+          "lemon_soda"
+        ],
+        [
+          "gingerbread",
+          "gravy_boat",
+          "santa"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "layers": [
+        [
+          "lemon_soda",
+          "gingerbread",
+          "gingerbread"
+        ],
+        [
+          "mustard",
+          "chocolate_bar",
+          "croissant"
+        ],
+        [
+          "pineapple",
+          "santa",
+          "gingerbread"
+        ],
+        [
+          "santa",
+          "gelato_cup",
+          "popcorn_bag"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "lock": 3,
+      "layers": [
+        [
+          "yogurt",
+          "gingerbread",
+          "gingerbread"
+        ],
+        [
+          "gelato_cup",
+          "pineapple",
+          "santa"
+        ],
+        [
+          "mustard",
+          "popcorn_bag",
+          "gravy_boat"
+        ],
+        [
+          "lemon_soda",
+          "popcorn_bag",
+          "croissant"
+        ],
+        [
+          "gingerbread",
+          "chocolate_bar",
+          "sorbet_cup"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "lock": 4,
+      "layers": [
+        [
+          "popcorn_bag",
+          "yogurt",
+          "chocolate_bar"
+        ],
+        [
+          "yogurt",
+          "lemon_soda",
+          "popcorn_bag"
+        ],
+        [
+          "pineapple",
+          "mustard",
+          "yogurt"
+        ],
+        [
+          "gelato_cup",
+          "croissant",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 3,
+      "layers": [
+        [
+          "sorbet_cup",
+          "gravy_boat",
+          "yogurt"
+        ],
+        [
+          "lemon_soda",
+          "santa",
+          "santa"
+        ],
+        [
+          "gingerbread",
+          "popcorn_bag",
+          "pineapple"
+        ],
+        [
+          "lemon_soda",
+          "croissant",
+          "santa"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
+      "layers": [
+        [
+          "santa",
+          "gingerbread",
+          "banana"
+        ],
+        [
+          "sorbet_cup",
+          "lemon_soda",
+          "chocolate_bar"
+        ],
+        [
+          "chocolate_bar",
+          "gelato_cup",
+          "popcorn_bag"
+        ],
+        [
+          "lemon_soda",
+          "gingerbread",
+          "gravy_boat"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 1,
+      "layers": [
+        [
+          "popcorn_bag",
+          "pineapple",
+          "chocolate_bar"
+        ],
+        [
+          "gravy_boat",
+          "banana",
+          "banana"
+        ],
+        [
+          "yogurt",
+          "banana",
+          "sorbet_cup"
+        ],
+        [
+          "sorbet_cup",
+          "gravy_boat",
+          "croissant"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 2,
+      "layers": [
+        [
+          "pineapple",
+          "santa",
+          "santa"
+        ],
+        [
+          "banana",
+          "croissant",
+          "mustard"
+        ],
+        [
+          "gingerbread",
+          "yogurt",
+          "mustard"
+        ],
+        [
+          "mustard",
+          "popcorn_bag",
+          "lemon_soda"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 3,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "level": 15,
+  "timeLimit": 337,
+  "cols": 3,
+  "rows": 3,
+  "cellCap": 3,
+  "goods": [
+    "banana_bunch",
+    "cheese_wedge",
+    "corn_cob",
+    "fig",
+    "icebar_b",
+    "juice"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 6,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 1,
+    "totalGoods": 57,
+    "attempt": 3
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "corn_cob",
+          "corn_cob",
+          "icebar_b"
+        ],
+        [
+          "corn_cob",
+          "juice",
+          "icebar_b"
+        ],
+        [
+          "juice",
+          "juice",
+          "icebar_b"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "corn_cob",
+          "cheese_wedge",
+          "icebar_b"
+        ],
+        [
+          "juice",
+          "banana_bunch",
+          "fig"
+        ],
+        [
+          "juice",
+          "icebar_b",
+          "banana_bunch"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "juice",
+          "corn_cob",
+          "banana_bunch"
+        ],
+        [
+          "corn_cob",
+          "icebar_b",
+          "cheese_wedge"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "banana_bunch",
+          "cheese_wedge",
+          "cheese_wedge"
+        ],
+        [
+          "fig",
+          "juice",
+          "cheese_wedge"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "banana_bunch",
+          "cheese_wedge",
+          "corn_cob"
+        ],
+        [
+          "banana_bunch",
+          "fig",
+          "juice"
+        ],
+        [
+          "banana_bunch",
+          "fig",
+          "corn_cob"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "juice",
+          "icebar_b",
+          "banana_bunch"
+        ],
+        [
+          "cheese_wedge",
+          "corn_cob",
+          "icebar_b"
+        ],
+        [
+          "cheese_wedge",
+          "icebar_b",
+          "cheese_wedge"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "cheese_wedge",
+          "fig",
+          "fig"
+        ],
+        [
+          "fig",
+          "cheese_wedge",
+          "fig"
+        ],
+        [
+          "banana_bunch",
+          "fig",
+          "cheese_wedge"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

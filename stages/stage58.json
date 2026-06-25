@@ -1,0 +1,306 @@
+{
+  "level": 58,
+  "timeLimit": 293,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "cereal_box",
+    "cooking_oil",
+    "corn",
+    "gingerbread",
+    "hot_sauce",
+    "milk",
+    "muffin",
+    "orange_soda",
+    "shiba_dog",
+    "sorbet_cup",
+    "waffle"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 11,
+    "depthRange": [
+      3,
+      5
+    ],
+    "workspaces": 2,
+    "lockCubbies": 4,
+    "totalGoods": 108,
+    "attempt": 6
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "shiba_dog",
+          "cooking_oil",
+          "sorbet_cup"
+        ],
+        [
+          "sorbet_cup",
+          "shiba_dog",
+          "hot_sauce"
+        ],
+        [
+          "shiba_dog",
+          "corn",
+          "cereal_box"
+        ],
+        [
+          "gingerbread",
+          "milk",
+          "orange_soda"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "lock": 1,
+      "layers": [
+        [
+          "cooking_oil",
+          "gingerbread",
+          "gingerbread"
+        ],
+        [
+          "hot_sauce",
+          "muffin",
+          "milk"
+        ],
+        [
+          "cooking_oil",
+          "hot_sauce",
+          "muffin"
+        ],
+        [
+          "gingerbread",
+          "cooking_oil",
+          "muffin"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 2,
+      "layers": [
+        [
+          "cooking_oil",
+          "gingerbread",
+          "waffle"
+        ],
+        [
+          "sorbet_cup",
+          "cooking_oil",
+          "gingerbread"
+        ],
+        [
+          "muffin",
+          "gingerbread",
+          "shiba_dog"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "hot_sauce",
+          "cereal_box",
+          "orange_soda"
+        ],
+        [
+          "cereal_box",
+          "sorbet_cup",
+          "muffin"
+        ],
+        [
+          "waffle",
+          "cereal_box",
+          "cereal_box"
+        ],
+        [
+          "cereal_box",
+          "cereal_box",
+          "cooking_oil"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "lock": 2,
+      "layers": [
+        [
+          "shiba_dog",
+          "orange_soda",
+          "shiba_dog"
+        ],
+        [
+          "waffle",
+          "shiba_dog",
+          "orange_soda"
+        ],
+        [
+          "milk",
+          "sorbet_cup",
+          "waffle"
+        ],
+        [
+          "cooking_oil",
+          "orange_soda",
+          "corn"
+        ],
+        [
+          "sorbet_cup",
+          "muffin",
+          "hot_sauce"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "corn",
+          "milk",
+          "sorbet_cup"
+        ],
+        [
+          "orange_soda",
+          "orange_soda",
+          "hot_sauce"
+        ],
+        [
+          "hot_sauce",
+          "cereal_box",
+          "corn"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "lock": 4,
+      "layers": [
+        [
+          "shiba_dog",
+          "corn",
+          "milk"
+        ],
+        [
+          "waffle",
+          "milk",
+          "milk"
+        ],
+        [
+          "orange_soda",
+          "shiba_dog",
+          "cooking_oil"
+        ],
+        [
+          "muffin",
+          "gingerbread",
+          "cooking_oil"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "waffle",
+          "cooking_oil",
+          "waffle"
+        ],
+        [
+          "muffin",
+          "hot_sauce",
+          "sorbet_cup"
+        ],
+        [
+          "corn",
+          "muffin",
+          "orange_soda"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "sorbet_cup",
+          "corn",
+          "corn"
+        ],
+        [
+          "muffin",
+          "orange_soda",
+          "milk"
+        ],
+        [
+          "gingerbread",
+          "orange_soda",
+          "waffle"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "waffle",
+          "orange_soda",
+          "hot_sauce"
+        ],
+        [
+          "corn",
+          "muffin",
+          "muffin"
+        ],
+        [
+          "milk",
+          "cooking_oil",
+          "cereal_box"
+        ]
+      ]
+    }
+  ]
+}

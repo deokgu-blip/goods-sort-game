@@ -1,0 +1,190 @@
+{
+  "level": 17,
+  "timeLimit": 336,
+  "cols": 3,
+  "rows": 3,
+  "cellCap": 3,
+  "goods": [
+    "donut",
+    "eggplant",
+    "fox_toy",
+    "pretzel_bag",
+    "snowcone",
+    "teapot"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 6,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 1,
+    "totalGoods": 54,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "snowcone",
+          "eggplant",
+          "fox_toy"
+        ],
+        [
+          "snowcone",
+          "fox_toy",
+          "donut"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "pretzel_bag",
+          "teapot",
+          "teapot"
+        ],
+        [
+          "pretzel_bag",
+          "snowcone",
+          "teapot"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "donut",
+          "pretzel_bag",
+          "teapot"
+        ],
+        [
+          "eggplant",
+          "snowcone",
+          "teapot"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "pretzel_bag",
+          "fox_toy",
+          "teapot"
+        ],
+        [
+          "pretzel_bag",
+          "fox_toy",
+          "eggplant"
+        ],
+        [
+          "eggplant",
+          "fox_toy",
+          "eggplant"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "pretzel_bag",
+          "pretzel_bag",
+          "teapot"
+        ],
+        [
+          "snowcone",
+          "pretzel_bag",
+          "fox_toy"
+        ],
+        [
+          "eggplant",
+          "donut",
+          "donut"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "eggplant",
+          "snowcone",
+          "donut"
+        ],
+        [
+          "fox_toy",
+          "fox_toy",
+          "eggplant"
+        ],
+        [
+          "teapot",
+          "snowcone",
+          "teapot"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "pretzel_bag",
+          "eggplant",
+          "donut"
+        ],
+        [
+          "snowcone",
+          "snowcone",
+          "donut"
+        ],
+        [
+          "fox_toy",
+          "donut",
+          "donut"
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "level": 49,
+  "timeLimit": 301,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "chips",
+    "cupcake_pink",
+    "detergent",
+    "honey_jar",
+    "icecream_cup",
+    "lion_toy",
+    "mayo",
+    "milkshake",
+    "persimmon",
+    "pineapple"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 10,
+    "depthRange": [
+      3,
+      4
+    ],
+    "workspaces": 2,
+    "lockCubbies": 4,
+    "totalGoods": 99,
+    "attempt": 1
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "chips",
+          "pineapple",
+          "persimmon"
+        ],
+        [
+          "cupcake_pink",
+          "chips",
+          "cupcake_pink"
+        ],
+        [
+          "lion_toy",
+          "lion_toy",
+          "persimmon"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "milkshake",
+          "honey_jar",
+          "mayo"
+        ],
+        [
+          "cupcake_pink",
+          "pineapple",
+          "mayo"
+        ],
+        [
+          "mayo",
+          "detergent",
+          "cupcake_pink"
+        ],
+        [
+          "honey_jar",
+          "honey_jar",
+          "icecream_cup"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "honey_jar",
+          "detergent",
+          "lion_toy"
+        ],
+        [
+          "icecream_cup",
+          "lion_toy",
+          "icecream_cup"
+        ],
+        [
+          "mayo",
+          "lion_toy",
+          "honey_jar"
+        ],
+        [
+          "honey_jar",
+          "chips",
+          "pineapple"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "lock": 4,
+      "layers": [
+        [
+          "detergent",
+          "detergent",
+          "milkshake"
+        ],
+        [
+          "persimmon",
+          "chips",
+          "pineapple"
+        ],
+        [
+          "milkshake",
+          "detergent",
+          "honey_jar"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          "icecream_cup",
+          "pineapple",
+          "chips"
+        ],
+        [
+          "chips",
+          "pineapple",
+          "detergent"
+        ],
+        [
+          "lion_toy",
+          "persimmon",
+          "persimmon"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "mayo",
+          "milkshake",
+          "milkshake"
+        ],
+        [
+          "cupcake_pink",
+          "pineapple",
+          "chips"
+        ],
+        [
+          "honey_jar",
+          "chips",
+          "pineapple"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "cupcake_pink",
+          "detergent",
+          "cupcake_pink"
+        ],
+        [
+          "milkshake",
+          "lion_toy",
+          "milkshake"
+        ],
+        [
+          "lion_toy",
+          "pineapple",
+          "cupcake_pink"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "lock": 3,
+      "layers": [
+        [
+          "honey_jar",
+          "mayo",
+          "icecream_cup"
+        ],
+        [
+          "persimmon",
+          "detergent",
+          "honey_jar"
+        ],
+        [
+          "persimmon",
+          "detergent",
+          "persimmon"
+        ],
+        [
+          "mayo",
+          "icecream_cup",
+          "milkshake"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "lock": 2,
+      "layers": [
+        [
+          "honey_jar",
+          "icecream_cup",
+          "mayo"
+        ],
+        [
+          "detergent",
+          "milkshake",
+          "detergent"
+        ],
+        [
+          "persimmon",
+          "chips",
+          "mayo"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "cupcake_pink",
+          "milkshake",
+          "icecream_cup"
+        ],
+        [
+          "icecream_cup",
+          "lion_toy",
+          "honey_jar"
+        ],
+        [
+          "milkshake",
+          "milkshake",
+          "detergent"
+        ]
+      ]
+    }
+  ]
+}

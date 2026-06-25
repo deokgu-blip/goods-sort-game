@@ -1,0 +1,288 @@
+{
+  "level": 34,
+  "timeLimit": 320,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "apple",
+    "biscuit_box",
+    "cola",
+    "cooking_oil",
+    "donut",
+    "eclair",
+    "lemon_fruit",
+    "lion_toy",
+    "popsicle_twin"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 9,
+    "depthRange": [
+      3,
+      4
+    ],
+    "workspaces": 2,
+    "lockCubbies": 3,
+    "totalGoods": 99,
+    "attempt": 8
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "popsicle_twin",
+          "eclair",
+          "lion_toy"
+        ],
+        [
+          "donut",
+          "donut",
+          "lion_toy"
+        ],
+        [
+          "apple",
+          "biscuit_box",
+          "apple"
+        ],
+        [
+          "donut",
+          "cooking_oil",
+          "lion_toy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "biscuit_box",
+          "biscuit_box",
+          "donut"
+        ],
+        [
+          "donut",
+          "lemon_fruit",
+          "lion_toy"
+        ],
+        [
+          "cooking_oil",
+          "popsicle_twin",
+          "biscuit_box"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "lion_toy",
+          "apple",
+          "popsicle_twin"
+        ],
+        [
+          "apple",
+          "apple",
+          "lemon_fruit"
+        ],
+        [
+          "cola",
+          "donut",
+          "lion_toy"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "lock": 1,
+      "layers": [
+        [
+          "apple",
+          "cooking_oil",
+          "biscuit_box"
+        ],
+        [
+          "popsicle_twin",
+          "cooking_oil",
+          "popsicle_twin"
+        ],
+        [
+          "popsicle_twin",
+          "cooking_oil",
+          "eclair"
+        ],
+        [
+          "apple",
+          "cooking_oil",
+          "cola"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "apple",
+          "lion_toy",
+          "donut"
+        ],
+        [
+          "cola",
+          "cooking_oil",
+          "eclair"
+        ],
+        [
+          "biscuit_box",
+          "cola",
+          "lion_toy"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "cola",
+          "lemon_fruit",
+          "cola"
+        ],
+        [
+          "lemon_fruit",
+          "eclair",
+          "donut"
+        ],
+        [
+          "donut",
+          "lion_toy",
+          "lion_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "popsicle_twin",
+          "cooking_oil",
+          "apple"
+        ],
+        [
+          "lemon_fruit",
+          "cooking_oil",
+          "eclair"
+        ],
+        [
+          "lemon_fruit",
+          "cola",
+          "biscuit_box"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "eclair",
+          "eclair",
+          "popsicle_twin"
+        ],
+        [
+          "biscuit_box",
+          "eclair",
+          "biscuit_box"
+        ],
+        [
+          "lion_toy",
+          "donut",
+          "cooking_oil"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "lock": 3,
+      "layers": [
+        [
+          "apple",
+          "biscuit_box",
+          "lion_toy"
+        ],
+        [
+          "apple",
+          "lemon_fruit",
+          "lemon_fruit"
+        ],
+        [
+          "donut",
+          "biscuit_box",
+          "cooking_oil"
+        ],
+        [
+          "apple",
+          "eclair",
+          "cola"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "donut",
+          "cola",
+          "cola"
+        ],
+        [
+          "cola",
+          "cola",
+          "biscuit_box"
+        ],
+        [
+          "popsicle_twin",
+          "lemon_fruit",
+          "cooking_oil"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,306 @@
+{
+  "level": 28,
+  "timeLimit": 328,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "bread_loaf",
+    "cooking_oil",
+    "corn_cob",
+    "icecream_stick",
+    "juice",
+    "penguin",
+    "perfume",
+    "snack"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 8,
+    "depthRange": [
+      3,
+      4
+    ],
+    "workspaces": 2,
+    "lockCubbies": 2,
+    "totalGoods": 111,
+    "attempt": 2
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "bread_loaf",
+          "penguin",
+          "corn_cob"
+        ],
+        [
+          "icecream_stick",
+          "penguin",
+          "bread_loaf"
+        ],
+        [
+          "penguin",
+          "penguin",
+          "perfume"
+        ],
+        [
+          "juice",
+          "bread_loaf",
+          "corn_cob"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "snack",
+          "snack",
+          "icecream_stick"
+        ],
+        [
+          "corn_cob",
+          "perfume",
+          "cooking_oil"
+        ],
+        [
+          "cooking_oil",
+          "penguin",
+          "penguin"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "lock": 1,
+      "layers": [
+        [
+          "corn_cob",
+          "perfume",
+          "snack"
+        ],
+        [
+          "penguin",
+          "snack",
+          "perfume"
+        ],
+        [
+          "bread_loaf",
+          "penguin",
+          "cooking_oil"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "perfume",
+          "icecream_stick",
+          "cooking_oil"
+        ],
+        [
+          "snack",
+          "juice",
+          "juice"
+        ],
+        [
+          "perfume",
+          "juice",
+          "perfume"
+        ],
+        [
+          "juice",
+          "penguin",
+          "corn_cob"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "icecream_stick",
+          "snack",
+          "corn_cob"
+        ],
+        [
+          "corn_cob",
+          "corn_cob",
+          "juice"
+        ],
+        [
+          "juice",
+          "icecream_stick",
+          "perfume"
+        ],
+        [
+          "icecream_stick",
+          "icecream_stick",
+          "cooking_oil"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "snack",
+          "penguin",
+          "icecream_stick"
+        ],
+        [
+          "perfume",
+          "snack",
+          "corn_cob"
+        ],
+        [
+          "juice",
+          "snack",
+          "perfume"
+        ],
+        [
+          "bread_loaf",
+          "cooking_oil",
+          "icecream_stick"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "penguin",
+          "corn_cob",
+          "bread_loaf"
+        ],
+        [
+          "bread_loaf",
+          "cooking_oil",
+          "cooking_oil"
+        ],
+        [
+          "corn_cob",
+          "penguin",
+          "cooking_oil"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "cooking_oil",
+          "penguin",
+          "juice"
+        ],
+        [
+          "juice",
+          "bread_loaf",
+          "corn_cob"
+        ],
+        [
+          "bread_loaf",
+          "icecream_stick",
+          "corn_cob"
+        ],
+        [
+          "perfume",
+          "perfume",
+          "cooking_oil"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "icecream_stick",
+          "perfume",
+          "penguin"
+        ],
+        [
+          "perfume",
+          "bread_loaf",
+          "bread_loaf"
+        ],
+        [
+          "perfume",
+          "snack",
+          "bread_loaf"
+        ],
+        [
+          "penguin",
+          "juice",
+          "snack"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "snack",
+          "cooking_oil",
+          "juice"
+        ],
+        [
+          "cooking_oil",
+          "corn_cob",
+          "bread_loaf"
+        ],
+        [
+          "corn_cob",
+          "cooking_oil",
+          "bread_loaf"
+        ],
+        [
+          "bread_loaf",
+          "cooking_oil",
+          "icecream_stick"
+        ]
+      ]
+    }
+  ]
+}

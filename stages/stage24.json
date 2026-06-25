@@ -1,0 +1,235 @@
+{
+  "level": 24,
+  "timeLimit": 331,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "bagel",
+    "chip_can_tall",
+    "icebar_a",
+    "jam_jar",
+    "pig_toy",
+    "sports_drink",
+    "taco"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 7,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 2,
+    "totalGoods": 69,
+    "attempt": 3
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "lock": 3,
+      "layers": [
+        [
+          "taco",
+          "bagel",
+          "bagel"
+        ],
+        [
+          "icebar_a",
+          "chip_can_tall",
+          "pig_toy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "jam_jar",
+          "chip_can_tall",
+          "bagel"
+        ],
+        [
+          "jam_jar",
+          "bagel",
+          "jam_jar"
+        ],
+        [
+          "chip_can_tall",
+          "sports_drink",
+          "jam_jar"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "taco",
+          "icebar_a",
+          "jam_jar"
+        ],
+        [
+          "bagel",
+          "pig_toy",
+          "sports_drink"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "chip_can_tall",
+          "pig_toy",
+          "taco"
+        ],
+        [
+          "icebar_a",
+          "sports_drink",
+          "icebar_a"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "taco",
+          "icebar_a",
+          "pig_toy"
+        ],
+        [
+          "bagel",
+          "pig_toy",
+          "pig_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "sports_drink",
+          "sports_drink",
+          "chip_can_tall"
+        ],
+        [
+          "jam_jar",
+          "bagel",
+          "icebar_a"
+        ],
+        [
+          "chip_can_tall",
+          "jam_jar",
+          "jam_jar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "taco",
+          "icebar_a",
+          "pig_toy"
+        ],
+        [
+          "icebar_a",
+          "bagel",
+          "pig_toy"
+        ],
+        [
+          "sports_drink",
+          "jam_jar",
+          "chip_can_tall"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "jam_jar",
+          "taco",
+          "taco"
+        ],
+        [
+          "pig_toy",
+          "sports_drink",
+          "bagel"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "sports_drink",
+          "pig_toy",
+          "taco"
+        ],
+        [
+          "pig_toy",
+          "icebar_a",
+          "taco"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "jam_jar",
+          "sports_drink",
+          "pig_toy"
+        ],
+        [
+          "chip_can_tall",
+          "jam_jar",
+          "chip_can_tall"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

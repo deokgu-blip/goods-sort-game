@@ -1,0 +1,186 @@
+{
+  "level": 18,
+  "timeLimit": 335,
+  "cols": 3,
+  "rows": 3,
+  "cellCap": 3,
+  "goods": [
+    "bunny",
+    "butter",
+    "fox_toy",
+    "pomegranate",
+    "sorbet_cup",
+    "water"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 6,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 2,
+    "totalGoods": 51,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "fox_toy",
+          "sorbet_cup",
+          "pomegranate"
+        ],
+        [
+          "water",
+          "water",
+          "fox_toy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "water",
+          "bunny",
+          "pomegranate"
+        ],
+        [
+          "butter",
+          "sorbet_cup",
+          "pomegranate"
+        ],
+        [
+          "butter",
+          "butter",
+          "water"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "pomegranate",
+          "water",
+          "pomegranate"
+        ],
+        [
+          "fox_toy",
+          "pomegranate",
+          "bunny"
+        ],
+        [
+          "sorbet_cup",
+          "pomegranate",
+          "bunny"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "lock": 3,
+      "layers": [
+        [
+          "fox_toy",
+          "butter",
+          "fox_toy"
+        ],
+        [
+          "sorbet_cup",
+          "sorbet_cup",
+          "butter"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "sorbet_cup",
+          "sorbet_cup",
+          "fox_toy"
+        ],
+        [
+          "butter",
+          "fox_toy",
+          "butter"
+        ],
+        [
+          "water",
+          "fox_toy",
+          "sorbet_cup"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "water",
+          "butter",
+          "bunny"
+        ],
+        [
+          "water",
+          "pomegranate",
+          "bunny"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 1,
+      "layers": [
+        [
+          "water",
+          "sorbet_cup",
+          "pomegranate"
+        ],
+        [
+          "bunny",
+          "butter",
+          "fox_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    }
+  ]
+}

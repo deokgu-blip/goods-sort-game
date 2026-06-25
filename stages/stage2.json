@@ -1,12 +1,12 @@
 {
-  "level": 1,
+  "level": 2,
   "timeLimit": 360,
   "cols": 2,
   "rows": 2,
   "cellCap": 3,
   "goods": [
-    "muffin",
-    "tomato"
+    "frozen_tub",
+    "pretzel_bag"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -32,9 +32,14 @@
       "c": 0,
       "layers": [
         [
-          null,
-          null,
-          null
+          "pretzel_bag",
+          "frozen_tub",
+          "pretzel_bag"
+        ],
+        [
+          "frozen_tub",
+          "pretzel_bag",
+          "pretzel_bag"
         ]
       ]
     },
@@ -43,14 +48,9 @@
       "c": 1,
       "layers": [
         [
-          "tomato",
-          "muffin",
-          "muffin"
-        ],
-        [
-          "muffin",
-          "muffin",
-          "tomato"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -70,14 +70,14 @@
       "c": 1,
       "layers": [
         [
-          "tomato",
-          "tomato",
-          "tomato"
+          "frozen_tub",
+          "pretzel_bag",
+          "frozen_tub"
         ],
         [
-          "tomato",
-          "muffin",
-          "muffin"
+          "frozen_tub",
+          "frozen_tub",
+          "pretzel_bag"
         ]
       ]
     }

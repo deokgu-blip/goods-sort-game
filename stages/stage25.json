@@ -1,0 +1,235 @@
+{
+  "level": 25,
+  "timeLimit": 330,
+  "cols": 3,
+  "rows": 4,
+  "cellCap": 3,
+  "goods": [
+    "air_freshener",
+    "broccoli",
+    "butter",
+    "cracker_box",
+    "elephant_toy",
+    "gingerbread",
+    "milkshake"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 7,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 2,
+    "totalGoods": 69,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "milkshake",
+          "elephant_toy",
+          "gingerbread"
+        ],
+        [
+          "butter",
+          "air_freshener",
+          "butter"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "gingerbread",
+          "gingerbread",
+          "broccoli"
+        ],
+        [
+          "elephant_toy",
+          "gingerbread",
+          "elephant_toy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "cracker_box",
+          "elephant_toy",
+          "gingerbread"
+        ],
+        [
+          "elephant_toy",
+          "air_freshener",
+          "broccoli"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "gingerbread",
+          "broccoli",
+          "cracker_box"
+        ],
+        [
+          "cracker_box",
+          "broccoli",
+          "broccoli"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "milkshake",
+          "broccoli",
+          "butter"
+        ],
+        [
+          "air_freshener",
+          "butter",
+          "broccoli"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "gingerbread",
+          "elephant_toy",
+          "milkshake"
+        ],
+        [
+          "cracker_box",
+          "butter",
+          "cracker_box"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "milkshake",
+          "milkshake",
+          "butter"
+        ],
+        [
+          "air_freshener",
+          "gingerbread",
+          "butter"
+        ],
+        [
+          "broccoli",
+          "milkshake",
+          "gingerbread"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "lock": 1,
+      "layers": [
+        [
+          "gingerbread",
+          "elephant_toy",
+          "butter"
+        ],
+        [
+          "elephant_toy",
+          "broccoli",
+          "elephant_toy"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "milkshake",
+          "cracker_box",
+          "milkshake"
+        ],
+        [
+          "air_freshener",
+          "gingerbread",
+          "butter"
+        ],
+        [
+          "gingerbread",
+          "air_freshener",
+          "broccoli"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          "air_freshener",
+          "cracker_box",
+          "broccoli"
+        ],
+        [
+          "broccoli",
+          "milkshake",
+          "cracker_box"
+        ],
+        [
+          "cracker_box",
+          "air_freshener",
+          "air_freshener"
+        ]
+      ]
+    }
+  ]
+}

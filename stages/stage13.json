@@ -1,0 +1,204 @@
+{
+  "level": 13,
+  "timeLimit": 339,
+  "cols": 3,
+  "rows": 3,
+  "cellCap": 3,
+  "goods": [
+    "chocolate_bar",
+    "dino_toy",
+    "donut_pink",
+    "macaron",
+    "strawberry"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 5,
+    "depthRange": [
+      3,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 1,
+    "totalGoods": 63,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "strawberry",
+          "strawberry",
+          "donut_pink"
+        ],
+        [
+          "strawberry",
+          "strawberry",
+          "macaron"
+        ],
+        [
+          "macaron",
+          "chocolate_bar",
+          "dino_toy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "dino_toy",
+          "strawberry",
+          "dino_toy"
+        ],
+        [
+          "chocolate_bar",
+          "macaron",
+          "macaron"
+        ],
+        [
+          "chocolate_bar",
+          "dino_toy",
+          "donut_pink"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "donut_pink",
+          "macaron",
+          "strawberry"
+        ],
+        [
+          "dino_toy",
+          "dino_toy",
+          "donut_pink"
+        ],
+        [
+          "chocolate_bar",
+          "chocolate_bar",
+          "macaron"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "donut_pink",
+          "dino_toy",
+          "macaron"
+        ],
+        [
+          "dino_toy",
+          "macaron",
+          "chocolate_bar"
+        ],
+        [
+          "dino_toy",
+          "chocolate_bar",
+          "donut_pink"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "strawberry",
+          "chocolate_bar",
+          "donut_pink"
+        ],
+        [
+          "donut_pink",
+          "strawberry",
+          "dino_toy"
+        ],
+        [
+          "donut_pink",
+          "dino_toy",
+          "strawberry"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "chocolate_bar",
+          "donut_pink",
+          "macaron"
+        ],
+        [
+          "donut_pink",
+          "strawberry",
+          "macaron"
+        ],
+        [
+          "macaron",
+          "macaron",
+          "strawberry"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "dino_toy",
+          "donut_pink",
+          "macaron"
+        ],
+        [
+          "macaron",
+          "macaron",
+          "chocolate_bar"
+        ],
+        [
+          "chocolate_bar",
+          "strawberry",
+          "chocolate_bar"
+        ]
+      ]
+    }
+  ]
+}

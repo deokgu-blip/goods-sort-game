@@ -1,0 +1,194 @@
+{
+  "level": 11,
+  "timeLimit": 340,
+  "cols": 3,
+  "rows": 3,
+  "cellCap": 3,
+  "goods": [
+    "bread_loaf",
+    "coffee_cup",
+    "hot_dog",
+    "jam_jar",
+    "vinegar"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 5,
+    "depthRange": [
+      2,
+      3
+    ],
+    "workspaces": 2,
+    "lockCubbies": 1,
+    "totalGoods": 57,
+    "attempt": 0
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "layers": [
+        [
+          "coffee_cup",
+          "bread_loaf",
+          "vinegar"
+        ],
+        [
+          "coffee_cup",
+          "coffee_cup",
+          "vinegar"
+        ],
+        [
+          "vinegar",
+          "bread_loaf",
+          "bread_loaf"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "jam_jar",
+          "bread_loaf",
+          "hot_dog"
+        ],
+        [
+          "hot_dog",
+          "bread_loaf",
+          "coffee_cup"
+        ],
+        [
+          "jam_jar",
+          "hot_dog",
+          "jam_jar"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "lock": 1,
+      "layers": [
+        [
+          "vinegar",
+          "jam_jar",
+          "coffee_cup"
+        ],
+        [
+          "coffee_cup",
+          "hot_dog",
+          "bread_loaf"
+        ],
+        [
+          "hot_dog",
+          "coffee_cup",
+          "jam_jar"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "bread_loaf",
+          "coffee_cup",
+          "hot_dog"
+        ],
+        [
+          "bread_loaf",
+          "jam_jar",
+          "jam_jar"
+        ],
+        [
+          "jam_jar",
+          "coffee_cup",
+          "hot_dog"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "vinegar",
+          "hot_dog",
+          "hot_dog"
+        ],
+        [
+          "bread_loaf",
+          "jam_jar",
+          "jam_jar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "coffee_cup",
+          "jam_jar",
+          "vinegar"
+        ],
+        [
+          "hot_dog",
+          "bread_loaf",
+          "vinegar"
+        ],
+        [
+          "vinegar",
+          "coffee_cup",
+          "bread_loaf"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "hot_dog",
+          "hot_dog",
+          "jam_jar"
+        ],
+        [
+          "bread_loaf",
+          "coffee_cup",
+          "vinegar"
+        ]
+      ]
+    }
+  ]
+}

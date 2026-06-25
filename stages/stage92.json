@@ -1,0 +1,496 @@
+{
+  "level": 92,
+  "timeLimit": 240,
+  "cols": 4,
+  "rows": 5,
+  "cellCap": 3,
+  "goods": [
+    "banana",
+    "bell_pepper",
+    "bunny",
+    "cola",
+    "cookie_stack",
+    "cooking_oil",
+    "cracker_box",
+    "donut_pink",
+    "honey_jar",
+    "hot_dog",
+    "icebar_orange",
+    "icecream_cone",
+    "penguin",
+    "pumpkin",
+    "swiss_roll"
+  ],
+  "combo": {
+    "resetAfterMs": 20000
+  },
+  "scoring": {
+    "starsPerSort": 1,
+    "comboBonus": 1
+  },
+  "_gen": {
+    "distinct": 15,
+    "depthRange": [
+      4,
+      4
+    ],
+    "workspaces": 5,
+    "lockCubbies": 7,
+    "totalGoods": 180,
+    "attempt": 85
+  },
+  "cubbies": [
+    {
+      "r": 0,
+      "c": 0,
+      "lock": 5,
+      "layers": [
+        [
+          "penguin",
+          "hot_dog",
+          "bunny"
+        ],
+        [
+          "honey_jar",
+          "hot_dog",
+          "banana"
+        ],
+        [
+          "pumpkin",
+          "banana",
+          "honey_jar"
+        ],
+        [
+          "pumpkin",
+          "swiss_roll",
+          "banana"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "lock": 1,
+      "layers": [
+        [
+          "bunny",
+          "icebar_orange",
+          "icecream_cone"
+        ],
+        [
+          "cracker_box",
+          "hot_dog",
+          "banana"
+        ],
+        [
+          "cooking_oil",
+          "honey_jar",
+          "banana"
+        ],
+        [
+          "icebar_orange",
+          "bunny",
+          "pumpkin"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "icebar_orange",
+          "cola",
+          "icebar_orange"
+        ],
+        [
+          "swiss_roll",
+          "penguin",
+          "cookie_stack"
+        ],
+        [
+          "icecream_cone",
+          "cola",
+          "bunny"
+        ],
+        [
+          "hot_dog",
+          "cola",
+          "hot_dog"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "layers": [
+        [
+          "hot_dog",
+          "banana",
+          "donut_pink"
+        ],
+        [
+          "hot_dog",
+          "donut_pink",
+          "penguin"
+        ],
+        [
+          "cooking_oil",
+          "icebar_orange",
+          "cookie_stack"
+        ],
+        [
+          "pumpkin",
+          "cookie_stack",
+          "pumpkin"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "honey_jar",
+          "swiss_roll",
+          "cracker_box"
+        ],
+        [
+          "cracker_box",
+          "cooking_oil",
+          "penguin"
+        ],
+        [
+          "icebar_orange",
+          "swiss_roll",
+          "donut_pink"
+        ],
+        [
+          "cola",
+          "cooking_oil",
+          "cooking_oil"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "penguin",
+          "icecream_cone",
+          "donut_pink"
+        ],
+        [
+          "banana",
+          "cooking_oil",
+          "banana"
+        ],
+        [
+          "bell_pepper",
+          "pumpkin",
+          "hot_dog"
+        ],
+        [
+          "swiss_roll",
+          "cookie_stack",
+          "cola"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "layers": [
+        [
+          "cola",
+          "hot_dog",
+          "bunny"
+        ],
+        [
+          "honey_jar",
+          "honey_jar",
+          "icecream_cone"
+        ],
+        [
+          "banana",
+          "cola",
+          "honey_jar"
+        ],
+        [
+          "bunny",
+          "donut_pink",
+          "bell_pepper"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 4,
+      "layers": [
+        [
+          "cola",
+          "penguin",
+          "icecream_cone"
+        ],
+        [
+          "icecream_cone",
+          "bunny",
+          "cracker_box"
+        ],
+        [
+          "cooking_oil",
+          "honey_jar",
+          "cookie_stack"
+        ],
+        [
+          "cola",
+          "honey_jar",
+          "icebar_orange"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "lock": 4,
+      "layers": [
+        [
+          "penguin",
+          "hot_dog",
+          "icecream_cone"
+        ],
+        [
+          "pumpkin",
+          "bunny",
+          "bunny"
+        ],
+        [
+          "cracker_box",
+          "swiss_roll",
+          "icebar_orange"
+        ],
+        [
+          "cookie_stack",
+          "honey_jar",
+          "icebar_orange"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "lock": 5,
+      "layers": [
+        [
+          "donut_pink",
+          "icecream_cone",
+          "cracker_box"
+        ],
+        [
+          "penguin",
+          "icecream_cone",
+          "cooking_oil"
+        ],
+        [
+          "cracker_box",
+          "cracker_box",
+          "penguin"
+        ],
+        [
+          "bell_pepper",
+          "cola",
+          "bell_pepper"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "cookie_stack",
+          "penguin",
+          "bell_pepper"
+        ],
+        [
+          "pumpkin",
+          "bell_pepper",
+          "pumpkin"
+        ],
+        [
+          "cracker_box",
+          "cracker_box",
+          "bell_pepper"
+        ],
+        [
+          "pumpkin",
+          "cooking_oil",
+          "cracker_box"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "lock": 4,
+      "layers": [
+        [
+          "pumpkin",
+          "donut_pink",
+          "bell_pepper"
+        ],
+        [
+          "donut_pink",
+          "banana",
+          "swiss_roll"
+        ],
+        [
+          "icebar_orange",
+          "cookie_stack",
+          "icebar_orange"
+        ],
+        [
+          "donut_pink",
+          "bunny",
+          "cracker_box"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 3,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 1,
+      "layers": [
+        [
+          "banana",
+          "penguin",
+          "donut_pink"
+        ],
+        [
+          "cookie_stack",
+          "cooking_oil",
+          "banana"
+        ],
+        [
+          "swiss_roll",
+          "donut_pink",
+          "cookie_stack"
+        ],
+        [
+          "honey_jar",
+          "swiss_roll",
+          "bell_pepper"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 2,
+      "layers": [
+        [
+          "bunny",
+          "cookie_stack",
+          "cola"
+        ],
+        [
+          "cooking_oil",
+          "bell_pepper",
+          "cola"
+        ],
+        [
+          "hot_dog",
+          "icecream_cone",
+          "bunny"
+        ],
+        [
+          "donut_pink",
+          "cooking_oil",
+          "icecream_cone"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 3,
+      "layers": [
+        [
+          "icebar_orange",
+          "bell_pepper",
+          "bell_pepper"
+        ],
+        [
+          "icecream_cone",
+          "swiss_roll",
+          "swiss_roll"
+        ],
+        [
+          "hot_dog",
+          "penguin",
+          "honey_jar"
+        ],
+        [
+          "pumpkin",
+          "swiss_roll",
+          "cookie_stack"
+        ]
+      ]
+    }
+  ]
+}

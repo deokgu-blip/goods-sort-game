@@ -2,16 +2,16 @@
   "level": 1,
   "timeLimit": 9999,
   "cols": 3,
-  "rows": 4,
+  "rows": 1,
   "cellCap": 3,
   "tutorial": true,
   "goods": ["green_cup", "red_cup"],
   "combo": { "resetAfterMs": 20000 },
   "scoring": { "starsPerSort": 1, "comboBonus": 1 },
-  "_gen": { "note": "hand-authored tutorial (user image): 3 isolated cubbies, no UI, 3x4 scale, drag same-color cups to make 3", "distinct": 2, "emptyCubbies": 0, "frontGaps": 3 },
+  "_gen": { "note": "hand-authored tutorial: 1x3 row (standard cabinet render, UI hidden). center has green+red; drag red->left(2 red), green->right(2 green) to make 3.", "distinct": 2, "emptyCubbies": 0, "frontGaps": 3 },
   "cubbies": [
-    { "r": 1, "c": 1, "layers": [["green_cup", "red_cup", null]] },
-    { "r": 2, "c": 0, "layers": [["red_cup", "red_cup", null]] },
-    { "r": 2, "c": 2, "layers": [["green_cup", "green_cup", null]] }
+    { "r": 0, "c": 0, "layers": [["red_cup", "red_cup", null]] },
+    { "r": 0, "c": 1, "layers": [["green_cup", "red_cup", null]] },
+    { "r": 0, "c": 2, "layers": [["green_cup", "green_cup", null]] }
   ]
 }

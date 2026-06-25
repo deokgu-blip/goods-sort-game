@@ -126,37 +126,11 @@
 
   #game{ position:fixed; inset:0; z-index:1; display:flex; flex-direction:column;
     align-items:center; }
-  /* TUTORIAL stage (level 1): show ONLY the background + the grid — hide top HUD & bottom item bar
-     (user: "레벨1에서는 상하단 UI를 표시하지말고 배경과 그리드만"). The board-wrap (flex:1) then
-     centers the board on the bare background. */
+  /* TUTORIAL stage (level 1): the board renders with the EXACT same code/look as the normal game
+     (a connected 1x3 cabinet — same wood frame). We ONLY hide the top HUD & bottom item bar
+     (user: "상하단 UI를 표시하지말고 배경과 그리드만" + "기존 코드 방식으로 1x3"). board-wrap (flex:1)
+     centers the cabinet on the bare background. */
   body.tut-clean #hud, body.tut-clean #boosters{ display:none !important; }
-  /* TUTORIAL bare empty cells: grid positions with no cubby render NOTHING (no wood frame),
-     so only the filled cubbies float on the background (like the reference mockup). */
-  .cubby.tut-empty{ background:none !important; box-shadow:none !important; visibility:hidden; }
-  /* TUTORIAL: hide the OUTER cabinet (frame + cabinet top) AND the grid's wood lattice background
-     so the filled cubbies float ISOLATED on the bare page background (per-cubby niche walls remain). */
-  body.tut-clean #shelf .frame,
-  body.tut-clean #shelf .frame-top-persp{ display:none !important; }
-  body.tut-clean #shelf .grid{ background:none !important; filter:none !important;
-    box-shadow:none !important; border-radius:0 !important; }
-  /* TUTORIAL: each filled cubby is wrapped in a .tut-frame using the SAME wood material as the
-     cabinet (--grid-color × grayscale grain, brightness, 3D inset highlight/shadow + drop shadow),
-     with padding = the frame thickness — so the isolated niche has the IDENTICAL frame to the rest
-     of the game (user: "프레임이 다른곳에서 쓰는 프레임하고 다르잖아"). */
-  body.tut-clean .tut-frame{ position:relative; box-sizing:border-box; padding:13px; border-radius:9px;
-    background-color: var(--grid-color, #caa06a);
-    background-image:
-      var(--board-grain),
-      linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
-      var(--board-img);
-    background-size:100% 100%,100% 100%,100% 100%; background-repeat:no-repeat;
-    background-blend-mode:multiply,normal,normal;
-    filter:brightness(1.04);
-    box-shadow:
-      inset 0 3px 0 rgba(255,255,255,.22),
-      inset 0 -5px 10px rgba(40,24,8,.42),
-      0 12px 18px rgba(60,38,16,.46); }
-  body.tut-clean .tut-frame .cubby{ width:100%; height:100%; border-radius:4px; }
 
   /* ---------------- HUD (reference: a WOOD FRAME bar wrapping the row) ----------------
      [ Lv ]   ·   [ TIMER ]   ·   [ ⏸ ]   +  COMBO gauge overlapping the frame's bottom.
@@ -1666,7 +1640,7 @@
     var cs = getComputedStyle(document.documentElement);
     function pxv(name){ return parseFloat(cs.getPropertyValue(name)) || 0; }
     // live cell (cubby opening) size — read one real cubby (all are equal in the grid).
-    var anyCubby = gridEl.querySelector('.cubby:not(.tut-empty)') || gridEl.querySelector('.cubby');
+    var anyCubby = gridEl.querySelector('.cubby');
     if (!anyCubby) return;
     var cr = anyCubby.getBoundingClientRect();
     var W = cr.width || 1, H = cr.height || 1;
@@ -1912,7 +1886,7 @@
   // budget * PEEK_H_FRAC keeps the back row non-overlapping too).
   var fitState = { interiorH: 0, slotBudgetPx: 0, heightPx: {} };   // heightPx[type] = front good box height (px)
   function fitGoods(){
-    var anyCubby = gridEl.querySelector('.cubby:not(.tut-empty)') || gridEl.querySelector('.cubby');
+    var anyCubby = gridEl.querySelector('.cubby');
     if (!anyCubby) return;
     var cr = anyCubby.getBoundingClientRect();
     var W = cr.width || 1, H = cr.height || 1;
@@ -1967,6 +1941,15 @@
     S.cap = cfg.cellCap || 3;
     gridEl.style.gridTemplateColumns = 'repeat(' + cfg.cols + ', 1fr)';
     gridEl.style.gridTemplateRows = 'repeat(' + cfg.rows + ', 1fr)';
+    // SHELF aspect. Normal stages keep the tuned 1/cubbyAspect. The TUTORIAL (a 1-row 1x3) scales
+    // the shelf so its cells stay the SAME landscape ratio as a row sliced out of a 3x4 (not
+    // stretched tall). (DEFAULT_COLS=3, DEFAULT_ROWS=4 -> 1x3 gives ≈4.65:1.)
+    (function(){
+      var sh = document.getElementById('shelf'); if (!sh) return;
+      var ca = SHELF.cubbyAspect || 0.86;
+      var asp = cfg.tutorial ? ((4 * cfg.cols) / (3 * ca * cfg.rows)) : (1 / ca);
+      sh.style.aspectRatio = asp.toFixed(3) + ' / 1';
+    })();
     gridEl.innerHTML = '';
     // order cubbies row-major so grid placement matches r,c
     var byRC = {};
@@ -1974,11 +1957,6 @@
     for (var r=0; r<cfg.rows; r++){
       for (var c=0; c<cfg.cols; c++){
         var cb = byRC[r+'_'+c];
-        // TUTORIAL: empty grid positions render as bare placeholders (keep grid sizing, no frame).
-        if (!cb && cfg.tutorial){
-          var ph = document.createElement('div'); ph.className = 'cubby tut-empty'; ph.dataset.idx = -1;
-          gridEl.appendChild(ph); continue;
-        }
         var el = document.createElement('div');
         el.className = 'cubby';
         el.dataset.idx = cb ? S.cubbies.indexOf(cb) : -1;
@@ -2003,14 +1981,7 @@
             '<div class="c-lock-badge"><span class="c-lock-num"></span></div>' +
           '</div>';
         if (cb){ cb.el = el; cb.floor = el.querySelector('.c-floor'); cb.backEl = el.querySelector('.c-back-layer'); cb.lockEl = el.querySelector('.c-lock'); }
-        // TUTORIAL: wrap each filled cubby in a wood FRAME (same grid-color+grain material as the
-        // cabinet) so the isolated niche reads with the SAME frame as the rest of the game.
-        if (cb && cfg.tutorial){
-          var fr = document.createElement('div'); fr.className = 'tut-frame';
-          fr.appendChild(el); gridEl.appendChild(fr);
-        } else {
-          gridEl.appendChild(el);
-        }
+        gridEl.appendChild(el);
       }
     }
     buildNiches();        // V12 — fold each cubby's 3D wood box (faces + shared eye)

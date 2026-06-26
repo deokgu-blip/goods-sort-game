@@ -803,6 +803,22 @@
   .go-btn.shake{ animation:shakeX .3s ease; }
   @keyframes shakeX{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-5px);} 75%{transform:translateX(5px);} }
 
+  /* ---- ITEM SHOP popup (buy more of an item: icon + coin price + close X; NO free) ---- */
+  .card.shop{ position:relative; width:84%; max-width:330px; padding:30px 22px 26px;
+    background:linear-gradient(#fff7e8,#ffe7c0); border:5px solid #fff; border-radius:30px;
+    box-shadow:0 12px 0 rgba(120,70,20,.22), 0 16px 28px rgba(0,0,0,.34);
+    display:flex; flex-direction:column; align-items:center; gap:7px;
+    animation:obPop .42s cubic-bezier(.34,1.56,.64,1); }
+  .card.shop .shop-x{ position:absolute; top:-15px; right:-15px; width:44px; height:44px; cursor:pointer; pointer-events:auto;
+    background:url("../assets/ui/btn_close.png") center/contain no-repeat;
+    filter:drop-shadow(0 3px 3px rgba(0,0,0,.3)); }
+  .card.shop .shop-title{ font-size:22px; font-weight:900; color:#b3601e; }
+  .card.shop .shop-icon{ width:108px; height:108px; background:center/contain no-repeat; margin:2px 0;
+    filter:drop-shadow(0 4px 4px rgba(0,0,0,.22)); }
+  .card.shop .shop-name{ font-size:18px; font-weight:900; color:#7a4a14; }
+  .card.shop .shop-desc{ font-size:13px; color:#9a7548; text-align:center; line-height:1.3; min-height:32px; max-width:240px; }
+  .card.shop .shop-buy{ flex:none; width:62%; max-width:200px; height:52px; margin-top:6px; }
+
   /* ---- CLEAR: full-screen DIM show (no card) — big praise + MAX COMBO + NEXT ---- */
   #overlay.on.clear{ background:rgba(20,8,2,.62); }
   .clear-show{ width:min(92vw,420px); display:flex; flex-direction:column; align-items:center;
@@ -863,19 +879,15 @@
     padding:1px 9px; border-radius:9px; background:linear-gradient(var(--green),var(--green-d));
     color:#fff; font-size:11px; font-weight:900; border:2px solid #fff;
     box-shadow:0 2px 0 rgba(0,0,0,.2); white-space:nowrap; pointer-events:none; }
-  /* COIN mode (free used up): cost pill at the BOTTOM of the tile */
-  .booster .cost-lbl{ position:absolute; left:50%; bottom:-7px; transform:translateX(-50%);
-    display:flex; align-items:center; gap:2px; padding:1px 8px 1px 6px; border-radius:9px;
-    background:linear-gradient(#ffd24d,#f0a81f); color:#7a4410; font-size:11px; font-weight:900;
-    border:2px solid #fff; box-shadow:0 2px 0 rgba(0,0,0,.2); white-space:nowrap; pointer-events:none; }
-  .booster .cost-lbl.cant{ background:linear-gradient(#d9d2c6,#b3a896); color:#6b6357; }   /* unaffordable */
-  /* owned-coin badge at the TOP-LEFT of the tile */
-  .booster .coin-own{ position:absolute; top:-8px; left:-5px; z-index:2;
-    display:flex; align-items:center; gap:2px; padding:1px 6px 1px 4px; border-radius:9px;
-    background:linear-gradient(#fff,#ffeccb); color:#b8631a; font-size:10px; font-weight:900;
-    border:1.5px solid #f3c272; box-shadow:0 1px 2px rgba(0,0,0,.2); white-space:nowrap; pointer-events:none; }
-  .booster .cc{ width:13px; height:13px; flex:none;
-    background:url("../assets/ui/icon_coin.png") center/contain no-repeat; }
+  /* inventory COUNT badge (qty>0) at the tile's bottom-right */
+  .booster .qty-badge{ position:absolute; right:-6px; bottom:-6px; z-index:2; min-width:20px; height:20px;
+    display:flex; align-items:center; justify-content:center; padding:0 5px; border-radius:11px;
+    background:linear-gradient(#5bb6ff,#2f86e8); color:#fff; font-size:12px; font-weight:900;
+    border:2px solid #fff; box-shadow:0 1px 2px rgba(0,0,0,.3); pointer-events:none; }
+  /* "+" ADD badge (qty=0) — tapping the tile opens the item shop */
+  .booster .plus-badge{ position:absolute; right:-7px; bottom:-7px; z-index:2; width:27px; height:27px;
+    background:url("../assets/ui/badge_plus.png") center/contain no-repeat; pointer-events:none;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
   /* LOCKED item — greyed + padlock + unlock level */
   .booster.locked{ filter:grayscale(.85) brightness(.82) drop-shadow(0 4px 3px rgba(80,50,20,.3)); cursor:default; }
   .booster .lock-ov{ position:absolute; inset:0; display:flex; flex-direction:column;
@@ -3290,40 +3302,35 @@
       if (locked){
         b.innerHTML = '<div class="lock-ov"><div class="lk-pad"></div><span class="lk-lv">Lv '+def.unlock+'</span></div>';
       } else if (free>0){
-        b.innerHTML = '<div class="free-lbl">Free</div>';
+        b.innerHTML = '<div class="qty-badge">'+free+'</div>';     // inventory count
       } else {
-        // free exhausted -> COIN mode: owned coins (top-left) + cost (bottom). Greyed cost if unaffordable.
-        var afford = S.coins >= (def.cost||0);
-        b.innerHTML =
-          '<div class="coin-own"><span class="cc"></span>'+S.coins+'</div>' +
-          '<div class="cost-lbl'+(afford?'':' cant')+'"><span class="cc"></span>'+(def.cost||0)+'</div>';
+        b.innerHTML = '<div class="plus-badge"></div>';            // empty -> "+" badge (opens shop)
       }
     });
     document.body.classList.toggle('hammer-aim', hammerArmed);
   }
 
-  // an item is usable if a FREE use remains OR the player can pay its coin cost.
-  function canUse(key){
-    if ((itemFree[key]||0) > 0) return true;
-    var def=defOf(key); return !!def && S.coins >= (def.cost||0);
-  }
-  // consume ONE use: free first, then coins. Returns true if it could be paid.
-  function consumeItem(key){
-    if ((itemFree[key]||0) > 0){ itemFree[key]-=1; return true; }
-    var def=defOf(key); var cost=def?(def.cost||0):0;
-    if (S.coins >= cost){ S.coins -= cost; saveCoins(); return true; }
+  // an item is usable only if INVENTORY remains. Coins are spent in the SHOP (openShop), not here.
+  function canUse(key){ return (itemFree[key]||0) > 0; }
+  // consume ONE from inventory. Returns true if there was one.
+  function consumeItem(key){ if ((itemFree[key]||0) > 0){ itemFree[key]-=1; return true; } return false; }
+  // BUY one more of an item with coins (item shop). Returns true on success.
+  function buyItem(key){
+    var def=defOf(key); if(!def) return false; var cost=def.cost||0;
+    if (S.coins >= cost){ S.coins-=cost; saveCoins(); itemFree[key]=(itemFree[key]||0)+1; return true; }
     return false;
   }
 
-  // tapping an item. hammer toggles a targeting mode; the rest fire immediately.
+  // tapping an item. empty (inventory 0) -> open the buy popup; hammer toggles targeting; rest fire.
   function useItem(key){
     if (S.over || S.paused) return false;
-    var def=defOf(key); if(!def || !itemUnlocked(def)) return false;
+    var def=defOf(key); if(!def || !itemUnlocked(def)){ haptic('btn'); return false; }
     if (key==='hammer'){                                 // arm/disarm targeting (consume at smash)
-      if (!hammerArmed && !canUse('hammer')){ haptic('btn'); return false; }
-      hammerArmed=!hammerArmed; renderItems(); return true;
+      if (hammerArmed){ hammerArmed=false; renderItems(); return true; }   // tap again -> disarm
+      if (!canUse('hammer')){ openShop('hammer'); return false; }          // empty -> buy popup
+      hammerArmed=true; renderItems(); return true;                         // arm targeting
     }
-    if (!canUse(key)){ haptic('btn'); return false; }    // no free use AND not enough coins
+    if (!canUse(key)){ openShop(key); return false; }    // empty -> buy popup
     var fired=false;
     if (key==='timefreeze'){ freezeUntil = performance.now()+FREEZE_MS; document.body.classList.add('frozen');
       setTimeout(function(){ document.body.classList.remove('frozen'); }, FREEZE_MS); fired=true; }
@@ -3383,6 +3390,30 @@
     }, 220);
     return true;
   }
+
+  // ITEM SHOP — when an item is empty, tapping it opens this buy popup: icon + coin
+  // price + close (X). NO free button (user spec). Buying adds 1 to inventory.
+  function openShop(key){
+    var def=defOf(key); if(!def || S.over) return;
+    S.paused = true;                                     // hold the timer while the shop is open
+    popupBox.innerHTML =
+      '<div class="card shop">' +
+        '<div class="shop-x" id="shopX"></div>' +
+        '<div class="shop-title">GET MORE</div>' +
+        '<div class="shop-icon" style="background-image:url(\'../assets/ui/'+def.icon+'.png\')"></div>' +
+        '<div class="shop-name">'+def.name+'</div>' +
+        '<div class="shop-desc">'+def.desc+'</div>' +
+        '<div class="go-btn coin shop-buy" id="shopBuy"><span class="bi-coin"></span><span class="bl">'+(def.cost||0)+'</span></div>' +
+      '</div>';
+    overlay.classList.add('on');
+    document.getElementById('shopX').addEventListener('click', function(){ haptic('btn'); closeShop(); });
+    document.getElementById('shopBuy').addEventListener('click', function(){
+      haptic('btn');
+      if (buyItem(key)){ closeShop(); renderItems(); }   // bought -> +1 inventory, close
+      else { var bb=document.getElementById('shopBuy'); if(bb){ bb.classList.remove('shake'); void bb.offsetWidth; bb.classList.add('shake'); } }
+    });
+  }
+  function closeShop(){ closePopup(); S.paused=false; S.lastTick=performance.now(); }
 
   document.querySelectorAll('#boosters .booster').forEach(function(b){
     b.addEventListener('click', function(){ useItem(b.getAttribute('data-item')); });

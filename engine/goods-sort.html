@@ -414,20 +414,14 @@
          A THIN, DEFINED strip with a crisp top edge (a short fade) — NOT a tall soft glow that
          bleeds up the wall (user: "그리드 뒤에 번지는 영역이있어"). A faint seam shadow sits just
          above it so the floor reads as a plane meeting the back wall. */
-      linear-gradient(to top,
-        rgba(54,33,12,.2) 21%, rgba(54,33,12,0) 26%),
-      linear-gradient(to top,
-        #a8733d 0%,
-        #a8733d 20%,
-        rgba(0,0,0,0) 24%),
-      /* V19 — SHALLOW TOP inner-shadow: a faint dark band hugging the TOP edge (ceiling
-         drop-shadow into the recess). SHALLOW = confined to ~top 22% then fades; opacity
-         from --cubby-top-shade-op (a small fraction of shadowStrength). Sits FIRST so it
-         reads at the top, over the cream wall + the directional shading below. */
+      /* dark wood CEILING band (top) + FLOOR band (bottom): the niche TOP and BOTTOM are the SAME
+         in-shadow dark wood (#a8733d) — only the back wall between them is the light cream. NO seam
+         line (the old faint seam shadow was removed). Both painted on the always-rendering back wall
+         (Safari-safe), with a crisp short fade so they don't bleed. */
       linear-gradient(to bottom,
-        rgba(34,20,6,var(--cubby-top-shade-op,.12)) 0%,
-        rgba(34,20,6,calc(var(--cubby-top-shade-op,.12) * 0.45)) 11%,
-        rgba(34,20,6,0) 22%),
+        #a8733d 0%, #a8733d 17%, rgba(0,0,0,0) 22%),
+      linear-gradient(to top,
+        #a8733d 0%, #a8733d 20%, rgba(0,0,0,0) 24%),
       radial-gradient(150% 150% at var(--cubby-shade-dark-x,80%) var(--cubby-shade-dark-y,80%),
         rgba(40,24,8,calc(var(--cubby-shade-op,.25) * 1.7)) 0%,
         rgba(40,24,8,calc(var(--cubby-shade-op,.25) * 0.7)) 38%,

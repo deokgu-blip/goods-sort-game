@@ -637,8 +637,8 @@
   /* praise = an <img> (praise_<word>.png) — FIXED HEIGHT gives the SAME letter size for every word
      (all images share one font size); width auto so longer words are wider, not taller. */
   .praise{ position:fixed; z-index:56; pointer-events:none; transform:translate(-50%,-50%);
-    height:50px; width:auto;
-    filter:drop-shadow(0 3px 3px rgba(0,0,0,.3)); }
+    height:32px; width:auto; max-width:92vw;
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.3)); }
   @keyframes praisePop{
     0%{ transform:translate(-50%,-50%) scale(.3); opacity:0; }
     25%{ transform:translate(-50%,-62%) scale(1.18); opacity:1; }
@@ -2428,6 +2428,15 @@
     p.style.left = x+'px'; p.style.top = y+'px';
     p.style.animation = 'praisePop 1.0s ease forwards';
     fxEl.appendChild(p);
+    // keep long words (Excellent/Outstanding…) on-screen: clamp center-x by rendered width.
+    // praisePop scales up to ~1.18x mid-animation, so reserve for the PEAK width (1.2x).
+    var clampX = function(){
+      var w = (p.offsetWidth || 0) * 1.2; if (!w) return;
+      var m = 8, half = w/2, lo = m+half, hi = window.innerWidth - m - half;
+      var cx = (lo > hi) ? window.innerWidth/2 : Math.max(lo, Math.min(hi, x));
+      p.style.left = cx+'px';
+    };
+    if (p.complete && p.naturalWidth) clampX(); else p.addEventListener('load', clampX);
     setTimeout(function(){ p.remove(); }, 1050);
   }
 
@@ -4303,6 +4312,11 @@
       if (combo >= 2) comboBadge(cx, cy, combo);
       sparkleRing(cx, cy); confettiBurst(cx, cy);
       flyStar(cx, cy, combo);
+    },
+    // QA/screenshot: fire ONLY the praise text at a horizontal fraction of the viewport
+    // (frac 0=left edge .. 1=right edge) to verify the on-screen clamp for long words.
+    praiseAt: function(frac, combo){
+      praise(window.innerWidth * (frac==null?0.5:frac), window.innerHeight*0.4, combo||3);
     },
     shouldEmitGameEnd: shouldEmitGameEnd,
     safeTop: function(){ return getComputedStyle(document.documentElement).getPropertyValue('--safe-top').trim(); },

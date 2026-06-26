@@ -81,7 +81,7 @@
        the #bg full-viewport layer, AND each niche's back wall all use
        this EXACT value so the whole thing reads as one seamless wall.
        =========================================================== */
-    --wallpaper: #f0e2c8;
+    --wallpaper: #ecd3b3;   /* V23 — warmer/softer peach bg (was bright #f0e2c8) — calmer overall tone */
     /* ===========================================================
        V18 — DIRECTIONAL LIGHTING (top-left light -> bottom-right shadows).
        These are DEFAULTS for the static/offline render; applyShelfCssVars()
@@ -241,7 +241,9 @@
   #shelf{ position:relative; width:min(94vw, 62vh, 460px); aspect-ratio:1/0.95;
     transform-style:flat;
     transform: none;                 /* front elevation — NO rotateX tilt */
-    filter: drop-shadow(0 18px 24px rgba(60,38,16,.42)); }
+    /* V23 — LOWER the overall lighting + saturation of the whole board (grid + goods) so it reads
+       calm/warm like the reference, not high-key/vivid (user: 너무 밝아서 눈이 아파 → 조명 낮춰). */
+    filter: brightness(0.88) saturate(0.83) drop-shadow(0 18px 24px rgba(60,38,16,.42)); }
   /* #cabinet = the OUTER WOOD BOX the niches sit inside (wood border + wood lattice
      gap). It is the real wood frame; the niches open into it. */
   /* V21 — UNIFIED WOOD: the frame is a SOLID --grid-color base × the GRAYSCALE board grain map
@@ -405,7 +407,7 @@
      (the gradients sit ON TOP of the cream base color but the back is mostly cream). */
   /* niche INTERIOR back wall = the reference's light cream (the SHELF FLOOR below is the darker, in-
      shadow wood — see the floor band + .c-wall.b). */
-  .cubby .c-back{ background-color: #e8d1b9;
+  .cubby .c-back{ background-color: #e3cba8;
     background-image:
       /* SAFARI-SAFE FLOOR — the niche's 3D floor face (blend-mode + rotateX fold) can fail to
          composite on iOS Safari, leaving the shelf bottom cream (user: "모바일에서 선반 바닥 안보여").
@@ -414,12 +416,9 @@
          A THIN, DEFINED strip with a crisp top edge (a short fade) — NOT a tall soft glow that
          bleeds up the wall (user: "그리드 뒤에 번지는 영역이있어"). A faint seam shadow sits just
          above it so the floor reads as a plane meeting the back wall. */
-      /* dark wood CEILING band (top) + FLOOR band (bottom): the niche TOP and BOTTOM are the SAME
-         in-shadow dark wood (#a8733d) — only the back wall between them is the light cream. NO seam
-         line (the old faint seam shadow was removed). Both painted on the always-rendering back wall
-         (Safari-safe), with a crisp short fade so they don't bleed. */
-      linear-gradient(to bottom,
-        #937149 0%, #937149 17%, rgba(0,0,0,0) 18.5%),
+      /* dark wood FLOOR band (bottom) only — the niche top has NO dark ceiling band (user: 천장색 없애줘),
+         so the cream back wall runs straight up to the frame. The floor band matches the 3D floor color
+         (#937149) with a crisp edge; painted on the always-rendering back wall (Safari-safe). */
       linear-gradient(to top,
         #937149 0%, #937149 20%, rgba(0,0,0,0) 21.5%),
       radial-gradient(150% 150% at var(--cubby-shade-dark-x,80%) var(--cubby-shade-dark-y,80%),

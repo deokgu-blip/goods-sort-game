@@ -403,7 +403,9 @@
      opacity scales with --cubby-shade-op (from shadowStrength). The FIRST background-image
      stays first so the back color is still sampled as cream for the seamless-wall assert
      (the gradients sit ON TOP of the cream base color but the back is mostly cream). */
-  .cubby .c-back{ background-color: var(--wallpaper);
+  /* the niche INTERIOR (back wall) is slightly DARKER than the bright wood frame so the shelf reads
+     as recessed/in-shadow (user: "선반 부분은 그림자진것처럼 프레임에 비해 살짝 어둡게"). */
+  .cubby .c-back{ background-color: #e5d0a4;
     background-image:
       /* SAFARI-SAFE FLOOR — the niche's 3D floor face (blend-mode + rotateX fold) can fail to
          composite on iOS Safari, leaving the shelf bottom cream (user: "모바일에서 선반 바닥 안보여").

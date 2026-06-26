@@ -267,8 +267,8 @@ function rgbDist(p, c){
   // rendered — but the asset is still WIRED on the rule (so the editor can re-enable it). We
   // assert the wood-asset wiring for the VISIBLE faces (floor/rim=board, L/R walls=post) +
   // the ceiling rule still carries the board asset (ceilUsesWood) even while hidden.
-  assert('(N2) faces use WOOD/CREAM: back=cream, floor/rim=shelf_board.png, L/R walls=post.png (ceiling asset still wired for editor toggle)',
-    niche.backIsCream && niche.floorUsesWood && niche.ceilUsesWood &&
+  assert('(N2) faces use WOOD: floor/rim=shelf_board.png, L/R walls=post.png (back is a recessed darker cream now)',
+    niche.floorUsesWood && niche.ceilUsesWood &&
     niche.leftUsesWood && niche.rightUsesWood && niche.rimUsesWood,
     JSON.stringify({back:niche.backIsCream,floor:niche.floorUsesWood,ceil:niche.ceilUsesWood,L:niche.leftUsesWood,R:niche.rightUsesWood,rim:niche.rimUsesWood}));
   // V17 LOOK-DOWN + HIDDEN CEILING: the eye now sits HIGH above center (eyeY≈0.20) so the camera
@@ -458,9 +458,11 @@ function rgbDist(p, c){
   // COLOR equals the page/body (and #bg) cream wall color -> one seamless wall.
   assert('(V5-2a) page #bg cream color == body cream color',
     v5.bgBg === v5.bodyBg && /rgb/.test(v5.bodyBg||''), 'body=' + v5.bodyBg + ' #bg=' + v5.bgBg);
-  assert('(V5-2b) EVERY cubby open-back cream color == page wall color (open-back)',
-    v5.backColors.length === 12 && v5.backAllEqualBody === true,
-    'bodyBg=' + v5.bodyBg + ' backs=' + JSON.stringify(v5.backColors));
+  assert('(V5-2b) EVERY cubby back is a RECESSED darker cream (uniform, slightly darker than the page wall)',
+    v5.backColors.length === 12 && new Set(v5.backColors).size === 1 &&
+      (function(){ const p=(v5.bodyBg.match(/\d+/g)||[]).map(Number); const k=(v5.backColors[0].match(/\d+/g)||[]).map(Number);
+        return k.length===3 && (k[0]+k[1]+k[2]) < (p[0]+p[1]+p[2]); })(),
+    'bodyBg=' + v5.bodyBg + ' back=' + JSON.stringify(v5.backColors[0]));
 
   // =====================================================================
   // V12 — NICHE WOOD INTERIOR is VISIBLY RENDERED (pixel-level, replaces the old

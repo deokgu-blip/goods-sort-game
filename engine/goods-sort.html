@@ -553,8 +553,7 @@
     /* V18 — DIRECTIONAL drop-shadow: offset toward the shadow direction (bottom-right by
        default, from the top-left light). dx/dy/blur/color come from --good-shadow-* which
        applyShelfCssVars() derives from SHELF.lightAngle + shadowStrength. */
-    /* V23b — saturate boost so the goods read COLORFUL/varied (알록달록), even under the dimmer board. */
-    filter:saturate(1.18) drop-shadow(var(--good-shadow-dx,4px) var(--good-shadow-dy,4px) var(--good-shadow-blur,5px) var(--good-shadow-color,rgba(20,10,2,.45)));
+    filter:drop-shadow(var(--good-shadow-dx,4px) var(--good-shadow-dy,4px) var(--good-shadow-blur,5px) var(--good-shadow-color,rgba(20,10,2,.45)));
     transform: translateX(-50%) translateZ(var(--gz,0px)) scale(var(--gs,1));
     transform-origin:bottom center;
     will-change:transform; cursor:grab; touch-action:none; pointer-events:none; }

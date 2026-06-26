@@ -863,6 +863,19 @@
     padding:1px 9px; border-radius:9px; background:linear-gradient(var(--green),var(--green-d));
     color:#fff; font-size:11px; font-weight:900; border:2px solid #fff;
     box-shadow:0 2px 0 rgba(0,0,0,.2); white-space:nowrap; pointer-events:none; }
+  /* COIN mode (free used up): cost pill at the BOTTOM of the tile */
+  .booster .cost-lbl{ position:absolute; left:50%; bottom:-7px; transform:translateX(-50%);
+    display:flex; align-items:center; gap:2px; padding:1px 8px 1px 6px; border-radius:9px;
+    background:linear-gradient(#ffd24d,#f0a81f); color:#7a4410; font-size:11px; font-weight:900;
+    border:2px solid #fff; box-shadow:0 2px 0 rgba(0,0,0,.2); white-space:nowrap; pointer-events:none; }
+  .booster .cost-lbl.cant{ background:linear-gradient(#d9d2c6,#b3a896); color:#6b6357; }   /* unaffordable */
+  /* owned-coin badge at the TOP-LEFT of the tile */
+  .booster .coin-own{ position:absolute; top:-8px; left:-5px; z-index:2;
+    display:flex; align-items:center; gap:2px; padding:1px 6px 1px 4px; border-radius:9px;
+    background:linear-gradient(#fff,#ffeccb); color:#b8631a; font-size:10px; font-weight:900;
+    border:1.5px solid #f3c272; box-shadow:0 1px 2px rgba(0,0,0,.2); white-space:nowrap; pointer-events:none; }
+  .booster .cc{ width:13px; height:13px; flex:none;
+    background:url("../assets/ui/icon_coin.png") center/contain no-repeat; }
   /* LOCKED item — greyed + padlock + unlock level */
   .booster.locked{ filter:grayscale(.85) brightness(.82) drop-shadow(0 4px 3px rgba(80,50,20,.3)); cursor:default; }
   .booster .lock-ov{ position:absolute; inset:0; display:flex; flex-direction:column;
@@ -3254,10 +3267,10 @@
   // Each item grants 1 FREE use per level ("Free" label). Locked items show a padlock + Lv.
   // =============================================================
   var ITEM_DEFS = [
-    { key:'hammer',     icon:'btn_hammer',     unlock:1, name:'HAMMER',      desc:'Tap an item to smash it and free up a slot.' },
-    { key:'timefreeze', icon:'btn_timefreeze', unlock:3, name:'TIME FREEZE', desc:'Freezes the timer for 8 seconds.' },
-    { key:'shuffle',    icon:'btn_shuffle',    unlock:6, name:'RESHUFFLE',   desc:'Shuffles every item into a fresh layout.' },
-    { key:'addtime',    icon:'btn_addtime',    unlock:9, name:'ADD TIME',    desc:'Adds 30 seconds to the timer.' }
+    { key:'hammer',     icon:'btn_hammer',     unlock:1, cost:120, name:'HAMMER',      desc:'Smash a good and 2 more of the same kind.' },
+    { key:'timefreeze', icon:'btn_timefreeze', unlock:3, cost:150, name:'TIME FREEZE', desc:'Freezes the timer for 8 seconds.' },
+    { key:'shuffle',    icon:'btn_shuffle',    unlock:6, cost:200, name:'RESHUFFLE',   desc:'Shuffles every item into a fresh layout.' },
+    { key:'addtime',    icon:'btn_addtime',    unlock:9, cost:180, name:'ADD TIME',    desc:'Adds 30 seconds to the timer.' }
   ];
   var FREE_PER_LEVEL = 1, FREEZE_MS = 8000;
   var itemFree = {};            // per-level free uses remaining, keyed by item
@@ -3274,41 +3287,100 @@
       b.style.backgroundImage = 'url("../assets/ui/'+def.icon+'.png")';
       b.classList.toggle('locked', locked);
       b.classList.toggle('armed', key==='hammer' && hammerArmed);
-      b.innerHTML = locked
-        ? '<div class="lock-ov"><div class="lk-pad"></div><span class="lk-lv">Lv '+def.unlock+'</span></div>'
-        : (free>0 ? '<div class="free-lbl">Free</div>' : '');
+      if (locked){
+        b.innerHTML = '<div class="lock-ov"><div class="lk-pad"></div><span class="lk-lv">Lv '+def.unlock+'</span></div>';
+      } else if (free>0){
+        b.innerHTML = '<div class="free-lbl">Free</div>';
+      } else {
+        // free exhausted -> COIN mode: owned coins (top-left) + cost (bottom). Greyed cost if unaffordable.
+        var afford = S.coins >= (def.cost||0);
+        b.innerHTML =
+          '<div class="coin-own"><span class="cc"></span>'+S.coins+'</div>' +
+          '<div class="cost-lbl'+(afford?'':' cant')+'"><span class="cc"></span>'+(def.cost||0)+'</div>';
+      }
     });
     document.body.classList.toggle('hammer-aim', hammerArmed);
+  }
+
+  // an item is usable if a FREE use remains OR the player can pay its coin cost.
+  function canUse(key){
+    if ((itemFree[key]||0) > 0) return true;
+    var def=defOf(key); return !!def && S.coins >= (def.cost||0);
+  }
+  // consume ONE use: free first, then coins. Returns true if it could be paid.
+  function consumeItem(key){
+    if ((itemFree[key]||0) > 0){ itemFree[key]-=1; return true; }
+    var def=defOf(key); var cost=def?(def.cost||0):0;
+    if (S.coins >= cost){ S.coins -= cost; saveCoins(); return true; }
+    return false;
   }
 
   // tapping an item. hammer toggles a targeting mode; the rest fire immediately.
   function useItem(key){
     if (S.over || S.paused) return false;
     var def=defOf(key); if(!def || !itemUnlocked(def)) return false;
-    if ((itemFree[key]||0) <= 0 && !(key==='hammer' && hammerArmed)) { haptic('btn'); return false; }  // no free use left (no ads)
-    if (key==='hammer'){ hammerArmed=!hammerArmed; renderItems(); return true; }
+    if (key==='hammer'){                                 // arm/disarm targeting (consume at smash)
+      if (!hammerArmed && !canUse('hammer')){ haptic('btn'); return false; }
+      hammerArmed=!hammerArmed; renderItems(); return true;
+    }
+    if (!canUse(key)){ haptic('btn'); return false; }    // no free use AND not enough coins
     var fired=false;
     if (key==='timefreeze'){ freezeUntil = performance.now()+FREEZE_MS; document.body.classList.add('frozen');
       setTimeout(function(){ document.body.classList.remove('frozen'); }, FREEZE_MS); fired=true; }
     else if (key==='shuffle'){ reshuffleBoard(); fired=true; }
     else if (key==='addtime'){ S.timeLeft = Math.max(0,S.timeLeft)+30; updateTimer(); fired=true; }
-    if (fired){ itemFree[key]=(itemFree[key]||0)-1; haptic('clear'); renderItems(); }
+    if (fired){ consumeItem(key); haptic('clear'); renderItems(); }
     return fired;
   }
 
-  // HAMMER smash — removes ONE front good from its slot (frees space). Not a clear: no combo/lock countdown.
+  // HAMMER smash — removes the tapped good AND up to 2 MORE goods of the SAME kind
+  // (total 3) from any unlocked front layer, freeing slots. Not a clear: no combo/lock countdown.
   function hammerSmash(goodEl){
-    var cb=S.cubbies[+goodEl.dataset.cubby]; if(!cb || cb.lock>0) return false;
-    var slot=+goodEl.dataset.slot, fl=frontLayer(cb); if(!fl || !fl[slot]) return false;
-    fl[slot]=null;                                     // data
-    var r=goodEl.getBoundingClientRect();
-    sparkleRing(r.left+r.width/2, r.top+r.height/2);
-    goodEl.style.transition='transform .2s ease, opacity .2s ease';
-    goodEl.style.transform='scale(.2) rotate(22deg)'; goodEl.style.opacity='0';
-    haptic('clear');
-    itemFree.hammer=Math.max(0,(itemFree.hammer||0)-1);
+    var cb0=S.cubbies[+goodEl.dataset.cubby]; if(!cb0 || cb0.lock>0 || cb0._holding) return false;
+    var slot0=+goodEl.dataset.slot, fl0=frontLayer(cb0); if(!fl0 || !fl0[slot0]) return false;
+    var type=fl0[slot0];
+    if (!consumeItem('hammer')){ haptic('btn'); return false; }   // pay free-or-coin
     hammerArmed=false;
-    setTimeout(function(){ renderCubby(cb); renderItems(); checkWin(); maybeDeadlock(); }, 200);
+
+    // targets: tapped good FIRST, then up to 2 MORE of the same type from any unlocked front layer.
+    var targets=[{cb:cb0, slot:slot0}];
+    for (var ci=0; ci<S.cubbies.length && targets.length<3; ci++){
+      var cb=S.cubbies[ci]; if(cb.lock>0 || cb._holding) continue;
+      var fl=frontLayer(cb); if(!fl) continue;
+      for (var si=0; si<SLOTS && targets.length<3; si++){
+        if (fl[si]===type && !(cb===cb0 && si===slot0)) targets.push({cb:cb, slot:si});
+      }
+    }
+
+    // remove each: null data + animate the DOM good out.
+    var touched=[];
+    targets.forEach(function(t){
+      var fl=frontLayer(t.cb); if(!fl || fl[t.slot]!==type) return;
+      fl[t.slot]=null;
+      var gEl=frontGoodDOM(t.cb, t.slot);
+      if (gEl){
+        var r=gEl.getBoundingClientRect();
+        sparkleRing(r.left+r.width/2, r.top+r.height/2);
+        popPuff(r.left+r.width/2, r.top+r.height*0.46);
+        gEl.style.transition='transform .2s ease, opacity .2s ease';
+        gEl.style.transform='scale(.2) rotate(22deg)'; gEl.style.opacity='0';
+      }
+      if (touched.indexOf(t.cb)<0) touched.push(t.cb);
+    });
+
+    // reveal a back layer for any cubby whose FRONT just emptied.
+    touched.forEach(function(cb){
+      var fl=frontLayer(cb), empty=true;
+      if (fl){ for(var si=0;si<SLOTS;si++) if(fl[si]) empty=false; }
+      cb._hReveal=(empty && cb.layers.length>1);
+      if (cb._hReveal) cb.layers.shift();
+    });
+
+    haptic('clear'); renderItems();
+    setTimeout(function(){
+      touched.forEach(function(cb){ renderCubby(cb, cb._hReveal?{reveal:true}:{}); cb._hReveal=false; });
+      checkWin(); maybeDeadlock();
+    }, 220);
     return true;
   }
 
@@ -4318,6 +4390,14 @@
     praiseAt: function(frac, combo){
       praise(window.innerWidth * (frac==null?0.5:frac), window.innerHeight*0.4, combo||3);
     },
+    // QA: drive the item system (free/coin economy + hammer 3-same).
+    itemUse: function(key){ return useItem(key); },
+    itemCanUse: function(key){ return canUse(key); },
+    itemFreeLeft: function(key){ return itemFree[key]||0; },
+    setItemFree: function(key, n){ itemFree[key]=n|0; renderItems(); return itemFree[key]; },
+    hammerAt: function(cubbyIdx, slot){ var cb=S.cubbies[cubbyIdx]; var g=cb&&frontGoodDOM(cb,slot); return g?hammerSmash(g):false; },
+    coins: function(){ return S.coins; },
+    setCoins: function(n){ S.coins=n|0; saveCoins(); renderItems(); return S.coins; },
     shouldEmitGameEnd: shouldEmitGameEnd,
     safeTop: function(){ return getComputedStyle(document.documentElement).getPropertyValue('--safe-top').trim(); },
     win: function(){ win(); },

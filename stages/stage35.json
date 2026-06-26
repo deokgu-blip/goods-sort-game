@@ -1,19 +1,20 @@
 {
   "level": 35,
-  "timeLimit": 319,
+  "timeLimit": 320,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
     "air_freshener",
     "berry_smoothie",
-    "cheese_puffs",
+    "cereal_fruit_loops",
     "cream_cheese",
-    "frozen_berries",
     "grapes",
     "gum_pack",
-    "jam_jar_brand",
+    "ketchup_squeeze",
+    "mayo_squeeze",
     "paint_can",
+    "rice_bag",
     "sandwich_cookies",
     "spray_cleaner",
     "tea_box",
@@ -27,16 +28,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 13,
+    "distinct": 14,
     "depthRange": [
       3,
       4
     ],
     "emptyCubbies": 1,
-    "frontGaps": 6,
-    "lockCubbies": 3,
-    "totalGoods": 105,
-    "attempt": 2
+    "frontGaps": 9,
+    "lockCubbies": 4,
+    "totalGoods": 102,
+    "attempt": 57
   },
   "cubbies": [
     {
@@ -44,19 +45,19 @@
       "c": 0,
       "layers": [
         [
-          "toaster_pastry",
-          "tea_box",
-          null
-        ],
-        [
+          null,
           "gum_pack",
-          "jam_jar_brand",
-          "spray_cleaner"
+          "grapes"
         ],
         [
-          "berry_smoothie",
+          "cream_cheese",
           "paint_can",
-          "sandwich_cookies"
+          "ketchup_squeeze"
+        ],
+        [
+          "mayo_squeeze",
+          "cream_cheese",
+          "air_freshener"
         ]
       ]
     },
@@ -66,18 +67,23 @@
       "lock": 1,
       "layers": [
         [
-          "jam_jar_brand",
-          "jam_jar_brand",
-          "paint_can"
+          null,
+          "berry_smoothie",
+          "ketchup_squeeze"
         ],
         [
+          "berry_smoothie",
           "air_freshener",
-          "jam_jar_brand",
-          "cheese_puffs"
+          "air_freshener"
         ],
         [
-          "toaster_pastry",
-          "air_freshener",
+          "spray_cleaner",
+          "rice_bag",
+          "toaster_pastry"
+        ],
+        [
+          "cream_cheese",
+          "sandwich_cookies",
           "grapes"
         ]
       ]
@@ -88,23 +94,23 @@
       "layers": [
         [
           null,
-          "paint_can",
-          "berry_smoothie"
+          "tea_box",
+          "toaster_pastry"
         ],
         [
-          "frozen_berries",
-          "air_freshener",
+          "grapes",
+          "spray_cleaner",
           "tea_box"
         ],
         [
-          "cheese_puffs",
-          "cream_cheese",
-          "spray_cleaner"
+          "berry_smoothie",
+          "air_freshener",
+          "paint_can"
         ],
         [
-          "air_freshener",
-          "grapes",
-          "berry_smoothie"
+          "ketchup_squeeze",
+          "ketchup_squeeze",
+          "cereal_fruit_loops"
         ]
       ]
     },
@@ -114,18 +120,18 @@
       "layers": [
         [
           "tea_box",
-          "cream_cheese",
-          "frozen_berries"
-        ],
-        [
-          "air_freshener",
-          "cream_cheese",
-          "gum_pack"
-        ],
-        [
-          "toaster_pastry",
-          "tea_box",
+          "grapes",
           "spray_cleaner"
+        ],
+        [
+          "spray_cleaner",
+          "toaster_pastry",
+          "mayo_squeeze"
+        ],
+        [
+          "sandwich_cookies",
+          "grapes",
+          "sandwich_cookies"
         ]
       ]
     },
@@ -134,67 +140,67 @@
       "c": 1,
       "layers": [
         [
-          "gum_pack",
-          "paint_can",
-          "cream_cheese"
-        ],
-        [
-          "spray_cleaner",
-          "jam_jar_brand",
+          "ketchup_squeeze",
+          "tea_box",
           "sandwich_cookies"
         ],
         [
-          "air_freshener",
+          "berry_smoothie",
+          "ketchup_squeeze",
+          "spray_cleaner"
+        ],
+        [
           "gum_pack",
-          "cream_cheese"
+          "paint_can",
+          "paint_can"
         ]
       ]
     },
     {
       "r": 1,
       "c": 2,
+      "lock": 4,
       "layers": [
         [
-          "paint_can",
-          "toaster_pastry",
-          "gum_pack"
-        ],
-        [
-          "cheese_puffs",
-          "cream_cheese",
-          "frozen_berries"
-        ],
-        [
-          "berry_smoothie",
+          "air_freshener",
           "tea_box",
+          null
+        ],
+        [
+          "mayo_squeeze",
+          "gum_pack",
+          "cereal_fruit_loops"
+        ],
+        [
+          "spray_cleaner",
+          "mayo_squeeze",
           "tea_box"
+        ],
+        [
+          "tea_box",
+          "gum_pack",
+          "ketchup_squeeze"
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
-      "lock": 1,
       "layers": [
         [
-          null,
-          null,
-          "gum_pack"
-        ],
-        [
-          "cheese_puffs",
-          "toaster_pastry",
-          "air_freshener"
-        ],
-        [
-          "sandwich_cookies",
-          "grapes",
-          "air_freshener"
-        ],
-        [
-          "cheese_puffs",
           "tea_box",
-          "berry_smoothie"
+          "berry_smoothie",
+          "air_freshener"
+        ],
+        [
+          "cream_cheese",
+          "gum_pack",
+          "rice_bag"
+        ],
+        [
+          "rice_bag",
+          "gum_pack",
+          "cream_cheese"
         ]
       ]
     },
@@ -204,45 +210,46 @@
       "lock": 2,
       "layers": [
         [
-          "spray_cleaner",
-          "toaster_pastry",
-          "spray_cleaner"
-        ],
-        [
-          "jam_jar_brand",
-          "tea_box",
+          "ketchup_squeeze",
+          null,
           "gum_pack"
         ],
         [
-          "frozen_berries",
-          "tea_box",
-          "frozen_berries"
+          "sandwich_cookies",
+          "berry_smoothie",
+          "berry_smoothie"
+        ],
+        [
+          "rice_bag",
+          "berry_smoothie",
+          "mayo_squeeze"
+        ],
+        [
+          "spray_cleaner",
+          "ketchup_squeeze",
+          "cereal_fruit_loops"
         ]
       ]
     },
     {
       "r": 2,
       "c": 2,
+      "lock": 4,
       "layers": [
         [
-          "grapes",
-          "cream_cheese",
-          "paint_can"
-        ],
-        [
-          "berry_smoothie",
-          "sandwich_cookies",
-          "berry_smoothie"
+          null,
+          null,
+          "cereal_fruit_loops"
         ],
         [
           "sandwich_cookies",
-          "berry_smoothie",
+          "spray_cleaner",
           "toaster_pastry"
         ],
         [
-          "jam_jar_brand",
-          "sandwich_cookies",
-          "paint_can"
+          "cereal_fruit_loops",
+          "mayo_squeeze",
+          "grapes"
         ]
       ]
     },
@@ -251,24 +258,9 @@
       "c": 0,
       "layers": [
         [
-          "paint_can",
+          null,
           null,
           null
-        ],
-        [
-          "frozen_berries",
-          "berry_smoothie",
-          "gum_pack"
-        ],
-        [
-          "cream_cheese",
-          "toaster_pastry",
-          "jam_jar_brand"
-        ],
-        [
-          "toaster_pastry",
-          "sandwich_cookies",
-          "grapes"
         ]
       ]
     },
@@ -277,19 +269,19 @@
       "c": 1,
       "layers": [
         [
-          "jam_jar_brand",
-          "sandwich_cookies",
-          "grapes"
-        ],
-        [
-          "gum_pack",
-          "cheese_puffs",
-          "air_freshener"
+          "paint_can",
+          "toaster_pastry",
+          "paint_can"
         ],
         [
           "cream_cheese",
-          "paint_can",
-          "sandwich_cookies"
+          "gum_pack",
+          "spray_cleaner"
+        ],
+        [
+          "rice_bag",
+          "tea_box",
+          "paint_can"
         ]
       ]
     },
@@ -299,8 +291,18 @@
       "layers": [
         [
           null,
-          null,
+          "gum_pack",
           null
+        ],
+        [
+          "paint_can",
+          "paint_can",
+          "toaster_pastry"
+        ],
+        [
+          "berry_smoothie",
+          "rice_bag",
+          "cereal_fruit_loops"
         ]
       ]
     }

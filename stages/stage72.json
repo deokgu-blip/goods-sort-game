@@ -1,22 +1,22 @@
 {
   "level": 72,
-  "timeLimit": 278,
+  "timeLimit": 280,
   "cols": 4,
   "rows": 5,
   "cellCap": 3,
   "goods": [
     "air_freshener",
-    "berry_smoothie",
-    "butter_box",
-    "cheese_puffs",
+    "artichoke",
+    "cereal_choco",
     "cream_cheese",
     "frozen_berries",
     "grapes",
     "gum_pack",
-    "ketchup_squeeze",
+    "mayo_squeeze",
     "paint_can",
     "pomegranate",
     "sandwich_cookies",
+    "soda",
     "spray_cleaner",
     "tea_box",
     "toaster_pastry"
@@ -32,13 +32,13 @@
     "distinct": 15,
     "depthRange": [
       3,
-      5
+      4
     ],
     "emptyCubbies": 1,
-    "frontGaps": 9,
+    "frontGaps": 15,
     "lockCubbies": 5,
-    "totalGoods": 213,
-    "attempt": 3
+    "totalGoods": 186,
+    "attempt": 100
   },
   "cubbies": [
     {
@@ -46,29 +46,24 @@
       "c": 0,
       "layers": [
         [
-          "frozen_berries",
-          "berry_smoothie",
-          "paint_can"
+          "pomegranate",
+          "artichoke",
+          "cereal_choco"
         ],
         [
-          "butter_box",
-          "grapes",
-          "pomegranate"
+          "cereal_choco",
+          "tea_box",
+          "spray_cleaner"
         ],
         [
+          "pomegranate",
           "spray_cleaner",
-          "berry_smoothie",
-          "paint_can"
+          "toaster_pastry"
         ],
         [
-          "spray_cleaner",
-          "air_freshener",
-          "gum_pack"
-        ],
-        [
+          "tea_box",
           "grapes",
-          "berry_smoothie",
-          "grapes"
+          "mayo_squeeze"
         ]
       ]
     },
@@ -77,125 +72,121 @@
       "c": 1,
       "layers": [
         [
-          "sandwich_cookies",
+          "pomegranate",
           null,
+          "toaster_pastry"
+        ],
+        [
+          "air_freshener",
+          "artichoke",
+          "toaster_pastry"
+        ],
+        [
+          "mayo_squeeze",
+          "toaster_pastry",
           "spray_cleaner"
         ],
         [
-          "ketchup_squeeze",
+          "artichoke",
           "pomegranate",
-          "grapes"
-        ],
-        [
-          "berry_smoothie",
-          "air_freshener",
-          "paint_can"
+          "toaster_pastry"
         ]
       ]
     },
     {
       "r": 0,
       "c": 2,
-      "lock": 3,
+      "lock": 2,
       "layers": [
         [
-          "grapes",
-          "air_freshener",
-          "paint_can"
+          "soda",
+          "artichoke",
+          "air_freshener"
         ],
         [
-          "grapes",
-          "grapes",
-          "cheese_puffs"
+          "cereal_choco",
+          "soda",
+          "spray_cleaner"
         ],
         [
-          "cheese_puffs",
-          "cheese_puffs",
-          "paint_can"
+          "paint_can",
+          "grapes",
+          "spray_cleaner"
         ]
       ]
     },
     {
       "r": 0,
       "c": 3,
+      "lock": 2,
+      "layers": [
+        [
+          "grapes",
+          "tea_box",
+          "gum_pack"
+        ],
+        [
+          "cream_cheese",
+          "paint_can",
+          "cereal_choco"
+        ],
+        [
+          "mayo_squeeze",
+          "tea_box",
+          "artichoke"
+        ],
+        [
+          "mayo_squeeze",
+          "soda",
+          "air_freshener"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "frozen_berries",
+          "gum_pack",
+          "frozen_berries"
+        ],
+        [
+          "spray_cleaner",
+          "cream_cheese",
+          "air_freshener"
+        ],
+        [
+          "frozen_berries",
+          "air_freshener",
+          "spray_cleaner"
+        ],
+        [
+          "toaster_pastry",
+          "cream_cheese",
+          "sandwich_cookies"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
       "lock": 1,
       "layers": [
         [
-          "frozen_berries",
+          "gum_pack",
           null,
-          "ketchup_squeeze"
+          "tea_box"
         ],
         [
-          "paint_can",
+          "grapes",
           "air_freshener",
-          "grapes"
-        ],
-        [
-          "cream_cheese",
-          "spray_cleaner",
-          "pomegranate"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "butter_box",
-          "sandwich_cookies",
-          null
-        ],
-        [
-          "ketchup_squeeze",
-          "butter_box",
-          "cream_cheese"
-        ],
-        [
-          "gum_pack",
-          "toaster_pastry",
-          "butter_box"
-        ],
-        [
-          "sandwich_cookies",
-          "toaster_pastry",
           "air_freshener"
         ],
         [
-          "cream_cheese",
-          "toaster_pastry",
-          "pomegranate"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "cream_cheese",
-          "cream_cheese",
-          null
-        ],
-        [
-          "cream_cheese",
-          "butter_box",
-          "berry_smoothie"
-        ],
-        [
-          "berry_smoothie",
           "gum_pack",
-          "toaster_pastry"
-        ],
-        [
-          "pomegranate",
-          "toaster_pastry",
-          "gum_pack"
-        ],
-        [
-          "butter_box",
-          "pomegranate",
-          "air_freshener"
+          "frozen_berries",
+          "pomegranate"
         ]
       ]
     },
@@ -204,45 +195,51 @@
       "c": 2,
       "layers": [
         [
-          "pomegranate",
           "toaster_pastry",
-          "ketchup_squeeze"
+          "spray_cleaner",
+          "gum_pack"
         ],
         [
-          "gum_pack",
-          "cheese_puffs",
-          "pomegranate"
-        ],
-        [
-          "gum_pack",
-          "sandwich_cookies",
-          "berry_smoothie"
-        ],
-        [
-          "toaster_pastry",
-          "cream_cheese",
+          "grapes",
+          "paint_can",
           "tea_box"
+        ],
+        [
+          "frozen_berries",
+          "soda",
+          "grapes"
+        ],
+        [
+          "pomegranate",
+          "cereal_choco",
+          "gum_pack"
         ]
       ]
     },
     {
       "r": 1,
       "c": 3,
+      "lock": 5,
       "layers": [
         [
-          "gum_pack",
-          "ketchup_squeeze",
-          null
+          "grapes",
+          "sandwich_cookies",
+          "cereal_choco"
         ],
         [
           "cream_cheese",
-          "air_freshener",
+          "toaster_pastry",
+          "sandwich_cookies"
+        ],
+        [
+          "frozen_berries",
+          "frozen_berries",
           "gum_pack"
         ],
         [
-          "toaster_pastry",
-          "ketchup_squeeze",
-          "cream_cheese"
+          "air_freshener",
+          "tea_box",
+          "grapes"
         ]
       ]
     },
@@ -251,293 +248,261 @@
       "c": 0,
       "layers": [
         [
-          "tea_box",
-          "spray_cleaner",
-          "tea_box"
-        ],
-        [
-          "butter_box",
-          "cheese_puffs",
-          "spray_cleaner"
-        ],
-        [
-          "ketchup_squeeze",
-          "toaster_pastry",
-          "berry_smoothie"
-        ],
-        [
-          "toaster_pastry",
-          "berry_smoothie",
-          "air_freshener"
-        ],
-        [
-          "air_freshener",
-          "frozen_berries",
-          "cream_cheese"
+          null,
+          null,
+          null
         ]
       ]
     },
     {
       "r": 2,
       "c": 1,
-      "lock": 5,
       "layers": [
         [
-          "frozen_berries",
+          "paint_can",
           null,
-          "cheese_puffs"
+          null
         ],
         [
-          "spray_cleaner",
-          "frozen_berries",
+          "tea_box",
+          "air_freshener",
+          "sandwich_cookies"
+        ],
+        [
+          "artichoke",
+          "paint_can",
           "tea_box"
         ],
         [
-          "cheese_puffs",
-          "gum_pack",
-          "gum_pack"
+          "frozen_berries",
+          "toaster_pastry",
+          "artichoke"
         ]
       ]
     },
     {
       "r": 2,
       "c": 2,
+      "layers": [
+        [
+          "cereal_choco",
+          "soda",
+          "sandwich_cookies"
+        ],
+        [
+          "cream_cheese",
+          "artichoke",
+          "spray_cleaner"
+        ],
+        [
+          "artichoke",
+          "cereal_choco",
+          "tea_box"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "layers": [
+        [
+          "air_freshener",
+          "tea_box",
+          null
+        ],
+        [
+          "tea_box",
+          "mayo_squeeze",
+          "air_freshener"
+        ],
+        [
+          "spray_cleaner",
+          "pomegranate",
+          "soda"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
       "lock": 4,
       "layers": [
         [
-          "cheese_puffs",
-          "toaster_pastry",
-          "frozen_berries"
-        ],
-        [
-          "frozen_berries",
-          "toaster_pastry",
-          "butter_box"
-        ],
-        [
-          "grapes",
-          "spray_cleaner",
-          "cheese_puffs"
-        ],
-        [
-          "paint_can",
-          "frozen_berries",
-          "gum_pack"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 3,
-      "lock": 5,
-      "layers": [
-        [
           "pomegranate",
-          "sandwich_cookies",
-          "cream_cheese"
-        ],
-        [
-          "paint_can",
-          "cheese_puffs",
-          "frozen_berries"
-        ],
-        [
-          "berry_smoothie",
-          "ketchup_squeeze",
-          "air_freshener"
-        ],
-        [
-          "butter_box",
-          "spray_cleaner",
-          "cheese_puffs"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "sandwich_cookies",
-          "cream_cheese",
-          "gum_pack"
-        ],
-        [
-          "pomegranate",
-          "spray_cleaner",
-          "tea_box"
-        ],
-        [
-          "tea_box",
-          "ketchup_squeeze",
-          "tea_box"
-        ],
-        [
-          "butter_box",
-          "cream_cheese",
-          "cheese_puffs"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          null,
-          "butter_box",
-          "air_freshener"
-        ],
-        [
-          "spray_cleaner",
-          "grapes",
-          "tea_box"
-        ],
-        [
-          "berry_smoothie",
-          "tea_box",
-          "gum_pack"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
-        [
-          "cheese_puffs",
-          "grapes",
-          "air_freshener"
-        ],
-        [
-          "grapes",
-          "sandwich_cookies",
-          "butter_box"
-        ],
-        [
-          "frozen_berries",
-          "tea_box",
-          "air_freshener"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 3,
-      "layers": [
-        [
-          "sandwich_cookies",
-          "cheese_puffs",
-          "tea_box"
-        ],
-        [
-          "pomegranate",
-          "cheese_puffs",
-          "air_freshener"
-        ],
-        [
-          "berry_smoothie",
-          "pomegranate",
-          "berry_smoothie"
-        ],
-        [
-          "ketchup_squeeze",
-          "grapes",
-          "ketchup_squeeze"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 0,
-      "layers": [
-        [
-          "paint_can",
-          "berry_smoothie",
-          null
-        ],
-        [
-          "air_freshener",
-          "cream_cheese",
-          "cream_cheese"
-        ],
-        [
-          "spray_cleaner",
-          "paint_can",
-          "tea_box"
-        ],
-        [
-          "ketchup_squeeze",
-          "grapes",
+          "cereal_choco",
           "sandwich_cookies"
         ],
         [
-          "berry_smoothie",
+          "spray_cleaner",
           "sandwich_cookies",
-          "paint_can"
+          "gum_pack"
+        ],
+        [
+          "paint_can",
+          "tea_box",
+          "cream_cheese"
         ]
       ]
     },
     {
-      "r": 4,
+      "r": 3,
       "c": 1,
       "layers": [
         [
+          "cream_cheese",
           null,
-          "tea_box",
-          "ketchup_squeeze"
+          "frozen_berries"
         ],
         [
-          "paint_can",
-          "tea_box",
-          "ketchup_squeeze"
-        ],
-        [
-          "paint_can",
-          "ketchup_squeeze",
-          "spray_cleaner"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 2,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 3,
-      "layers": [
-        [
-          "tea_box",
-          "toaster_pastry",
+          "cereal_choco",
+          "grapes",
           "toaster_pastry"
         ],
         [
           "sandwich_cookies",
+          "soda",
+          "frozen_berries"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
           "spray_cleaner",
-          "sandwich_cookies"
+          null,
+          null
         ],
         [
-          "frozen_berries",
           "gum_pack",
-          "grapes"
-        ],
-        [
-          "paint_can",
-          "toaster_pastry",
+          "frozen_berries",
           "gum_pack"
         ],
         [
-          "frozen_berries",
           "paint_can",
-          "spray_cleaner"
+          "cream_cheese",
+          "pomegranate"
+        ],
+        [
+          "soda",
+          "soda",
+          "mayo_squeeze"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 3,
+      "layers": [
+        [
+          null,
+          "tea_box",
+          "cream_cheese"
+        ],
+        [
+          "mayo_squeeze",
+          "cream_cheese",
+          "toaster_pastry"
+        ],
+        [
+          "artichoke",
+          "grapes",
+          "mayo_squeeze"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          "paint_can",
+          "mayo_squeeze"
+        ],
+        [
+          "paint_can",
+          "soda",
+          "cream_cheese"
+        ],
+        [
+          "gum_pack",
+          "pomegranate",
+          "toaster_pastry"
+        ],
+        [
+          "cereal_choco",
+          "grapes",
+          "tea_box"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          "toaster_pastry"
+        ],
+        [
+          "paint_can",
+          "mayo_squeeze",
+          "toaster_pastry"
+        ],
+        [
+          "sandwich_cookies",
+          "paint_can",
+          "gum_pack"
+        ],
+        [
+          "cream_cheese",
+          "soda",
+          "sandwich_cookies"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          "pomegranate",
+          "sandwich_cookies"
+        ],
+        [
+          "paint_can",
+          "mayo_squeeze",
+          "cereal_choco"
+        ],
+        [
+          "artichoke",
+          "air_freshener",
+          "soda"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 3,
+      "layers": [
+        [
+          "pomegranate",
+          null,
+          null
+        ],
+        [
+          "grapes",
+          "mayo_squeeze",
+          "frozen_berries"
+        ],
+        [
+          "toaster_pastry",
+          "sandwich_cookies",
+          "artichoke"
         ]
       ]
     }

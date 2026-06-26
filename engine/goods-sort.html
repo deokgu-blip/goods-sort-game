@@ -4445,82 +4445,42 @@
     // find a winning move sequence, then EXECUTE it on the live board (so effects +
     // haptics still fire). Solving runs on a CLONED SLOT model via bounded DFS with
     // memoization — mirrors V4 doMove/maybeReveal/clear (3-slot layers, null=empty).
-    autoSolve: function(maxSteps){
-      maxSteps = maxSteps || 600;
-      // ---- pure model over SLOT layer-stacks (each layer = [s0,s1,s2], null=empty) ----
-      function clone(){ return S.cubbies.map(function(cb){ return (cb.layers||[]).map(function(l){return l.slice();}); }); }
-      function mFront(st,i){ return st[i].length? st[i][0] : null; }      // the front layer (slot array) or null
-      function mFilled(l){ var n=0; for(var k=0;k<SLOTS;k++) if(l[k]) n++; return n; }
-      function mAllEmpty(l){ return mFilled(l)===0; }
-      function mFullSame(l){ if(mFilled(l)!==SLOTS) return false; for(var k=1;k<SLOTS;k++) if(l[k]!==l[0]) return false; return true; }
-      function mFirstFilled(l){ for(var k=0;k<SLOTS;k++) if(l[k]) return k; return -1; }
-      function mFirstEmpty(l){ for(var k=0;k<SLOTS;k++) if(!l[k]) return k; return -1; }
-      function mReveal(st,i){ while(st[i].length>1 && mAllEmpty(st[i][0])) st[i].shift(); }
-      function mTotal(st){ var n=0; for(var i=0;i<st.length;i++) for(var j=0;j<st[i].length;j++) n+=mFilled(st[i][j]); return n; }
-      function mMove(st,f,t){ // returns new cloned state or null if illegal
-        if(f===t) return null;
-        var ff=mFront(st,f), tf=mFront(st,t);
-        if(!ff) return null;
-        var sf=mFirstFilled(ff); if(sf<0) return null;
-        if(!tf) return null;
-        var se=mFirstEmpty(tf); if(se<0) return null;                    // target full
-        var ns = st.map(function(c){ return c.map(function(l){return l.slice();}); });
-        var nff=ns[f][0], ntf=ns[t][0];
-        var g = nff[sf]; nff[sf]=null; ntf[se]=g;
-        if(mFullSame(ntf)){ for(var k=0;k<SLOTS;k++) ntf[k]=null; }       // clear
-        mReveal(ns,f); mReveal(ns,t);
-        return ns;
-      }
-      function key(st){ return st.map(function(c){ return c.map(function(l){return l.map(function(x){return x||'_';}).join(',');}).join('|'); }).join(';'); }
-      // candidate moves from a state (ordered: completing > gathering > dumping)
-      function moves(st){
-        var n=st.length, out=[];
-        function pushIf(f,t,pri){ var ns=mMove(st,f,t); if(ns){ out.push({f:f,t:t,pri:pri,ns:ns}); } }
-        for(var f=0;f<n;f++){ var ff=mFront(st,f); if(!ff || mFirstFilled(ff)<0) continue;
-          var tp=ff[mFirstFilled(ff)];
-          for(var t=0;t<n;t++){ if(t===f) continue; var tf=mFront(st,t); if(!tf || mFirstEmpty(tf)<0) continue;
-            var fc=mFilled(tf), same=true;
-            for(var k=0;k<SLOTS;k++){ if(tf[k] && tf[k]!==tp){ same=false; break; } }
-            var pri;
-            if(fc===SLOTS-1 && same) pri=0;                              // completes (2 same + 1 empty, dropping tp)
-            else if(fc>0 && fc<SLOTS && same) pri=1;                     // gathers onto same-type
-            else if(fc===0) pri=2;                                       // dump to empty cubby
-            else continue;                                              // greedy full-solve (bounded); mixing handled by the deadlock check
-            pushIf(f,t,pri);
-          }
-        }
-        out.sort(function(a,b){ return a.pri-b.pri; });
-        return out;
-      }
-      // bounded DFS for a winning sequence
-      var seen = {};
-      var path = null;
-      var nodeBudget = 400000;   // V10 — larger search budget for the deeper 66-good packed board
-      function dfs(st, acc){
+    autoSolve: function(maxSteps, budget, mix){
+      maxSteps = maxSteps || 2000;
+      // LOCK-AWARE solve: reuse the real Model (normalize/moves/move/total) which threads lock
+      // counts (locked cubbies are no source/target; every clear counts ALL locks down by 1).
+      // This lets autoSolve actually clear LOCKED stages, not just lock-free ones. mix=true also
+      // explores parking a good into a partial different-type cubby (the live free-sort rule),
+      // which some packed boards need; default greedy keeps it fast.
+      var nodeBudget = budget || 3000000, seen = {}, path = null, allowMix = !!mix;
+      function dfs(st, locks, acc){
         if(nodeBudget-- <= 0) return false;
-        if(mTotal(st)===0){ path = acc.slice(); return true; }
-        var k = key(st); if(seen[k]) return false; seen[k]=1;
-        if(acc.length>maxSteps) return false;
-        var ms = moves(st);
+        var nr = Model.normalize(st, locks); st = nr.st; locks = nr.locks;   // auto-settle full-same fronts
+        if(Model.total(st)===0){ path = acc.slice(); return true; }
+        if(acc.length > maxSteps) return false;
+        var k = Model.key(st, locks); if(seen[k]) return false; seen[k]=1;
+        var ms = Model.moves(st, locks, allowMix);                           // lock-aware (optionally mixing)
         for(var i=0;i<ms.length;i++){
+          var r = Model.move(st, ms[i].f, ms[i].t, locks); if(!r) continue;
           acc.push([ms[i].f, ms[i].t]);
-          if(dfs(ms[i].ns, acc)) return true;
+          if(dfs(r.st, r.locks, acc)) return true;
           acc.pop();
         }
         return false;
       }
-      var solved = dfs(clone(), []);
+      var solved = dfs(Model.snapshot(), Model.snapshotLocks(), []);
       var steps = 0;
       if(solved && path){
         // execute on the live board (no explicit slot -> first-filled source, nearest-empty target).
-        // S._solving bypasses the per-cubby 0.2s clear-HOLD lock (programmatic moves run synchronously,
-        // faster than the visual hold's timeout, so the lock would otherwise block re-using cubbies).
+        // S._solving bypasses the per-cubby 0.2s clear-HOLD lock (programmatic moves run synchronously).
         S._solving = true;
         for(var s=0;s<path.length && totalGoods()>0;s++){ doMove(path[s][0], path[s][1]); steps++; }
         S._solving = false;
       }
       return { steps:steps, remaining:totalGoods(), won:totalGoods()===0, solvedPlan: !!solved };
     },
+    // QA: jump to a level number (drives item unlocks, which key off S.level).
+    setLevel: function(n){ startLevelFn(n|0); return S.level; },
     // =====================================================================
     // SHELF CONFIG probes — prove the engine reads SHELF_DEFAULTS as the single
     // source of truth, that cornerRadius=0 yields ANGULAR corners, and that an

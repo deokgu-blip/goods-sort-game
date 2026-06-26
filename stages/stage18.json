@@ -6,19 +6,19 @@
   "cellCap": 3,
   "goods": [
     "avocado",
-    "biscuit_box",
-    "cereal_box_blue",
-    "cheese_puffs",
-    "cream_cheese_tub",
-    "dino_green",
-    "dragon_fruit",
-    "gingerbread",
+    "berry_smoothie",
+    "butter_box",
+    "cereal_choco",
+    "cereal_fruit_loops",
+    "cola_zero",
+    "cream_cheese",
     "gum_pack",
     "jelly_bag",
-    "pitcher_juice",
-    "pomegranate",
+    "popcorn_box",
     "rice_bag",
-    "snack"
+    "sandwich_cookies",
+    "tea_box",
+    "toaster_pastry"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -37,7 +37,7 @@
     "frontGaps": 6,
     "lockCubbies": 2,
     "totalGoods": 75,
-    "attempt": 21
+    "attempt": 25
   },
   "cubbies": [
     {
@@ -45,19 +45,9 @@
       "c": 0,
       "layers": [
         [
-          "rice_bag",
-          "dino_green",
+          null,
+          null,
           null
-        ],
-        [
-          "pomegranate",
-          "cream_cheese_tub",
-          "gum_pack"
-        ],
-        [
-          "dino_green",
-          "pomegranate",
-          "jelly_bag"
         ]
       ]
     },
@@ -66,14 +56,14 @@
       "c": 1,
       "layers": [
         [
-          "pitcher_juice",
+          "cream_cheese",
           null,
-          "pomegranate"
+          "berry_smoothie"
         ],
         [
-          "pitcher_juice",
-          "gingerbread",
-          "cheese_puffs"
+          "cereal_choco",
+          "popcorn_box",
+          "cream_cheese"
         ]
       ]
     },
@@ -82,19 +72,19 @@
       "c": 2,
       "layers": [
         [
-          "gum_pack",
-          "dragon_fruit",
-          "cheese_puffs"
+          "jelly_bag",
+          "rice_bag",
+          "cola_zero"
+        ],
+        [
+          "toaster_pastry",
+          "berry_smoothie",
+          "cereal_fruit_loops"
         ],
         [
           "avocado",
-          "avocado",
-          "dino_green"
-        ],
-        [
-          "gingerbread",
-          "pitcher_juice",
-          "cream_cheese_tub"
+          "jelly_bag",
+          "gum_pack"
         ]
       ]
     },
@@ -103,30 +93,40 @@
       "c": 0,
       "layers": [
         [
-          "biscuit_box",
+          "tea_box",
           null,
+          null
+        ],
+        [
+          "cereal_fruit_loops",
+          "cereal_choco",
+          "avocado"
+        ],
+        [
+          "sandwich_cookies",
+          "sandwich_cookies",
+          "rice_bag"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "cream_cheese",
+          "avocado",
+          "toaster_pastry"
+        ],
+        [
+          "gum_pack",
+          "gum_pack",
           "rice_bag"
         ],
         [
-          "cream_cheese_tub",
-          "snack",
-          "dragon_fruit"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "rice_bag",
-          "gum_pack",
-          "dragon_fruit"
-        ],
-        [
-          "jelly_bag",
-          "jelly_bag",
-          "biscuit_box"
+          "tea_box",
+          "cola_zero",
+          "gum_pack"
         ]
       ]
     },
@@ -135,52 +135,57 @@
       "c": 2,
       "layers": [
         [
-          "pomegranate",
-          "gum_pack",
+          "cereal_choco",
+          "butter_box",
           null
         ],
         [
-          "pomegranate",
-          "avocado",
-          "cheese_puffs"
+          "sandwich_cookies",
+          "rice_bag",
+          "cereal_choco"
+        ],
+        [
+          "tea_box",
+          "cream_cheese",
+          "berry_smoothie"
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
-      "layers": [
-        [
-          "jelly_bag",
-          "pitcher_juice",
-          "avocado"
-        ],
-        [
-          "dino_green",
-          "cream_cheese_tub",
-          "snack"
-        ],
-        [
-          "gingerbread",
-          "gum_pack",
-          "cereal_box_blue"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
       "lock": 2,
       "layers": [
         [
-          "snack",
-          "snack",
-          "snack"
+          "tea_box",
+          "berry_smoothie",
+          "avocado"
         ],
         [
-          "dragon_fruit",
-          "rice_bag",
+          "toaster_pastry",
+          "cereal_fruit_loops",
+          "popcorn_box"
+        ],
+        [
+          "popcorn_box",
+          "cereal_choco",
+          "rice_bag"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "butter_box",
+          "sandwich_cookies",
           "jelly_bag"
+        ],
+        [
+          "gum_pack",
+          "avocado",
+          "tea_box"
         ]
       ]
     },
@@ -189,9 +194,14 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
+          "cola_zero",
+          "rice_bag",
           null
+        ],
+        [
+          "butter_box",
+          "butter_box",
+          "toaster_pastry"
         ]
       ]
     },
@@ -200,19 +210,14 @@
       "c": 0,
       "layers": [
         [
-          "dino_green",
-          "pitcher_juice",
-          "dragon_fruit"
+          "sandwich_cookies",
+          "berry_smoothie",
+          null
         ],
         [
           "gum_pack",
-          "dragon_fruit",
-          "cream_cheese_tub"
-        ],
-        [
-          "gingerbread",
-          "rice_bag",
-          "gingerbread"
+          "butter_box",
+          "berry_smoothie"
         ]
       ]
     },
@@ -221,19 +226,14 @@
       "c": 1,
       "layers": [
         [
-          "rice_bag",
-          "cereal_box_blue",
+          "cream_cheese",
+          "toaster_pastry",
+          "toaster_pastry"
+        ],
+        [
+          "avocado",
+          "butter_box",
           "jelly_bag"
-        ],
-        [
-          "gingerbread",
-          "pitcher_juice",
-          "avocado"
-        ],
-        [
-          "snack",
-          "biscuit_box",
-          "cream_cheese_tub"
         ]
       ]
     },
@@ -243,14 +243,14 @@
       "lock": 2,
       "layers": [
         [
-          null,
-          "avocado",
-          null
+          "jelly_bag",
+          "tea_box",
+          "cream_cheese"
         ],
         [
-          "dino_green",
-          "cereal_box_blue",
-          "pomegranate"
+          "cereal_choco",
+          "jelly_bag",
+          "sandwich_cookies"
         ]
       ]
     }

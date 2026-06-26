@@ -584,13 +584,16 @@
   /* a blocked good (data flag / non-grabbable) is visibly inert but in the FRONT */
   .good.blocked{ cursor:default; filter:drop-shadow(0 3px 3px rgba(0,0,0,.3)) brightness(.9); }
   .good.dragging{ opacity:0; }
-  .good.land{ animation:land .34s cubic-bezier(.34,1.56,.64,1); }
+  /* land squash WEAKENED (user: 이동 바운스 약하게) — gentler squash/stretch + shorter. */
+  .good.land{ animation:land .28s cubic-bezier(.34,1.4,.64,1); }
   @keyframes land{
-    0%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-17%) scaleY(1.12) scaleX(.91) scale(var(--gs,1)); }
-    45%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(.86) scaleX(1.10) scale(var(--gs,1)); }
-    70%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(1.05) scaleX(.96) scale(var(--gs,1)); }
+    0%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(-7%) scaleY(1.05) scaleX(.97) scale(var(--gs,1)); }
+    45%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(.95) scaleX(1.035) scale(var(--gs,1)); }
+    70%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(1.02) scaleX(.99) scale(var(--gs,1)); }
     100%{ transform:translateX(-50%) translateZ(var(--gz,0px)) translateY(0) scaleY(1) scaleX(1) scale(var(--gs,1)); }
   }
+  /* 0.2s hold after a triple completes: freeze grabbing on that cubby so the goods sit then pop. */
+  .cubby.cb-hold .good{ pointer-events:none; }
   /* CLEAR POP (뿅) — the 3 matched goods BOUNCE up + grow, then pop out together.
      Preserves the good's base transform (centering / depth z / per-type scale). */
   .good.popping{ animation:goodPop .36s cubic-bezier(.34,1.7,.5,1) forwards;
@@ -635,13 +638,11 @@
     transform:translate(-50%,-50%) scale(1); will-change:left,top,transform,opacity;
     filter:drop-shadow(0 0 5px rgba(255,140,30,.85)); }
   /* praise = praise_*.png banner image, escalating by combo tier */
+  /* praise = an <img> (praise_<word>.png) — FIXED HEIGHT gives the SAME letter size for every word
+     (all images share one font size); width auto so longer words are wider, not taller. */
   .praise{ position:fixed; z-index:56; pointer-events:none; transform:translate(-50%,-50%);
-    width:138px; height:55px; background:center/contain no-repeat;
+    height:50px; width:auto;
     filter:drop-shadow(0 3px 3px rgba(0,0,0,.3)); }
-  .praise.t-good{ background-image:url("../assets/ui/praise_good.png"); }
-  .praise.t-great{ background-image:url("../assets/ui/praise_great.png"); }
-  .praise.t-excellent{ background-image:url("../assets/ui/praise_excellent.png"); }
-  .praise.t-perfect{ background-image:url("../assets/ui/praise_perfect.png"); width:152px; height:61px; }
   @keyframes praisePop{
     0%{ transform:translate(-50%,-50%) scale(.3); opacity:0; }
     25%{ transform:translate(-50%,-62%) scale(1.18); opacity:1; }
@@ -2200,6 +2201,7 @@
   function doMove(fromIdx, toIdx, fromSlot, toSlot){
     var fromCb = S.cubbies[fromIdx], toCb = S.cubbies[toIdx];
     if (!fromCb || !toCb) return false;
+    if (!S._solving && (fromCb._holding || toCb._holding)) return false;   // mid-clear hold: ignore LIVE moves to/from it
     var ff = frontLayer(fromCb);
     if (!ff) return false;
     var sFrom = (fromSlot===undefined || fromSlot===null || !ff[fromSlot]) ? firstFilledSlot(ff) : fromSlot;
@@ -2231,7 +2233,8 @@
     }
     haptic('place');
 
-    // CLEAR: front layer's 3 slots all hold the SAME type
+    // CLEAR: front layer's 3 slots all hold the SAME type. (clearCubby nulls the DATA synchronously
+    // for solver/win consistency, but HOLDS the goods visible 0.2s before the pop — see clearCubby.)
     if (allSameSlots(tf)){
       clearCubby(toCb);                                 // clears + reveals toCb's back layer (if any)
       renderCubby(fromCb); maybeReveal(fromCb);
@@ -2254,46 +2257,42 @@
     // combo bump (consecutive-clear streak; 0-based -> first clear = 1)
     bumpCombo();
     var combo = S.combo;
-
-    // COMBO FEEDBACK — a small flame (🔥, matching the top UI) pops at the clear spot and flies INTO
-    // the top flame pill, + a sparkle pop, + a PRAISE TEXT banner (GOOD!/GREAT!/EXCELLENT!/PERFECT!
-    // escalating by combo) so every match has a text 연출 (esp. needed in the HUD-less tutorial).
     var base = (S.cfg.scoring && S.cfg.scoring.starsPerSort) || 1;
     S.stars += base * Math.max(1, combo);              // internal score (no UI counter)
-    flyFlameToCombo(cx, cy);
-    sparkleRing(cx, cy);
-    praise(cx, cy - 6, combo);                         // text effect on every clear
 
-    // 4) cubby pop
-    if (el){
-      el.classList.add('clearing');
-      el.addEventListener('animationend', function(){ el.classList.remove('clearing'); }, { once:true });
-    }
-    haptic('clear');
-
-    // BOUNCE + POP (뿅): the 3 matched goods bounce up together then pop out (CSS goodPop).
-    if (cb.floor){
-      var goods = cb.floor.querySelectorAll('.good');
-      goods.forEach(function(g){
-        g.classList.add('popping');
-        var gr = g.getBoundingClientRect();                 // resting position (captured at frame 0)
-        var px = gr.left + gr.width/2, py = gr.top + gr.height*0.46;
-        setTimeout(function(){ popPuff(px, py); }, 175);     // poof exactly at the "뿅" vanish moment
-      });
-    }
-    // DATA is updated SYNCHRONOUSLY (single source of truth): null out all 3 front
-    // slots, then if a back layer exists drop the empty front so the back becomes the
-    // new front immediately. This keeps totalGoods()/win-check/solver consistent
-    // without waiting on animation. The visual pop + reveal slide are deferred.
+    // DATA is updated SYNCHRONOUSLY (single source of truth): null the 3 front slots, then reveal a
+    // back layer + decrement locks NOW. This keeps totalGoods()/win-check/solver/autoSolve consistent
+    // immediately — only the VISUAL pop is deferred (the 0.2s hold below).
     var f = frontLayer(cb); if (f){ for (var si=0; si<SLOTS; si++) f[si] = null; }  // empty FRONT slots (data)
     var willReveal = (cb.layers.length > 1);
     if (willReveal) cb.layers.shift();                  // back layer -> front (data, now)
     decrementLocks();                                    // LOCK: every clear counts ALL locks down by 1
+
+    // HOLD the completed triple VISIBLE for 0.2s, THEN fire the FX + pop it out (user: 정리 완료 후
+    // 0.2초 머문 뒤 사라짐). The cubby is frozen (cb._holding) during the window so its still-shown
+    // goods can't be grabbed while the data already cleared.
+    cb._holding = true; if (el) el.classList.add('cb-hold');
+    var heldGoods = cb.floor ? cb.floor.querySelectorAll('.good') : [];
     setTimeout(function(){
-      // re-render after the pop completes: if a back layer slid up, animate the reveal.
-      renderCubby(cb, willReveal ? { reveal:true } : {});
-      checkWin();
-    }, 340);
+      // COMBO FEEDBACK — flame -> top pill, sparkle, + PRAISE TEXT (GOOD!/GREAT!/… by combo).
+      flyFlameToCombo(cx, cy);
+      sparkleRing(cx, cy);
+      praise(cx, cy - 6, combo);
+      if (el){ el.classList.add('clearing'); el.addEventListener('animationend', function(){ el.classList.remove('clearing'); }, { once:true }); }
+      haptic('clear');
+      // BOUNCE + POP (뿅): the 3 goods bounce up together then pop out (CSS goodPop) + a soft poof.
+      heldGoods.forEach(function(g){
+        g.classList.add('popping');
+        var gr = g.getBoundingClientRect();
+        var px = gr.left + gr.width/2, py = gr.top + gr.height*0.46;
+        setTimeout(function(){ popPuff(px, py); }, 175);
+      });
+      setTimeout(function(){
+        cb._holding = false; if (el) el.classList.remove('cb-hold');
+        renderCubby(cb, willReveal ? { reveal:true } : {});   // back layer slides up if revealed
+        checkWin();
+      }, 340);
+    }, 200);
   }
 
   // combo logic ----------------------------------------------
@@ -2412,15 +2411,22 @@
 
   // praise IMAGE (praise_*.png) — escalates by combo tier -----
   // GOOD! (combo 1) -> GREAT! (2) -> EXCELLENT! (3-4) -> PERFECT! (5+).
-  function praiseTier(combo){
-    if (combo >= 5) return 't-perfect';
-    if (combo >= 3) return 't-excellent';
-    if (combo >= 2) return 't-great';
-    return 't-good';
+  // PRAISE WORD per combo (user spec): NO praise for combo 1-2. combo 3..17 = fixed words; combo 18+
+  // cycles back from index 7 (amazing) through 17 (brilliant). Each word is its own art-tone image.
+  var PRAISE_WORDS = { 3:'cool',4:'pretty',5:'nice',6:'great',7:'amazing',8:'wow',9:'good',10:'wow',
+    11:'perfect',12:'unbelievable',13:'bravo',14:'beautiful',15:'excellent',16:'outstanding',17:'brilliant' };
+  var PRAISE_CYCLE = [7,8,9,10,11,12,13,14,15,16,17];
+  function praiseWord(combo){
+    if (combo < 3) return null;
+    if (combo <= 17) return PRAISE_WORDS[combo];
+    return PRAISE_WORDS[ PRAISE_CYCLE[(combo - 18) % PRAISE_CYCLE.length] ];
   }
   function praise(x, y, combo){
-    var p = document.createElement('div');
-    p.className = 'praise ' + praiseTier(combo);
+    var word = praiseWord(combo);
+    if (!word) return;                                 // combo 1-2: no text 연출
+    var p = document.createElement('img');
+    p.className = 'praise';
+    p.src = '../assets/ui/praise_' + word + '.png';
     p.style.left = x+'px'; p.style.top = y+'px';
     p.style.animation = 'praisePop 1.0s ease forwards';
     fxEl.appendChild(p);
@@ -3096,8 +3102,8 @@
   // CLEAR — a DIM layer (no card): big praise banner + MAX COMBO + NEXT, with the
   // all-sides fireworks still going. Fills the screen so it doesn't read empty.
   function showResultCard(){
-    var tier = praiseTier(S.maxCombo);
-    var praiseImg = ({'t-good':'praise_good','t-great':'praise_great','t-excellent':'praise_excellent','t-perfect':'praise_perfect'})[tier];
+    // big praise on the result = the word for the MAX combo reached (>=3; default to the first tier).
+    var praiseImg = 'praise_' + (praiseWord(Math.max(3, S.maxCombo || 0)) || 'cool');
     popupBox.innerHTML =
       '<div class="clear-show" id="resultCard">' +
         '<div class="cb-praise" style="background-image:url(\'../assets/ui/' + praiseImg + '.png\')"></div>' +
@@ -4373,8 +4379,12 @@
       var solved = dfs(clone(), []);
       var steps = 0;
       if(solved && path){
-        // execute on the live board (no explicit slot -> first-filled source, nearest-empty target)
+        // execute on the live board (no explicit slot -> first-filled source, nearest-empty target).
+        // S._solving bypasses the per-cubby 0.2s clear-HOLD lock (programmatic moves run synchronously,
+        // faster than the visual hold's timeout, so the lock would otherwise block re-using cubbies).
+        S._solving = true;
         for(var s=0;s<path.length && totalGoods()>0;s++){ doMove(path[s][0], path[s][1]); steps++; }
+        S._solving = false;
       }
       return { steps:steps, remaining:totalGoods(), won:totalGoods()===0, solvedPlan: !!solved };
     },

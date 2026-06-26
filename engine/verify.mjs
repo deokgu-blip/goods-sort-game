@@ -637,7 +637,7 @@ function rgbDist(p, c){
       const did = qa.move(mv[0],mv[1]); moves++;
       if (did){ cleared=true; }
     }
-    await new Promise(r=>setTimeout(r, 80));
+    await new Promise(r=>setTimeout(r, 260));   // wait past the 0.2s completion HOLD so the FX have fired
     const praiseEls = document.querySelectorAll('#fx .praise').length;
     const praiseImg = (() => { const p=document.querySelector('#fx .praise'); return p ? bgHas(p,'praise_') : false; })();
     const flyStarEls = document.querySelectorAll('.fly-star').length;
@@ -665,9 +665,9 @@ function rgbDist(p, c){
   // COMBO feedback is now a 🔥 FLAME that flies into the top flame pill — NO text banner/badge.
   assert('(2b-FX1 combo FLAME) a 🔥 flame flies to the top flame pill on clear', clearInfo.flameSeen >= 1 && clearInfo.flameIsFire,
     'flame='+clearInfo.flameSeen+' isFire='+clearInfo.flameIsFire);
-  assert('(2c-FX2 PRAISE text) a praise banner (GOOD!/GREAT!/…) plays on clear as the text 연출 (user-requested)',
-    clearInfo.praiseSeen >= 1,
-    'praise='+clearInfo.praiseSeen+' comboBadge='+clearInfo.comboBadgeSeen);
+  assert('(2c-FX2 PRAISE gated) NO praise on combo 1-2 (praise text starts at combo 3 — user spec)',
+    clearInfo.praiseSeen === 0,
+    'praise@combo1='+clearInfo.praiseSeen+' comboBadge='+clearInfo.comboBadgeSeen);
   assert('(2d-score) internal score incremented on clear', clearInfo.starsAfter > clearInfo.starsBefore, clearInfo.starsBefore+'->'+clearInfo.starsAfter);
   // combo starts at 0 and increments on clear; the FLAME pill shows the CURRENT combo "xN".
   assert('(2e-FX3 combo) combo incremented + flame pill shows "xN"', clearInfo.comboAfter > clearInfo.comboBefore && clearInfo.comboCountTxt === ('x'+clearInfo.comboAfter),

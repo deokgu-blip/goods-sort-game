@@ -5,20 +5,20 @@
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "bunny",
-    "candy_jar",
-    "cereal_box_blue",
-    "coffee_can",
-    "egg",
-    "frog_toy",
-    "grapes",
+    "cereal_choco",
+    "cereal_fruit_loops",
+    "cream_cheese",
+    "eggplant",
     "gum_pack",
-    "peanut_jar",
-    "plum",
-    "red_onion",
+    "instant_noodle_cup",
+    "jelly_bag",
+    "mayo_squeeze",
     "rice_bag",
+    "sandwich_cookies",
     "seaweed_snack",
-    "strawberry"
+    "tea_box",
+    "toaster_pastry",
+    "yogurt_drink"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -45,29 +45,29 @@
       "c": 0,
       "layers": [
         [
+          "cream_cheese",
+          "cereal_choco",
+          "toaster_pastry"
+        ],
+        [
+          "mayo_squeeze",
           "rice_bag",
-          "coffee_can",
+          "instant_noodle_cup"
+        ],
+        [
+          "cereal_fruit_loops",
+          "mayo_squeeze",
           "gum_pack"
         ],
         [
-          "peanut_jar",
+          "cereal_fruit_loops",
           "seaweed_snack",
-          "candy_jar"
+          "toaster_pastry"
         ],
         [
-          "strawberry",
-          "peanut_jar",
-          "grapes"
-        ],
-        [
-          "strawberry",
-          "bunny",
-          "gum_pack"
-        ],
-        [
-          "egg",
-          "peanut_jar",
-          "peanut_jar"
+          "jelly_bag",
+          "mayo_squeeze",
+          "mayo_squeeze"
         ]
       ]
     },
@@ -76,29 +76,29 @@
       "c": 1,
       "layers": [
         [
-          "candy_jar",
-          "rice_bag",
-          "plum"
+          "instant_noodle_cup",
+          "cream_cheese",
+          "eggplant"
         ],
         [
-          "coffee_can",
+          "cereal_choco",
+          "toaster_pastry",
+          "yogurt_drink"
+        ],
+        [
+          "toaster_pastry",
           "gum_pack",
-          "cereal_box_blue"
+          "toaster_pastry"
         ],
         [
-          "gum_pack",
-          "grapes",
-          "gum_pack"
+          "cereal_choco",
+          "seaweed_snack",
+          "jelly_bag"
         ],
         [
-          "coffee_can",
-          "bunny",
-          "egg"
-        ],
-        [
-          "bunny",
-          "red_onion",
-          "strawberry"
+          "seaweed_snack",
+          "sandwich_cookies",
+          "cereal_fruit_loops"
         ]
       ]
     },
@@ -107,29 +107,29 @@
       "c": 2,
       "layers": [
         [
-          "frog_toy",
-          "candy_jar",
+          "tea_box",
+          "instant_noodle_cup",
           null
         ],
         [
-          "frog_toy",
-          "bunny",
-          "egg"
+          "tea_box",
+          "seaweed_snack",
+          "jelly_bag"
         ],
         [
-          "rice_bag",
-          "grapes",
-          "plum"
+          "cream_cheese",
+          "gum_pack",
+          "eggplant"
         ],
         [
-          "coffee_can",
-          "rice_bag",
-          "cereal_box_blue"
+          "cereal_choco",
+          "cream_cheese",
+          "yogurt_drink"
         ],
         [
-          "peanut_jar",
-          "frog_toy",
-          "red_onion"
+          "mayo_squeeze",
+          "tea_box",
+          "sandwich_cookies"
         ]
       ]
     },
@@ -140,49 +140,49 @@
       "layers": [
         [
           null,
+          "cream_cheese",
+          "cream_cheese"
+        ],
+        [
+          "cereal_choco",
+          "cereal_fruit_loops",
+          "seaweed_snack"
+        ],
+        [
+          "cereal_fruit_loops",
           "rice_bag",
+          "sandwich_cookies"
+        ],
+        [
+          "sandwich_cookies",
+          "gum_pack",
+          "rice_bag"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "tea_box",
+          "jelly_bag",
           "rice_bag"
         ],
         [
-          "coffee_can",
-          "strawberry",
-          "bunny"
-        ],
-        [
-          "strawberry",
-          "seaweed_snack",
-          "red_onion"
-        ],
-        [
-          "red_onion",
-          "grapes",
-          "seaweed_snack"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "frog_toy",
-          "egg",
-          "seaweed_snack"
-        ],
-        [
-          "egg",
-          "grapes",
-          "frog_toy"
-        ],
-        [
-          "plum",
+          "jelly_bag",
           "gum_pack",
-          "grapes"
+          "tea_box"
         ],
         [
-          "candy_jar",
-          "red_onion",
-          "egg"
+          "eggplant",
+          "toaster_pastry",
+          "gum_pack"
+        ],
+        [
+          "instant_noodle_cup",
+          "sandwich_cookies",
+          "jelly_bag"
         ]
       ]
     },
@@ -192,29 +192,29 @@
       "lock": 3,
       "layers": [
         [
-          "red_onion",
-          "coffee_can",
-          "plum"
+          "sandwich_cookies",
+          "cereal_choco",
+          "eggplant"
         ],
         [
-          "bunny",
-          "grapes",
-          "peanut_jar"
+          "seaweed_snack",
+          "gum_pack",
+          "mayo_squeeze"
         ],
         [
-          "peanut_jar",
-          "grapes",
-          "plum"
+          "mayo_squeeze",
+          "gum_pack",
+          "eggplant"
         ],
         [
-          "coffee_can",
-          "cereal_box_blue",
-          "strawberry"
+          "cereal_choco",
+          "yogurt_drink",
+          "cereal_fruit_loops"
         ],
         [
-          "plum",
-          "rice_bag",
-          "peanut_jar"
+          "eggplant",
+          "cream_cheese",
+          "mayo_squeeze"
         ]
       ]
     },
@@ -224,29 +224,29 @@
       "lock": 3,
       "layers": [
         [
-          "egg",
-          "red_onion",
-          "peanut_jar"
+          "jelly_bag",
+          "sandwich_cookies",
+          "mayo_squeeze"
         ],
         [
-          "cereal_box_blue",
-          "strawberry",
-          "frog_toy"
+          "yogurt_drink",
+          "cereal_fruit_loops",
+          "tea_box"
         ],
         [
-          "peanut_jar",
-          "bunny",
-          "candy_jar"
+          "mayo_squeeze",
+          "seaweed_snack",
+          "instant_noodle_cup"
         ],
         [
-          "peanut_jar",
-          "coffee_can",
-          "peanut_jar"
+          "mayo_squeeze",
+          "cereal_choco",
+          "mayo_squeeze"
         ],
         [
-          "candy_jar",
-          "cereal_box_blue",
-          "frog_toy"
+          "instant_noodle_cup",
+          "yogurt_drink",
+          "tea_box"
         ]
       ]
     },
@@ -256,23 +256,23 @@
       "layers": [
         [
           null,
-          "frog_toy",
-          "seaweed_snack"
+          "tea_box",
+          "rice_bag"
         ],
         [
+          "toaster_pastry",
+          "cereal_fruit_loops",
+          "rice_bag"
+        ],
+        [
+          "tea_box",
           "gum_pack",
-          "strawberry",
-          "seaweed_snack"
+          "sandwich_cookies"
         ],
         [
-          "frog_toy",
-          "grapes",
-          "red_onion"
-        ],
-        [
-          "plum",
-          "cereal_box_blue",
-          "seaweed_snack"
+          "eggplant",
+          "yogurt_drink",
+          "rice_bag"
         ]
       ]
     },
@@ -283,23 +283,23 @@
       "layers": [
         [
           null,
-          "plum",
-          "cereal_box_blue"
+          "eggplant",
+          "yogurt_drink"
         ],
         [
-          "cereal_box_blue",
-          "gum_pack",
-          "frog_toy"
+          "yogurt_drink",
+          "toaster_pastry",
+          "tea_box"
         ],
         [
-          "candy_jar",
-          "egg",
-          "bunny"
+          "instant_noodle_cup",
+          "jelly_bag",
+          "seaweed_snack"
         ],
         [
-          "bunny",
-          "candy_jar",
-          "egg"
+          "seaweed_snack",
+          "instant_noodle_cup",
+          "jelly_bag"
         ]
       ]
     },
@@ -319,19 +319,19 @@
       "c": 1,
       "layers": [
         [
-          "rice_bag",
+          "cream_cheese",
           null,
-          "coffee_can"
+          "cereal_choco"
         ],
         [
-          "coffee_can",
-          "strawberry",
-          "cereal_box_blue"
+          "cereal_choco",
+          "cereal_fruit_loops",
+          "yogurt_drink"
         ],
         [
-          "frog_toy",
-          "seaweed_snack",
-          "red_onion"
+          "tea_box",
+          "rice_bag",
+          "sandwich_cookies"
         ]
       ]
     },
@@ -340,19 +340,19 @@
       "c": 2,
       "layers": [
         [
-          "rice_bag",
+          "cream_cheese",
           null,
-          "gum_pack"
+          "toaster_pastry"
         ],
         [
-          "coffee_can",
-          "coffee_can",
-          "frog_toy"
+          "cereal_choco",
+          "cereal_choco",
+          "tea_box"
         ],
         [
-          "candy_jar",
-          "plum",
-          "seaweed_snack"
+          "instant_noodle_cup",
+          "eggplant",
+          "rice_bag"
         ]
       ]
     }

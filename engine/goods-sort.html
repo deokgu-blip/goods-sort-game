@@ -257,7 +257,7 @@
       var(--board-img);                              /* legacy colored asset kept for selectors */
     background-size: 100% 100%, 100% 100%, 100% 100%; background-repeat:no-repeat;
     background-blend-mode: multiply, normal, normal;
-    filter: brightness(1.04);
+    filter: brightness(1.18);   /* V23 — frame BRIGHTER (strong contrast vs the dark floor, per ref) */
     border-radius: var(--corner-radius, 0px);
     padding: var(--cab-pad);
     box-shadow: inset 0 2px 0 rgba(255,255,255,.22), inset 0 -3px 8px rgba(40,24,8,.4); }
@@ -273,7 +273,7 @@
       var(--board-img);
     background-size: 100% 100%, 100% 100%, 100% 100%; background-repeat:no-repeat;
     background-blend-mode: multiply, normal, normal;
-    filter: brightness(1.04);
+    filter: brightness(1.18);   /* V23 — frame BRIGHTER (strong contrast vs the dark floor, per ref) */
     border-radius: var(--corner-radius, 0px); z-index:1; }
   /* legacy wood-layer container kept (empty) so old selectors resolve harmlessly. */
   #shelf .wood-layer{ position:absolute; inset:0; z-index:0; pointer-events:none; display:none; }
@@ -417,8 +417,8 @@
       linear-gradient(to top,
         rgba(54,33,12,.2) 21%, rgba(54,33,12,0) 26%),
       linear-gradient(to top,
-        #c48f62 0%,
-        #c48f62 20%,
+        #a8733d 0%,
+        #a8733d 20%,
         rgba(0,0,0,0) 24%),
       /* V19 — SHALLOW TOP inner-shadow: a faint dark band hugging the TOP edge (ceiling
          drop-shadow into the recess). SHALLOW = confined to ~top 22% then fades; opacity
@@ -457,8 +457,8 @@
     background-position: 0 100%, 0 100%, 0 0, 0 100%;
     background-repeat:no-repeat;
     background-blend-mode: normal, multiply, normal, normal;
-    /* V23 — the niche FLOOR reads DARKER than the frame (in shadow), per the reference. */
-    filter: brightness(0.9); }
+    /* V23 — the niche FLOOR reads clearly DARKER than the (now brighter) frame, per the reference. */
+    filter: brightness(0.68); }
   /* CEILING (.t) — underside of the shelf above. Faces DOWN so a step DARKER than the lit floor
      (lit-from-above read) but still a clear wood SURFACE (V15). Same hue as every face. */
   .cubby .c-wall.t{
@@ -1185,7 +1185,7 @@
     postThickness: 7,
     frameThickness: 7,
     ceilingVisibility: 0,   // LEGACY (V17) — kept for back-compat; folded into frameCeilingDepth (V21)
-    cornerRadius: 4,
+    cornerRadius: 0,   // angular frame corners (user: 모서리 둥글기 0)
     goodFillHeight: 0.87,
     cubbyAspect: 0.86,
     rimH: 0,

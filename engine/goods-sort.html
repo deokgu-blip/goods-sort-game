@@ -803,21 +803,19 @@
   .go-btn.shake{ animation:shakeX .3s ease; }
   @keyframes shakeX{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-5px);} 75%{transform:translateX(5px);} }
 
-  /* ---- ITEM SHOP popup (buy more of an item: icon + coin price + close X; NO free) ---- */
-  .card.shop{ position:relative; width:84%; max-width:330px; padding:30px 22px 26px;
-    background:linear-gradient(#fff7e8,#ffe7c0); border:5px solid #fff; border-radius:30px;
-    box-shadow:0 12px 0 rgba(120,70,20,.22), 0 16px 28px rgba(0,0,0,.34);
-    display:flex; flex-direction:column; align-items:center; gap:7px;
-    animation:obPop .42s cubic-bezier(.34,1.56,.64,1); }
-  .card.shop .shop-x{ position:absolute; top:-15px; right:-15px; width:44px; height:44px; cursor:pointer; pointer-events:auto;
-    background:url("../assets/ui/btn_close.png") center/contain no-repeat;
-    filter:drop-shadow(0 3px 3px rgba(0,0,0,.3)); }
-  .card.shop .shop-title{ font-size:22px; font-weight:900; color:#b3601e; }
-  .card.shop .shop-icon{ width:108px; height:108px; background:center/contain no-repeat; margin:2px 0;
+  /* ---- ITEM SHOP popup — SAME image panel as the other popups (panel_popup.png:
+         purple ribbon + baked-in X + cream area). Centered by #overlay; the X is part
+         of the panel (top-right), so it never offsets the panel's centering. ---- */
+  .card.shop{ background-image:url("../assets/ui/panel_popup.png"); aspect-ratio:215/305; }
+  .card.shop .shop-x{ position:absolute; top:0; right:0; width:22%; height:15%; cursor:pointer; pointer-events:auto; z-index:5; }
+  .card.shop .shop-ribbon{ position:absolute; top:9.5%; left:50%; transform:translate(-50%,-50%); z-index:4;
+    font-size:21px; font-weight:900; color:#fff; white-space:nowrap; text-shadow:0 2px 2px rgba(95,30,95,.55); }
+  .card.shop .card-body{ top:25%; bottom:17%; left:12%; right:12%; justify-content:center; gap:9px; }
+  .card.shop .shop-icon{ width:48%; aspect-ratio:1/1; background:center/contain no-repeat;
     filter:drop-shadow(0 4px 4px rgba(0,0,0,.22)); }
   .card.shop .shop-name{ font-size:18px; font-weight:900; color:#7a4a14; }
-  .card.shop .shop-desc{ font-size:13px; color:#9a7548; text-align:center; line-height:1.3; min-height:32px; max-width:240px; }
-  .card.shop .shop-buy{ flex:none; width:62%; max-width:200px; height:52px; margin-top:6px; }
+  .card.shop .shop-desc{ font-size:12.5px; color:#9a7548; text-align:center; line-height:1.3; }
+  .card.shop .shop-buy{ flex:none; width:76%; max-width:188px; height:50px; margin-top:4px; }
 
   /* ---- CLEAR: full-screen DIM show (no card) — big praise + MAX COMBO + NEXT ---- */
   #overlay.on.clear{ background:rgba(20,8,2,.62); }
@@ -3399,11 +3397,13 @@
     popupBox.innerHTML =
       '<div class="card shop">' +
         '<div class="shop-x" id="shopX"></div>' +
-        '<div class="shop-title">GET MORE</div>' +
-        '<div class="shop-icon" style="background-image:url(\'../assets/ui/'+def.icon+'.png\')"></div>' +
-        '<div class="shop-name">'+def.name+'</div>' +
-        '<div class="shop-desc">'+def.desc+'</div>' +
-        '<div class="go-btn coin shop-buy" id="shopBuy"><span class="bi-coin"></span><span class="bl">'+(def.cost||0)+'</span></div>' +
+        '<div class="shop-ribbon">GET MORE</div>' +
+        '<div class="card-body">' +
+          '<div class="shop-icon" style="background-image:url(\'../assets/ui/'+def.icon+'.png\')"></div>' +
+          '<div class="shop-name">'+def.name+'</div>' +
+          '<div class="shop-desc">'+def.desc+'</div>' +
+          '<div class="go-btn coin shop-buy" id="shopBuy"><span class="bi-coin"></span><span class="bl">'+(def.cost||0)+'</span></div>' +
+        '</div>' +
       '</div>';
     overlay.classList.add('on');
     document.getElementById('shopX').addEventListener('click', function(){ haptic('btn'); closeShop(); });

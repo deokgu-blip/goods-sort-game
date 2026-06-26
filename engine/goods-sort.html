@@ -789,15 +789,18 @@
   .go-divider{ width:86%; height:3px; margin:8px auto; border-radius:3px;
     background:linear-gradient(90deg, rgba(165,120,70,0), rgba(165,120,70,.45) 50%, rgba(165,120,70,0)); }
   .go-sec.bot{ flex-direction:row; gap:10px; width:100%; }
-  /* CSS pill buttons — green coin / orange RETRY, rounded-font labels (consistent fonts) */
-  .go-btn{ flex:1; height:50px; border-radius:25px; display:flex; align-items:center; justify-content:center; gap:6px;
-    cursor:pointer; pointer-events:auto; font-weight:800; font-size:19px; color:#fff;
-    text-shadow:0 2px 1px rgba(0,0,0,.28); transition:transform .08s; }
-  .go-btn:active{ transform:translateY(2px); }
-  .go-btn.coin{ background:linear-gradient(#82dd5a,#4cae31); border:3px solid #fff;
-    box-shadow:0 4px 0 #387f23, 0 6px 7px rgba(0,0,0,.2); }
-  .go-btn.retry{ background:linear-gradient(#ffaa3c,#ef7d1c); border:3px solid #fff;
-    box-shadow:0 4px 0 #c25e12, 0 6px 7px rgba(0,0,0,.2); }
+  /* 3D TOY buttons — NO white outline; glossy top highlight + colored side ledge + drop
+     shadow give the depth (입체감 토이아트톤). Press = sink onto the ledge. */
+  .go-btn{ flex:1; height:52px; border-radius:26px; display:flex; align-items:center; justify-content:center; gap:6px;
+    cursor:pointer; pointer-events:auto; font-weight:900; font-size:19px; color:#fff;
+    text-shadow:0 2px 1px rgba(0,0,0,.3); transition:transform .08s, box-shadow .08s; }
+  .go-btn:active{ transform:translateY(4px); }
+  .go-btn.coin{ background:linear-gradient(#90e85f 0%,#6cca44 48%,#4faf30 100%);
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.5), inset 0 -6px 7px rgba(0,80,15,.34), 0 6px 0 #2f7d1d, 0 10px 11px rgba(0,0,0,.28); }
+  .go-btn.coin:active{ box-shadow:inset 0 3px 0 rgba(255,255,255,.45), inset 0 -5px 7px rgba(0,80,15,.32), 0 2px 0 #2f7d1d, 0 4px 6px rgba(0,0,0,.24); }
+  .go-btn.retry{ background:linear-gradient(#ffb858 0%,#f7973a 48%,#ef7d1c 100%);
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.55), inset 0 -6px 7px rgba(150,55,0,.34), 0 6px 0 #c25e12, 0 10px 11px rgba(0,0,0,.28); }
+  .go-btn.retry:active{ box-shadow:inset 0 3px 0 rgba(255,255,255,.5), inset 0 -5px 7px rgba(150,55,0,.32), 0 2px 0 #c25e12, 0 4px 6px rgba(0,0,0,.24); }
   .go-btn .bi-coin{ width:24px; height:24px; background:url("../assets/ui/icon_coin.png") center/contain no-repeat; }
   .go-btn .bi-retry{ font-size:21px; font-weight:800; }
   .go-btn.shake{ animation:shakeX .3s ease; }
@@ -829,11 +832,13 @@
   .clear-show .cb-maxcombo .val{ font-weight:900; font-size:64px; line-height:1; color:#ffce3a;
     -webkit-text-stroke:4px #8a3d00; paint-order:stroke fill; text-shadow:0 4px 0 rgba(0,0,0,.25);
     font-variant-numeric:tabular-nums; animation:obPop .5s .1s both cubic-bezier(.34,1.56,.64,1); }
-  .clear-show .cb-next{ width:62%; max-width:230px; height:54px; border-radius:27px; cursor:pointer; pointer-events:auto;
+  .clear-show .cb-next{ width:62%; max-width:230px; height:56px; border-radius:28px; cursor:pointer; pointer-events:auto;
     display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(#82dd5a,#4cae31); border:3px solid #fff;
-    box-shadow:0 5px 0 #387f23, 0 7px 8px rgba(0,0,0,.22); transition:transform .08s; }
-  .clear-show .cb-next:active{ transform:translateY(2px); }
+    background:linear-gradient(#90e85f 0%,#6cca44 48%,#4faf30 100%);
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.5), inset 0 -6px 7px rgba(0,80,15,.34), 0 6px 0 #2f7d1d, 0 10px 11px rgba(0,0,0,.26);
+    transition:transform .08s, box-shadow .08s; }
+  .clear-show .cb-next:active{ transform:translateY(4px);
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.45), inset 0 -5px 7px rgba(0,80,15,.32), 0 2px 0 #2f7d1d, 0 4px 6px rgba(0,0,0,.24); }
   .clear-show .cb-next .nextlbl{ position:relative; font-weight:800; font-size:21px; color:#fff; letter-spacing:1px;
     text-shadow:0 2px 1px rgba(0,0,0,.28); }
 
@@ -844,11 +849,12 @@
   .popup h2{ margin:0 0 6px; font-size:30px; color:var(--hud);
     -webkit-text-stroke:0; text-shadow:0 2px 0 #fff; }
   .popup .sub{ font-size:15px; color:#7a5a32; margin-bottom:14px; }
-  .btn{ display:inline-block; margin-top:6px; padding:14px 30px; border-radius:18px;
-    font-weight:900; font-size:19px; color:#fff; cursor:pointer; border:3px solid #fff;
-    box-shadow:0 5px 0 rgba(0,0,0,.25); }
-  .btn.next{ background:linear-gradient(var(--green),var(--green-d)); }
-  .btn:active{ transform:translateY(3px); box-shadow:0 2px 0 rgba(0,0,0,.25); }
+  .btn{ display:inline-block; margin-top:6px; padding:15px 32px; border-radius:24px;
+    font-weight:900; font-size:19px; color:#fff; cursor:pointer;
+    transition:transform .08s, box-shadow .08s; }
+  .btn.next{ background:linear-gradient(#90e85f 0%,#6cca44 48%,#4faf30 100%);
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.5), inset 0 -6px 7px rgba(0,80,15,.34), 0 6px 0 #2f7d1d, 0 10px 11px rgba(0,0,0,.26); }
+  .btn:active{ transform:translateY(4px); box-shadow:inset 0 3px 0 rgba(255,255,255,.45), inset 0 -5px 7px rgba(0,80,15,.32), 0 2px 0 #2f7d1d, 0 4px 6px rgba(0,0,0,.24); }
 
   /* pause overlay */
   #pauseScreen{ position:fixed; inset:0; z-index:90; display:none;
@@ -925,12 +931,14 @@
     background:rgba(42,27,12,.88); color:#ffe9c2; font-weight:800; font-size:14px; padding:9px 16px; border-radius:18px;
     box-shadow:0 4px 12px rgba(0,0,0,.32); white-space:nowrap; animation:capFade .3s ease-out; }
   @keyframes capFade{ 0%{opacity:0; transform:translateX(-50%) translateY(8px);} 100%{opacity:1; transform:translateX(-50%) translateY(0);} }
-  .card.onboard .ob-ok{ margin-top:8px; width:64%; height:48px; border-radius:24px; cursor:pointer; pointer-events:auto;
+  .card.onboard .ob-ok{ margin-top:8px; width:64%; height:50px; border-radius:25px; cursor:pointer; pointer-events:auto;
     display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(#82dd5a,#4cae31); border:3px solid #fff;
-    box-shadow:0 4px 0 #387f23, 0 6px 7px rgba(0,0,0,.2);
-    font-weight:800; font-size:18px; color:#fff; letter-spacing:.5px; text-shadow:0 2px 1px rgba(0,0,0,.28); }
-  .card.onboard .ob-ok:active{ transform:translateY(2px); }
+    background:linear-gradient(#90e85f 0%,#6cca44 48%,#4faf30 100%);
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.5), inset 0 -6px 7px rgba(0,80,15,.34), 0 6px 0 #2f7d1d, 0 10px 11px rgba(0,0,0,.26);
+    font-weight:900; font-size:18px; color:#fff; letter-spacing:.5px; text-shadow:0 2px 1px rgba(0,0,0,.3);
+    transition:transform .08s, box-shadow .08s; }
+  .card.onboard .ob-ok:active{ transform:translateY(4px);
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.45), inset 0 -5px 7px rgba(0,80,15,.32), 0 2px 0 #2f7d1d, 0 4px 6px rgba(0,0,0,.24); }
   /* time-freeze active — subtle icy tint on the timer */
   body.frozen #timer{ filter:hue-rotate(150deg) saturate(1.15) brightness(1.06); }
 

@@ -811,7 +811,7 @@
          of the panel (top-right), so it never offsets the panel's centering. ---- */
   .card.shop{ background-image:url("../assets/ui/panel_popup.png"); aspect-ratio:215/305; }
   .card.shop .shop-x{ position:absolute; top:0; right:0; width:22%; height:15%; cursor:pointer; pointer-events:auto; z-index:5; }
-  .card.shop .shop-ribbon{ position:absolute; top:9.5%; left:50%; transform:translate(-50%,-50%); z-index:4;
+  .card.shop .shop-ribbon{ position:absolute; top:11%; left:49.8%; transform:translate(-50%,-50%); z-index:4;
     font-size:21px; font-weight:900; color:#fff; white-space:nowrap; text-shadow:0 2px 2px rgba(95,30,95,.55); }
   .card.shop .card-body{ top:25%; bottom:17%; left:12%; right:12%; justify-content:center; gap:9px; }
   .card.shop .shop-icon{ width:48%; aspect-ratio:1/1; background:center/contain no-repeat;
@@ -3404,6 +3404,7 @@
     S.paused = true;                                     // hold the timer while the shop is open
     popupBox.innerHTML =
       '<div class="card shop">' +
+        '<div class="go-coins"><span class="ci"></span><span class="cv">'+S.coins+'</span></div>' +
         '<div class="shop-x" id="shopX"></div>' +
         '<div class="shop-ribbon">GET MORE</div>' +
         '<div class="card-body">' +

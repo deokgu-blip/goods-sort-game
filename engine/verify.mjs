@@ -665,8 +665,8 @@ function rgbDist(p, c){
   // COMBO feedback is now a 🔥 FLAME that flies into the top flame pill — NO text banner/badge.
   assert('(2b-FX1 combo FLAME) a 🔥 flame flies to the top flame pill on clear', clearInfo.flameSeen >= 1 && clearInfo.flameIsFire,
     'flame='+clearInfo.flameSeen+' isFire='+clearInfo.flameIsFire);
-  assert('(2c-FX2 NO combo text) no praise banner / combo-badge text plays on clear (replaced by the flame)',
-    clearInfo.praiseSeen === 0 && clearInfo.comboBadgeSeen === 0,
+  assert('(2c-FX2 PRAISE text) a praise banner (GOOD!/GREAT!/…) plays on clear as the text 연출 (user-requested)',
+    clearInfo.praiseSeen >= 1,
     'praise='+clearInfo.praiseSeen+' comboBadge='+clearInfo.comboBadgeSeen);
   assert('(2d-score) internal score incremented on clear', clearInfo.starsAfter > clearInfo.starsBefore, clearInfo.starsBefore+'->'+clearInfo.starsAfter);
   // combo starts at 0 and increments on clear; the FLAME pill shows the CURRENT combo "xN".

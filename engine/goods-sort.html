@@ -2255,12 +2255,14 @@
     bumpCombo();
     var combo = S.combo;
 
-    // COMBO FEEDBACK — NO text banner / xN badge. A small flame (🔥, matching the top UI)
-    // pops at the clear spot and flies INTO the top flame pill. + a small sparkle pop.
+    // COMBO FEEDBACK — a small flame (🔥, matching the top UI) pops at the clear spot and flies INTO
+    // the top flame pill, + a sparkle pop, + a PRAISE TEXT banner (GOOD!/GREAT!/EXCELLENT!/PERFECT!
+    // escalating by combo) so every match has a text 연출 (esp. needed in the HUD-less tutorial).
     var base = (S.cfg.scoring && S.cfg.scoring.starsPerSort) || 1;
     S.stars += base * Math.max(1, combo);              // internal score (no UI counter)
     flyFlameToCombo(cx, cy);
     sparkleRing(cx, cy);
+    praise(cx, cy - 6, combo);                         // text effect on every clear
 
     // 4) cubby pop
     if (el){

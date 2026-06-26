@@ -241,9 +241,9 @@
   #shelf{ position:relative; width:min(94vw, 62vh, 460px); aspect-ratio:1/0.95;
     transform-style:flat;
     transform: none;                 /* front elevation — NO rotateX tilt */
-    /* V23 — LOWER the overall lighting + saturation of the whole board (grid + goods) so it reads
-       calm/warm like the reference, not high-key/vivid (user: 너무 밝아서 눈이 아파 → 조명 낮춰). */
-    filter: brightness(0.88) saturate(0.83) drop-shadow(0 18px 24px rgba(60,38,16,.42)); }
+    /* V23b — lower only the BRIGHTNESS a touch (glare comfort) — NOT saturation; the colors must stay
+       (user: 채도 죽이지마, 알록달록하게). Goods get an extra saturate boost on .good. */
+    filter: brightness(0.95) drop-shadow(0 18px 24px rgba(60,38,16,.42)); }
   /* #cabinet = the OUTER WOOD BOX the niches sit inside (wood border + wood lattice
      gap). It is the real wood frame; the niches open into it. */
   /* V21 — UNIFIED WOOD: the frame is a SOLID --grid-color base × the GRAYSCALE board grain map
@@ -259,7 +259,7 @@
       var(--board-img);                              /* legacy colored asset kept for selectors */
     background-size: 100% 100%, 100% 100%, 100% 100%; background-repeat:no-repeat;
     background-blend-mode: multiply, normal, normal;
-    filter: brightness(1.18);   /* V23 — frame BRIGHTER (strong contrast vs the dark floor, per ref) */
+    filter: brightness(1.08);   /* V23b — frame a touch brighter than the dark floor (contrast), but not glaring */
     border-radius: var(--corner-radius, 0px);
     padding: var(--cab-pad);
     box-shadow: inset 0 2px 0 rgba(255,255,255,.22), inset 0 -3px 8px rgba(40,24,8,.4); }
@@ -275,7 +275,7 @@
       var(--board-img);
     background-size: 100% 100%, 100% 100%, 100% 100%; background-repeat:no-repeat;
     background-blend-mode: multiply, normal, normal;
-    filter: brightness(1.18);   /* V23 — frame BRIGHTER (strong contrast vs the dark floor, per ref) */
+    filter: brightness(1.08);   /* V23b — frame a touch brighter than the dark floor (contrast), but not glaring */
     border-radius: var(--corner-radius, 0px); z-index:1; }
   /* legacy wood-layer container kept (empty) so old selectors resolve harmlessly. */
   #shelf .wood-layer{ position:absolute; inset:0; z-index:0; pointer-events:none; display:none; }
@@ -553,7 +553,8 @@
     /* V18 — DIRECTIONAL drop-shadow: offset toward the shadow direction (bottom-right by
        default, from the top-left light). dx/dy/blur/color come from --good-shadow-* which
        applyShelfCssVars() derives from SHELF.lightAngle + shadowStrength. */
-    filter:drop-shadow(var(--good-shadow-dx,4px) var(--good-shadow-dy,4px) var(--good-shadow-blur,5px) var(--good-shadow-color,rgba(20,10,2,.45)));
+    /* V23b — saturate boost so the goods read COLORFUL/varied (알록달록), even under the dimmer board. */
+    filter:saturate(1.18) drop-shadow(var(--good-shadow-dx,4px) var(--good-shadow-dy,4px) var(--good-shadow-blur,5px) var(--good-shadow-color,rgba(20,10,2,.45)));
     transform: translateX(-50%) translateZ(var(--gz,0px)) scale(var(--gs,1));
     transform-origin:bottom center;
     will-change:transform; cursor:grab; touch-action:none; pointer-events:none; }

@@ -1324,11 +1324,11 @@ function rgbDist(p, c){
     JSON.stringify(v21keys.map(k=>k+'='+(sc.defaults?sc.defaults[k]:'MISSING'))) + ' legacy shadowStrength='+(sc.defaults&&sc.defaults.shadowStrength));
   // V22 — the V20 manual params now carry the USER-TUNED values (independent walls, falloff, depths,
   // gridColor). The frameCeilingDepth (per-cubby ceiling) stays 0 = hidden; camera stays upright/centered.
-  assert('(S1-V20b) V20/V21 defaults carry the V22 user-tuned look (wallOuterReveal=0.1, wallCenterReveal=0.16, wallFalloff=3, floorDepth=1.5, frameCeilingDepth=0=hidden, cameraAngle=0, cameraHeight=0.5, gridColor=#ffbb5c)',
+  assert('(S1-V20b) V20/V21 defaults carry the V22 user-tuned look (wallOuterReveal=0.1, wallCenterReveal=0.16, wallFalloff=3, floorDepth=1.5, frameCeilingDepth=0=hidden, cameraAngle=0, cameraHeight=0.5, gridColor=#d8a669)',
     sc.defaults.wallOuterReveal === 0.1 && sc.defaults.wallCenterReveal === 0.16 && sc.defaults.wallFalloff === 3 &&
     sc.defaults.floorDepth === 1.5 && sc.defaults.frameCeilingDepth === 0 &&
     sc.defaults.cameraAngle === 0 && sc.defaults.cameraHeight === 0.5 &&
-    String(sc.defaults.gridColor).toLowerCase() === '#ffbb5c',
+    String(sc.defaults.gridColor).toLowerCase() === '#d8a669',
     JSON.stringify(v20keys.map(k=>k+'='+sc.defaults[k])));
   // V22 — the NEW shipped defaults == the user's tuned export (_user_shelf_config.json). Assert the
   // engine bakes EXACTLY those key values (single source of truth) so the default render reflects them.
@@ -1337,12 +1337,12 @@ function rgbDist(p, c){
     wallFalloff:3, depth:0.4, floorDepth:1.5, frameCeilingDepth:0, shelfAngle:74, cameraAngle:0,
     cameraHeight:0.5, postThickness:7, frameThickness:7, ceilingVisibility:0, cornerRadius:4,
     goodFillHeight:0.87, cubbyAspect:0.86, rimH:0, goodGap:0, lightAngle:135, shadowStrength:0.45,
-    cubbyShadowStrength:0.23, goodShadowStrength:0.09, backDim:0.25, topShadow:0.6, gridColor:'#ffbb5c'
+    cubbyShadowStrength:0.23, goodShadowStrength:0.09, backDim:0.25, topShadow:0.6, gridColor:'#d8a669'
   };
   const ucMismatch = Object.keys(userCfg).filter(k =>
     (k === 'gridColor') ? String(sc.defaults[k]).toLowerCase() !== userCfg[k].toLowerCase()
                         : sc.defaults[k] !== userCfg[k]);
-  assert('(S1-V22) SHELF_DEFAULTS == the user-tuned config (perspective 1400, eyeY 0.18, shelfAngle 74, depth 0.4, floorDepth 1.5, cubbyAspect 0.86, gridColor #ffbb5c, etc — every applied key value matches)',
+  assert('(S1-V22) SHELF_DEFAULTS == the user-tuned config (perspective 1400, eyeY 0.18, shelfAngle 74, depth 0.4, floorDepth 1.5, cubbyAspect 0.86, gridColor #d8a669, etc — every applied key value matches)',
     ucMismatch.length === 0, 'mismatched keys: '+JSON.stringify(ucMismatch.map(k=>k+'='+sc.defaults[k]+'(want '+userCfg[k]+')')));
   // V22 — frameTopDepth is a NEW default param (the OUTER cabinet top face), present + VISIBLE (>0) by default.
   assert('(S1-V22b) SHELF_DEFAULTS carries frameTopDepth (OUTER cabinet top face) and it is VISIBLE by default (>0)',
@@ -1437,8 +1437,8 @@ function rgbDist(p, c){
     window.__shelfApi.applyConfig(window.__shelfApi.DEFAULTS);
     return r;
   });
-  assert('(S20c-GRID-COLOR) gridColor RECOLORS the wood: --grid-color == the picker value (default #ffbb5c), a different gridColor (#883333) shifts BOTH --grid-color and the legacy --grid-tint',
-    gtBase.color === '#ffbb5c' && gtRed.color === '#883333' &&
+  assert('(S20c-GRID-COLOR) gridColor RECOLORS the wood: --grid-color == the picker value (default #d8a669), a different gridColor (#883333) shifts BOTH --grid-color and the legacy --grid-tint',
+    gtBase.color === '#d8a669' && gtRed.color === '#883333' &&
     gtRed.tint !== gtBase.tint && /^#[0-9a-f]{6}$/.test(gtRed.tint),
     'default{color='+gtBase.color+',tint='+gtBase.tint+'} #883333->{color='+gtRed.color+',tint='+gtRed.tint+'}');
   // (S20d) cameraAngle tilts the WHOLE board (rotateX on #shelf -> 3D matrix) + cameraHeight

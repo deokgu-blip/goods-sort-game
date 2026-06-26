@@ -403,9 +403,9 @@
      opacity scales with --cubby-shade-op (from shadowStrength). The FIRST background-image
      stays first so the back color is still sampled as cream for the seamless-wall assert
      (the gradients sit ON TOP of the cream base color but the back is mostly cream). */
-  /* the niche INTERIOR (back wall) is slightly DARKER than the bright wood frame so the shelf reads
-     as recessed/in-shadow (user: "선반 부분은 그림자진것처럼 프레임에 비해 살짝 어둡게"). */
-  .cubby .c-back{ background-color: #e5d0a4;
+  /* niche INTERIOR back wall = the reference's light cream (the SHELF FLOOR below is the darker, in-
+     shadow wood — see the floor band + .c-wall.b). */
+  .cubby .c-back{ background-color: #e8d1b9;
     background-image:
       /* SAFARI-SAFE FLOOR — the niche's 3D floor face (blend-mode + rotateX fold) can fail to
          composite on iOS Safari, leaving the shelf bottom cream (user: "모바일에서 선반 바닥 안보여").
@@ -415,10 +415,10 @@
          bleeds up the wall (user: "그리드 뒤에 번지는 영역이있어"). A faint seam shadow sits just
          above it so the floor reads as a plane meeting the back wall. */
       linear-gradient(to top,
-        rgba(54,33,12,.18) 21%, rgba(54,33,12,0) 26%),
+        rgba(54,33,12,.2) 21%, rgba(54,33,12,0) 26%),
       linear-gradient(to top,
-        var(--grid-color,#caa06a) 0%,
-        var(--grid-color,#caa06a) 20%,
+        #c48f62 0%,
+        #c48f62 20%,
         rgba(0,0,0,0) 24%),
       /* V19 — SHALLOW TOP inner-shadow: a faint dark band hugging the TOP edge (ceiling
          drop-shadow into the recess). SHALLOW = confined to ~top 22% then fades; opacity
@@ -457,7 +457,8 @@
     background-position: 0 100%, 0 100%, 0 0, 0 100%;
     background-repeat:no-repeat;
     background-blend-mode: normal, multiply, normal, normal;
-    filter: brightness(1.34); }
+    /* V23 — the niche FLOOR reads DARKER than the frame (in shadow), per the reference. */
+    filter: brightness(0.9); }
   /* CEILING (.t) — underside of the shelf above. Faces DOWN so a step DARKER than the lit floor
      (lit-from-above read) but still a clear wood SURFACE (V15). Same hue as every face. */
   .cubby .c-wall.t{
@@ -1197,7 +1198,9 @@
     goodShadowStrength: 0.09,   // V21 — goods' drop-shadow opacity (was shadowStrength)
     backDim: 0.25,          // back-row (peek) goods darkness (user: 0.25)
     topShadow: 0.6,         // V19 — SHALLOW top inner-shadow band strength (frac of cubbyShadowStrength)
-    gridColor: '#ffbb5c'    // V21 — SINGLE wood hue: every wood face derives its color from this base
+    gridColor: '#d8a669'    // V23 — reference-matched wood (extracted from the ref game frame): a muted
+                            // golden-brown, NOT the old bright #ffbb5c (looked transparent/soft). Floor
+                            // is rendered DARKER than this (see .c-wall.b + the .c-back floor band).
   };
   // merge an OVERRIDE over the defaults (shallow; only known keys). Reads
   // localStorage['gs_shelf_config'] (same-browser editor save) + window.__SHELF_OVERRIDE

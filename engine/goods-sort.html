@@ -3591,11 +3591,11 @@
   function onboardSet(){ try{ return JSON.parse(localStorage.getItem('gs_item_onboarded')||'{}'); }catch(e){ return {}; } }
   function saveOnboardSet(s){ try{ localStorage.setItem('gs_item_onboarded', JSON.stringify(s)); }catch(e){} }
   function maybeOnboard(){
-    if (S._cheat) return;                         // cheat: no item-unlock popup while jumping levels
     var shown=onboardSet();
     for (var i=0;i<ITEM_DEFS.length;i++){ var d=ITEM_DEFS[i];
-      if (d.unlock===S.level && d.unlock>1 && !shown[d.key]){
-        shown[d.key]=1; saveOnboardSet(shown);
+      // CHEAT: always show at the unlock level (for testing, no persist); normal: once per item.
+      if (d.unlock===S.level && d.unlock>1 && (S._cheat || !shown[d.key])){
+        if (!S._cheat){ shown[d.key]=1; saveOnboardSet(shown); }
         setTimeout((function(def){ return function(){ showItemOnboard(def); }; })(d), 450);
         break;
       }

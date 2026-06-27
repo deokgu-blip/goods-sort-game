@@ -143,7 +143,7 @@
      edge from y=0 (behind the safe area) so the empty top strip is filled with header-brown
      (user: 빈 공간을 헤더와 같은 색으로 채워). The bottom keeps the liked rounded-bar form (clean
      24px rounded corners, NOT a convex curve). HUD controls sit LOWER (header moved down). */
-  #hud{ width:100%; max-width:none; padding:calc(var(--safe-top) + 24px) 16px 18px; z-index:5;
+  #hud{ width:100%; max-width:none; padding:calc(var(--safe-top) + 24px) 16px 0; z-index:5;
     display:flex; flex-direction:column; align-items:center;
     background:linear-gradient(#a4683f,#9a5d36);
     border-radius:0 0 26px 26px;
@@ -212,7 +212,10 @@
 
   /* COMBO retention bar — INTEGRAL with the frame (일체형): a downward LOBE of the SAME wood
      as #hudFrame (fuses, no separate border) with a DEBOSSED dark channel carved into it. */
-  .combo-gauge{ position:relative; width:148px; height:25px; margin-top:8px; z-index:6; pointer-events:none;
+  /* straddle the header bottom ~HALF (user: 헤더에 기존처럼 반정도만 걸치게): margin-top spaces it
+     below the elements; the negative margin-bottom pulls #hud's bottom edge up to the gauge's
+     middle so its lower lobe hangs BELOW the header (like the original frame-lobe). */
+  .combo-gauge{ position:relative; width:148px; height:25px; margin-top:6px; margin-bottom:-13px; z-index:6; pointer-events:none;
     padding:4px 7px 6px; border-radius:0 0 16px 16px;     /* straight top fuses to the frame; rounded bottom = the lobe */
     background:linear-gradient(#96592f,#88512f);          /* SAME wood as the frame */
     box-shadow:0 3px 3px rgba(0,0,0,.16); }

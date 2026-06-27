@@ -357,23 +357,23 @@
   .c-lock.dim-crack .c-lock-crack{ display:block; }
   /* CHAINS — strands crossing the OPENING with ends hooked OVER the frame; strong offset
      shadow = the chain reads as hanging in FRONT (3D), not painted on the niche back. */
-  .c-lock .c-chain{ position:absolute; z-index:3; left:50%; top:50%; width:150%; height:34%;
+  .c-lock .c-chain{ position:absolute; z-index:3; left:50%; top:50%; width:116%; height:25%;
     background:url("../assets/ui/chain.png") center/100% 100% no-repeat;
-    filter:drop-shadow(1px 4px 3px rgba(0,0,0,.55)); pointer-events:none; }
-  .c-lock .c-chain.c1{ transform:translate(-50%,-50%) rotate(34deg); }
-  .c-lock .c-chain.c2{ transform:translate(-50%,-50%) rotate(-34deg); }
+    filter:drop-shadow(1px 3px 2.5px rgba(0,0,0,.5)); pointer-events:none; }
+  .c-lock .c-chain.c1{ transform:translate(-50%,-50%) rotate(36deg); }
+  .c-lock .c-chain.c2{ transform:translate(-50%,-50%) rotate(-36deg); }
   /* PADLOCK (gold) centered */
   .c-lock .c-lock-pad{ position:absolute; z-index:4; width:52%; height:52%; left:24%; top:30%;
     background:url("../assets/ui/lock_closed.png") center/contain no-repeat;
     filter:drop-shadow(0 3px 4px rgba(0,0,0,.45)); animation:lockIn .3s ease; }
   /* COUNT badge — small blue circle, top-center, overlapping the top edge */
-  .c-lock .c-lock-badge{ position:absolute; z-index:5; top:1.5%; left:50%; transform:translateX(-50%);
-    width:clamp(15px,18%,26px); aspect-ratio:1/1; border-radius:50%;
-    background:radial-gradient(circle at 38% 32%, #6fc4ff, #2f8fe6 70%, #1f6fc0);
-    border:2px solid #dcefff; box-shadow:0 2px 3px rgba(0,0,0,.3);
-    display:flex; align-items:center; justify-content:center; }
-  .c-lock .c-lock-num{ font-weight:900; font-size:clamp(9px,2.7vw,15px); color:#fff;
-    -webkit-text-stroke:0.8px #1f5fa6; paint-order:stroke fill; text-shadow:0 1px 1px rgba(0,0,0,.3); }
+  .c-lock .c-lock-badge{ position:absolute; z-index:5; top:-2%; left:50%; transform:translateX(-50%);
+    width:clamp(15px,17%,26px); aspect-ratio:159/191;
+    background:url("../assets/ui/badge_lock.png") center/contain no-repeat;
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
+  .c-lock .c-lock-num{ position:absolute; top:44%; left:50%; transform:translate(-50%,-50%);
+    font-weight:900; font-size:clamp(8px,2.3vw,14px); color:#fff; white-space:nowrap;
+    -webkit-text-stroke:0.7px #1f5fa6; paint-order:stroke fill; text-shadow:0 1px 1px rgba(0,0,0,.3); }
   /* BREAK (count -> 0): padlock flies off sideways, rest fades. */
   .c-lock.breaking .c-lock-pad{ background-image:url("../assets/ui/lock_break.png"); animation:lockFly .5s ease-in forwards; }
   .c-lock.breaking .c-lock-dim,

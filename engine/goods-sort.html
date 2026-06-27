@@ -468,6 +468,57 @@
     background-blend-mode: normal, multiply, normal, normal;
     /* V23 — the niche FLOOR reads clearly DARKER than the (now brighter) frame, per the reference. */
     filter: brightness(0.68); }
+
+  /* ============ ATTIC TOPPERS (한칸/두칸 바닥없는 조각을 기존 그리드 천장 위에 얹기) ============
+     A `.cubby.attic` is a floorless piece sitting on the cabinet top: it KEEPS its walls/back/
+     ceiling but DROPS its own recessed floor (the 3D floor face + the dark back-wall floor band),
+     so its goods stand on the cabinet TOP surface below it. That sitting surface is rendered FLOOR-
+     COLORED (user: 가장 윗면도 선반 바닥색과 동일) as a band at the topper's base. */
+  .cubby.attic .c-wall.b{ display:none; }                       /* no recessed 3D floor face (바닥빼고) */
+  .cubby.attic .c-back{                                          /* back wall: drop the dark floor band, keep soft shade */
+    background-image:
+      linear-gradient(to top, #937149 0%, #937149 16%, rgba(0,0,0,0) 18%),   /* FLOOR-colored sitting surface */
+      radial-gradient(150% 150% at 80% 80%, rgba(40,24,8,.16) 0%, rgba(40,24,8,0) 60%); }
+  /* the floor-colored plank the topper SITS on (the cabinet top face under it) */
+  .cubby.attic::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:13%;
+    background: #937149; filter:brightness(1.0); z-index:2; pointer-events:none;
+    border-radius: 0 0 var(--corner-radius,0px) var(--corner-radius,0px); }
+
+  /* VOID — an EMPTY attic cell: paint over the cabinet wood (cell + its gaps + the frame top rail
+     above it) with the page WALLPAPER so only the toppers read as separate pieces on top. Appended
+     BEFORE the toppers so the toppers paint over these mask edges. */
+  .c-void{ position:relative; background:var(--wallpaper,#ecd3b3); }
+  .c-void::before{ content:''; position:absolute; inset:calc(-1 * var(--niche-gap) - 1px);
+    background:var(--wallpaper,#ecd3b3); z-index:0; }
+  .c-void.void-top::after{ content:''; position:absolute;
+    left:calc(-1 * var(--niche-gap)); right:calc(-1 * var(--niche-gap));
+    top:calc(-1 * (var(--cab-pad) + var(--niche-gap))); height:var(--cab-pad);
+    background:var(--wallpaper,#ecd3b3); z-index:0; }
+
+  /* ============ HIDE FACES (per-cubby face transparency — data: hideFaces:[...]) ============
+     A cubby may carry hideFaces (e.g. ["floor"]) -> we add a .hide-<face> class to its element
+     in makeCubbyEl. The named wood FACE is display:none, but the cubby STAYS registered (its
+     .c-floor holds goods + slots, drag/drop/match still work). 'floor' is the wood FLOOR BAND
+     (.c-wall.b + the .c-back floor gradient band) — NEVER .c-floor. This is the general mechanism
+     the user wants: stack a 1-/2-cell topper with its floor removed so it doesn't DOUBLE with the
+     base's top face below it, yet still plays as a grid. */
+  .cubby.hide-floor .c-wall.b{ display:none; }              /* drop the recessed 3D floor face */
+  /* the back-wall floor-band override is SKIPPED for .attic cubbies — the attic block already
+     paints a purpose-built floor-COLORED sitting surface there (the topper-on-cabinet look), so
+     hideFoor on an attic topper is satisfied by attic's own CSS (both drop the band + 3D floor). */
+  .cubby.hide-floor:not(.attic) .c-back{                    /* drop the dark FLOOR BAND on the back wall; keep soft shade */
+    background-image:
+      radial-gradient(150% 150% at var(--cubby-shade-dark-x,80%) var(--cubby-shade-dark-y,80%),
+        rgba(40,24,8,calc(var(--cubby-shade-op,.25) * 1.7)) 0%,
+        rgba(40,24,8,calc(var(--cubby-shade-op,.25) * 0.7)) 38%,
+        rgba(40,24,8,0) 72%),
+      radial-gradient(140% 140% at var(--cubby-shade-lit-x,20%) var(--cubby-shade-lit-y,20%),
+        rgba(255,248,228,.32) 0%, rgba(255,248,228,0) 50%),
+      radial-gradient(135% 130% at 50% 12%, rgba(0,0,0,0) 50%, rgba(70,45,18,.14) 100%); }
+  .cubby.hide-ceiling .c-wall.t{ display:none; }            /* drop the ceiling face */
+  .cubby.hide-left    .c-wall.l{ display:none; }            /* drop the left side wall */
+  .cubby.hide-right   .c-wall.r{ display:none; }            /* drop the right side wall */
+  .cubby.hide-back    .c-back{ background:transparent !important; }  /* clear the back-wall plane */
   /* CEILING (.t) — underside of the shelf above. Faces DOWN so a step DARKER than the lit floor
      (lit-from-above read) but still a clear wood SURFACE (V15). Same hue as every face. */
   .cubby .c-wall.t{
@@ -2059,46 +2110,94 @@
     g.style.setProperty('--gz', gz.toFixed(2) + 'px');
   }
 
+  // build ONE cubby's niche DOM (factored so attic toppers reuse the exact same niche box).
+  function makeCubbyEl(cb){
+    var el = document.createElement('div');
+    el.className = 'cubby';
+    el.dataset.idx = cb ? S.cubbies.indexOf(cb) : -1;
+    // V12 NICHE: an INNER preserve-3d layer (.niche-clip) holds the folded box —
+    // BACK WALL + 4 folded WOOD faces (.c-wall t/b/l/r = ceiling/floor/left/right) +
+    // the back-row stage + the interactive front floor (slots). The FRONT RIM sits
+    // outside the clip (front-edge plank). All face sizes/transforms set in buildNiches().
+    el.innerHTML =
+      '<div class="niche-clip">' +
+        '<div class="c-back"></div>' +
+        '<div class="c-wall t"></div><div class="c-wall b"></div>' +
+        '<div class="c-wall l"></div><div class="c-wall r"></div>' +
+        '<div class="c-back-layer"></div>' +
+        '<div class="c-floor"></div>' +
+      '</div>' +
+      '<div class="c-rim"></div>';
+    if (cb){
+      cb.el = el; cb.floor = el.querySelector('.c-floor'); cb.backEl = el.querySelector('.c-back-layer');
+      // HIDE FACES — add a per-face class so CSS sets display:none on the chosen wood face(s).
+      // The cubby stays in S.cubbies and .c-floor (goods/slots) is untouched, so gameplay is intact.
+      // 'floor' also drops the .c-back floor BAND (handled via .hide-floor on .c-back in CSS).
+      if (cb.hideFaces && cb.hideFaces.length){
+        cb.hideFaces.forEach(function(f){
+          if (f === 'floor')   el.classList.add('hide-floor');
+          else if (f === 'ceiling') el.classList.add('hide-ceiling');
+          else if (f === 'left')    el.classList.add('hide-left');
+          else if (f === 'right')   el.classList.add('hide-right');
+          else if (f === 'back')    el.classList.add('hide-back');
+        });
+      }
+    }
+    return el;
+  }
   function buildBoard(){
     var cfg = S.cfg;
     S.cap = cfg.cellCap || 3;
+    // ATTIC: optional floorless 1-/2-cell toppers stacked ABOVE the main grid (user: 한칸/두칸짜리
+    // 바닥빼고 천장 위에 올리기). They occupy `atticRows` extra rows at the TOP; main grid shifts down.
+    var atticRows = cfg.atticRows || 0;
+    var totalRows = cfg.rows + atticRows;
     gridEl.style.gridTemplateColumns = 'repeat(' + cfg.cols + ', 1fr)';
-    gridEl.style.gridTemplateRows = 'repeat(' + cfg.rows + ', 1fr)';
-    // SHELF aspect. Normal stages keep the tuned 1/cubbyAspect. The TUTORIAL (a 1-row 1x3) scales
-    // the shelf so its cells stay the SAME landscape ratio as a row sliced out of a 3x4 (not
-    // stretched tall). (DEFAULT_COLS=3, DEFAULT_ROWS=4 -> 1x3 gives ≈4.65:1.)
+    gridEl.style.gridTemplateRows = 'repeat(' + totalRows + ', 1fr)';
+    // SHELF aspect. Normal stages keep the tuned 1/cubbyAspect (per MAIN cell). The attic adds
+    // extra rows so the shelf grows TALLER by totalRows/rows (main cells keep their proportion).
+    // The TUTORIAL (a 1-row 1x3) scales so its cells stay the landscape ratio of a 3x4 row slice.
     (function(){
       var sh = document.getElementById('shelf'); if (!sh) return;
       var ca = SHELF.cubbyAspect || 0.86;
-      var asp = cfg.tutorial ? ((4 * cfg.cols) / (3 * ca * cfg.rows)) : (1 / ca);
+      var asp = cfg.tutorial ? ((4 * cfg.cols) / (3 * ca * cfg.rows))
+                             : (cfg.rows / (ca * totalRows));
       sh.style.aspectRatio = asp.toFixed(3) + ' / 1';
     })();
     gridEl.innerHTML = '';
-    // order cubbies row-major so grid placement matches r,c
     var byRC = {};
-    S.cubbies.forEach(function(cb){ byRC[cb.r+'_'+cb.c] = cb; });
+    S.cubbies.forEach(function(cb){ if (!cb.attic) byRC[cb.r+'_'+cb.c] = cb; });
+    // MAIN grid cells (rows x cols), placed BELOW the attic band via explicit grid-row.
     for (var r=0; r<cfg.rows; r++){
       for (var c=0; c<cfg.cols; c++){
-        var cb = byRC[r+'_'+c];
-        var el = document.createElement('div');
-        el.className = 'cubby';
-        el.dataset.idx = cb ? S.cubbies.indexOf(cb) : -1;
-        // V12 NICHE: an INNER preserve-3d layer (.niche-clip) holds the folded box —
-        // BACK WALL + 4 folded WOOD faces (.c-wall t/b/l/r = ceiling/floor/left/right) +
-        // the back-row stage + the interactive front floor (slots). The FRONT RIM sits
-        // outside the clip (front-edge plank). All face sizes/transforms set in buildNiches().
-        el.innerHTML =
-          '<div class="niche-clip">' +
-            '<div class="c-back"></div>' +
-            '<div class="c-wall t"></div><div class="c-wall b"></div>' +
-            '<div class="c-wall l"></div><div class="c-wall r"></div>' +
-            '<div class="c-back-layer"></div>' +
-            '<div class="c-floor"></div>' +
-          '</div>' +
-          '<div class="c-rim"></div>';
-        if (cb){ cb.el = el; cb.floor = el.querySelector('.c-floor'); cb.backEl = el.querySelector('.c-back-layer'); }
+        var el = makeCubbyEl(byRC[r+'_'+c]);
+        el.style.gridRow = (atticRows + r + 1); el.style.gridColumn = (c + 1);
         gridEl.appendChild(el);
       }
+    }
+    // ATTIC toppers (cubbies flagged attic, at attic-row `aRow` + column c) + VOID masks for the
+    // empty attic cells (wallpaper-colored so only the toppers read as pieces sitting on top).
+    if (atticRows > 0){
+      var occ = {};
+      S.cubbies.forEach(function(cb){ if (cb.attic) occ[(cb.aRow!=null?cb.aRow:atticRows-1) + '_' + cb.c] = true; });
+      // VOID masks FIRST (DOM order) so the toppers, appended after, paint OVER the mask edges.
+      for (var ar2=0; ar2<atticRows; ar2++){
+        for (var c2=0; c2<cfg.cols; c2++){
+          if (occ[ar2 + '_' + c2]) continue;
+          var v = document.createElement('div'); v.className = 'c-void';
+          if (ar2 === 0) v.classList.add('void-top');
+          v.style.gridRow = (ar2 + 1); v.style.gridColumn = (c2 + 1);
+          gridEl.appendChild(v);
+        }
+      }
+      S.cubbies.forEach(function(cb){
+        if (!cb.attic) return;
+        var ar = (cb.aRow != null ? cb.aRow : atticRows - 1);
+        var el = makeCubbyEl(cb); el.classList.add('attic');
+        if (ar === atticRows - 1) el.classList.add('attic-bottom');  // bottom attic row sits ON the main grid
+        el.style.gridRow = (ar + 1); el.style.gridColumn = (cb.c + 1);
+        gridEl.appendChild(el);
+      });
     }
     // LOCK overlays live at GRID level (absolute, NOT clipped by the cubby) so chains can
     // hook OVER the wood frame. One per cubby; positionLocks() places it over its cubby.
@@ -3425,7 +3524,14 @@
     // V3: build per-cubby LAYER stacks (normLayers handles both layers:[...] and
     // legacy flat items:[...]). layers[0]=FRONT (interactive), rest=hidden/peeking.
     S.cubbies = S.cfg.cubbies.map(function(cb){
-      return { r:cb.r, c:cb.c, layers: normLayers(cb), lock:(cb.lock|0), el:null, floor:null, backEl:null, lockEl:null };
+      return { r:cb.r, c:cb.c, attic:!!cb.attic, aRow:(cb.aRow!=null?cb.aRow:null),
+               // hideFaces: per-cubby list of wood faces to render display:none WITHOUT
+               // un-registering the cubby (goods/slots/drag/drop/match all keep working).
+               // faces: 'floor' (.c-wall.b + .c-back floor band), 'ceiling' (.c-wall.t),
+               // 'left' (.c-wall.l), 'right' (.c-wall.r), 'back' (.c-back). NEVER hides
+               // .c-floor (it holds the goods + slot hit-columns).
+               hideFaces: (Array.isArray(cb.hideFaces) ? cb.hideFaces.slice() : null),
+               layers: normLayers(cb), lock:(cb.lock|0), el:null, floor:null, backEl:null, lockEl:null };
     });
     S.cap = S.cfg.cellCap || 3;
     S.timeLeft = S.cfg.timeLimit || 120;

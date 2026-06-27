@@ -869,14 +869,15 @@
   #pauseScreen .popup h2{ font-size:26px; }
 
   /* dev nav */
-  #devnav{ position:fixed; left:0; right:0; bottom:0; z-index:120; display:none;
-    justify-content:center; gap:10px; padding:8px; }
+  /* CHEAT panel — top (below HUD) so the bottom item bar stays tappable for testing */
+  #devnav{ position:fixed; left:0; right:0; top:calc(var(--safe-top, 0px) + 58px); z-index:120; display:none;
+    justify-content:center; gap:7px; padding:5px; }
   #devnav.on{ display:flex; align-items:center; }
   #devnav button{ background:#222; color:#fff; border:1px solid #555; border-radius:8px;
-    padding:8px 14px; font-weight:700; }
+    padding:7px 12px; font-weight:700; cursor:pointer; }
   #devnav #devLvl{ background:#111; color:#7af06e; border:1px solid #555; border-radius:8px;
-    padding:8px 12px; font-weight:900; min-width:54px; text-align:center; }
-  #devnav .dev-tag{ background:#a8324c; color:#fff; border-radius:6px; padding:5px 9px; font-size:12px; font-weight:900; }
+    padding:7px 10px; font-weight:900; min-width:50px; text-align:center; }
+  #devnav .dev-tag{ background:#a8324c; color:#fff; border-radius:6px; padding:5px 8px; font-size:11px; font-weight:900; }
 
   /* ---------------- BOOSTER BAR (bottom — IMAGE buttons) ---------------- */
   #boosters{ width:100%; max-width:560px; padding:0 12px calc(env(safe-area-inset-bottom,0px) + 12px);

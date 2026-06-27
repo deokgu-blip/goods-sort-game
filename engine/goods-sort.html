@@ -645,15 +645,18 @@
   /* praise = praise_*.png banner image, escalating by combo tier */
   /* praise = an <img> (praise_<word>.png) — FIXED HEIGHT gives the SAME letter size for every word
      (all images share one font size); width auto so longer words are wider, not taller. */
-  .praise{ position:fixed; z-index:56; pointer-events:none; transform:translate(-50%,-50%);
+  /* --pf = fit scale (1 normally; <1 only when a long word can't fit centered on a tight
+     edge cell — shrinks PROPORTIONALLY so the praise stays CENTERED on its grid cell and
+     never bleeds off-screen, instead of shifting off-center). */
+  .praise{ position:fixed; z-index:56; pointer-events:none; --pf:1; transform:translate(-50%,-50%) scale(var(--pf));
     height:23px; width:auto; max-width:92vw;
     filter:drop-shadow(0 2px 2px rgba(0,0,0,.3)); }
   @keyframes praisePop{
-    0%{ transform:translate(-50%,-50%) scale(.3); opacity:0; }
-    25%{ transform:translate(-50%,-62%) scale(1.18); opacity:1; }
-    45%{ transform:translate(-50%,-60%) scale(.95); }
-    70%{ transform:translate(-50%,-66%) scale(1.05); opacity:1; }
-    100%{ transform:translate(-50%,-92%) scale(.9); opacity:0; }
+    0%{ transform:translate(-50%,-50%) scale(calc(var(--pf)*.3)); opacity:0; }
+    25%{ transform:translate(-50%,-62%) scale(calc(var(--pf)*1.18)); opacity:1; }
+    45%{ transform:translate(-50%,-60%) scale(calc(var(--pf)*.95)); }
+    70%{ transform:translate(-50%,-66%) scale(calc(var(--pf)*1.05)); opacity:1; }
+    100%{ transform:translate(-50%,-92%) scale(calc(var(--pf)*.9)); opacity:0; }
   }
   /* in-play COMBO badge = badge_combo.png with the multiplier overlaid */
   .combo-badge{ position:fixed; z-index:57; pointer-events:none; transform:translate(-50%,-50%);
@@ -2554,18 +2557,19 @@
     var p = document.createElement('img');
     p.className = 'praise';
     p.src = '../assets/ui/praise_' + word + '.png';
-    p.style.left = x+'px'; p.style.top = y+'px';
+    p.style.left = x+'px'; p.style.top = y+'px';        // x = the cleared CELL's center (always centered on its grid cell)
     p.style.animation = 'praisePop 1.0s ease forwards';
     fxEl.appendChild(p);
-    // keep long words (Excellent/Outstanding…) on-screen: clamp center-x by rendered width.
-    // praisePop scales up to ~1.18x mid-animation, so reserve for the PEAK width (1.2x).
-    var clampX = function(){
+    // STAY CENTERED ON THE GRID CELL: keep left = cell-center x; only if a long word can't
+    // fit centered here (tight edge cell) shrink it PROPORTIONALLY via --pf so it never
+    // bleeds off-screen and never goes off-center. praisePop peaks at 1.18x -> reserve 1.2x.
+    var fitScale = function(){
       var w = (p.offsetWidth || 0) * 1.2; if (!w) return;
-      var m = 8, half = w/2, lo = m+half, hi = window.innerWidth - m - half;
-      var cx = (lo > hi) ? window.innerWidth/2 : Math.max(lo, Math.min(hi, x));
-      p.style.left = cx+'px';
+      var m = 6, peakHalf = w/2;
+      var availHalf = Math.max(24, Math.min(x - m, window.innerWidth - m - x));
+      p.style.setProperty('--pf', String(Math.min(1, availHalf / peakHalf)));
     };
-    if (p.complete && p.naturalWidth) clampX(); else p.addEventListener('load', clampX);
+    if (p.complete && p.naturalWidth) fitScale(); else p.addEventListener('load', fitScale);
     setTimeout(function(){ p.remove(); }, 1050);
   }
 

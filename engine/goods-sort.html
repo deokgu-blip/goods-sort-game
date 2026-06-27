@@ -882,14 +882,19 @@
   .booster-tray{ width:100%; max-width:438px; display:flex; align-items:center; justify-content:center; gap:11px;
     padding:11px 16px; border-radius:22px; background:linear-gradient(#caa066,#b98a44);
     box-shadow:0 3px 7px rgba(0,0,0,.22), inset 0 2px 0 rgba(255,255,255,.28), inset 0 -4px 7px rgba(70,42,12,.40); }
-  /* each item is a beige tile (gpt-image-2 frame recolored), icon set per-item in JS. */
-  .booster{ position:relative; flex:1; max-width:74px; aspect-ratio:1/1.02;
-    background-repeat:no-repeat; background-position:center; background-size:contain;
-    filter:drop-shadow(0 3px 2px rgba(70,42,12,.40));
-    cursor:pointer; transition:transform .08s; }
-  /* recessed SLOT behind each item (틀에 박힌 embedded look) */
-  .booster::before{ content:""; position:absolute; inset:-8% -10%; border-radius:28%; z-index:-1;
-    background:rgba(95,58,22,.20); box-shadow:inset 0 2px 4px rgba(55,32,8,.45), inset 0 -1px 0 rgba(255,255,255,.10); }
+  /* TILE (아이템 배경) = the element bg: slightly 3D (top gloss + bottom inner shade) + a
+     darker-EDGE radial gradient so it reads as set/embedded into the tray. No dark slot. */
+  .booster{ position:relative; flex:1; max-width:74px; aspect-ratio:1/1.02; cursor:pointer;
+    transition:transform .08s; border-radius:26%;
+    background:radial-gradient(circle at 50% 36%, #f8edd3 0%, #eedbb7 64%, #d7bf92 100%);
+    box-shadow: inset 0 3px 3px rgba(255,255,255,.55),       /* top gloss (3D) */
+                inset 0 -6px 9px rgba(120,82,38,.42),         /* bottom inner shade (3D) */
+                inset 0 0 0 1.5px rgba(198,168,118,.55),      /* thin edge */
+                0 1px 2px rgba(70,42,12,.22); }
+  /* the colored ICON on top of the tile (behind the count/+ badges) */
+  .booster::before{ content:""; position:absolute; inset:9%; pointer-events:none;
+    background:var(--bicon) center/contain no-repeat;
+    filter:drop-shadow(0 1px 1px rgba(70,42,12,.28)); }
   .booster:active{ transform:translateY(3px); }
   /* "Free" label — small green pill at the tile's bottom (when a free use is available) */
   .booster .free-lbl{ position:absolute; left:50%; bottom:-7px; transform:translateX(-50%);
@@ -3336,7 +3341,7 @@
     document.querySelectorAll('#boosters .booster').forEach(function(b){
       var key=b.getAttribute('data-item'), def=defOf(key); if(!def) return;
       var locked=!itemUnlocked(def), free=itemFree[key]||0;
-      b.style.backgroundImage = 'url("../assets/ui/'+def.icon+'.png")';
+      b.style.setProperty('--bicon', 'url("../assets/ui/'+def.icon+'.png")');   // icon -> ::before; tile = element bg
       b.classList.toggle('locked', locked);
       b.classList.toggle('armed', key==='hammer' && hammerArmed);
       if (locked){

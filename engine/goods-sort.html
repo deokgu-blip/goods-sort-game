@@ -891,9 +891,9 @@
                 inset 0 -6px 9px rgba(120,82,38,.42),         /* bottom inner shade (3D) */
                 inset 0 0 0 1.5px rgba(198,168,118,.55),      /* thin edge */
                 0 1px 2px rgba(70,42,12,.22); }
-  /* the colored ICON on top of the tile (behind the count/+ badges) */
-  .booster::before{ content:""; position:absolute; inset:9%; pointer-events:none;
-    background:var(--bicon) center/contain no-repeat;
+  /* the colored ICON on top of the tile — large, nearly filling the tile (behind badges) */
+  .booster::before{ content:""; position:absolute; inset:2%; pointer-events:none;
+    background:var(--bicon) center/146% no-repeat;
     filter:drop-shadow(0 1px 1px rgba(70,42,12,.28)); }
   .booster:active{ transform:translateY(3px); }
   /* "Free" label — small green pill at the tile's bottom (when a free use is available) */

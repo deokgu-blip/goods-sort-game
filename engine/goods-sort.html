@@ -372,10 +372,11 @@
     background:url("../assets/ui/lock_closed.png") center/contain no-repeat;
     filter:drop-shadow(0 3px 4px rgba(0,0,0,.45)); animation:lockIn .3s ease; }
   /* COUNT badge — small blue circle, top-center, overlapping the top edge */
-  .c-lock .c-lock-badge{ position:absolute; z-index:7; top:-2%; left:50%; transform:translateX(-50%);
-    width:clamp(15px,17%,26px); aspect-ratio:159/191;
+  /* number badge sits ON the padlock (centered on the lock body) */
+  .c-lock .c-lock-badge{ position:absolute; z-index:7; top:52%; left:50%; transform:translate(-50%,-50%);
+    width:clamp(16px,19%,30px); aspect-ratio:159/191;
     background:url("../assets/ui/badge_lock.png") center/contain no-repeat;
-    filter:drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
   .c-lock .c-lock-num{ position:absolute; top:44%; left:50%; transform:translate(-50%,-50%);
     font-weight:900; font-size:clamp(8px,2.3vw,14px); color:#fff; white-space:nowrap;
     -webkit-text-stroke:0.7px #1f5fa6; paint-order:stroke fill; text-shadow:0 1px 1px rgba(0,0,0,.3); }

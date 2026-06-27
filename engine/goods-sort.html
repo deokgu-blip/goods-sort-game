@@ -357,17 +357,22 @@
   .c-lock.dim-crack .c-lock-crack{ display:block; }
   /* CHAINS — strands crossing the OPENING with ends hooked OVER the frame; strong offset
      shadow = the chain reads as hanging in FRONT (3D), not painted on the niche back. */
-  .c-lock .c-chain{ position:absolute; z-index:3; left:50%; top:50%; width:116%; height:25%;
+  .c-lock .c-chain{ position:absolute; z-index:3; left:50%; top:50%; width:112%; height:25%;
     background:url("../assets/ui/chain.png") center/100% 100% no-repeat;
     filter:drop-shadow(1px 3px 2.5px rgba(0,0,0,.5)); pointer-events:none; }
   .c-lock .c-chain.c1{ transform:translate(-50%,-50%) rotate(36deg); }
   .c-lock .c-chain.c2{ transform:translate(-50%,-50%) rotate(-36deg); }
+  /* GAP COVER — paints the frame lattice (gap wood) back OVER the chain ends so the chain
+     tucks BEHIND the frame (woven look). Border = the gap, sits in the gap around the cubby. */
+  .c-lock .c-gapcover{ position:absolute; inset:calc(-1 * var(--niche-gap, 8px)); z-index:6;
+    border:var(--niche-gap, 8px) solid var(--grid-color, #caa06a); box-sizing:border-box;
+    border-radius:var(--corner-radius, 0px); filter:brightness(1.08); pointer-events:none; }
   /* PADLOCK (gold) centered */
   .c-lock .c-lock-pad{ position:absolute; z-index:4; width:52%; height:52%; left:24%; top:30%;
     background:url("../assets/ui/lock_closed.png") center/contain no-repeat;
     filter:drop-shadow(0 3px 4px rgba(0,0,0,.45)); animation:lockIn .3s ease; }
   /* COUNT badge — small blue circle, top-center, overlapping the top edge */
-  .c-lock .c-lock-badge{ position:absolute; z-index:5; top:-2%; left:50%; transform:translateX(-50%);
+  .c-lock .c-lock-badge{ position:absolute; z-index:7; top:-2%; left:50%; transform:translateX(-50%);
     width:clamp(15px,17%,26px); aspect-ratio:159/191;
     background:url("../assets/ui/badge_lock.png") center/contain no-repeat;
     filter:drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
@@ -2019,6 +2024,7 @@
       lk.innerHTML =
         '<div class="c-lock-dim"></div><div class="c-lock-crack"></div>' +
         '<div class="c-chain c1"></div><div class="c-chain c2"></div>' +
+        '<div class="c-gapcover"></div>' +
         '<div class="c-lock-pad"></div>' +
         '<div class="c-lock-badge"><span class="c-lock-num"></span></div>';
       gridEl.appendChild(lk); cb.lockEl = lk;

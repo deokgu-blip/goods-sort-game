@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>물건 정리 / Goods Sort</title>
+<title>Goods Sort</title>
 <!-- rounded, chunky game font (동글동글) applied to ALL in-game text -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -3662,9 +3662,9 @@
       '<div class="card onboard tut">' +
         '<div class="ob-title">HOW TO PLAY</div>' +
         '<div class="tut-emoji">🛒</div>' +
-        '<div class="ob-name">같은 굿즈 3개 모으기!</div>' +
-        '<div class="ob-desc">굿즈를 끌어다 <b>같은 굿즈</b> 위에 올려<br>한 칸에 <b>3개</b>를 채우면 정리돼요.<br>빈 칸을 잘 써서 모두 정리해 보세요!</div>' +
-        '<div class="ibtn ob-ok" id="tutOk">시작하기</div>' +
+        '<div class="ob-name">Collect 3 matching goods!</div>' +
+        '<div class="ob-desc">Drag a good onto a <b>matching good</b>.<br>Fill a cell with <b>3</b> of a kind to clear it.<br>Use the empty cells to clear them all!</div>' +
+        '<div class="ibtn ob-ok" id="tutOk">START</div>' +
       '</div>';
     overlay.classList.add('on');
     document.getElementById('tutOk').addEventListener('click', function(){
@@ -3702,7 +3702,7 @@
     clearTutorHand();
     var hand = document.createElement('div'); hand.className='tutor-hand';   // art-tone hand image (CSS bg)
     fxEl.appendChild(hand); tutorHandEl=hand;
-    var cap = document.createElement('div'); cap.className='tutor-cap'; cap.textContent='끌어서 같은 굿즈끼리 모아요';
+    var cap = document.createElement('div'); cap.className='tutor-cap'; cap.textContent='Drag to group matching goods';
     document.body.appendChild(cap); tutorCapEl=cap;
     var n=0;
     function center(el){ var r=el.getBoundingClientRect(); return { x:r.left+r.width/2, y:r.top+r.height/2 }; }

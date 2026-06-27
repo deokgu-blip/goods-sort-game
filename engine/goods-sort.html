@@ -871,9 +871,12 @@
   /* dev nav */
   #devnav{ position:fixed; left:0; right:0; bottom:0; z-index:120; display:none;
     justify-content:center; gap:10px; padding:8px; }
-  #devnav.on{ display:flex; }
+  #devnav.on{ display:flex; align-items:center; }
   #devnav button{ background:#222; color:#fff; border:1px solid #555; border-radius:8px;
     padding:8px 14px; font-weight:700; }
+  #devnav #devLvl{ background:#111; color:#7af06e; border:1px solid #555; border-radius:8px;
+    padding:8px 12px; font-weight:900; min-width:54px; text-align:center; }
+  #devnav .dev-tag{ background:#a8324c; color:#fff; border-radius:6px; padding:5px 9px; font-size:12px; font-weight:900; }
 
   /* ---------------- BOOSTER BAR (bottom — IMAGE buttons) ---------------- */
   #boosters{ width:100%; max-width:560px; padding:0 12px calc(env(safe-area-inset-bottom,0px) + 12px);
@@ -1071,8 +1074,11 @@
 </div></div>
 
 <div id="devnav">
-  <button id="devPrev">◀ Prev</button>
-  <button id="devNext">Next ▶</button>
+  <span class="dev-tag">CHEAT</span>
+  <button id="devPrev">◀ Lv</button>
+  <span id="devLvl">Lv 1</span>
+  <button id="devNext">Lv ▶</button>
+  <span class="dev-tag">ITEMS ∞</span>
 </div>
 
 <script>
@@ -3446,7 +3452,7 @@
   var freezeUntil = 0;          // performance.now() ts until which the timer is frozen
   var hammerArmed = false;
   function defOf(k){ for (var i=0;i<ITEM_DEFS.length;i++) if (ITEM_DEFS[i].key===k) return ITEM_DEFS[i]; return null; }
-  function itemUnlocked(def){ return S.level >= def.unlock; }
+  function itemUnlocked(def){ return S._cheat || S.level >= def.unlock; }
 
   // (re)render every item tile for the current level state.
   function renderItems(){
@@ -3459,7 +3465,7 @@
       if (locked){
         b.innerHTML = '<div class="lock-ov"><div class="lk-pad"></div><span class="lk-lv">Lv '+def.unlock+'</span></div>';
       } else if (free>0){
-        b.innerHTML = '<div class="qty-badge">'+free+'</div>';     // inventory count
+        b.innerHTML = '<div class="qty-badge">'+(S._cheat?'∞':free)+'</div>';   // inventory count (∞ in cheat)
       } else {
         b.innerHTML = '<div class="plus-badge"></div>';            // empty -> "+" badge (opens shop)
       }
@@ -3468,9 +3474,9 @@
   }
 
   // an item is usable only if INVENTORY remains. Coins are spent in the SHOP (openShop), not here.
-  function canUse(key){ return (itemFree[key]||0) > 0; }
+  function canUse(key){ return S._cheat || (itemFree[key]||0) > 0; }
   // consume ONE from inventory. Returns true if there was one.
-  function consumeItem(key){ if ((itemFree[key]||0) > 0){ itemFree[key]-=1; return true; } return false; }
+  function consumeItem(key){ if (S._cheat) return true; if ((itemFree[key]||0) > 0){ itemFree[key]-=1; return true; } return false; }
   // BUY one more of an item with coins (item shop). Returns true on success.
   function buyItem(key){
     var def=defOf(key); if(!def) return false; var cost=def.cost||0;
@@ -3584,6 +3590,7 @@
   function onboardSet(){ try{ return JSON.parse(localStorage.getItem('gs_item_onboarded')||'{}'); }catch(e){ return {}; } }
   function saveOnboardSet(s){ try{ localStorage.setItem('gs_item_onboarded', JSON.stringify(s)); }catch(e){} }
   function maybeOnboard(){
+    if (S._cheat) return;                         // cheat: no item-unlock popup while jumping levels
     var shown=onboardSet();
     for (var i=0;i<ITEM_DEFS.length;i++){ var d=ITEM_DEFS[i];
       if (d.unlock===S.level && d.unlock>1 && !shown[d.key]){
@@ -3719,13 +3726,27 @@
     if (d && typeof d === 'object' && d.event) handleHostMsg(d);
   });
 
-  // dev nav
-  document.getElementById('devPrev').addEventListener('click', function(){
-    if (S.level>1){ S.level--; startLevelFn(S.level); }
-  });
-  document.getElementById('devNext').addEventListener('click', function(){
-    S.level++; startLevelFn(S.level);
-  });
+  // ---- CHEAT / dev panel — toggle by TRIPLE-TAPPING the timer (count). Level ◀▶, all
+  //      items unlocked + unlimited uses. (S._cheat drives itemUnlocked/canUse/consumeItem.) ----
+  var devLvlEl = document.getElementById('devLvl');
+  function cheatRefillItems(){ ITEM_DEFS.forEach(function(d){ itemFree[d.key]=999; }); }
+  function updateDevLabel(){ if(devLvlEl) devLvlEl.textContent = 'Lv ' + S.level; }
+  function cheatGoLevel(L){ L=Math.max(1,Math.min(100,L)); startLevelFn(L); if(S._cheat) cheatRefillItems(); renderItems(); updateDevLabel(); }
+  function toggleCheat(){
+    S._cheat = !S._cheat;
+    document.getElementById('devnav').classList.toggle('on', S._cheat);
+    if (S._cheat) cheatRefillItems();
+    renderItems(); updateDevLabel();
+  }
+  document.getElementById('devPrev').addEventListener('click', function(){ cheatGoLevel(S.level-1); });
+  document.getElementById('devNext').addEventListener('click', function(){ cheatGoLevel(S.level+1); });
+  (function(){ var taps=0, last=0; if(!timerEl) return; timerEl.style.cursor='pointer';
+    timerEl.addEventListener('click', function(){
+      var now=performance.now(); if(now-last>700) taps=0; last=now; taps++;
+      if(taps>=3){ taps=0; toggleCheat(); }
+    });
+  })();
+  window.__cheatToggle = toggleCheat; window.__cheatGoLevel = cheatGoLevel;   // QA hooks
 
   // =============================================================
   // GAMESTART (idempotent re-emit) + BOOT

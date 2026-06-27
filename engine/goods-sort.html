@@ -340,47 +340,46 @@
      flatten). z-index ABOVE the front rim (V14) so the GOODS standing on the floor PAINT
      OVER the thin front-lip band -> each good's FULL base is visible, never walled-off. */
   .cubby .niche-clip{ position:absolute; inset:0; transform-style:preserve-3d; z-index:3; }
-  /* ---- LOCK gimmick (자물쇠): count-driven overlay, ABOVE the goods (z 20) ----
-     count>=4 : solid dim + 2 chains       count 2 : cracked dim + 1 chain
-     count 3  : cracked dim + 2 chains      count 1 : cracked dim + 0 chains
-     count 0  : break — padlock flies off sideways, everything fades. */
-  .cubby .c-lock{ position:absolute; inset:0; z-index:20; display:none;
-    align-items:center; justify-content:center; pointer-events:auto; cursor:not-allowed; overflow:hidden; }
-  .cubby .c-lock.on{ display:flex; }
+  /* ---- LOCK gimmick (자물쇠): GRID-LEVEL overlay (NOT clipped by the cubby) so the
+     CHAINS hook OVER the wood frame between cubbies. Positioned over each cubby by
+     positionLocks(). count>=4: solid dim+2 chains / 3: crack+2 / 2: crack+1 / 1: crack+0. */
+  #grid .c-lock{ position:absolute; z-index:25; display:none; pointer-events:none; }
+  #grid .c-lock.on{ display:block; }
   .cubby.locked .niche-clip{ filter:brightness(.74) saturate(.9); }   /* slightly darken frozen contents */
   /* DIM layer: bluish, solid for >=4, lighter for cracked (1..3) */
-  .cubby .c-lock-dim{ position:absolute; inset:0; z-index:1; background:rgba(22,30,58,.0); transition:background .25s; }
-  .cubby .c-lock.dim-solid .c-lock-dim{ background:rgba(22,30,58,.50); }
-  .cubby .c-lock.dim-crack .c-lock-dim{ background:rgba(22,30,58,.30); }
+  .c-lock .c-lock-dim{ position:absolute; inset:0; z-index:1; background:rgba(22,30,58,.0); transition:background .25s; }
+  .c-lock.dim-solid .c-lock-dim{ background:rgba(22,30,58,.50); }
+  .c-lock.dim-crack .c-lock-dim{ background:rgba(22,30,58,.30); }
   /* CRACK overlay (금간 유리) — shown only on cracked (count<=3) */
-  .cubby .c-lock-crack{ position:absolute; inset:-4%; z-index:2; display:none;
+  .c-lock .c-lock-crack{ position:absolute; inset:-4%; z-index:2; display:none;
     background:url("../assets/ui/crack_overlay.png") center/cover no-repeat; opacity:.9;
     mix-blend-mode:screen; pointer-events:none; }
-  .cubby .c-lock.dim-crack .c-lock-crack{ display:block; }
-  /* CHAINS — long metal strands crossing the cubby; c1 \ , c2 / */
-  .cubby .c-chain{ position:absolute; z-index:3; left:50%; top:50%; width:152%; height:30%;
+  .c-lock.dim-crack .c-lock-crack{ display:block; }
+  /* CHAINS — strands crossing the OPENING with ends hooked OVER the frame; strong offset
+     shadow = the chain reads as hanging in FRONT (3D), not painted on the niche back. */
+  .c-lock .c-chain{ position:absolute; z-index:3; left:50%; top:50%; width:150%; height:34%;
     background:url("../assets/ui/chain.png") center/100% 100% no-repeat;
-    filter:drop-shadow(0 2px 3px rgba(0,0,0,.4)); pointer-events:none; }
-  .cubby .c-chain.c1{ transform:translate(-50%,-50%) rotate(38deg); }
-  .cubby .c-chain.c2{ transform:translate(-50%,-50%) rotate(-38deg); }
+    filter:drop-shadow(1px 4px 3px rgba(0,0,0,.55)); pointer-events:none; }
+  .c-lock .c-chain.c1{ transform:translate(-50%,-50%) rotate(34deg); }
+  .c-lock .c-chain.c2{ transform:translate(-50%,-50%) rotate(-34deg); }
   /* PADLOCK (gold) centered */
-  .cubby .c-lock-pad{ position:absolute; z-index:4; width:52%; height:52%; left:24%; top:30%;
+  .c-lock .c-lock-pad{ position:absolute; z-index:4; width:52%; height:52%; left:24%; top:30%;
     background:url("../assets/ui/lock_closed.png") center/contain no-repeat;
     filter:drop-shadow(0 3px 4px rgba(0,0,0,.45)); animation:lockIn .3s ease; }
-  /* COUNT badge — blue circle, top-center, overlapping the top edge */
-  .cubby .c-lock-badge{ position:absolute; z-index:5; top:3%; left:50%; transform:translateX(-50%);
-    min-width:30%; aspect-ratio:1/1; border-radius:50%;
+  /* COUNT badge — small blue circle, top-center, overlapping the top edge */
+  .c-lock .c-lock-badge{ position:absolute; z-index:5; top:1.5%; left:50%; transform:translateX(-50%);
+    width:clamp(15px,18%,26px); aspect-ratio:1/1; border-radius:50%;
     background:radial-gradient(circle at 38% 32%, #6fc4ff, #2f8fe6 70%, #1f6fc0);
-    border:3px solid #fff; box-shadow:0 3px 5px rgba(0,0,0,.35);
+    border:2px solid #dcefff; box-shadow:0 2px 3px rgba(0,0,0,.3);
     display:flex; align-items:center; justify-content:center; }
-  .cubby .c-lock-num{ font-weight:900; font-size:clamp(14px,4.6vw,26px); color:#fff;
-    -webkit-text-stroke:1.5px #1f5fa6; paint-order:stroke fill; text-shadow:0 2px 2px rgba(0,0,0,.3); }
+  .c-lock .c-lock-num{ font-weight:900; font-size:clamp(9px,2.7vw,15px); color:#fff;
+    -webkit-text-stroke:0.8px #1f5fa6; paint-order:stroke fill; text-shadow:0 1px 1px rgba(0,0,0,.3); }
   /* BREAK (count -> 0): padlock flies off sideways, rest fades. */
-  .cubby .c-lock.breaking .c-lock-pad{ background-image:url("../assets/ui/lock_break.png"); animation:lockFly .5s ease-in forwards; }
-  .cubby .c-lock.breaking .c-lock-dim,
-  .cubby .c-lock.breaking .c-lock-crack,
-  .cubby .c-lock.breaking .c-chain,
-  .cubby .c-lock.breaking .c-lock-badge{ animation:lockFade .3s ease forwards; }
+  .c-lock.breaking .c-lock-pad{ background-image:url("../assets/ui/lock_break.png"); animation:lockFly .5s ease-in forwards; }
+  .c-lock.breaking .c-lock-dim,
+  .c-lock.breaking .c-lock-crack,
+  .c-lock.breaking .c-chain,
+  .c-lock.breaking .c-lock-badge{ animation:lockFade .3s ease forwards; }
   @keyframes lockIn{ from{ transform:scale(.4); opacity:0; } to{ opacity:1; } }
   @keyframes lockFly{ 0%{ transform:translate(0,0) rotate(0); opacity:1; }
     100%{ transform:translate(150%,-40%) rotate(55deg); opacity:0; } }
@@ -1386,7 +1385,7 @@
         for (var k in SHELF_DEFAULTS){ if (partial[k]!==undefined && partial[k]!==null) SHELF[k]=partial[k]; }
       }
       applyShelfCssVars();
-      try{ buildNiches(); fitGoods(); }catch(e){}
+      try{ buildNiches(); fitGoods(); positionLocks(); }catch(e){}
     }
   };
 
@@ -2007,21 +2006,39 @@
             '<div class="c-back-layer"></div>' +
             '<div class="c-floor"></div>' +
           '</div>' +
-          '<div class="c-rim"></div>' +
-          '<div class="c-lock">' +
-            '<div class="c-lock-dim"></div>' +
-            '<div class="c-lock-crack"></div>' +
-            '<div class="c-chain c1"></div><div class="c-chain c2"></div>' +
-            '<div class="c-lock-pad"></div>' +
-            '<div class="c-lock-badge"><span class="c-lock-num"></span></div>' +
-          '</div>';
-        if (cb){ cb.el = el; cb.floor = el.querySelector('.c-floor'); cb.backEl = el.querySelector('.c-back-layer'); cb.lockEl = el.querySelector('.c-lock'); }
+          '<div class="c-rim"></div>';
+        if (cb){ cb.el = el; cb.floor = el.querySelector('.c-floor'); cb.backEl = el.querySelector('.c-back-layer'); }
         gridEl.appendChild(el);
       }
     }
+    // LOCK overlays live at GRID level (absolute, NOT clipped by the cubby) so chains can
+    // hook OVER the wood frame. One per cubby; positionLocks() places it over its cubby.
+    S.cubbies.forEach(function(cb){
+      if (!cb.el) return;
+      var lk = document.createElement('div'); lk.className = 'c-lock';
+      lk.innerHTML =
+        '<div class="c-lock-dim"></div><div class="c-lock-crack"></div>' +
+        '<div class="c-chain c1"></div><div class="c-chain c2"></div>' +
+        '<div class="c-lock-pad"></div>' +
+        '<div class="c-lock-badge"><span class="c-lock-num"></span></div>';
+      gridEl.appendChild(lk); cb.lockEl = lk;
+    });
     buildNiches();        // V12 — fold each cubby's 3D wood box (faces + shared eye)
     fitGoods();           // V12 — size goods BIG (fill cubby) + floor depth (front/back)
+    positionLocks();      // place each lock overlay exactly over its cubby (chains overflow)
     renderAllCubbies();
+  }
+  // Position each grid-level lock overlay exactly over its cubby box (chains overflow onto
+  // the frame). Re-run on resize. Uses offset* (cubby's box within the positioned #grid).
+  function positionLocks(){
+    S.cubbies.forEach(function(cb){
+      if (!cb.lockEl || !cb.el) return;
+      var le = cb.lockEl, el = cb.el;
+      le.style.left = el.offsetLeft + 'px';
+      le.style.top = el.offsetTop + 'px';
+      le.style.width = el.offsetWidth + 'px';
+      le.style.height = el.offsetHeight + 'px';
+    });
   }
 
   // ---- LAYER ACCESSORS (single source of truth for the depth model) ----
@@ -3593,7 +3610,7 @@
   var resizeT = null;
   window.addEventListener('resize', function(){
     if (resizeT) clearTimeout(resizeT);
-    resizeT = setTimeout(function(){ if (S.cfg){ buildNiches(); fitGoods(); } }, 120);
+    resizeT = setTimeout(function(){ if (S.cfg){ buildNiches(); fitGoods(); positionLocks(); } }, 120);
   });
 
   // boot — apply the resolved shelf config CSS vars BEFORE the first build so the

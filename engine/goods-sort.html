@@ -916,15 +916,17 @@
     border:2px solid #fff; box-shadow:0 1px 2px rgba(0,0,0,.3); pointer-events:none; }
   /* qty=0 → same badge but a YELLOW "+" (replaces the count); tapping the tile opens the shop */
   .booster .qty-badge.plus{ background:linear-gradient(#ffd24d,#f3a712); color:#fff; font-size:17px; line-height:1; }
-  /* LOCKED item — greyed + padlock + unlock level */
-  .booster.locked{ filter:grayscale(.85) brightness(.82) drop-shadow(0 4px 3px rgba(80,50,20,.3)); cursor:default; }
-  .booster .lock-ov{ position:absolute; inset:0; display:flex; flex-direction:column;
-    align-items:center; justify-content:center; gap:0; pointer-events:none; }
-  .booster .lock-ov .lk-pad{ width:48%; height:48%;
+  /* LOCKED item (ref IMG_3305): greyed icon stays VISIBLE + a "Lv.N" banner across the
+     bottom + a small padlock at the bottom-right corner. */
+  .booster.locked{ filter:grayscale(.78) brightness(.86) saturate(.6) drop-shadow(0 3px 3px rgba(60,55,75,.3)); cursor:default; }
+  .booster .lock-ov{ position:absolute; inset:0; pointer-events:none; }
+  .booster .lock-ov .lk-lv{ position:absolute; left:7%; right:7%; bottom:5%; z-index:3;
+    background:rgba(74,82,108,.82); border-radius:7px; padding:1.5px 0; text-align:center;
+    color:#fff; font-weight:900; font-size:12px; letter-spacing:.3px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.22); }
+  .booster .lock-ov .lk-pad{ position:absolute; right:-6px; bottom:-6px; z-index:4; width:42%; height:42%;
     background:url("../assets/ui/lock_closed.png") center/contain no-repeat;
     filter:drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
-  .booster .lock-ov .lk-lv{ font-weight:900; font-size:11px; color:#fff; margin-top:1px;
-    -webkit-text-stroke:1.4px #5a3a14; paint-order:stroke fill; }
   /* ARMED (hammer targeting) — pulse the tile */
   .booster.armed{ animation:itemPulse .7s ease-in-out infinite; }
   @keyframes itemPulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.13);} }
@@ -3466,7 +3468,7 @@
       b.classList.toggle('locked', locked);
       b.classList.toggle('armed', key==='hammer' && hammerArmed);
       if (locked){
-        b.innerHTML = '<div class="lock-ov"><div class="lk-pad"></div><span class="lk-lv">Lv '+def.unlock+'</span></div>';
+        b.innerHTML = '<div class="lock-ov"><div class="lk-lv">Lv '+def.unlock+'</div><div class="lk-pad"></div></div>';
       } else if (free>0){
         b.innerHTML = '<div class="qty-badge">'+(S._cheat?'∞':free)+'</div>';   // inventory count (∞ in cheat)
       } else {

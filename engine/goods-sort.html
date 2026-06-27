@@ -959,6 +959,48 @@
     box-shadow:inset 0 3px 0 rgba(255,255,255,.45), inset 0 -5px 7px rgba(0,80,15,.32), 0 2px 0 #2f7d1d, 0 4px 6px rgba(0,0,0,.24); }
   /* time-freeze active — subtle icy tint on the timer */
   body.frozen #timer{ filter:hue-rotate(150deg) saturate(1.15) brightness(1.06); }
+  /* ---- ITEM-USE EFFECTS ---- */
+  /* FROST overlay on the timer while frozen (icy blue glaze + crystals + glow) */
+  #timer.iced{ position:relative; }
+  #timer.iced::after{ content:""; position:absolute; inset:-4px; border-radius:inherit; z-index:3; pointer-events:none;
+    background:linear-gradient(135deg, rgba(180,235,255,.6), rgba(120,200,255,.25) 45%, rgba(200,245,255,.55));
+    box-shadow:0 0 12px 3px rgba(120,205,255,.7), inset 0 0 10px rgba(255,255,255,.7);
+    border:2px solid rgba(220,245,255,.85);
+    -webkit-mask:radial-gradient(circle at 18% 22%, #000 0 5px, transparent 6px) 0 0/22px 22px,
+            linear-gradient(#000,#000); -webkit-mask-composite:source-over;
+    animation:icedIn .25s ease-out; }
+  @keyframes icedIn{ from{ opacity:0; transform:scale(1.15); } to{ opacity:1; transform:scale(1); } }
+  /* a couple of frost spikes on the timer corners */
+  #timer.iced::before{ content:""; position:absolute; left:-3px; top:-3px; right:-3px; bottom:-3px; z-index:4; pointer-events:none;
+    background:
+      radial-gradient(circle at 6% 50%, #eafaff 0 3px, transparent 4px),
+      radial-gradient(circle at 94% 50%, #eafaff 0 3px, transparent 4px),
+      radial-gradient(circle at 50% 8%, #eafaff 0 3px, transparent 4px);
+    filter:drop-shadow(0 0 3px #bfe9ff); }
+  /* HAMMER swing sprite */
+  .hammer-fx{ position:fixed; z-index:58; width:62px; height:62px; margin-left:-8px; margin-top:-46px;
+    transform-origin:78% 92%; pointer-events:none;
+    background:url("../assets/ui/btn_hammer.png") center/contain no-repeat;
+    filter:drop-shadow(0 4px 4px rgba(0,0,0,.32));
+    animation:hammerSwing .44s cubic-bezier(.5,0,.35,1) forwards; }
+  @keyframes hammerSwing{
+    0%{ transform:rotate(-66deg) scale(1.1); opacity:0; }
+    30%{ transform:rotate(-66deg) scale(1.1); opacity:1; }
+    55%{ transform:rotate(10deg) scale(1.18); }
+    70%{ transform:rotate(-7deg) scale(1.1); }
+    100%{ transform:rotate(2deg) scale(1); opacity:0; } }
+  /* "+30" float to the timer */
+  .plus30-fx{ position:fixed; z-index:58; transform:translate(-50%,-50%); pointer-events:none;
+    font-weight:900; font-size:24px; color:#7af06e; -webkit-text-stroke:3px #1e6b2c; paint-order:stroke fill;
+    text-shadow:0 2px 2px rgba(0,0,0,.3); animation:plus30 .95s ease-out forwards; }
+  @keyframes plus30{ 0%{ transform:translate(-50%,-50%) scale(.4); opacity:0; }
+    25%{ transform:translate(-50%,-90%) scale(1.15); opacity:1; }
+    70%{ opacity:1; } 100%{ transform:translate(-50%,-260%) scale(1); opacity:0; } }
+  /* SHUFFLE: goods spin out / pop in */
+  #grid.shuffling .good{ animation:gShufOut .25s ease forwards; }
+  @keyframes gShufOut{ to{ opacity:.15; filter:blur(2px); } }
+  #grid.shuffled-in .good{ animation:gShufIn .42s cubic-bezier(.34,1.56,.64,1) both; }
+  @keyframes gShufIn{ 0%{ opacity:.2; } 60%{ opacity:1; } 100%{ opacity:1; } }
 
   /* reels mode: zero safe-top */
   body.reels{ --safe-top:0px; }
@@ -2610,6 +2652,76 @@
   function confettiBurst(x, y){ spawnConfetti(x, y, 7, true, 3.2, fxEl); }
 
   // =============================================================
+  // ITEM-USE EFFECTS — every item plays a little show when used.
+  // =============================================================
+  function elCenter(el){ if(!el) return null; var r=el.getBoundingClientRect(); if(!r.width) return null; return {x:r.left+r.width/2, y:r.top+r.height/2}; }
+  function boosterCenter(key){ return elCenter(document.querySelector('#boosters .booster[data-item="'+key+'"]')); }
+  // glowing dots flying along an arc from A -> B; onArrive() fires when the first dot lands.
+  function flyBeam(x1,y1,x2,y2,color,count,onArrive){
+    count = count||10; var arrived=false;
+    var cx=(x1+x2)/2+(Math.random()-0.5)*24, cy=Math.min(y1,y2)-70;
+    for(var i=0;i<count;i++){ (function(i){
+      var sz=7+Math.random()*7;
+      var d=document.createElement('div');
+      d.style.cssText='position:fixed;z-index:57;pointer-events:none;width:'+sz.toFixed(0)+'px;height:'+sz.toFixed(0)+'px;border-radius:50%;left:0;top:0;background:'+color+';box-shadow:0 0 9px 2px '+color+';will-change:transform,opacity';
+      fxEl.appendChild(d);
+      var ccx=cx+(Math.random()-0.5)*44, ccy=cy+(Math.random()-0.5)*30, dur=440+Math.random()*140, start=null;
+      function step(ts){ if(!start) start=ts; var t=Math.min(1,(ts-start)/dur), mt=1-t;
+        var px=mt*mt*x1+2*mt*t*ccx+t*t*x2, py=mt*mt*y1+2*mt*t*ccy+t*t*y2;
+        d.style.transform='translate('+px.toFixed(1)+'px,'+py.toFixed(1)+'px) scale('+(0.45+0.55*mt).toFixed(2)+')';
+        d.style.opacity = t<0.85?'1':((1-t)/0.15).toFixed(2);
+        if(t<1) requestAnimationFrame(step); else { d.remove(); if(!arrived){ arrived=true; onArrive&&onArrive(); } } }
+      setTimeout(function(){ requestAnimationFrame(step); }, i*26);
+    })(i); }
+  }
+  // brief color flash + pop on the timer plate
+  function timerFlash(color){ if(!timerEl) return;
+    timerEl.style.transition='transform .12s ease'; timerEl.style.transform='scale(1.12)';
+    var g=document.createElement('div'); var c=elCenter(timerEl); if(c){ for(var i=0;i<8;i++){ var s=document.createElement('div');
+      s.style.cssText='position:fixed;z-index:58;pointer-events:none;width:6px;height:6px;border-radius:50%;left:'+c.x+'px;top:'+c.y+'px;background:'+color+';box-shadow:0 0 6px '+color;
+      fxEl.appendChild(s); (function(s,a){ requestAnimationFrame(function(){ s.style.transition='transform .5s ease-out,opacity .5s'; s.style.transform='translate('+Math.cos(a)*46+'px,'+Math.sin(a)*30+'px)'; s.style.opacity='0'; }); setTimeout(function(){s.remove();},520); })(s,(Math.PI*2)*(i/8)); } }
+    setTimeout(function(){ timerEl.style.transform=''; }, 130);
+  }
+  // FROST the timer for the freeze duration (icy overlay + crystals + sparkle)
+  function freezeTimerFx(ms){ if(!timerEl) return;
+    timerEl.classList.add('iced'); timerFlash('#aee9ff');
+    setTimeout(function(){ timerEl.classList.remove('iced'); }, ms);
+  }
+  function itemFreezeFx(){ var b=boosterCenter('timefreeze'), t=elCenter(timerEl); if(!b||!t){ freezeTimerFx(FREEZE_MS); return; }
+    flyBeam(b.x,b.y,t.x,t.y,'#4fc3ff',12, function(){ freezeTimerFx(FREEZE_MS); }); }
+  function itemAddTimeFx(){ var b=boosterCenter('addtime'), t=elCenter(timerEl); if(!b||!t) return;
+    flyBeam(b.x,b.y,t.x,t.y,'#5bd96a',10, function(){ timerFlash('#7af06e'); });
+    var lbl=document.createElement('div'); lbl.className='plus30-fx'; lbl.textContent='+30';
+    lbl.style.left=b.x+'px'; lbl.style.top=(b.y-10)+'px'; fxEl.appendChild(lbl);
+    setTimeout(function(){ lbl.remove(); }, 950);
+  }
+  // HAMMER swing onto (x,y): the hammer drops in, strikes, impact burst.
+  function hammerSwingFx(x,y){
+    var h=document.createElement('div'); h.className='hammer-fx';
+    h.style.left=x+'px'; h.style.top=y+'px'; fxEl.appendChild(h);
+    setTimeout(function(){ sparkleRing(x,y); spawnConfetti(x,y,9,true,3.0,fxEl); haptic('clear'); }, 240);
+    setTimeout(function(){ h.remove(); }, 640);
+  }
+  // SHUFFLE: a swirl of colored dots at the board center + flash; reshuffle mid-swirl.
+  function itemShuffleFx(doReshuffle){
+    var c=elCenter(gridEl)||{x:innerWidth/2,y:innerHeight*0.4};
+    for(var i=0;i<16;i++){ (function(i){
+      var d=document.createElement('div'); var col=CONFETTI_COLORS[(Math.random()*CONFETTI_COLORS.length)|0];
+      d.style.cssText='position:fixed;z-index:57;pointer-events:none;width:10px;height:10px;border-radius:50%;left:'+c.x+'px;top:'+c.y+'px;background:'+col+';box-shadow:0 0 8px '+col+';will-change:transform,opacity';
+      fxEl.appendChild(d);
+      var R=90+Math.random()*50, a0=(Math.PI*2)*(i/16), turns=2+Math.random(), dur=520, start=null;
+      function step(ts){ if(!start)start=ts; var t=Math.min(1,(ts-start)/dur);
+        var a=a0+turns*Math.PI*2*t, rad=R*(1-t*0.85);
+        d.style.transform='translate('+(Math.cos(a)*rad).toFixed(1)+'px,'+(Math.sin(a)*rad).toFixed(1)+'px) scale('+(1-t*0.6).toFixed(2)+')';
+        d.style.opacity = t<0.8?'1':((1-t)/0.2).toFixed(2);
+        if(t<1) requestAnimationFrame(step); else d.remove(); }
+      requestAnimationFrame(step);
+    })(i); }
+    if(gridEl) gridEl.classList.add('shuffling');
+    setTimeout(function(){ doReshuffle(); if(gridEl){ gridEl.classList.remove('shuffling'); gridEl.classList.add('shuffled-in'); setTimeout(function(){ gridEl.classList.remove('shuffled-in'); }, 460); } }, 250);
+  }
+
+  // =============================================================
   // ALL-SIDES FIREWORKS (clear celebration) — Phase 2b
   // A celebratory ~1.6s show: multiple bursts launching/exploding from the screen
   // EDGES and CORNERS (like ref_clear_fireworks.png). Each burst is an IMAGE sprite
@@ -3378,9 +3490,9 @@
     if (!canUse(key)){ openShop(key); return false; }    // empty -> buy popup
     var fired=false;
     if (key==='timefreeze'){ freezeUntil = performance.now()+FREEZE_MS; document.body.classList.add('frozen');
-      setTimeout(function(){ document.body.classList.remove('frozen'); }, FREEZE_MS); fired=true; }
-    else if (key==='shuffle'){ reshuffleBoard(); fired=true; }
-    else if (key==='addtime'){ S.timeLeft = Math.max(0,S.timeLeft)+30; updateTimer(); fired=true; }
+      setTimeout(function(){ document.body.classList.remove('frozen'); }, FREEZE_MS); itemFreezeFx(); fired=true; }
+    else if (key==='shuffle'){ itemShuffleFx(reshuffleBoard); fired=true; }
+    else if (key==='addtime'){ S.timeLeft = Math.max(0,S.timeLeft)+30; updateTimer(); itemAddTimeFx(); fired=true; }
     if (fired){ consumeItem(key); haptic('clear'); renderItems(); }
     return fired;
   }
@@ -3393,6 +3505,7 @@
     var type=fl0[slot0];
     if (!consumeItem('hammer')){ haptic('btn'); return false; }   // pay free-or-coin
     hammerArmed=false;
+    (function(){ var r=goodEl.getBoundingClientRect(); hammerSwingFx(r.left+r.width/2, r.top+r.height*0.42); })();
 
     // targets: tapped good FIRST, then up to 2 MORE of the same type from any unlocked front layer.
     var targets=[{cb:cb0, slot:slot0}];

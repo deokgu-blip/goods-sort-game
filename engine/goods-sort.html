@@ -139,13 +139,14 @@
   /* ---------------- HUD (reference: a WOOD FRAME bar wrapping the row) ----------------
      [ Lv ]   ·   [ TIMER ]   ·   [ ⏸ ]   +  COMBO gauge overlapping the frame's bottom.
      ------------------------------------------------------------------------------------ */
-  /* FULL-BLEED BROWN HEADER (reference 1:1): the top brown fills edge-to-edge from the very
-     top (y=0, behind the safe area) down to a gentle convex-down curved bottom — NOT a floating
-     rounded bar. HUD controls sit LOWER on it (pushed below the notch via safe-top + padding). */
-  #hud{ width:100%; max-width:none; padding:calc(var(--safe-top) + 16px) 16px 16px; z-index:5;
+  /* FULL-BLEED BROWN HEADER: the SAME brown as the old rounded bar, now filling the top edge-to-
+     edge from y=0 (behind the safe area) so the empty top strip is filled with header-brown
+     (user: 빈 공간을 헤더와 같은 색으로 채워). The bottom keeps the liked rounded-bar form (clean
+     24px rounded corners, NOT a convex curve). HUD controls sit LOWER (header moved down). */
+  #hud{ width:100%; max-width:none; padding:calc(var(--safe-top) + 24px) 16px 18px; z-index:5;
     display:flex; flex-direction:column; align-items:center;
     background:linear-gradient(#a4683f,#9a5d36);
-    border-radius:0 0 50% 50% / 0 0 16px 16px;
+    border-radius:0 0 26px 26px;
     box-shadow:0 4px 9px rgba(0,0,0,.16); }
   /* the HUD control row — now just a layout grid ON the brown header (no own bar/bg) */
   #hudFrame{ position:relative; width:100%; max-width:480px;

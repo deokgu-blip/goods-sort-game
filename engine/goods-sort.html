@@ -105,9 +105,10 @@
   html,body{ margin:0; padding:0; height:100%; overflow:hidden;
     background:var(--wallpaper); font-family:"Baloo 2","Jua",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
     touch-action:none; user-select:none; -webkit-user-select:none; }
-  /* touch-action does NOT inherit → set it on the actual tap targets so rapid taps
-     (e.g. the cheat triple-tap on #timer) never trigger iOS double-tap-to-ZOOM. */
-  #game, #hud, #hudFrame, #timer, #lv, #comboCount, #boosters, .booster, #devnav, #grid, #overlay{ touch-action:manipulation; }
+  /* touch-action does NOT inherit → set it on the tap targets AND their descendants (the
+     tap can land on the inner text/icon) so rapid taps never trigger iOS double-tap-ZOOM. */
+  #game, #hud, #hudFrame, #timer, #lv, #comboCount, #boosters, .booster, #devnav, #grid, #overlay,
+  #hud *, #boosters *, #devnav *, #overlay *{ touch-action:manipulation; }
   /* full-viewport CREAM WALL so any ratio is filled (L12) and it blends with the
      page/body bg into one seamless wall. FLAT color — no tiling texture. This is the
      SAME wall the cubby open-backs show through their openings (V6). */
@@ -913,10 +914,8 @@
     display:flex; align-items:center; justify-content:center; padding:0 5px; border-radius:11px;
     background:linear-gradient(#5bb6ff,#2f86e8); color:#fff; font-size:12px; font-weight:900;
     border:2px solid #fff; box-shadow:0 1px 2px rgba(0,0,0,.3); pointer-events:none; }
-  /* "+" ADD badge (qty=0) — tapping the tile opens the item shop */
-  .booster .plus-badge{ position:absolute; right:-7px; bottom:-7px; z-index:2; width:27px; height:27px;
-    background:url("../assets/ui/badge_plus.png") center/contain no-repeat; pointer-events:none;
-    filter:drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
+  /* qty=0 → same badge but a YELLOW "+" (replaces the count); tapping the tile opens the shop */
+  .booster .qty-badge.plus{ background:linear-gradient(#ffd24d,#f3a712); color:#fff; font-size:17px; line-height:1; }
   /* LOCKED item — greyed + padlock + unlock level */
   .booster.locked{ filter:grayscale(.85) brightness(.82) drop-shadow(0 4px 3px rgba(80,50,20,.3)); cursor:default; }
   .booster .lock-ov{ position:absolute; inset:0; display:flex; flex-direction:column;
@@ -3471,7 +3470,7 @@
       } else if (free>0){
         b.innerHTML = '<div class="qty-badge">'+(S._cheat?'∞':free)+'</div>';   // inventory count (∞ in cheat)
       } else {
-        b.innerHTML = '<div class="plus-badge"></div>';            // empty -> "+" badge (opens shop)
+        b.innerHTML = '<div class="qty-badge plus">+</div>';        // empty -> yellow "+" (same badge as count; opens shop)
       }
     });
     document.body.classList.toggle('hammer-aim', hammerArmed);
@@ -3750,6 +3749,9 @@
       if(taps>=3){ taps=0; toggleCheat(); }
     });
   })();
+  // block iOS PINCH-zoom (gesture* events). Double-tap-zoom is handled by touch-action:manipulation
+  // above (no JS touchend guard — that would swallow the triple-tap's clicks).
+  ['gesturestart','gesturechange','gestureend'].forEach(function(ev){ document.addEventListener(ev, function(e){ e.preventDefault(); }, { passive:false }); });
   window.__cheatToggle = toggleCheat; window.__cheatGoLevel = cheatGoLevel;   // QA hooks
 
   // =============================================================

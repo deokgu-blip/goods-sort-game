@@ -105,6 +105,9 @@
   html,body{ margin:0; padding:0; height:100%; overflow:hidden;
     background:var(--wallpaper); font-family:"Baloo 2","Jua",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
     touch-action:none; user-select:none; -webkit-user-select:none; }
+  /* touch-action does NOT inherit → set it on the actual tap targets so rapid taps
+     (e.g. the cheat triple-tap on #timer) never trigger iOS double-tap-to-ZOOM. */
+  #game, #hud, #hudFrame, #timer, #lv, #comboCount, #boosters, .booster, #devnav, #grid, #overlay{ touch-action:manipulation; }
   /* full-viewport CREAM WALL so any ratio is filled (L12) and it blends with the
      page/body bg into one seamless wall. FLAT color — no tiling texture. This is the
      SAME wall the cubby open-backs show through their openings (V6). */

@@ -876,13 +876,20 @@
     padding:8px 14px; font-weight:700; }
 
   /* ---------------- BOOSTER BAR (bottom — IMAGE buttons) ---------------- */
-  #boosters{ width:100%; max-width:560px; padding:4px 16px calc(env(safe-area-inset-bottom,0px) + 14px);
-    display:flex; align-items:center; justify-content:center; gap:12px; z-index:5; }
-  /* each item is a gpt-image-2 button tile (icon set per-item in JS). */
-  .booster{ position:relative; flex:1; max-width:78px; aspect-ratio:1/1.02;
+  #boosters{ width:100%; max-width:560px; padding:0 12px calc(env(safe-area-inset-bottom,0px) + 12px);
+    display:flex; align-items:center; justify-content:center; z-index:5; }
+  /* TRAY frame (reference: items embedded in a wood/tan bar, like the top HUD frame) */
+  .booster-tray{ width:100%; max-width:438px; display:flex; align-items:center; justify-content:center; gap:11px;
+    padding:11px 16px; border-radius:22px; background:linear-gradient(#caa066,#b98a44);
+    box-shadow:0 3px 7px rgba(0,0,0,.22), inset 0 2px 0 rgba(255,255,255,.28), inset 0 -4px 7px rgba(70,42,12,.40); }
+  /* each item is a beige tile (gpt-image-2 frame recolored), icon set per-item in JS. */
+  .booster{ position:relative; flex:1; max-width:74px; aspect-ratio:1/1.02;
     background-repeat:no-repeat; background-position:center; background-size:contain;
-    filter:drop-shadow(0 4px 3px rgba(80,50,20,.35));
+    filter:drop-shadow(0 3px 2px rgba(70,42,12,.40));
     cursor:pointer; transition:transform .08s; }
+  /* recessed SLOT behind each item (틀에 박힌 embedded look) */
+  .booster::before{ content:""; position:absolute; inset:-8% -10%; border-radius:28%; z-index:-1;
+    background:rgba(95,58,22,.20); box-shadow:inset 0 2px 4px rgba(55,32,8,.45), inset 0 -1px 0 rgba(255,255,255,.10); }
   .booster:active{ transform:translateY(3px); }
   /* "Free" label — small green pill at the tile's bottom (when a free use is available) */
   .booster .free-lbl{ position:absolute; left:50%; bottom:-7px; transform:translateX(-50%);
@@ -992,10 +999,12 @@
 
   <!-- ITEM bar — 4 powerups. hammer always on; the rest unlock at Lv 3/6/9 (rendered in JS). -->
   <div id="boosters">
+   <div class="booster-tray">
     <div class="booster" data-item="hammer"></div>
     <div class="booster" data-item="timefreeze"></div>
     <div class="booster" data-item="shuffle"></div>
     <div class="booster" data-item="addtime"></div>
+   </div>
   </div>
 </div>
 

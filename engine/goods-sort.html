@@ -1230,8 +1230,43 @@
   }
 
   // ---------- haptics (CORE-GATED only) ----------
+  // =============================================================
+  // SFX — soft, ASMR-style sound effects (Web Audio: decode once -> low-latency playback).
+  // Files in ../assets/audio/. The context unlocks on the first user gesture (mobile autoplay
+  // policy). Missing/failed files just no-op (play() guards on a decoded buffer). Volumes are
+  // kept LOW + soft (user: "귀 아픈 소리 말고 ASMR 소리처럼").
+  // =============================================================
+  var SFX = (function(){
+    var ctx=null, buffers={}, inited=false, muted=false, master=null;
+    var FILES={ pick:'sfx_pick', drop:'sfx_drop', clear:'sfx_clear', combo:'sfx_combo', win:'sfx_win', lock:'sfx_lock', button:'sfx_button' };
+    var VOL={ pick:0.5, drop:0.55, clear:0.8, combo:0.75, win:0.85, lock:0.65, button:0.5 };
+    function init(){
+      if (inited) return; inited=true;
+      try { var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; ctx=new AC(); }
+      catch(e){ ctx=null; return; }
+      master=ctx.createGain(); master.gain.value=0.85; master.connect(ctx.destination);
+      Object.keys(FILES).forEach(function(k){
+        fetch('../assets/audio/'+FILES[k]+'.mp3').then(function(r){ return r.ok?r.arrayBuffer():null; })
+          .then(function(ab){ if(!ab||!ctx) return; ctx.decodeAudioData(ab, function(b){ buffers[k]=b; }, function(){}); })
+          .catch(function(){});
+      });
+    }
+    function unlock(){ init(); if(ctx && ctx.state==='suspended'){ try{ ctx.resume(); }catch(e){} } }
+    function play(name, vol){
+      if (muted || !ctx || !buffers[name]) return;
+      try { var s=ctx.createBufferSource(); s.buffer=buffers[name];
+        var g=ctx.createGain(); g.gain.value=(vol!=null?vol:(VOL[name]||0.6));
+        s.connect(g); g.connect(master); s.start(0); }catch(e){}
+    }
+    return { init:init, unlock:unlock, play:play, setMuted:function(m){muted=!!m;}, isMuted:function(){return muted;} };
+  })();
+  window.__sfx = SFX;                          // QA/debug hook
+
   function haptic(kind){
     // kind: 'place' (drop/place) -> Light | 'clear' (cubby clear) -> Medium | 'btn' -> Soft
+    SFX.unlock();                              // any haptic == a user gesture -> unlock audio + play soft SFX
+    if (kind==='place') SFX.play('drop');
+    else if (kind==='btn') SFX.play('button');
     var sig = kind==='clear' ? 'MediumVibrate'
             : kind==='place' ? 'LightVibrate'
             : kind==='btn'   ? 'SoftVibrate' : null;
@@ -1610,6 +1645,27 @@
 
   // asset path resolver (relative — zippable for host)
   function tileURL(type){ return '../assets/goods/' + type + '_tile.png'; }
+  // ---- TILE PRELOAD: warm the image cache so goods appear INSTANTLY on stage transitions.
+  // Goods are CSS background-images; without preloading they pop in late as each PNG downloads —
+  // worse now that boards span ~200 distinct goods. We preload the CURRENT stage's goods on load
+  // AND the NEXT stage's goods shortly after, so advancing never waits on a download. (user:
+  // "스테이지 넘어갈 때 굿즈들이 늦게 나와".)
+  var _preloadedTiles = {}, _preloadKeep = [];
+  function preloadTiles(types){
+    if (!types || !types.length) return;
+    for (var i=0;i<types.length;i++){ var t=types[i]; if (!t) continue;
+      var u = tileURL(t); if (_preloadedTiles[u]) continue; _preloadedTiles[u] = 1;
+      var im = new Image(); im.decoding = 'async'; im.src = u;
+      _preloadKeep.push(im); if (_preloadKeep.length > 600) _preloadKeep.shift();
+    }
+  }
+  function stageGoodTypes(cfg){
+    if (!cfg) return [];
+    if (Array.isArray(cfg.goods) && cfg.goods.length) return cfg.goods.slice();
+    var set = {}, out = [];   // fallback: collect distinct goods from the cubbies
+    (cfg.cubbies||[]).forEach(function(cb){ (cb.layers||[]).forEach(function(l){ (l||[]).forEach(function(g){ if (g && !set[g]){ set[g]=1; out.push(g); } }); }); });
+    return out;
+  }
   // per-type display scale so goods read at consistent real-world sizes (bottle bigger
   // than donut). V3: front goods are BIG (fill the cubby) — these scale the .good box.
   // V17 — ALL 119 goods. The per-type box is sized by GOOD_AR (real content aspect) +
@@ -2369,6 +2425,7 @@
             var numEl = c.lockEl.querySelector('.c-lock-num');
             if (numEl) numEl.textContent = '';
             c.lockEl.classList.add('breaking');     // swap to broken-padlock art + pop
+            SFX.play('lock');                       // soft muffled unlatch thunk
             c.el && c.el.classList.remove('locked');
             haptic('clear');
             (function(cc){ setTimeout(function(){
@@ -2524,6 +2581,7 @@
   // CLEAR + EFFECTS (star fly, praise, combo, pop)
   // =============================================================
   function clearCubby(cb){
+    SFX.play('clear');                                  // the satisfying soft ASMR "poof" (fires per cell clear)
     var el = cb.el;
     var rect = el ? el.getBoundingClientRect() : {left:0,top:0,width:0,height:0};
     var cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
@@ -2576,6 +2634,7 @@
   function bumpCombo(){
     S.combo += 1;
     if (S.combo > S.maxCombo) S.maxCombo = S.combo;
+    if (S.combo >= 2) SFX.play('combo');                // soft ascending chime only on a real streak (>=2)
     updateComboPill(true);
     if (S.comboTimer) clearTimeout(S.comboTimer);
     var ms = (S.cfg.combo && S.cfg.combo.resetAfterMs) || 20000;   // combo retention = 20s
@@ -3009,6 +3068,7 @@
     drag = { type: goodEl.dataset.type, fromIdx: +goodEl.dataset.cubby,
              fromSlot: +goodEl.dataset.slot, el: goodEl, size: rect.width };
     goodEl.classList.add('dragging');
+    SFX.unlock(); SFX.play('pick');                     // soft pluck on grab (first board gesture also unlocks audio)
     ghostEl.style.display='block';
     ghostEl.style.width = rect.width+'px';
     ghostEl.style.height = rect.height+'px';
@@ -3432,6 +3492,7 @@
   function win(){
     if (S.over) return;
     S.over = true; S.running = false;
+    SFX.play('win');                                   // cozy win jingle
     tutGuide = null; clearTutorHand();                 // L1 solved -> drop the tutorial gate + hand
     if (S.comboTimer) clearTimeout(S.comboTimer);
     // COIN REWARD on clear (the only earn source): base + combo bonus + small level scaling.
@@ -3596,7 +3657,9 @@
     setUrgent(false);           // clear any red-urgency from a prior level
     document.body.classList.toggle('tut-clean', !!S.cfg.tutorial);   // L1 tutorial: hide HUD/item bar
     closePopup();
+    preloadTiles(stageGoodTypes(S.cfg));        // current stage tiles into cache before the board paints
     buildBoard();
+    setTimeout(function(){ try { preloadTiles(stageGoodTypes(loadStage((S.level||1)+1))); } catch(e){} }, 350);  // warm the NEXT stage during play -> instant transition
     updateTimer();
     // ITEM bar: refresh per-level free uses, clear transient item state, render, onboard new unlocks.
     ITEM_DEFS.forEach(function(d){ itemFree[d.key] = FREE_PER_LEVEL; });

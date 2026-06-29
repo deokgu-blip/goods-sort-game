@@ -307,27 +307,30 @@
      ============================================================ */
   #shelf .frame-top-persp{ position:absolute; left:0; right:0; top:0;
     perspective: var(--frame-top-persp, 900px); perspective-origin: 50% 100%;
+    /* V27 — CLIP the roof board to the frame width: the perspective projection paints the folded board
+       a few px WIDER than its layout box, so its edges poked PAST the side frame (user: 오른쪽 끝에 조금
+       튀어나와). overflow:hidden clips it to left:0/right:0 = the frame width on BOTH sides (scales with
+       any board width, unlike a fixed inset). */
+    overflow:hidden;
     pointer-events:none; z-index:2; display:none; }
   #shelf .frame-top{ position:absolute; left:0; right:0; bottom:0;
     transform-origin: center bottom; transform-style:flat;
-    /* unified wood: SOLID --grid-color base × the GRAYSCALE board grain (multiply) so its hue
-       comes ENTIRELY from gridColor -> recolors uniformly with every other face. */
+    /* ROOF (V27) — the 지붕 paints EXACTLY like the FLOOR (.c-wall.b): the LIT top of the wood plank
+       (light at the FRONT/bottom edge, soft shade toward the BACK) at brightness 0.68. So the cabinet
+       TOP reads as the SAME shelf board as the floors below — the floor copied straight onto the top
+       (user: 바닥면을 그대로 복사해서 위로). SOLID --grid-color × grayscale grain -> recolors uniformly. */
     background-color: var(--grid-color, #caa06a);
     background-image:
-      /* top-surface light: brighter toward the FAR (top) edge, fading to FRAME-MATCH at the
-         bottom join so the band fuses CONTINUOUSLY into the frame (no seam — one solid piece). */
-      linear-gradient(to bottom, rgba(255,255,255,.24) 0%, rgba(255,255,255,.05) 72%, rgba(255,255,255,0) 100%),
+      linear-gradient(to top, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 32%, rgba(0,0,0,.10) 100%),
       var(--board-grain),
       linear-gradient(var(--grid-color,#caa06a),var(--grid-color,#caa06a)),
       var(--board-img);
-    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%; background-repeat:no-repeat;
+    background-size: 100% 100%, 100% 150%, 100% 100%, 100% 150%; background-repeat:no-repeat;
+    background-position: 0 100%, 0 100%, 0 0, 0 100%;
     background-blend-mode: normal, multiply, normal, normal;
-    /* only slightly brighter than the frame (1.04) — a continuous top, not a separate plank. */
-    filter: brightness(1.10);
+    filter: brightness(0.68);   /* MATCH the floor's brightness — same shelf board */
     border-top-left-radius: var(--corner-radius, 0px);
-    border-top-right-radius: var(--corner-radius, 0px);
-    /* ONLY a soft TOP highlight — NO dark BOTTOM edge (that dark line read as a floating seam). */
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.26); }
+    border-top-right-radius: var(--corner-radius, 0px); }
 
   /* ============================================================
      A single CUBBY = the GRID CELL that owns the slot hit-regions + holds
@@ -437,13 +440,11 @@
          (#937149) with a crisp edge; painted on the always-rendering back wall (Safari-safe). */
       linear-gradient(to top,
         #937149 0%, #937149 20%, rgba(0,0,0,0) 21.5%),
-      radial-gradient(150% 150% at var(--cubby-shade-dark-x,80%) var(--cubby-shade-dark-y,80%),
-        rgba(40,24,8,calc(var(--cubby-shade-op,.25) * 1.7)) 0%,
-        rgba(40,24,8,calc(var(--cubby-shade-op,.25) * 0.7)) 38%,
-        rgba(40,24,8,0) 72%),
       radial-gradient(140% 140% at var(--cubby-shade-lit-x,20%) var(--cubby-shade-lit-y,20%),
-        rgba(255,248,228,.32) 0%, rgba(255,248,228,0) 50%),
-      radial-gradient(135% 130% at 50% 12%, rgba(0,0,0,0) 50%, rgba(70,45,18,.14) 100%);
+        rgba(255,248,228,.32) 0%, rgba(255,248,228,0) 50%);
+    /* V28 (option B) — REMOVED ALL the dark shading behind the floor (the bottom AO vignette AND the
+       diagonal dark radial) — user: 바닥 뒤에 이건 지워줘 → B로가. The back wall is now CLEAN cream running
+       straight down to the floor band; only a soft top-left LIT highlight remains for a touch of depth. */
     z-index:0; }
   /* the folded WOOD faces — FLOOR (.b), CEILING (.t), LEFT (.l), RIGHT (.r). One
      light (upper-front-left): FLOOR lightest, CEILING darkest, LEFT lit, RIGHT shaded. */
@@ -1337,11 +1338,16 @@
     // V21 — FRAME CEILING DEPTH is the SINGLE intuitive PER-CUBBY ceiling control: 0 = ceiling HIDDEN,
     // > 0 = ceiling SHOWS + deepens (depth = base D × frameCeilingDepth). Distinct from frameTopDepth
     // (V22 — the OUTER cabinet top face below).
-    frameCeilingDepth: 0,   // V21 — 0 = per-cubby ceiling hidden (default); raise to SHOW + deepen it
-    // V22 — OUTER CABINET TOP face (the whole shelf unit's top surface, the topmost frame rail's top).
-    // 0 = hidden; ~1.0 = VISIBLE by default (a wood plane tilted back under the look-down). It is the
-    // OUTER top, SEPARATE from the per-cubby ceilings (frameCeilingDepth). Multiplier on its depth.
-    frameTopDepth: 1.0,     // V22 — OUTER frame TOP face depth (0 = hidden, ~1 = visible default)
+    // V27 — the ROOF (지붕) is the OUTER CABINET TOP BOARD (frameTopDepth below), NOT a per-cubby face.
+    // It is the topmost surface on the OUTSIDE of the grid, facing the sky (user's definition), styled
+    // like the FLOOR (.frame-top paints == .c-wall.b). So per-cubby CEILINGS stay HIDDEN by default.
+    frameCeilingDepth: 0,   // V27 — per-cubby ceiling HIDDEN (the 지붕 is the OUTER top board, not this)
+    ceilingTopRowOnly: true,// gates the per-cubby ceiling to the top row IF ever re-enabled (editor only)
+    // V27 — THE ROOF: the OUTER cabinet TOP board sitting ON the top frame rail, folded at the floor's
+    // angle (shelfAngle) so its lit TOP surface faces the sky, and painted exactly like the floor. Its
+    // FRONT-BOTTOM hinge sits on the shelf top edge so the top frame rail shows as the roof's front frame
+    // (same thickness as the floors'). ON by default.
+    frameTopDepth: 1.0,     // V27 — the ROOF (지붕): OUTER cabinet TOP board ON, styled like the floor
     shelfAngle: 74,
     cameraAngle: 0,         // V20 — global board tilt (rotateX on #shelf); 0 = upright
     cameraHeight: 0.5,      // V20 — global board camera height (board perspective-origin Y); 0.5 = center
@@ -1927,9 +1933,13 @@
         floor.style.top=(H-Dfloor)+'px'; floor.style.transformOrigin='center bottom';
         floor.style.transform='rotateX('+ang+'deg)'; }
       if (ceil){
-        // CEILING — V21: depth = base D × frameCeilingDepth. frameCeilingDepth=0 -> Dceil=0 -> the
-        // ceiling is HIDDEN via display:none (never renders); > 0 -> it RENDERS + deepens.
-        if (Dceil <= 0){ ceil.style.display='none'; }
+        // Per-cubby CEILING — EDITOR-ONLY (default frameCeilingDepth 0 = HIDDEN). The cabinet ROOF (지붕)
+        // is the OUTER top board (buildFrameTop), NOT this inner face. When an editor config enables it
+        // (frameCeilingDepth>0), a simple ceiling face folds back from the cell's top edge. ceilingTopRowOnly
+        // (default true) limits it to the top row if shown.
+        var ceilTopOnly = (SHELF.ceilingTopRowOnly !== false);
+        var isTopRow = (!cb.attic && cb.r === 0);
+        if (Dceil <= 0 || (ceilTopOnly && !isTopRow)){ ceil.style.display='none'; }
         else {
           ceil.style.display='';
           ceil.style.width=W+'px'; ceil.style.height=Dceil+'px';
@@ -1978,23 +1988,26 @@
     // a SOLID receding top surface that connects FLUSH down to the frame top (one continuous
     // cabinet), instead of an edge-on sliver floating above it (the old rotateX(90) bug). Still
     // controllable by frameTopDepth (it scales Dtop -> a deeper/shallower top band).
-    var fold = 58;   // hinge at front-bottom edge ON the frame top; folds back -> solid top surface
-    // perspective for the top face — reuse the same px the cubbies use (look-down feel), but a
-    // touch farther so the top band doesn't distort. Clamp to the same safe floor as the niches.
+    // FOLD = shelfAngle (74°) — the SAME tilt as the FLOOR, so the roof's projected band reads as the
+    // same shelf board (user: 바닥과 동일한 각도). Hinged at the FRONT-BOTTOM edge, folds back-up.
+    var fold = (SHELF.shelfAngle != null ? +SHELF.shelfAngle : 74);
+    // V28 — TRUE PERSPECTIVE (user: 지붕은 뒤로 갈수록 가로가 좁아져야 원근감이 맞다). Use the SAME perspective
+    // as the cells (SHELF.perspective) so the roof's BACK edge CONVERGES inward (narrower) as it recedes —
+    // a real top board receding away — instead of the old near-orthographic (parallel) sides. The
+    // FRONT-bottom edge is at the hinge (z=0) so it stays the full frame width (connected); only the back
+    // narrows -> no overhang either.
     var perspPx = Math.max(150, Math.min(4000, (SHELF.perspective != null ? +SHELF.perspective : 560)));
-    document.documentElement.style.setProperty('--frame-top-persp', (perspPx * 1.4).toFixed(0) + 'px');
-    // EYE LEVEL WITH THE HINGE — the key to a FLUSH join (front-bottom edge stays on the frame top).
+    document.documentElement.style.setProperty('--frame-top-persp', perspPx.toFixed(0) + 'px');
+    // EYE on the hinge X (center, level with the hinge) — the band foreshortens straight back, symmetric.
     persp.style.perspectiveOrigin = '50% 100%';
-    // size + place: the wrapper hugs the shelf's top edge; the plane is Dtop tall, hinged at its
-    // bottom (the shelf top edge) and folded back so its top surface rises up/away from the camera.
-    // Its FRONT-BOTTOM edge is FLUSH on the shelf top edge — bottom of band == top of frame, no gap.
-    // OVERLAP the band a few px DOWN into the frame top so the join is FUSED (no gap/seam):
-    // the band's bottom hinge sinks behind the frame's top edge -> reads as ONE continuous
-    // wood piece (the cabinet top is part of the frame, not a separate plank floating above).
-    var ov = Math.max(4, Dtop * 0.14);
-    persp.style.height = (Dtop + ov) + 'px';
-    persp.style.top = (-Dtop) + 'px';     // band TOP rises Dtop above; its BOTTOM sinks `ov` into the frame
-    top.style.height = (Dtop + ov) + 'px';
+    // V27 — FRONT FRAME: the roof board's FRONT-BOTTOM hinge sits EXACTLY ON the shelf's top edge (NOT
+    // sunk into it), so the cabinet's TOP FRAME RAIL (the full --cab-pad wood border below the board)
+    // stays VISIBLE as the roof's front frame — the SAME thickness as the floors' front frames (the
+    // inter-row lattice). The old `ov` overlap covered that rail (made the front frame a ~1px sliver,
+    // user: 지붕 앞쪽 프레임이 너무 얇아). bottom hinge at y=0 -> front frame == --cab-pad.
+    persp.style.height = Dtop + 'px';
+    persp.style.top = (-Dtop) + 'px';     // band TOP rises Dtop above; its BOTTOM hinge sits ON the shelf top edge
+    top.style.height = Dtop + 'px';
     top.style.transform = 'rotateX(' + fold + 'deg)';
   }
 
@@ -3874,6 +3887,9 @@
   document.getElementById('devPrev').addEventListener('click', function(){ cheatGoLevel(S.level-1); });
   document.getElementById('devNext').addEventListener('click', function(){ cheatGoLevel(S.level+1); });
   (function(){ var taps=0, last=0; if(!timerEl) return; timerEl.style.cursor='pointer';
+    // the timer is an .img-pill (pointer-events:none so HUD pills don't block game touches);
+    // RE-ENABLE pointer-events here so the cheat TRIPLE-TAP target can actually receive taps.
+    timerEl.style.pointerEvents='auto';
     timerEl.addEventListener('click', function(){
       var now=performance.now(); if(now-last>700) taps=0; last=now; taps++;
       if(taps>=3){ taps=0; toggleCheat(); }

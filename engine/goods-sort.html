@@ -3099,7 +3099,7 @@
     drag = { type: goodEl.dataset.type, fromIdx: +goodEl.dataset.cubby,
              fromSlot: +goodEl.dataset.slot, el: goodEl, size: rect.width };
     goodEl.classList.add('dragging');
-    SFX.unlock(); SFX.play('pick');                     // soft pluck on grab (first board gesture also unlocks audio)
+    SFX.unlock();                                      // first board gesture unlocks audio/BGM (pick SFX removed per user)
     ghostEl.style.display='block';
     ghostEl.style.width = rect.width+'px';
     ghostEl.style.height = rect.height+'px';

@@ -3047,7 +3047,10 @@
       var tIdx = +tEl.dataset.idx;
       // target slot = the slot column nearest the drop X (Fix #1)
       var toSlot = slotFromX(tEl, clientX);
-      done = doMove(drag.fromIdx, tIdx, drag.fromSlot, toSlot);
+      // GUIDED tutorial: only allow the drop on the highlighted TARGET cubby; otherwise cancel (snap back).
+      if (!tutGuide || tIdx === tutGuide.tgtIdx){
+        done = doMove(drag.fromIdx, tIdx, drag.fromSlot, toSlot);
+      }
     }
     // if move didn't happen, re-render source to restore the (hidden) good
     if (!done){
@@ -3061,13 +3064,22 @@
     if (moved && !S.over){
       setTimeout(function(){ if (!S.over && totalGoods() > 0) maybeDeadlock(); }, 280);
     }
+    // GUIDED tutorial: after the move settles, re-point the hand at the NEXT required move (or drop the
+    // gate when the board is solved). On a cancelled/failed drop, re-show the hand quickly at the same move.
+    if (tutGuide) setTimeout(refreshGuidedTutorial, done ? 480 : 90);
   }
 
   // pointer handlers
   function onDown(ev){
     if (S.paused || S.over) return;
-    if (tutorHandEl) clearTutorHand();                 // first interaction dismisses the coachmark
     var p = pt(ev);
+    if (tutGuide){                                     // GUIDED tutorial: ONLY the highlighted good is grabbable
+      var gh = hitAt(p.x, p.y);
+      if (!gh || gh.idx !== tutGuide.srcIdx || !gh.good || gh.good.dataset.type !== tutGuide.srcType){
+        ev.preventDefault(); return;                   // wrong good -> blocked; the hand keeps pointing at the right move
+      }
+      clearTutorHand();                                // correct grab -> hide the hand during the drag (re-shown after)
+    } else if (tutorHandEl){ clearTutorHand(); }       // (legacy demo) first interaction dismisses the coachmark
     // HIT-TEST by SLOT (Fix #2): map the pointer to the slot column under it and
     // grab THAT slot's FRONT good — never a visually-overlapping neighbor/back good.
     var hit = hitAt(p.x, p.y);
@@ -3420,6 +3432,7 @@
   function win(){
     if (S.over) return;
     S.over = true; S.running = false;
+    tutGuide = null; clearTutorHand();                 // L1 solved -> drop the tutorial gate + hand
     if (S.comboTimer) clearTimeout(S.comboTimer);
     // COIN REWARD on clear (the only earn source): base + combo bonus + small level scaling.
     S._earned = 40 + (S.maxCombo||0)*6 + Math.floor((S.level||1)/4)*5;
@@ -3590,6 +3603,7 @@
     hammerArmed = false; freezeUntil = 0;
     document.body.classList.remove('frozen');
     renderItems();
+    tutGuide = null; clearTutorHand();          // clear any prior-level tutorial gate/hand
     maybeOnboard();
     maybeGameTutorial();
   }
@@ -3796,7 +3810,7 @@
   // the drag on the real board. Auto-dismisses on first interaction or after 3 loops.
   function tutorialDone(){ try{ return localStorage.getItem('gs_tutorial_done')==='1'; }catch(e){ return false; } }
   function setTutorialDone(){ try{ localStorage.setItem('gs_tutorial_done','1'); }catch(e){} }
-  var tutorHandEl=null, tutorCapEl=null, tutorLoop=null;
+  var tutorHandEl=null, tutorCapEl=null, tutorLoop=null, tutGuide=null;
   function clearTutorHand(){
     if (tutorLoop){ clearTimeout(tutorLoop); tutorLoop=null; }
     if (tutorHandEl){ tutorHandEl.remove(); tutorHandEl=null; }
@@ -3806,11 +3820,13 @@
     if (window.__NO_TUTORIAL) return;                  // verify/screenshot harnesses skip the coachmark
     if (!window.__stagesSettled) return;               // wait for the LIVE stage (skip the embedded boot pass)
     if (S.level !== 1 || S.over) return;
+    // DEDICATED clean tutorial stage (cfg.tutorial): a GUIDED + GATED tutorial. The hand shows on EVERY
+    // L1 visit (NOT gated by gs_tutorial_done — user: "손이 안 보여"), points at the exact required move,
+    // and ONLY that move is grabbable/droppable (user: "튜토리얼이면 정답 객체 외엔 선택 못 하게 막아야지").
+    if (S.cfg.tutorial){ setTimeout(startGuidedTutorial, 450); return; }
+    // non-tutorial first play (legacy path): welcome card + a 3-loop demo coachmark, once per install.
     if (tutorialDone()) return;
     setTutorialDone();
-    // DEDICATED clean tutorial stage (cfg.tutorial: no HUD, isolated cubbies) — no welcome card,
-    // just the finger coachmark demonstrating the drag right on the board (matches the mockup).
-    if (S.cfg.tutorial){ setTimeout(startTutorHand, 450); return; }
     S.paused = true;                                   // hold the timer during the welcome card
     popupBox.innerHTML =
       '<div class="card onboard tut">' +
@@ -3823,7 +3839,7 @@
     overlay.classList.add('on');
     document.getElementById('tutOk').addEventListener('click', function(){
       haptic('btn'); closePopup(); S.paused=false; S.lastTick=performance.now();
-      setTimeout(startTutorHand, 250);
+      setTimeout(function(){ var p=tutorHintPair(); if(p&&p.src.el&&p.tgt.el) runTutorHand(p.src.el, p.tgt.el, false); }, 250);
     });
   }
   function tutorFrontTop(cb){ var f=frontLayer(cb); if(!f) return null; for(var i=0;i<SLOTS;i++) if(f[i]) return f[i]; return null; }
@@ -3838,7 +3854,7 @@
       var tf = frontLayer(tgt); var counts = {};
       for (s=0;s<SLOTS;s++){ if (tf[s]) counts[tf[s]] = (counts[tf[s]]||0)+1; }
       for (var g in counts){ if (counts[g] === 2){
-        for (j=0;j<cbs.length;j++){ if (cbs[j]!==tgt && cbs[j].el && tutorFrontCount(cbs[j], g) >= 1) return { src:cbs[j], tgt:tgt }; }
+        for (j=0;j<cbs.length;j++){ if (cbs[j]!==tgt && cbs[j].el && tutorFrontCount(cbs[j], g) >= 1) return { src:cbs[j], tgt:tgt, good:g }; }
       }}
     }
     // fallback: any source with a front good -> a cubby that shares it (or any other cubby)
@@ -3848,11 +3864,22 @@
     gg = tutorFrontTop(src);
     for (i=0;i<cbs.length;i++){ if (cbs[i]!==src && cbs[i].el && tutorFrontTop(cbs[i])===gg){ fb=cbs[i]; break; } }
     if (!fb){ for (i=0;i<cbs.length;i++){ if (cbs[i]!==src && cbs[i].el){ fb=cbs[i]; break; } } }
-    return fb ? { src:src, tgt:fb } : null;
+    return fb ? { src:src, tgt:fb, good:gg } : null;
   }
-  function startTutorHand(){
-    if (S.over || S.level!==1) return;
-    var pair = tutorHintPair(); if (!pair) return;
+  // GUIDED tutorial (L1): point the hand at the exact move + LOCK every other good (gate in onDown/endDrag).
+  function startGuidedTutorial(){ if (S.over || S.level!==1) return; refreshGuidedTutorial(); }
+  function refreshGuidedTutorial(){
+    clearTutorHand();
+    if (S.over || S.level!==1){ tutGuide=null; return; }
+    var pair = tutorHintPair();
+    if (!pair || !pair.src.el || !pair.tgt.el){ tutGuide=null; return; }   // solved / animating -> stop guiding
+    tutGuide = { srcIdx:S.cubbies.indexOf(pair.src), tgtIdx:S.cubbies.indexOf(pair.tgt),
+                 srcType:(pair.good || tutorFrontTop(pair.src)) };
+    runTutorHand(pair.src.el, pair.tgt.el, true);       // loop the hand indefinitely until the move is made
+  }
+  // Animate the hand dragging src->tgt. infinite=true loops until cleared (guided); false = 3 loops (demo).
+  function runTutorHand(srcEl, tgtEl, infinite){
+    if (S.over || S.level!==1 || !srcEl || !tgtEl) return;
     clearTutorHand();
     var hand = document.createElement('div'); hand.className='tutor-hand';   // art-tone hand image (CSS bg)
     fxEl.appendChild(hand); tutorHandEl=hand;
@@ -3862,7 +3889,7 @@
     function center(el){ var r=el.getBoundingClientRect(); return { x:r.left+r.width/2, y:r.top+r.height/2 }; }
     function playOnce(){
       if (!tutorHandEl) return;
-      var a=center(pair.src.el), b=center(pair.tgt.el);
+      var a=center(srcEl), b=center(tgtEl);
       hand.style.transition='none'; hand.style.opacity='0';
       hand.style.left=a.x+'px'; hand.style.top=a.y+'px';
       hand.style.transform='translate(-50%,-4%) scale(1)';
@@ -3879,7 +3906,7 @@
               hand.style.transition='transform .15s ease-out, opacity .3s ease-out';
               hand.style.transform='translate(-50%,-4%) scale(1)';
               hand.style.opacity='0';
-              tutorLoop=setTimeout(function(){ if (++n<3 && tutorHandEl) playOnce(); else clearTutorHand(); }, 520);
+              tutorLoop=setTimeout(function(){ if ((infinite || ++n<3) && tutorHandEl) playOnce(); else clearTutorHand(); }, 520);
             }, 760);
           }, 250);
         }, 260);

@@ -1530,7 +1530,7 @@
         for (var k in SHELF_DEFAULTS){ if (partial[k]!==undefined && partial[k]!==null) SHELF[k]=partial[k]; }
       }
       applyShelfCssVars();
-      try{ buildNiches(); fitGoods(); positionLocks(); }catch(e){}
+      try{ sizeShelf(); buildNiches(); fitGoods(); positionLocks(); }catch(e){}
     }
   };
 
@@ -2158,6 +2158,38 @@
     }
     return el;
   }
+  // V29 — CONSTANT CELL HEIGHT regardless of ROW count (user: 층수는 위·아래로 세로 확장, 칸 높이는
+  // 3/4/5층 모두 동일). The OLD model fixed the shelf BOX (aspect-ratio) and squished cells into more
+  // rows. NEW: size cells so the TALLEST board (MAX_ROWS) fits the available area, then set the shelf
+  // HEIGHT = totalRows × cellH — fewer rows ⇒ SHORTER shelf (centered by #board-wrap), more rows ⇒
+  // TALLER. Width FILLS the area (cols adjust within it). Cell height is independent of THIS stage's
+  // rows (it depends only on cols + viewport), so 3/4/5-row boards share the same cell height. Called
+  // by buildBoard AND on resize so it stays correct across orientation changes.
+  function sizeShelf(){
+    var sh = document.getElementById('shelf'); var cfg = S.cfg; if (!sh || !cfg) return;
+    var ca = SHELF.cubbyAspect || 0.86;
+    if (cfg.tutorial){   // 1-row tutorial keeps its special landscape scale (reads like a 4×3 slice)
+      sh.style.width = ''; sh.style.height = '';
+      sh.style.aspectRatio = ((4 * cfg.cols) / (3 * ca * cfg.rows)).toFixed(3) + ' / 1';
+      return;
+    }
+    var totalRows = (cfg.rows || 1) + (cfg.atticRows || 0);
+    var MAX_ROWS = 5;                    // the game's tallest board; cells sized so 5 rows always fit
+    var REF_COLS = 3;                    // GLOBAL cell HEIGHT is anchored to a 3-col board (the early look)
+    var cellAR = 4 / (3 * ca);           // a 3-col cell's W:H (≈1.55) — the tuned landscape look
+    var bw = document.getElementById('board-wrap');
+    var availW = Math.max(80, (bw && bw.clientWidth)  ? bw.clientWidth  - 6  : Math.min(window.innerWidth * 0.96, 540));
+    var availH = Math.max(80, (bw && bw.clientHeight) ? bw.clientHeight - 18 : window.innerHeight * 0.60);
+    // SHELF WIDTH fills the area (cols adjust within it); capped at 540 AND so a MAX_ROWS×REF_COLS board
+    // fits the height. ALL cells share ONE height = (shelfW/REF_COLS)/cellAR — independent of THIS stage's
+    // cols AND rows, so 3/4/5-row (and 3/4-col) boards keep the SAME cell height; only the WIDTH per col
+    // and the TOTAL height (= rows × cellH) change.
+    var shelfW = Math.min(availW, 540, availH * REF_COLS * cellAR / MAX_ROWS);
+    var cellH = (shelfW / REF_COLS) / cellAR;        // GLOBAL constant cell height
+    sh.style.aspectRatio = 'auto';
+    sh.style.width  = Math.round(shelfW) + 'px';
+    sh.style.height = Math.round(totalRows * cellH) + 'px';
+  }
   function buildBoard(){
     var cfg = S.cfg;
     S.cap = cfg.cellCap || 3;
@@ -2167,16 +2199,8 @@
     var totalRows = cfg.rows + atticRows;
     gridEl.style.gridTemplateColumns = 'repeat(' + cfg.cols + ', 1fr)';
     gridEl.style.gridTemplateRows = 'repeat(' + totalRows + ', 1fr)';
-    // SHELF aspect. Normal stages keep the tuned 1/cubbyAspect (per MAIN cell). The attic adds
-    // extra rows so the shelf grows TALLER by totalRows/rows (main cells keep their proportion).
-    // The TUTORIAL (a 1-row 1x3) scales so its cells stay the landscape ratio of a 3x4 row slice.
-    (function(){
-      var sh = document.getElementById('shelf'); if (!sh) return;
-      var ca = SHELF.cubbyAspect || 0.86;
-      var asp = cfg.tutorial ? ((4 * cfg.cols) / (3 * ca * cfg.rows))
-                             : (cfg.rows / (ca * totalRows));
-      sh.style.aspectRatio = asp.toFixed(3) + ' / 1';
-    })();
+    // V29 — size the shelf so CELL HEIGHT is CONSTANT regardless of row count (sizeShelf below).
+    sizeShelf();
     gridEl.innerHTML = '';
     var byRC = {};
     S.cubbies.forEach(function(cb){ if (!cb.attic) byRC[cb.r+'_'+cb.c] = cb; });
@@ -3354,17 +3378,20 @@
         return layers;
       });
     }
-    // pick a SOLVABLE candidate: try grouped (guaranteed) + several scatters, verify each.
+    // pick a SOLVABLE candidate. The SHUFFLE item must RANDOMIZE (재배치), NOT sort — so try the RANDOM
+    // SCATTER first (a genuinely MIXED board). Only fall back to the GROUPED layout (which packs each
+    // type's triples into single layers = looks "sorted/정렬", which the user does NOT want) when no
+    // random scatter is solvable — e.g. a fully-packed NO-SPACE rescue board, where grouped is the
+    // guaranteed-solvable safety net. (Mid-game shuffle keeps its workspace, so scatter is solvable.)
     var chosen = null;
-    var grouped = buildGrouped();
-    if (Model.solvable(grouped, 800, 200000)) chosen = grouped;
-    if (!chosen){
-      for (var attempt=0; attempt<30 && !chosen; attempt++){
-        var cand = buildScatter();
-        if (Model.solvable(cand, 800, 200000)) chosen = cand;
-      }
+    for (var attempt=0; attempt<40 && !chosen; attempt++){
+      var cand = buildScatter();
+      if (Model.solvable(cand, 800, 200000)) chosen = cand;
     }
-    if (!chosen) chosen = grouped;   // grouped is solvable-by-construction; safe fallback
+    if (!chosen){
+      var grouped = buildGrouped();                 // guaranteed solvable-by-construction (last resort)
+      chosen = grouped;                              // (solvability re-checked implicitly by construction)
+    }
     chosen = normalizeLayers(chosen);
     // apply to the live board (preserve r/c; replace layers).
     S.cubbies.forEach(function(cb, ci){ cb.layers = chosen[ci]; });
@@ -3917,7 +3944,7 @@
   var resizeT = null;
   window.addEventListener('resize', function(){
     if (resizeT) clearTimeout(resizeT);
-    resizeT = setTimeout(function(){ if (S.cfg){ buildNiches(); fitGoods(); positionLocks(); } }, 120);
+    resizeT = setTimeout(function(){ if (S.cfg){ sizeShelf(); buildNiches(); fitGoods(); positionLocks(); } }, 120);
   });
 
   // boot — apply the resolved shelf config CSS vars BEFORE the first build so the

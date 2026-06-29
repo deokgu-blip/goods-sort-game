@@ -1021,6 +1021,13 @@
     background:url("../assets/ui/tutorial_hand.png") top center/contain no-repeat;
     transform-origin:50% 0;   /* fingertip (image top-center) = the anchor: press-scale keeps the tip put */
     filter:drop-shadow(0 4px 3px rgba(0,0,0,.3)); will-change:left,top,transform,opacity; opacity:0; }
+  /* tutorial: a PULSING GLOW on the EXACT good the hand points at, so it's unmistakable which item
+     to drag (user: "장갑이 정확히 무엇을 가리키는지 모르겠어"). .good has no base filter, so animating
+     the filter here is safe; the cubby clips it to the cell which still reads as "this one". */
+  .good.tut-poke{ animation:tutPoke .85s ease-in-out infinite; z-index:6; }
+  @keyframes tutPoke{
+    0%,100%{ filter:drop-shadow(0 2px 2px rgba(0,0,0,.25)) brightness(1); }
+    50%    { filter:drop-shadow(0 0 8px rgba(255,205,80,.98)) drop-shadow(0 0 3px rgba(255,180,40,.9)) brightness(1.13); } }
   .tutor-cap{ position:fixed; left:50%; bottom:132px; transform:translateX(-50%); z-index:55; pointer-events:none;
     background:rgba(42,27,12,.88); color:#ffe9c2; font-weight:800; font-size:14px; padding:9px 16px; border-radius:18px;
     box-shadow:0 4px 12px rgba(0,0,0,.32); white-space:nowrap; animation:capFade .3s ease-out; }
@@ -1237,28 +1244,39 @@
   // kept LOW + soft (user: "귀 아픈 소리 말고 ASMR 소리처럼").
   // =============================================================
   var SFX = (function(){
-    var ctx=null, buffers={}, inited=false, muted=false, master=null;
+    var ctx=null, buffers={}, inited=false, muted=false, master=null, bgm=null, bgmVol=0.30;
     var FILES={ pick:'sfx_pick', drop:'sfx_drop', clear:'sfx_clear', combo:'sfx_combo', win:'sfx_win', lock:'sfx_lock', button:'sfx_button' };
     var VOL={ pick:0.5, drop:0.55, clear:0.8, combo:0.75, win:0.85, lock:0.65, button:0.5 };
     function init(){
       if (inited) return; inited=true;
-      try { var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; ctx=new AC(); }
-      catch(e){ ctx=null; return; }
-      master=ctx.createGain(); master.gain.value=0.85; master.connect(ctx.destination);
-      Object.keys(FILES).forEach(function(k){
-        fetch('../assets/audio/'+FILES[k]+'.mp3').then(function(r){ return r.ok?r.arrayBuffer():null; })
-          .then(function(ab){ if(!ab||!ctx) return; ctx.decodeAudioData(ab, function(b){ buffers[k]=b; }, function(){}); })
-          .catch(function(){});
-      });
+      try { var AC=window.AudioContext||window.webkitAudioContext;
+        if (AC){ ctx=new AC(); master=ctx.createGain(); master.gain.value=0.85; master.connect(ctx.destination);
+          Object.keys(FILES).forEach(function(k){
+            fetch('../assets/audio/'+FILES[k]+'.mp3').then(function(r){ return r.ok?r.arrayBuffer():null; })
+              .then(function(ab){ if(!ab||!ctx) return; ctx.decodeAudioData(ab, function(b){ buffers[k]=b; }, function(){}); })
+              .catch(function(){});
+          });
+        }
+      } catch(e){ ctx=null; }
+      // BGM = a calm looping track (HTMLAudio); low volume so it sits UNDER the SFX. Starts on unlock().
+      try { bgm=new Audio('../assets/audio/bgm.mp3'); bgm.loop=true; bgm.volume=bgmVol; bgm.preload='auto'; } catch(e){ bgm=null; }
     }
-    function unlock(){ init(); if(ctx && ctx.state==='suspended'){ try{ ctx.resume(); }catch(e){} } }
+    function unlock(){
+      init();
+      if (ctx && ctx.state==='suspended'){ try{ ctx.resume(); }catch(e){} }
+      if (bgm && !muted && bgm.paused){ var pr=bgm.play(); if(pr&&pr.catch) pr.catch(function(){}); }   // gesture-gated autoplay
+    }
     function play(name, vol){
       if (muted || !ctx || !buffers[name]) return;
       try { var s=ctx.createBufferSource(); s.buffer=buffers[name];
         var g=ctx.createGain(); g.gain.value=(vol!=null?vol:(VOL[name]||0.6));
         s.connect(g); g.connect(master); s.start(0); }catch(e){}
     }
-    return { init:init, unlock:unlock, play:play, setMuted:function(m){muted=!!m;}, isMuted:function(){return muted;} };
+    function setMuted(m){ muted=!!m;
+      if (bgm){ if (muted){ try{ bgm.pause(); }catch(e){} } else { var pr=bgm.play(); if(pr&&pr.catch) pr.catch(function(){}); } } }
+    return { init:init, unlock:unlock, play:play, setMuted:setMuted, isMuted:function(){return muted;},
+             setBgmVolume:function(v){ bgmVol=Math.max(0,Math.min(1,v)); if(bgm) bgm.volume=bgmVol; },
+             bgmState:function(){ return bgm ? { paused:bgm.paused, t:bgm.currentTime, vol:bgm.volume } : null; } };
   })();
   window.__sfx = SFX;                          // QA/debug hook
 
@@ -2607,7 +2625,7 @@
     var heldGoods = cb.floor ? cb.floor.querySelectorAll('.good') : [];
     setTimeout(function(){
       // COMBO FEEDBACK — flame -> top pill, sparkle, + PRAISE TEXT (GOOD!/GREAT!/… by combo).
-      flyFlameToCombo(cx, cy);
+      flyFlameToCombo(cx, cy, combo);             // # of flames scales with combo (user: 콤보수만큼 차례로 빨려듦)
       sparkleRing(cx, cy);
       praise(cx, cy - 6, combo);
       if (el){ el.classList.add('clearing'); el.addEventListener('animationend', function(){ el.classList.remove('clearing'); }, { once:true }); }
@@ -2687,13 +2705,26 @@
       comboEl.classList.remove('bump'); void comboEl.offsetWidth; comboEl.classList.add('bump');
     }, 560);
   }
-  // COMBO flame — a small 🔥 pops at the clear spot and flies INTO the top flame pill (#comboCount).
-  function flyFlameToCombo(x, y){
+  // COMBO flames — `count` 🔥 (= the current combo, capped) pop at the clear spot and fly, ONE AFTER
+  // ANOTHER (staggered), INTO the top flame pill (#comboCount). The flame count grows with the combo
+  // (user: "콤보수에 따라 불꽃이 점점 늘어나고, N개를 한번에 얻으면 N개가 차례대로 빨려들어가야 돼").
+  var FLAME_CAP = 6;
+  function flyFlameToCombo(x, y, count){
+    count = Math.max(1, Math.min(count|0 || 1, FLAME_CAP));
     var dest = comboCountEl || comboEl;
     var t = dest ? dest.getBoundingClientRect() : null;
-    // TUTORIAL / hidden HUD: the combo pill is display:none -> rect is all-zero. Don't fly the flame
-    // to the top-left corner (0,0); just pop it at the clear spot and let it fade in place.
-    if (!t || (t.width === 0 && t.height === 0)){
+    var hidden = (!t || (t.width === 0 && t.height === 0));   // tutorial / hidden HUD -> pop in place
+    for (var i=0;i<count;i++){
+      (function(i){
+        // tiny spread so stacked flames don't perfectly overlap at the source
+        var ox = x + (i ? (((i*53)%23) - 11) : 0), oy = y + (i ? (((i*37)%15) - 7) : 0);
+        setTimeout(function(){ spawnFlyFlame(ox, oy, hidden ? null : t); }, i*130);   // STAGGER -> sequential suck-in
+      })(i);
+    }
+  }
+  function spawnFlyFlame(x, y, t){
+    // t = the dest pill rect, or null when the HUD is hidden (tutorial): just pop + fade in place.
+    if (!t){
       var flp = document.createElement('div'); flp.className='fly-flame'; flp.textContent='🔥';
       flp.style.left=x+'px'; flp.style.top=y+'px'; flp.style.transform='translate(-50%,-50%) scale(0)';
       document.body.appendChild(flp);
@@ -2709,7 +2740,7 @@
     fl.style.left = x+'px'; fl.style.top = y+'px';
     fl.style.transform = 'translate(-50%,-50%) scale(0)';
     document.body.appendChild(fl);
-    var HOLD = 200, RISE = 700;
+    var HOLD = 150, RISE = 620;
     // 1) POP IN at the clear spot (overshoot), then HOLD a beat in place
     requestAnimationFrame(function(){
       fl.style.transition = 'transform .2s cubic-bezier(.34,1.75,.5,1)';
@@ -3493,7 +3524,7 @@
     if (S.over) return;
     S.over = true; S.running = false;
     SFX.play('win');                                   // cozy win jingle
-    tutGuide = null; clearTutorHand();                 // L1 solved -> drop the tutorial gate + hand
+    tutGuide = null; clearTutorHand(); clearTutPoke(); // L1 solved -> drop the tutorial gate + hand + glow
     if (S.comboTimer) clearTimeout(S.comboTimer);
     // COIN REWARD on clear (the only earn source): base + combo bonus + small level scaling.
     S._earned = 40 + (S.maxCombo||0)*6 + Math.floor((S.level||1)/4)*5;
@@ -3666,7 +3697,7 @@
     hammerArmed = false; freezeUntil = 0;
     document.body.classList.remove('frozen');
     renderItems();
-    tutGuide = null; clearTutorHand();          // clear any prior-level tutorial gate/hand
+    tutGuide = null; clearTutorHand(); clearTutPoke();  // clear any prior-level tutorial gate/hand/glow
     maybeOnboard();
     maybeGameTutorial();
   }
@@ -3931,14 +3962,23 @@
   }
   // GUIDED tutorial (L1): point the hand at the exact move + LOCK every other good (gate in onDown/endDrag).
   function startGuidedTutorial(){ if (S.over || S.level!==1) return; refreshGuidedTutorial(); }
+  var tutPokeEl=null;
+  function setTutPoke(el){ clearTutPoke(); if (el && el.classList){ el.classList.add('tut-poke'); tutPokeEl=el; } }
+  function clearTutPoke(){ if (tutPokeEl && tutPokeEl.classList) tutPokeEl.classList.remove('tut-poke'); tutPokeEl=null; }
   function refreshGuidedTutorial(){
     clearTutorHand();
-    if (S.over || S.level!==1){ tutGuide=null; return; }
+    if (S.over || S.level!==1){ tutGuide=null; clearTutPoke(); return; }
     var pair = tutorHintPair();
-    if (!pair || !pair.src.el || !pair.tgt.el){ tutGuide=null; return; }   // solved / animating -> stop guiding
-    tutGuide = { srcIdx:S.cubbies.indexOf(pair.src), tgtIdx:S.cubbies.indexOf(pair.tgt),
-                 srcType:(pair.good || tutorFrontTop(pair.src)) };
-    runTutorHand(pair.src.el, pair.tgt.el, true);       // loop the hand indefinitely until the move is made
+    if (!pair || !pair.src.el || !pair.tgt.el){ tutGuide=null; clearTutPoke(); return; }   // solved / animating -> stop guiding
+    var srcIdx=S.cubbies.indexOf(pair.src), tgtIdx=S.cubbies.indexOf(pair.tgt);
+    var srcType=(pair.good || tutorFrontTop(pair.src));
+    tutGuide = { srcIdx:srcIdx, tgtIdx:tgtIdx, srcType:srcType };
+    // Point the hand at the EXACT good to drag (not the whole cubby) and GLOW it; aim the drag at the
+    // matching good in the target cubby. (user: 장갑이 정확히 뭘 가리키는지 모르겠어.)
+    var srcGoodEl = document.querySelector('.good[data-cubby="'+srcIdx+'"][data-type="'+srcType+'"]') || pair.src.el;
+    var tgtGoodEl = document.querySelector('.good[data-cubby="'+tgtIdx+'"][data-type="'+srcType+'"]') || pair.tgt.el;
+    setTutPoke(srcGoodEl);
+    runTutorHand(srcGoodEl, tgtGoodEl, true);           // loop the hand indefinitely until the move is made
   }
   // Animate the hand dragging src->tgt. infinite=true loops until cleared (guided); false = 3 loops (demo).
   function runTutorHand(srcEl, tgtEl, infinite){
@@ -4837,6 +4877,8 @@
     setLock: function(idx, n){ var cb=S.cubbies[idx]; if(!cb) return null; cb.lock=n|0; renderCubby(cb); return cb.lock; },
     lockStates: function(){ return S.cubbies.map(function(cb){ return cb.lock|0; }); },
     fireCombo: function(n){ for(var i=0;i<(n||1);i++) bumpCombo(); return S.combo; },   // preview the combo gauge
+    flyFlames: function(n){ flyFlameToCombo(window.innerWidth*0.5, window.innerHeight*0.6, n||1); return n; },   // QA: N flames fly to the pill
+    bgmState: function(){ return window.__sfx ? window.__sfx.bgmState && window.__sfx.bgmState() : null; },
     // build a CONTRIVED deadlock board on the live state: 4 types x3 each (multiples of 3,
     // so the bag IS reshuffle-solvable), but arranged FULLY PACKED + MIXED with NO empty
     // slot anywhere -> no move is possible -> no clear is reachable -> DEADLOCK. This is a

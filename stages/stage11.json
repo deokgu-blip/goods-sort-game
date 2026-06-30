@@ -1,23 +1,19 @@
 {
   "level": 11,
-  "timeLimit": 340,
+  "timeLimit": 213,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "berry_smoothie",
-    "chestnut",
-    "chip_can_tall",
-    "deodorant_stick",
-    "glass_cleaner",
-    "grape_soda",
-    "hand_cream_tube",
-    "iced_tea",
-    "lychee",
+    "artichoke",
+    "bee_toy",
+    "cereal_fruit_loops",
+    "frozen_berries",
     "pomegranate",
     "pumpkin",
-    "tea_box",
-    "wheel_of_lime"
+    "soap_dispenser",
+    "soy_sauce",
+    "sports_drink"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -27,15 +23,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 13,
+    "distinct": 9,
     "depthRange": [
-      2,
-      3
+      1,
+      1
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 1,
-    "totalGoods": 81,
+    "totalGoods": 27,
     "attempt": 0
   },
   "cubbies": [
@@ -44,19 +40,9 @@
       "c": 0,
       "layers": [
         [
-          "pomegranate",
-          "glass_cleaner",
+          "bee_toy",
+          "soy_sauce",
           null
-        ],
-        [
-          "berry_smoothie",
-          "pomegranate",
-          "pumpkin"
-        ],
-        [
-          "chip_can_tall",
-          "wheel_of_lime",
-          "chip_can_tall"
         ]
       ]
     },
@@ -65,19 +51,9 @@
       "c": 1,
       "layers": [
         [
-          "deodorant_stick",
-          "wheel_of_lime",
-          "grape_soda"
-        ],
-        [
-          "deodorant_stick",
-          "pumpkin",
-          "hand_cream_tube"
-        ],
-        [
-          "iced_tea",
-          "glass_cleaner",
-          "grape_soda"
+          "cereal_fruit_loops",
+          "artichoke",
+          "soy_sauce"
         ]
       ]
     },
@@ -86,19 +62,9 @@
       "c": 2,
       "layers": [
         [
-          "grape_soda",
-          "berry_smoothie",
-          "grape_soda"
-        ],
-        [
-          "berry_smoothie",
-          "wheel_of_lime",
-          "iced_tea"
-        ],
-        [
-          "chip_can_tall",
-          "pomegranate",
-          "pumpkin"
+          "frozen_berries",
+          "frozen_berries",
+          "pomegranate"
         ]
       ]
     },
@@ -107,19 +73,9 @@
       "c": 0,
       "layers": [
         [
-          "grape_soda",
           "pumpkin",
-          null
-        ],
-        [
           "pumpkin",
-          "hand_cream_tube",
-          "iced_tea"
-        ],
-        [
-          "glass_cleaner",
-          "pumpkin",
-          "wheel_of_lime"
+          "cereal_fruit_loops"
         ]
       ]
     },
@@ -128,120 +84,75 @@
       "c": 1,
       "layers": [
         [
-          "chip_can_tall",
-          "lychee",
-          "deodorant_stick"
-        ],
-        [
-          "tea_box",
-          "lychee",
-          "chestnut"
+          null,
+          null,
+          null
         ]
       ]
     },
     {
       "r": 1,
       "c": 2,
+      "layers": [
+        [
+          "pumpkin",
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "soap_dispenser",
+          "bee_toy",
+          "soy_sauce"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "soap_dispenser",
+          null,
+          "bee_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "soap_dispenser",
+          "sports_drink",
+          "pomegranate"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "artichoke",
+          "frozen_berries",
+          "pomegranate"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
       "lock": 1,
       "layers": [
         [
-          "pomegranate",
-          "pomegranate",
-          "pumpkin"
-        ],
-        [
-          "glass_cleaner",
-          "iced_tea",
-          "glass_cleaner"
-        ],
-        [
-          "tea_box",
-          "lychee",
-          "lychee"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "hand_cream_tube",
-          "deodorant_stick",
-          "grape_soda"
-        ],
-        [
-          "iced_tea",
-          "pomegranate",
-          "lychee"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "hand_cream_tube",
-          null,
-          null
-        ],
-        [
-          "deodorant_stick",
-          "chestnut",
-          "berry_smoothie"
-        ],
-        [
-          "tea_box",
-          "hand_cream_tube",
-          "wheel_of_lime"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "chestnut",
-          null,
-          "iced_tea"
-        ],
-        [
-          "deodorant_stick",
-          "tea_box",
-          "chip_can_tall"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          "berry_smoothie",
-          "pumpkin"
-        ],
-        [
-          "chip_can_tall",
-          "chestnut",
-          "wheel_of_lime"
-        ],
-        [
-          "glass_cleaner",
-          "berry_smoothie",
-          "tea_box"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          null,
-          null,
+          "sports_drink",
+          "sports_drink",
           null
         ]
       ]
@@ -251,14 +162,9 @@
       "c": 2,
       "layers": [
         [
-          "hand_cream_tube",
-          "pumpkin",
-          "tea_box"
-        ],
-        [
-          "chestnut",
-          "lychee",
-          "chestnut"
+          null,
+          "cereal_fruit_loops",
+          "artichoke"
         ]
       ]
     }

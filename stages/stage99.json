@@ -1,26 +1,26 @@
 {
   "level": 99,
-  "timeLimit": 345,
+  "timeLimit": 240,
   "cols": 4,
   "rows": 5,
   "cellCap": 3,
   "goods": [
+    "air_freshener",
+    "bell_pepper",
+    "berry_smoothie",
+    "butter",
+    "cabbage",
     "coconut_water",
-    "cream_cheese",
+    "cola",
     "cupcake_choco",
-    "iced_tea",
-    "koala_toy",
+    "fig",
+    "glass_cleaner",
     "milk_carton_tall",
-    "milk_choc_bar",
-    "popping_candy",
-    "pump_ketchup",
-    "red_onion",
+    "pasta_jar_tall",
+    "pomegranate",
+    "popcorn_bag",
     "ridged_chips",
-    "sandwich_cookies",
-    "soda",
-    "strawberry",
-    "tea_box",
-    "teddy_bear"
+    "slush_cup"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -32,77 +32,35 @@
   "_gen": {
     "distinct": 16,
     "depthRange": [
-      4,
-      5
+      1,
+      1
     ],
     "emptyCubbies": 1,
-    "frontGaps": 12,
+    "frontGaps": 9,
     "lockCubbies": 7,
-    "totalGoods": 252,
-    "attempt": 50
+    "totalGoods": 48,
+    "attempt": 0
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
-      "lock": 2,
       "layers": [
         [
-          "cream_cheese",
-          "pump_ketchup",
-          null
-        ],
-        [
-          "cupcake_choco",
-          "sandwich_cookies",
-          "tea_box"
-        ],
-        [
-          "coconut_water",
-          "coconut_water",
-          "cream_cheese"
-        ],
-        [
-          "tea_box",
-          "cream_cheese",
-          "cupcake_choco"
-        ],
-        [
-          "popping_candy",
-          "popping_candy",
-          "red_onion"
+          null,
+          "butter",
+          "cola"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
-      "lock": 1,
       "layers": [
         [
-          "soda",
-          "cupcake_choco",
-          "milk_carton_tall"
-        ],
-        [
-          "soda",
-          "cupcake_choco",
-          "strawberry"
-        ],
-        [
-          "strawberry",
-          "strawberry",
-          "milk_carton_tall"
-        ],
-        [
-          "red_onion",
+          null,
           "coconut_water",
-          "teddy_bear"
-        ],
-        [
-          "ridged_chips",
-          "milk_carton_tall",
-          "pump_ketchup"
+          "fig"
         ]
       ]
     },
@@ -111,28 +69,8 @@
       "c": 2,
       "layers": [
         [
-          "teddy_bear",
-          null,
-          "iced_tea"
-        ],
-        [
-          "cream_cheese",
-          "popping_candy",
-          "coconut_water"
-        ],
-        [
-          "strawberry",
           "milk_carton_tall",
-          "popping_candy"
-        ],
-        [
-          "coconut_water",
-          "sandwich_cookies",
-          "ridged_chips"
-        ],
-        [
-          "iced_tea",
-          "koala_toy",
+          "butter",
           "ridged_chips"
         ]
       ]
@@ -142,319 +80,124 @@
       "c": 3,
       "layers": [
         [
-          "red_onion",
-          "popping_candy",
-          "iced_tea"
-        ],
-        [
-          "pump_ketchup",
-          "tea_box",
-          "milk_carton_tall"
-        ],
-        [
-          "cupcake_choco",
-          "milk_choc_bar",
-          "cream_cheese"
-        ],
-        [
-          "cupcake_choco",
-          "popping_candy",
-          "iced_tea"
-        ],
-        [
-          "cupcake_choco",
-          "cream_cheese",
-          "tea_box"
+          "cabbage",
+          "popcorn_bag",
+          "slush_cup"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
+      "lock": 5,
       "layers": [
         [
-          "popping_candy",
-          "milk_choc_bar",
-          "popping_candy"
-        ],
-        [
-          "sandwich_cookies",
-          "cream_cheese",
-          "cream_cheese"
-        ],
-        [
-          "popping_candy",
-          "pump_ketchup",
-          "iced_tea"
-        ],
-        [
-          "milk_carton_tall",
-          "milk_carton_tall",
-          "ridged_chips"
+          null,
+          "popcorn_bag",
+          "bell_pepper"
         ]
       ]
     },
     {
       "r": 1,
       "c": 1,
-      "lock": 2,
+      "lock": 5,
       "layers": [
         [
-          "tea_box",
-          "pump_ketchup",
-          "koala_toy"
-        ],
-        [
-          "milk_choc_bar",
-          "red_onion",
-          "pump_ketchup"
-        ],
-        [
-          "red_onion",
-          "pump_ketchup",
-          "coconut_water"
-        ],
-        [
-          "red_onion",
-          "coconut_water",
-          "strawberry"
+          "air_freshener",
+          "pomegranate",
+          "pomegranate"
         ]
       ]
     },
     {
       "r": 1,
       "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "layers": [
+        [
+          "bell_pepper",
+          "cola",
+          "cupcake_choco"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 5,
+      "layers": [
+        [
+          "fig",
+          "slush_cup",
+          "berry_smoothie"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "berry_smoothie",
+          "bell_pepper",
+          "glass_cleaner"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "pomegranate",
+          null,
+          "butter"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "layers": [
+        [
+          "ridged_chips",
+          "cola",
+          "pasta_jar_tall"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "lock": 1,
+      "layers": [
+        [
+          "glass_cleaner",
+          "air_freshener",
+          "cabbage"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
       "lock": 4,
       "layers": [
         [
-          "coconut_water",
-          null,
-          "red_onion"
-        ],
-        [
-          "strawberry",
-          "milk_choc_bar",
-          "red_onion"
-        ],
-        [
-          "red_onion",
-          "koala_toy",
-          "sandwich_cookies"
-        ],
-        [
-          "milk_choc_bar",
-          "strawberry",
-          "milk_choc_bar"
-        ],
-        [
-          "ridged_chips",
-          "ridged_chips",
-          "cupcake_choco"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 3,
-      "layers": [
-        [
-          "koala_toy",
-          "ridged_chips",
-          "teddy_bear"
-        ],
-        [
-          "popping_candy",
-          "tea_box",
-          "sandwich_cookies"
-        ],
-        [
-          "soda",
-          "red_onion",
-          "coconut_water"
-        ],
-        [
-          "milk_carton_tall",
-          "pump_ketchup",
-          "sandwich_cookies"
-        ],
-        [
-          "cupcake_choco",
-          "koala_toy",
-          "cream_cheese"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          "teddy_bear",
-          "sandwich_cookies"
-        ],
-        [
-          "sandwich_cookies",
-          "koala_toy",
-          "milk_choc_bar"
-        ],
-        [
-          "teddy_bear",
-          "iced_tea",
-          "koala_toy"
-        ],
-        [
-          "teddy_bear",
-          "pump_ketchup",
-          "sandwich_cookies"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "lock": 3,
-      "layers": [
-        [
-          "soda",
-          "strawberry",
-          "soda"
-        ],
-        [
-          "pump_ketchup",
-          "cream_cheese",
-          "cream_cheese"
-        ],
-        [
-          "teddy_bear",
-          "sandwich_cookies",
-          "koala_toy"
-        ],
-        [
-          "ridged_chips",
-          "strawberry",
-          "soda"
-        ],
-        [
-          "soda",
-          "iced_tea",
-          "coconut_water"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "lock": 1,
-      "layers": [
-        [
-          null,
-          null,
-          "coconut_water"
-        ],
-        [
-          "iced_tea",
-          "tea_box",
-          "teddy_bear"
-        ],
-        [
-          "milk_choc_bar",
-          "cupcake_choco",
-          "cupcake_choco"
-        ],
-        [
-          "iced_tea",
-          "ridged_chips",
-          "iced_tea"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 3,
-      "layers": [
-        [
-          "cupcake_choco",
-          "soda",
-          "ridged_chips"
-        ],
-        [
-          "ridged_chips",
-          "coconut_water",
-          "sandwich_cookies"
-        ],
-        [
-          "tea_box",
-          "pump_ketchup",
-          "milk_carton_tall"
-        ],
-        [
-          "popping_candy",
-          "milk_carton_tall",
-          "soda"
-        ],
-        [
-          "popping_candy",
-          "koala_toy",
-          "milk_choc_bar"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "strawberry",
-          "milk_choc_bar",
-          "cream_cheese"
-        ],
-        [
-          "tea_box",
-          "pump_ketchup",
-          "sandwich_cookies"
-        ],
-        [
-          "ridged_chips",
-          "tea_box",
-          "strawberry"
-        ],
-        [
-          "red_onion",
-          "koala_toy",
-          "cupcake_choco"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "lock": 1,
-      "layers": [
-        [
-          null,
-          "cream_cheese",
-          "soda"
-        ],
-        [
-          "popping_candy",
-          "cupcake_choco",
-          "ridged_chips"
-        ],
-        [
-          "koala_toy",
-          "milk_carton_tall",
-          "teddy_bear"
-        ],
-        [
-          "milk_carton_tall",
-          "popping_candy",
-          "strawberry"
-        ],
-        [
-          "tea_box",
-          "pump_ketchup",
-          "strawberry"
+          "popcorn_bag",
+          "pasta_jar_tall",
+          null
         ]
       ]
     },
@@ -463,29 +206,9 @@
       "c": 2,
       "layers": [
         [
-          "tea_box",
-          "tea_box",
-          null
-        ],
-        [
-          "ridged_chips",
-          "cream_cheese",
-          "ridged_chips"
-        ],
-        [
-          "popping_candy",
-          "soda",
-          "strawberry"
-        ],
-        [
-          "teddy_bear",
-          "cupcake_choco",
-          "soda"
-        ],
-        [
-          "koala_toy",
-          "soda",
-          "strawberry"
+          "milk_carton_tall",
+          null,
+          "fig"
         ]
       ]
     },
@@ -494,24 +217,9 @@
       "c": 3,
       "layers": [
         [
-          null,
-          "cream_cheese",
+          "cupcake_choco",
+          "glass_cleaner",
           null
-        ],
-        [
-          "iced_tea",
-          "soda",
-          "milk_choc_bar"
-        ],
-        [
-          "iced_tea",
-          "teddy_bear",
-          "coconut_water"
-        ],
-        [
-          "strawberry",
-          "red_onion",
-          "cream_cheese"
         ]
       ]
     },
@@ -520,66 +228,33 @@
       "c": 0,
       "layers": [
         [
-          null,
-          "strawberry",
-          "strawberry"
-        ],
-        [
-          "milk_choc_bar",
           "coconut_water",
-          "iced_tea"
-        ],
-        [
-          "sandwich_cookies",
-          "red_onion",
-          "milk_choc_bar"
-        ],
-        [
-          "tea_box",
-          "milk_carton_tall",
-          "coconut_water"
-        ],
-        [
-          "pump_ketchup",
-          "milk_carton_tall",
-          "cream_cheese"
+          null,
+          "ridged_chips"
         ]
       ]
     },
     {
       "r": 4,
       "c": 1,
+      "lock": 1,
       "layers": [
         [
-          "pump_ketchup",
-          "red_onion",
-          "coconut_water"
-        ],
-        [
-          "koala_toy",
-          "koala_toy",
-          "cream_cheese"
-        ],
-        [
-          "milk_choc_bar",
-          "soda",
-          "coconut_water"
-        ],
-        [
-          "red_onion",
-          "teddy_bear",
-          "teddy_bear"
+          "slush_cup",
+          "cupcake_choco",
+          null
         ]
       ]
     },
     {
       "r": 4,
       "c": 2,
+      "lock": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "cabbage",
+          "coconut_water",
+          "berry_smoothie"
         ]
       ]
     },
@@ -588,29 +263,9 @@
       "c": 3,
       "layers": [
         [
-          null,
-          "coconut_water",
-          "ridged_chips"
-        ],
-        [
-          "milk_choc_bar",
-          "ridged_chips",
-          "teddy_bear"
-        ],
-        [
-          "tea_box",
-          "iced_tea",
-          "ridged_chips"
-        ],
-        [
-          "teddy_bear",
-          "sandwich_cookies",
-          "milk_carton_tall"
-        ],
-        [
-          "sandwich_cookies",
-          "koala_toy",
-          "iced_tea"
+          "milk_carton_tall",
+          "pasta_jar_tall",
+          "air_freshener"
         ]
       ]
     }

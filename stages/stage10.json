@@ -1,23 +1,19 @@
 {
   "level": 10,
-  "timeLimit": 360,
-  "cols": 3,
-  "rows": 4,
+  "timeLimit": 217,
+  "cols": 4,
+  "rows": 3,
   "cellCap": 3,
   "goods": [
-    "apple",
-    "chip_tube",
-    "coconut_water",
-    "cookie_disc",
-    "frozen_berries",
-    "gelato_cup",
-    "lotion_pump",
-    "marshmallow_blue",
-    "milk_carton_tall",
-    "orange_soda",
-    "popping_candy",
+    "candy_coated_bag",
+    "coconut",
+    "dish_soap",
+    "gum_pack",
+    "mason_jam",
+    "milk",
     "robot_toy",
-    "toaster_pastry"
+    "rubber_duck",
+    "spray_cleaner"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -27,16 +23,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 13,
+    "distinct": 9,
     "depthRange": [
       1,
-      2
+      1
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
-    "lockCubbies": 0,
-    "totalGoods": 54,
-    "attempt": 5
+    "lockCubbies": 1,
+    "totalGoods": 27,
+    "attempt": 0
   },
   "cubbies": [
     {
@@ -44,9 +40,9 @@
       "c": 0,
       "layers": [
         [
-          "cookie_disc",
-          "marshmallow_blue",
-          "frozen_berries"
+          "dish_soap",
+          "mason_jam",
+          "rubber_duck"
         ]
       ]
     },
@@ -55,14 +51,9 @@
       "c": 1,
       "layers": [
         [
-          "cookie_disc",
           null,
+          "mason_jam",
           null
-        ],
-        [
-          "apple",
-          "robot_toy",
-          "popping_candy"
         ]
       ]
     },
@@ -71,14 +62,20 @@
       "c": 2,
       "layers": [
         [
-          "milk_carton_tall",
-          "gelato_cup",
-          "coconut_water"
-        ],
+          "milk",
+          "milk",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "layers": [
         [
-          "toaster_pastry",
-          "lotion_pump",
-          "lotion_pump"
+          "rubber_duck",
+          "spray_cleaner",
+          "gum_pack"
         ]
       ]
     },
@@ -87,14 +84,9 @@
       "c": 0,
       "layers": [
         [
-          "orange_soda",
-          "chip_tube",
-          "marshmallow_blue"
-        ],
-        [
-          "frozen_berries",
-          "orange_soda",
-          "apple"
+          "mason_jam",
+          "candy_coated_bag",
+          "robot_toy"
         ]
       ]
     },
@@ -103,9 +95,9 @@
       "c": 1,
       "layers": [
         [
-          "gelato_cup",
-          null,
-          "milk_carton_tall"
+          "spray_cleaner",
+          "coconut",
+          "spray_cleaner"
         ]
       ]
     },
@@ -114,30 +106,32 @@
       "c": 2,
       "layers": [
         [
+          "dish_soap",
           "robot_toy",
-          "toaster_pastry",
-          "popping_candy"
-        ],
+          "candy_coated_bag"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "lock": 2,
+      "layers": [
         [
+          "dish_soap",
+          "milk",
+          "gum_pack"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "coconut",
           "robot_toy",
-          "orange_soda",
-          "lotion_pump"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "chip_tube",
-          "coconut_water",
-          null
-        ],
-        [
-          "gelato_cup",
-          "cookie_disc",
-          "chip_tube"
+          "gum_pack"
         ]
       ]
     },
@@ -146,7 +140,7 @@
       "c": 1,
       "layers": [
         [
-          null,
+          "candy_coated_bag",
           null,
           null
         ]
@@ -157,62 +151,20 @@
       "c": 2,
       "layers": [
         [
-          "marshmallow_blue",
-          "chip_tube",
-          "orange_soda"
-        ],
-        [
-          "coconut_water",
-          "chip_tube",
-          "popping_candy"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "milk_carton_tall",
-          "chip_tube",
-          null
-        ],
-        [
-          "marshmallow_blue",
-          "popping_candy",
-          "gelato_cup"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
           null,
-          "orange_soda",
-          "toaster_pastry"
-        ],
-        [
-          "orange_soda",
-          "apple",
-          "marshmallow_blue"
+          null,
+          null
         ]
       ]
     },
     {
-      "r": 3,
-      "c": 2,
+      "r": 2,
+      "c": 3,
       "layers": [
         [
-          "marshmallow_blue",
-          "popping_candy",
-          "gelato_cup"
-        ],
-        [
-          "gelato_cup",
-          "frozen_berries",
-          "popping_candy"
+          "coconut",
+          "rubber_duck",
+          null
         ]
       ]
     }

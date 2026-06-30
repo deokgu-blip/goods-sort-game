@@ -1,22 +1,19 @@
 {
   "level": 3,
-  "timeLimit": 360,
+  "timeLimit": 233,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
     "broccoli",
     "cheese_wheel",
-    "chip_can_tall",
     "cola_cherry",
-    "cream_cheese",
-    "energy_drink",
-    "koala_toy",
-    "lemon_lime_soda",
     "orange_juice_carton",
     "popcorn_box",
+    "sandwich_cookies",
     "soap_dispenser",
-    "sorbet_cup"
+    "sorbet_cup",
+    "sports_drink"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -26,15 +23,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 12,
+    "distinct": 9,
     "depthRange": [
       1,
-      2
+      1
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 0,
-    "totalGoods": 45,
+    "totalGoods": 27,
     "attempt": 0
   },
   "cubbies": [
@@ -43,15 +40,26 @@
       "c": 0,
       "layers": [
         [
+          null,
           "soap_dispenser",
-          "chip_can_tall",
-          "koala_toy"
+          "broccoli"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "layers": [
+        [
+          "orange_juice_carton",
+          "sandwich_cookies",
+          "sports_drink"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
       "layers": [
         [
           null,
@@ -61,29 +69,13 @@
       ]
     },
     {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "cream_cheese",
-          "chip_can_tall",
-          null
-        ]
-      ]
-    },
-    {
       "r": 1,
       "c": 0,
       "layers": [
         [
-          "orange_juice_carton",
-          null,
-          "cola_cherry"
-        ],
-        [
-          "orange_juice_carton",
-          "lemon_lime_soda",
-          "energy_drink"
+          "popcorn_box",
+          "sorbet_cup",
+          null
         ]
       ]
     },
@@ -92,9 +84,9 @@
       "c": 1,
       "layers": [
         [
+          "broccoli",
           null,
-          null,
-          null
+          "cheese_wheel"
         ]
       ]
     },
@@ -103,57 +95,42 @@
       "c": 2,
       "layers": [
         [
-          "koala_toy",
+          null,
+          "sorbet_cup",
+          "soap_dispenser"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "sandwich_cookies",
           "cheese_wheel",
           "cola_cherry"
-        ],
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
         [
-          "soap_dispenser",
-          "broccoli",
+          "cola_cherry",
+          "sandwich_cookies",
           "popcorn_box"
         ]
       ]
     },
     {
       "r": 2,
-      "c": 0,
+      "c": 2,
       "layers": [
         [
-          "orange_juice_carton",
-          "cola_cherry",
+          null,
+          null,
           null
-        ],
-        [
-          "soap_dispenser",
-          "cola_cherry",
-          "sorbet_cup"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "popcorn_box",
-          "koala_toy",
-          "broccoli"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "cream_cheese",
-          null,
-          "broccoli"
-        ],
-        [
-          "broccoli",
-          "energy_drink",
-          "cola_cherry"
         ]
       ]
     },
@@ -162,9 +139,9 @@
       "c": 0,
       "layers": [
         [
-          "popcorn_box",
-          "orange_juice_carton",
-          "cream_cheese"
+          "sports_drink",
+          "sports_drink",
+          null
         ]
       ]
     },
@@ -174,13 +151,8 @@
       "layers": [
         [
           "orange_juice_carton",
-          null,
-          "sorbet_cup"
-        ],
-        [
-          "lemon_lime_soda",
-          "energy_drink",
-          "orange_juice_carton"
+          "popcorn_box",
+          "soap_dispenser"
         ]
       ]
     },
@@ -189,14 +161,9 @@
       "c": 2,
       "layers": [
         [
-          "chip_can_tall",
-          "cola_cherry",
-          "broccoli"
-        ],
-        [
-          "lemon_lime_soda",
+          "orange_juice_carton",
           "sorbet_cup",
-          "cheese_wheel"
+          "cola_cherry"
         ]
       ]
     }

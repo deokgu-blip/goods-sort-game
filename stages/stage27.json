@@ -1,23 +1,19 @@
 {
   "level": 27,
-  "timeLimit": 329,
+  "timeLimit": 211,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "cream_cheese",
-    "cupcake_choco",
-    "fox_toy",
-    "glass_cleaner",
-    "grapes",
-    "iced_tea",
-    "popping_candy",
-    "protein_tube",
-    "red_onion",
-    "rice_bag",
-    "santa",
-    "sriracha",
-    "wheel_of_lime"
+    "butter_box",
+    "candy_coated_bag",
+    "cocoa_tin_tall",
+    "dino_green",
+    "egg",
+    "penguin",
+    "soap_dispenser",
+    "sorbet_cup",
+    "toothpaste"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -27,16 +23,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 13,
+    "distinct": 9,
     "depthRange": [
-      3,
-      4
+      1,
+      1
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
-    "lockCubbies": 2,
-    "totalGoods": 111,
-    "attempt": 2
+    "lockCubbies": 0,
+    "totalGoods": 27,
+    "attempt": 0
   },
   "cubbies": [
     {
@@ -44,19 +40,9 @@
       "c": 0,
       "layers": [
         [
-          null,
-          "protein_tube",
-          null
-        ],
-        [
-          "grapes",
-          "wheel_of_lime",
-          "sriracha"
-        ],
-        [
-          "rice_bag",
-          "popping_candy",
-          "cupcake_choco"
+          "dino_green",
+          "butter_box",
+          "sorbet_cup"
         ]
       ]
     },
@@ -65,19 +51,9 @@
       "c": 1,
       "layers": [
         [
-          "grapes",
-          "popping_candy",
-          "grapes"
-        ],
-        [
-          "cream_cheese",
-          "red_onion",
-          "grapes"
-        ],
-        [
-          "red_onion",
-          "rice_bag",
-          "protein_tube"
+          "egg",
+          "soap_dispenser",
+          "cocoa_tin_tall"
         ]
       ]
     },
@@ -86,24 +62,9 @@
       "c": 2,
       "layers": [
         [
+          "cocoa_tin_tall",
           null,
-          "santa",
-          "popping_candy"
-        ],
-        [
-          "cream_cheese",
-          "santa",
-          "iced_tea"
-        ],
-        [
-          "cupcake_choco",
-          "sriracha",
-          "popping_candy"
-        ],
-        [
-          "fox_toy",
-          "wheel_of_lime",
-          "cream_cheese"
+          null
         ]
       ]
     },
@@ -112,24 +73,9 @@
       "c": 0,
       "layers": [
         [
-          "santa",
-          "grapes",
-          "wheel_of_lime"
-        ],
-        [
-          "fox_toy",
-          "rice_bag",
-          "grapes"
-        ],
-        [
-          "fox_toy",
-          "wheel_of_lime",
-          "protein_tube"
-        ],
-        [
-          "grapes",
-          "grapes",
-          "cupcake_choco"
+          "candy_coated_bag",
+          "sorbet_cup",
+          "egg"
         ]
       ]
     },
@@ -138,24 +84,9 @@
       "c": 1,
       "layers": [
         [
+          "toothpaste",
           null,
-          "glass_cleaner",
-          null
-        ],
-        [
-          "sriracha",
-          "cupcake_choco",
-          "cream_cheese"
-        ],
-        [
-          "popping_candy",
-          "sriracha",
-          "iced_tea"
-        ],
-        [
-          "protein_tube",
-          "santa",
-          "glass_cleaner"
+          "soap_dispenser"
         ]
       ]
     },
@@ -164,52 +95,15 @@
       "c": 2,
       "layers": [
         [
-          "glass_cleaner",
-          "iced_tea",
-          "red_onion"
-        ],
-        [
-          "cupcake_choco",
-          "iced_tea",
-          "red_onion"
-        ],
-        [
-          "fox_toy",
-          "cupcake_choco",
-          "santa"
+          "soap_dispenser",
+          "penguin",
+          null
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
-      "lock": 1,
-      "layers": [
-        [
-          "sriracha",
-          "wheel_of_lime",
-          "red_onion"
-        ],
-        [
-          "santa",
-          "rice_bag",
-          "iced_tea"
-        ],
-        [
-          "red_onion",
-          "glass_cleaner",
-          "sriracha"
-        ],
-        [
-          "rice_bag",
-          "grapes",
-          "popping_candy"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
       "layers": [
         [
           null,
@@ -220,22 +114,23 @@
     },
     {
       "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "dino_green",
+          "butter_box",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
       "c": 2,
       "layers": [
         [
-          "red_onion",
-          "fox_toy",
-          "cupcake_choco"
-        ],
-        [
-          "red_onion",
-          "protein_tube",
-          "wheel_of_lime"
-        ],
-        [
-          "iced_tea",
-          "cream_cheese",
-          "cream_cheese"
+          "penguin",
+          "penguin",
+          "toothpaste"
         ]
       ]
     },
@@ -244,24 +139,9 @@
       "c": 0,
       "layers": [
         [
-          "wheel_of_lime",
-          "popping_candy",
-          "cupcake_choco"
-        ],
-        [
-          "santa",
-          "protein_tube",
-          "wheel_of_lime"
-        ],
-        [
-          "santa",
-          "rice_bag",
-          "glass_cleaner"
-        ],
-        [
-          "red_onion",
-          "popping_candy",
-          "glass_cleaner"
+          "candy_coated_bag",
+          "cocoa_tin_tall",
+          "candy_coated_bag"
         ]
       ]
     },
@@ -270,46 +150,20 @@
       "c": 1,
       "layers": [
         [
-          "santa",
-          "protein_tube",
-          "rice_bag"
-        ],
-        [
-          "glass_cleaner",
-          "wheel_of_lime",
-          "sriracha"
-        ],
-        [
-          "fox_toy",
-          "popping_candy",
-          "rice_bag"
+          "butter_box",
+          "dino_green",
+          null
         ]
       ]
     },
     {
       "r": 3,
       "c": 2,
-      "lock": 3,
       "layers": [
         [
-          "glass_cleaner",
-          null,
-          "sriracha"
-        ],
-        [
-          "sriracha",
-          "rice_bag",
-          "glass_cleaner"
-        ],
-        [
-          "protein_tube",
-          "iced_tea",
-          "iced_tea"
-        ],
-        [
-          "cupcake_choco",
-          "protein_tube",
-          "iced_tea"
+          "toothpaste",
+          "sorbet_cup",
+          "egg"
         ]
       ]
     }

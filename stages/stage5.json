@@ -1,20 +1,17 @@
 {
   "level": 5,
-  "timeLimit": 360,
+  "timeLimit": 222,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "cabbage",
-    "coconut_water",
-    "cookie_disc",
     "cream_cheese",
     "fox_toy",
+    "frog_toy",
     "glue_stick",
     "mayo_squeeze",
     "milk",
     "pomegranate",
-    "sandwich_cookies",
     "soda",
     "soy_sauce"
   ],
@@ -26,42 +23,38 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 12,
+    "distinct": 9,
     "depthRange": [
       1,
-      2
+      1
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
-    "lockCubbies": 0,
-    "totalGoods": 39,
+    "lockCubbies": 1,
+    "totalGoods": 27,
     "attempt": 0
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
+      "lock": 1,
       "layers": [
-        [
-          "fox_toy",
-          "coconut_water",
-          "cream_cheese"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 1,
-      "layers": [
-        [
-          "sandwich_cookies",
-          "milk",
-          "cream_cheese"
-        ],
         [
           "soda",
-          "soy_sauce",
-          "glue_stick"
+          "glue_stick",
+          "fox_toy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          "soda",
+          "soda"
         ]
       ]
     },
@@ -70,44 +63,6 @@
       "c": 2,
       "layers": [
         [
-          "sandwich_cookies",
-          "coconut_water",
-          null
-        ],
-        [
-          "glue_stick",
-          "cabbage",
-          "milk"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "mayo_squeeze",
-          "fox_toy",
-          "coconut_water"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "mayo_squeeze",
-          "cabbage",
-          "glue_stick"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
           null,
           null,
           null
@@ -115,35 +70,8 @@
       ]
     },
     {
-      "r": 2,
+      "r": 1,
       "c": 0,
-      "layers": [
-        [
-          "pomegranate",
-          "fox_toy",
-          "sandwich_cookies"
-        ],
-        [
-          "mayo_squeeze",
-          "cookie_disc",
-          "cream_cheese"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          null,
-          "cookie_disc",
-          "cabbage"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
       "layers": [
         [
           "fox_toy",
@@ -153,18 +81,68 @@
       ]
     },
     {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "frog_toy",
+          "glue_stick",
+          "cream_cheese"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "mayo_squeeze",
+          null,
+          "mayo_squeeze"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          "pomegranate",
+          "cream_cheese"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "frog_toy",
+          "milk",
+          "pomegranate"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "fox_toy",
+          null,
+          "milk"
+        ]
+      ]
+    },
+    {
       "r": 3,
       "c": 0,
       "layers": [
         [
-          "soy_sauce",
-          "soda",
-          null
-        ],
-        [
-          "cookie_disc",
-          "milk",
-          "soda"
+          "glue_stick",
+          "mayo_squeeze",
+          "frog_toy"
         ]
       ]
     },
@@ -173,8 +151,8 @@
       "c": 1,
       "layers": [
         [
-          "pomegranate",
           null,
+          "cream_cheese",
           null
         ]
       ]
@@ -184,9 +162,9 @@
       "c": 2,
       "layers": [
         [
-          "fox_toy",
-          null,
-          "fox_toy"
+          "milk",
+          "soy_sauce",
+          "soy_sauce"
         ]
       ]
     }

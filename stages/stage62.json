@@ -1,24 +1,22 @@
 {
   "level": 62,
-  "timeLimit": 279,
+  "timeLimit": 237,
   "cols": 3,
   "rows": 5,
   "cellCap": 3,
   "goods": [
-    "apple",
+    "bath_salt_tub",
     "bok_choy",
-    "butter",
-    "detergent",
-    "flower_vase",
+    "cabbage",
+    "candle",
+    "cereal_box_blue",
+    "cherry_pair",
+    "cream_cheese",
     "glue_stick",
-    "lychee",
-    "robot_toy",
-    "salt_grinder",
-    "sandwich_cookies",
-    "shiba_dog",
-    "tennis_can",
-    "toaster_pastry",
-    "toothpaste"
+    "hand_soap",
+    "sorbet_cup",
+    "spray_sunscreen",
+    "strawberry"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -28,245 +26,128 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 14,
+    "distinct": 12,
     "depthRange": [
-      3,
-      4
+      1,
+      1
     ],
     "emptyCubbies": 1,
-    "frontGaps": 12,
-    "lockCubbies": 5,
-    "totalGoods": 135,
-    "attempt": 90
+    "frontGaps": 6,
+    "lockCubbies": 3,
+    "totalGoods": 36,
+    "attempt": 0
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          "spray_sunscreen"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "cherry_pair",
+          "spray_sunscreen",
+          "strawberry"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
       "lock": 4,
       "layers": [
         [
-          "robot_toy",
-          "shiba_dog",
-          null
-        ],
-        [
-          "tennis_can",
-          "detergent",
-          "shiba_dog"
-        ],
-        [
-          "toothpaste",
-          "flower_vase",
-          "toaster_pastry"
-        ],
-        [
-          "toothpaste",
-          "toothpaste",
-          "toaster_pastry"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 1,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "lock": 1,
-      "layers": [
-        [
-          "lychee",
-          "toothpaste",
-          "apple"
-        ],
-        [
-          "tennis_can",
-          "flower_vase",
-          "butter"
-        ],
-        [
           "bok_choy",
-          "toaster_pastry",
-          "sandwich_cookies"
+          "cereal_box_blue",
+          "candle"
         ]
       ]
     },
     {
       "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "tennis_can",
-          "apple",
-          "shiba_dog"
-        ],
-        [
-          "tennis_can",
-          "shiba_dog",
-          "salt_grinder"
-        ],
-        [
-          "tennis_can",
-          "tennis_can",
-          "lychee"
-        ],
-        [
-          "lychee",
-          "apple",
-          "flower_vase"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "lock": 3,
-      "layers": [
-        [
-          "bok_choy",
-          null,
-          "apple"
-        ],
-        [
-          "lychee",
-          "lychee",
-          "sandwich_cookies"
-        ],
-        [
-          "sandwich_cookies",
-          "salt_grinder",
-          "robot_toy"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "glue_stick",
-          "glue_stick",
-          "butter"
-        ],
-        [
-          "tennis_can",
-          "glue_stick",
-          "tennis_can"
-        ],
-        [
-          "flower_vase",
-          "robot_toy",
-          "butter"
-        ],
-        [
-          "flower_vase",
-          "apple",
-          "sandwich_cookies"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          "toothpaste",
-          null
-        ],
-        [
-          "flower_vase",
-          "salt_grinder",
-          "bok_choy"
-        ],
-        [
-          "salt_grinder",
-          "butter",
-          "lychee"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "lock": 1,
-      "layers": [
-        [
-          "toaster_pastry",
-          "robot_toy",
-          null
-        ],
-        [
-          "sandwich_cookies",
-          "butter",
-          "butter"
-        ],
-        [
-          "bok_choy",
-          "glue_stick",
-          "toothpaste"
-        ],
-        [
-          "butter",
-          "toaster_pastry",
-          "butter"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          null,
-          null,
-          "detergent"
-        ],
-        [
-          "tennis_can",
-          "lychee",
-          "detergent"
-        ],
-        [
-          "toothpaste",
-          "sandwich_cookies",
-          "glue_stick"
-        ],
-        [
-          "apple",
-          "robot_toy",
-          "apple"
-        ]
-      ]
-    },
-    {
-      "r": 3,
       "c": 0,
       "lock": 2,
       "layers": [
         [
-          "lychee",
-          "shiba_dog",
-          null
-        ],
+          "sorbet_cup",
+          "cabbage",
+          "hand_soap"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
         [
-          "flower_vase",
-          "flower_vase",
-          "bok_choy"
-        ],
+          null,
+          "cherry_pair",
+          "hand_soap"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 3,
+      "layers": [
         [
-          "flower_vase",
-          "shiba_dog",
-          "bok_choy"
+          "bok_choy",
+          "glue_stick",
+          "spray_sunscreen"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "cherry_pair",
+          "sorbet_cup",
+          "glue_stick"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "cream_cheese",
+          null,
+          "cereal_box_blue"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "candle",
+          "glue_stick",
+          "cream_cheese"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "cereal_box_blue",
+          "cabbage",
+          "cream_cheese"
         ]
       ]
     },
@@ -276,23 +157,8 @@
       "layers": [
         [
           null,
-          null,
-          "shiba_dog"
-        ],
-        [
-          "shiba_dog",
-          "bok_choy",
-          "salt_grinder"
-        ],
-        [
-          "toothpaste",
-          "butter",
-          "glue_stick"
-        ],
-        [
-          "toaster_pastry",
-          "salt_grinder",
-          "toaster_pastry"
+          "cabbage",
+          "bath_salt_tub"
         ]
       ]
     },
@@ -301,24 +167,9 @@
       "c": 2,
       "layers": [
         [
-          "shiba_dog",
-          "shiba_dog",
-          "tennis_can"
-        ],
-        [
-          "glue_stick",
-          "salt_grinder",
-          "toaster_pastry"
-        ],
-        [
-          "tennis_can",
-          "robot_toy",
-          "toaster_pastry"
-        ],
-        [
-          "sandwich_cookies",
-          "glue_stick",
-          "apple"
+          "bok_choy",
+          "strawberry",
+          "hand_soap"
         ]
       ]
     },
@@ -327,19 +178,9 @@
       "c": 0,
       "layers": [
         [
-          "shiba_dog",
-          null,
-          "detergent"
-        ],
-        [
-          "toothpaste",
-          "bok_choy",
-          "detergent"
-        ],
-        [
-          "robot_toy",
-          "detergent",
-          "detergent"
+          "candle",
+          "bath_salt_tub",
+          null
         ]
       ]
     },
@@ -348,19 +189,9 @@
       "c": 1,
       "layers": [
         [
-          "salt_grinder",
-          "apple",
-          "detergent"
-        ],
-        [
-          "flower_vase",
-          "shiba_dog",
-          "glue_stick"
-        ],
-        [
-          "sandwich_cookies",
-          "lychee",
-          "flower_vase"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -369,19 +200,9 @@
       "c": 2,
       "layers": [
         [
-          "sandwich_cookies",
-          "robot_toy",
-          null
-        ],
-        [
-          "tennis_can",
-          "detergent",
-          "salt_grinder"
-        ],
-        [
-          "flower_vase",
-          "bok_choy",
-          "robot_toy"
+          "bath_salt_tub",
+          "strawberry",
+          "sorbet_cup"
         ]
       ]
     }

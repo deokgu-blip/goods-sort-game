@@ -1,23 +1,25 @@
 {
   "level": 77,
-  "timeLimit": 310,
+  "timeLimit": 288,
   "cols": 4,
   "rows": 5,
   "cellCap": 3,
   "goods": [
-    "apple",
-    "butter",
-    "cola",
-    "detergent",
-    "dish_soap",
-    "energy_drink",
-    "hand_soap",
+    "chip_tube",
+    "chips_tube_red",
+    "dino_green",
+    "gingerbread",
+    "glass_cleaner",
+    "green_cup",
+    "honey_pot_round",
+    "lemonade",
+    "mason_jam",
     "milk_choc_bar",
-    "pet_food_bag",
-    "protein_tube",
+    "mushroom_brown",
     "red_onion",
-    "rice_bag",
     "robot_toy",
+    "soap_dispenser",
+    "soda",
     "teddy_bear"
   ],
   "combo": {
@@ -28,16 +30,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 14,
+    "distinct": 16,
     "depthRange": [
-      4,
-      4
+      1,
+      1
     ],
     "emptyCubbies": 1,
-    "frontGaps": 18,
-    "lockCubbies": 7,
-    "totalGoods": 210,
-    "attempt": 163
+    "frontGaps": 9,
+    "lockCubbies": 4,
+    "totalGoods": 48,
+    "attempt": 0
   },
   "cubbies": [
     {
@@ -46,51 +48,21 @@
       "lock": 2,
       "layers": [
         [
+          "teddy_bear",
           null,
-          "detergent",
-          null
-        ],
-        [
-          "robot_toy",
-          "detergent",
-          "milk_choc_bar"
-        ],
-        [
-          "hand_soap",
-          "pet_food_bag",
-          "energy_drink"
-        ],
-        [
-          "robot_toy",
-          "apple",
-          "dish_soap"
+          "green_cup"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
-      "lock": 1,
+      "lock": 4,
       "layers": [
         [
-          null,
-          "apple",
-          "hand_soap"
-        ],
-        [
-          "red_onion",
-          "detergent",
-          "pet_food_bag"
-        ],
-        [
-          "pet_food_bag",
-          "dish_soap",
-          "cola"
-        ],
-        [
-          "cola",
-          "rice_bag",
-          "cola"
+          "soda",
+          "glass_cleaner",
+          null
         ]
       ]
     },
@@ -99,24 +71,9 @@
       "c": 2,
       "layers": [
         [
-          null,
-          "butter",
-          "rice_bag"
-        ],
-        [
-          "teddy_bear",
-          "hand_soap",
-          "pet_food_bag"
-        ],
-        [
-          "red_onion",
-          "dish_soap",
-          "detergent"
-        ],
-        [
           "milk_choc_bar",
-          "pet_food_bag",
-          "protein_tube"
+          "mason_jam",
+          "honey_pot_round"
         ]
       ]
     },
@@ -126,23 +83,8 @@
       "layers": [
         [
           null,
-          "protein_tube",
-          "pet_food_bag"
-        ],
-        [
-          "energy_drink",
-          "protein_tube",
-          "robot_toy"
-        ],
-        [
-          "cola",
-          "energy_drink",
-          "pet_food_bag"
-        ],
-        [
-          "energy_drink",
-          "detergent",
-          "butter"
+          "soap_dispenser",
+          "milk_choc_bar"
         ]
       ]
     },
@@ -151,51 +93,20 @@
       "c": 0,
       "layers": [
         [
-          "robot_toy",
-          "apple",
-          "milk_choc_bar"
-        ],
-        [
-          "cola",
-          "butter",
-          "robot_toy"
-        ],
-        [
-          "robot_toy",
-          "hand_soap",
-          "dish_soap"
-        ],
-        [
-          "hand_soap",
-          "teddy_bear",
-          "apple"
+          "milk_choc_bar",
+          "red_onion",
+          "lemonade"
         ]
       ]
     },
     {
       "r": 1,
       "c": 1,
-      "lock": 2,
       "layers": [
         [
-          null,
-          "butter",
-          null
-        ],
-        [
-          "apple",
-          "red_onion",
-          "cola"
-        ],
-        [
-          "cola",
-          "apple",
+          "teddy_bear",
+          "chip_tube",
           "teddy_bear"
-        ],
-        [
-          "energy_drink",
-          "protein_tube",
-          "energy_drink"
         ]
       ]
     },
@@ -205,78 +116,31 @@
       "lock": 3,
       "layers": [
         [
-          "apple",
-          "energy_drink",
-          "butter"
-        ],
-        [
-          "dish_soap",
-          "dish_soap",
-          "apple"
-        ],
-        [
-          "butter",
-          "dish_soap",
-          "apple"
-        ],
-        [
-          "energy_drink",
-          "teddy_bear",
-          "energy_drink"
+          "soda",
+          "honey_pot_round",
+          "green_cup"
         ]
       ]
     },
     {
       "r": 1,
       "c": 3,
-      "lock": 3,
       "layers": [
         [
+          "dino_green",
           null,
-          null,
-          "milk_choc_bar"
-        ],
-        [
-          "robot_toy",
-          "robot_toy",
-          "rice_bag"
-        ],
-        [
-          "rice_bag",
-          "detergent",
-          "red_onion"
-        ],
-        [
-          "cola",
-          "rice_bag",
-          "cola"
+          "honey_pot_round"
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
-      "lock": 1,
       "layers": [
         [
-          "apple",
-          "red_onion",
-          "butter"
-        ],
-        [
-          "dish_soap",
-          "energy_drink",
-          "rice_bag"
-        ],
-        [
-          "rice_bag",
-          "energy_drink",
-          "butter"
-        ],
-        [
-          "teddy_bear",
-          "energy_drink",
-          "dish_soap"
+          "robot_toy",
+          "soap_dispenser",
+          null
         ]
       ]
     },
@@ -287,22 +151,7 @@
         [
           null,
           null,
-          "rice_bag"
-        ],
-        [
-          "teddy_bear",
-          "energy_drink",
-          "detergent"
-        ],
-        [
-          "hand_soap",
-          "pet_food_bag",
-          "butter"
-        ],
-        [
-          "protein_tube",
-          "cola",
-          "teddy_bear"
+          null
         ]
       ]
     },
@@ -311,24 +160,9 @@
       "c": 2,
       "layers": [
         [
-          null,
-          "rice_bag",
-          "milk_choc_bar"
-        ],
-        [
-          "red_onion",
-          "teddy_bear",
-          "energy_drink"
-        ],
-        [
-          "rice_bag",
-          "teddy_bear",
-          "detergent"
-        ],
-        [
-          "pet_food_bag",
-          "milk_choc_bar",
-          "teddy_bear"
+          "glass_cleaner",
+          "mason_jam",
+          "chips_tube_red"
         ]
       ]
     },
@@ -337,24 +171,9 @@
       "c": 3,
       "layers": [
         [
-          "protein_tube",
-          "butter",
-          null
-        ],
-        [
-          "red_onion",
-          "dish_soap",
-          "milk_choc_bar"
-        ],
-        [
-          "apple",
-          "detergent",
-          "dish_soap"
-        ],
-        [
-          "hand_soap",
-          "detergent",
-          "cola"
+          "chip_tube",
+          "green_cup",
+          "gingerbread"
         ]
       ]
     },
@@ -363,24 +182,9 @@
       "c": 0,
       "layers": [
         [
-          null,
-          "red_onion",
-          "milk_choc_bar"
-        ],
-        [
-          "rice_bag",
-          "robot_toy",
-          "butter"
-        ],
-        [
-          "protein_tube",
-          "protein_tube",
-          "butter"
-        ],
-        [
-          "protein_tube",
-          "pet_food_bag",
-          "apple"
+          "lemonade",
+          "gingerbread",
+          "soap_dispenser"
         ]
       ]
     },
@@ -390,24 +194,9 @@
       "lock": 2,
       "layers": [
         [
-          "apple",
-          "dish_soap",
-          "milk_choc_bar"
-        ],
-        [
-          "protein_tube",
-          "dish_soap",
-          "teddy_bear"
-        ],
-        [
-          "robot_toy",
-          "milk_choc_bar",
-          "red_onion"
-        ],
-        [
-          "butter",
-          "rice_bag",
-          "red_onion"
+          "lemonade",
+          null,
+          "mason_jam"
         ]
       ]
     },
@@ -416,24 +205,9 @@
       "c": 2,
       "layers": [
         [
-          "dish_soap",
-          null,
-          "cola"
-        ],
-        [
-          "butter",
-          "protein_tube",
-          "detergent"
-        ],
-        [
-          "rice_bag",
-          "butter",
-          "robot_toy"
-        ],
-        [
-          "red_onion",
-          "robot_toy",
-          "protein_tube"
+          "chip_tube",
+          "mushroom_brown",
+          null
         ]
       ]
     },
@@ -442,24 +216,9 @@
       "c": 3,
       "layers": [
         [
-          "cola",
-          "protein_tube",
-          null
-        ],
-        [
-          "detergent",
-          "protein_tube",
-          "hand_soap"
-        ],
-        [
-          "hand_soap",
-          "milk_choc_bar",
-          "rice_bag"
-        ],
-        [
-          "robot_toy",
-          "detergent",
-          "robot_toy"
+          "mushroom_brown",
+          "mushroom_brown",
+          "soda"
         ]
       ]
     },
@@ -468,24 +227,9 @@
       "c": 0,
       "layers": [
         [
-          "rice_bag",
-          "apple",
-          "hand_soap"
-        ],
-        [
-          "milk_choc_bar",
-          "hand_soap",
-          "teddy_bear"
-        ],
-        [
-          "pet_food_bag",
-          "milk_choc_bar",
-          "pet_food_bag"
-        ],
-        [
-          "teddy_bear",
-          "red_onion",
-          "red_onion"
+          "robot_toy",
+          "chips_tube_red",
+          null
         ]
       ]
     },
@@ -494,24 +238,9 @@
       "c": 1,
       "layers": [
         [
-          "detergent",
-          null,
-          "energy_drink"
-        ],
-        [
-          "pet_food_bag",
-          "pet_food_bag",
-          "dish_soap"
-        ],
-        [
-          "pet_food_bag",
-          "detergent",
-          "apple"
-        ],
-        [
-          "teddy_bear",
-          "cola",
-          "robot_toy"
+          "chips_tube_red",
+          "glass_cleaner",
+          "dino_green"
         ]
       ]
     },
@@ -520,9 +249,9 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "dino_green",
+          "red_onion",
+          "robot_toy"
         ]
       ]
     },
@@ -531,24 +260,9 @@
       "c": 3,
       "layers": [
         [
-          "teddy_bear",
+          "gingerbread",
           null,
-          "protein_tube"
-        ],
-        [
-          "red_onion",
-          "hand_soap",
-          "milk_choc_bar"
-        ],
-        [
-          "milk_choc_bar",
-          "cola",
-          "hand_soap"
-        ],
-        [
-          "hand_soap",
-          "red_onion",
-          "hand_soap"
+          "red_onion"
         ]
       ]
     }

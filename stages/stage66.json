@@ -1,25 +1,22 @@
 {
   "level": 66,
-  "timeLimit": 360,
-  "cols": 4,
+  "timeLimit": 218,
+  "cols": 3,
   "rows": 5,
   "cellCap": 3,
   "goods": [
+    "band_aid_box",
+    "beet",
+    "broccoli",
+    "caviar_tin",
+    "cereal_box_blue",
     "coconut_water",
-    "cooking_oil",
-    "deodorant_stick",
-    "dragon_toy",
-    "gift_box",
-    "glass_cleaner",
-    "honey_jar",
-    "icebar_a",
-    "lemon_soda",
-    "oat_canister",
-    "owl_toy",
-    "rice_bag",
-    "sorbet_cup",
-    "toothpaste",
-    "wheel_of_lime"
+    "cupcake_choco",
+    "fox_toy",
+    "pomegranate",
+    "soda",
+    "sports_drink",
+    "wafer_bar"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -29,195 +26,73 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 15,
+    "distinct": 12,
     "depthRange": [
-      3,
-      5
+      1,
+      1
     ],
     "emptyCubbies": 1,
-    "frontGaps": 9,
-    "lockCubbies": 6,
-    "totalGoods": 246,
-    "attempt": 22
+    "frontGaps": 6,
+    "lockCubbies": 5,
+    "totalGoods": 36,
+    "attempt": 0
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
-      "lock": 2,
+      "lock": 3,
       "layers": [
         [
-          "sorbet_cup",
-          "lemon_soda",
-          "rice_bag"
-        ],
-        [
-          "gift_box",
-          "sorbet_cup",
-          "lemon_soda"
-        ],
-        [
-          "cooking_oil",
-          "deodorant_stick",
-          "rice_bag"
-        ],
-        [
-          "honey_jar",
-          "gift_box",
-          "icebar_a"
-        ],
-        [
-          "toothpaste",
-          "dragon_toy",
-          "lemon_soda"
+          "broccoli",
+          "coconut_water",
+          "cereal_box_blue"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "lock": 1,
       "layers": [
         [
-          "coconut_water",
-          "toothpaste",
-          "coconut_water"
-        ],
-        [
-          "owl_toy",
-          "wheel_of_lime",
-          "sorbet_cup"
-        ],
-        [
-          "coconut_water",
-          "oat_canister",
-          "dragon_toy"
-        ],
-        [
-          "icebar_a",
-          "lemon_soda",
-          "honey_jar"
-        ],
-        [
-          "honey_jar",
-          "lemon_soda",
-          "wheel_of_lime"
+          "cereal_box_blue",
+          "wafer_bar",
+          "sports_drink"
         ]
       ]
     },
     {
       "r": 0,
       "c": 2,
-      "layers": [
-        [
-          "coconut_water",
-          "owl_toy",
-          null
-        ],
-        [
-          "icebar_a",
-          "icebar_a",
-          "glass_cleaner"
-        ],
-        [
-          "deodorant_stick",
-          "wheel_of_lime",
-          "cooking_oil"
-        ],
-        [
-          "coconut_water",
-          "icebar_a",
-          "lemon_soda"
-        ],
-        [
-          "cooking_oil",
-          "deodorant_stick",
-          "toothpaste"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 3,
       "lock": 2,
       "layers": [
         [
-          "cooking_oil",
-          "gift_box",
-          "owl_toy"
-        ],
-        [
-          "wheel_of_lime",
-          "rice_bag",
-          "wheel_of_lime"
-        ],
-        [
-          "coconut_water",
-          "owl_toy",
-          "lemon_soda"
-        ],
-        [
-          "deodorant_stick",
-          "oat_canister",
-          "gift_box"
-        ],
-        [
-          "oat_canister",
-          "cooking_oil",
-          "icebar_a"
+          "sports_drink",
+          "fox_toy",
+          "beet"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
-      "lock": 5,
       "layers": [
         [
-          "gift_box",
-          "gift_box",
-          "dragon_toy"
-        ],
-        [
-          "oat_canister",
-          "lemon_soda",
-          "cooking_oil"
-        ],
-        [
-          "honey_jar",
-          "wheel_of_lime",
-          "owl_toy"
-        ],
-        [
-          "owl_toy",
-          "owl_toy",
-          "glass_cleaner"
+          "cereal_box_blue",
+          "broccoli",
+          "cupcake_choco"
         ]
       ]
     },
     {
       "r": 1,
       "c": 1,
-      "lock": 5,
       "layers": [
         [
-          "cooking_oil",
           null,
-          "wheel_of_lime"
-        ],
-        [
-          "glass_cleaner",
-          "wheel_of_lime",
-          "glass_cleaner"
-        ],
-        [
-          "icebar_a",
-          "deodorant_stick",
-          "lemon_soda"
-        ],
-        [
-          "cooking_oil",
-          "toothpaste",
-          "gift_box"
+          "coconut_water",
+          "caviar_tin"
         ]
       ]
     },
@@ -227,55 +102,81 @@
       "lock": 3,
       "layers": [
         [
-          "sorbet_cup",
-          "lemon_soda",
-          "glass_cleaner"
-        ],
-        [
-          "glass_cleaner",
-          "icebar_a",
-          "gift_box"
-        ],
-        [
-          "wheel_of_lime",
-          "gift_box",
-          "sorbet_cup"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 3,
-      "layers": [
-        [
-          "gift_box",
-          "glass_cleaner",
-          "wheel_of_lime"
-        ],
-        [
-          "toothpaste",
-          "deodorant_stick",
-          "dragon_toy"
-        ],
-        [
-          "icebar_a",
-          "dragon_toy",
-          "glass_cleaner"
-        ],
-        [
-          "lemon_soda",
-          "gift_box",
-          "dragon_toy"
-        ],
-        [
-          "glass_cleaner",
-          "cooking_oil",
-          "honey_jar"
+          null,
+          null,
+          "caviar_tin"
         ]
       ]
     },
     {
       "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "wafer_bar",
+          "beet",
+          "wafer_bar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          "caviar_tin",
+          "fox_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "band_aid_box",
+          "soda",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "band_aid_box",
+          "band_aid_box",
+          "pomegranate"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "pomegranate",
+          "beet",
+          "cupcake_choco"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          null,
+          "pomegranate",
+          "coconut_water"
+        ]
+      ]
+    },
+    {
+      "r": 4,
       "c": 0,
       "layers": [
         [
@@ -286,262 +187,13 @@
       ]
     },
     {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "coconut_water",
-          "cooking_oil",
-          "glass_cleaner"
-        ],
-        [
-          "wheel_of_lime",
-          "oat_canister",
-          "owl_toy"
-        ],
-        [
-          "honey_jar",
-          "coconut_water",
-          "rice_bag"
-        ],
-        [
-          "dragon_toy",
-          "icebar_a",
-          "sorbet_cup"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "icebar_a",
-          "owl_toy",
-          null
-        ],
-        [
-          "honey_jar",
-          "rice_bag",
-          "sorbet_cup"
-        ],
-        [
-          "wheel_of_lime",
-          "toothpaste",
-          "gift_box"
-        ],
-        [
-          "deodorant_stick",
-          "coconut_water",
-          "toothpaste"
-        ],
-        [
-          "toothpaste",
-          "lemon_soda",
-          "deodorant_stick"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 3,
-      "lock": 4,
-      "layers": [
-        [
-          null,
-          null,
-          "oat_canister"
-        ],
-        [
-          "sorbet_cup",
-          "wheel_of_lime",
-          "oat_canister"
-        ],
-        [
-          "cooking_oil",
-          "icebar_a",
-          "lemon_soda"
-        ],
-        [
-          "deodorant_stick",
-          "rice_bag",
-          "glass_cleaner"
-        ],
-        [
-          "icebar_a",
-          "glass_cleaner",
-          "dragon_toy"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "dragon_toy",
-          null,
-          "sorbet_cup"
-        ],
-        [
-          "wheel_of_lime",
-          "honey_jar",
-          "rice_bag"
-        ],
-        [
-          "lemon_soda",
-          "toothpaste",
-          "wheel_of_lime"
-        ],
-        [
-          "deodorant_stick",
-          "gift_box",
-          "lemon_soda"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          "oat_canister",
-          "honey_jar",
-          null
-        ],
-        [
-          "cooking_oil",
-          "toothpaste",
-          "wheel_of_lime"
-        ],
-        [
-          "rice_bag",
-          "oat_canister",
-          "dragon_toy"
-        ],
-        [
-          "oat_canister",
-          "dragon_toy",
-          "owl_toy"
-        ],
-        [
-          "owl_toy",
-          "cooking_oil",
-          "owl_toy"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
-        [
-          "lemon_soda",
-          "oat_canister",
-          "owl_toy"
-        ],
-        [
-          "wheel_of_lime",
-          "coconut_water",
-          "cooking_oil"
-        ],
-        [
-          "glass_cleaner",
-          "oat_canister",
-          "sorbet_cup"
-        ],
-        [
-          "dragon_toy",
-          "honey_jar",
-          "gift_box"
-        ],
-        [
-          "glass_cleaner",
-          "honey_jar",
-          "coconut_water"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 3,
-      "layers": [
-        [
-          null,
-          "sorbet_cup",
-          "sorbet_cup"
-        ],
-        [
-          "toothpaste",
-          "glass_cleaner",
-          "honey_jar"
-        ],
-        [
-          "gift_box",
-          "deodorant_stick",
-          "toothpaste"
-        ],
-        [
-          "owl_toy",
-          "owl_toy",
-          "lemon_soda"
-        ],
-        [
-          "rice_bag",
-          "owl_toy",
-          "wheel_of_lime"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          "lemon_soda",
-          "gift_box"
-        ],
-        [
-          "coconut_water",
-          "icebar_a",
-          "sorbet_cup"
-        ],
-        [
-          "dragon_toy",
-          "toothpaste",
-          "oat_canister"
-        ]
-      ]
-    },
-    {
       "r": 4,
       "c": 1,
       "layers": [
         [
-          "glass_cleaner",
-          "rice_bag",
-          "sorbet_cup"
-        ],
-        [
-          "deodorant_stick",
-          "honey_jar",
-          "toothpaste"
-        ],
-        [
-          "rice_bag",
-          "icebar_a",
-          "rice_bag"
-        ],
-        [
-          "toothpaste",
-          "cooking_oil",
-          "deodorant_stick"
-        ],
-        [
-          "honey_jar",
-          "gift_box",
-          "owl_toy"
+          "broccoli",
+          "soda",
+          "cupcake_choco"
         ]
       ]
     },
@@ -550,50 +202,9 @@
       "c": 2,
       "layers": [
         [
-          "icebar_a",
-          "rice_bag",
-          "rice_bag"
-        ],
-        [
-          "icebar_a",
-          "honey_jar",
-          "glass_cleaner"
-        ],
-        [
-          "toothpaste",
-          "rice_bag",
-          "oat_canister"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 3,
-      "layers": [
-        [
-          "toothpaste",
-          "coconut_water",
-          "icebar_a"
-        ],
-        [
-          "owl_toy",
-          "sorbet_cup",
-          "coconut_water"
-        ],
-        [
-          "deodorant_stick",
-          "dragon_toy",
-          "coconut_water"
-        ],
-        [
-          "gift_box",
-          "glass_cleaner",
-          "dragon_toy"
-        ],
-        [
-          "oat_canister",
-          "toothpaste",
-          "deodorant_stick"
+          "soda",
+          "sports_drink",
+          "fox_toy"
         ]
       ]
     }

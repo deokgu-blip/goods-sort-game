@@ -1,24 +1,26 @@
 {
   "level": 44,
-  "timeLimit": 306,
-  "cols": 3,
-  "rows": 4,
+  "timeLimit": 335,
+  "cols": 4,
+  "rows": 5,
   "cellCap": 3,
   "goods": [
-    "butter_tub",
-    "cheese_wheel",
-    "coconut",
-    "cola",
-    "detergent",
+    "air_freshener",
+    "caviar_tin",
+    "chips",
+    "cotton_candy",
+    "cream_cheese_tub",
+    "fox_toy",
+    "frog_toy",
     "frozen_berries",
-    "gelato_cup",
-    "gift_box",
-    "glass_cleaner",
-    "red_onion",
-    "soap_dispenser",
-    "soda",
-    "sparkling_water",
-    "tennis_can"
+    "glue_stick",
+    "gobstopper_jar",
+    "green_tea",
+    "lotion_pump",
+    "milk",
+    "pomegranate",
+    "strawberry",
+    "tea_box"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -28,138 +30,83 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 14,
+    "distinct": 16,
     "depthRange": [
-      3,
-      4
+      1,
+      1
     ],
     "emptyCubbies": 1,
-    "frontGaps": 6,
+    "frontGaps": 9,
     "lockCubbies": 3,
-    "totalGoods": 111,
+    "totalGoods": 48,
     "attempt": 0
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
+      "layers": [
+        [
+          "lotion_pump",
+          "frozen_berries",
+          "gobstopper_jar"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "strawberry",
+          "strawberry",
+          "green_tea"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          "strawberry",
+          "cotton_candy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "lock": 2,
+      "layers": [
+        [
+          "pomegranate",
+          "chips",
+          "gobstopper_jar"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
       "lock": 1,
       "layers": [
         [
-          "glass_cleaner",
-          null,
-          "cheese_wheel"
-        ],
-        [
-          "butter_tub",
-          "gift_box",
-          "sparkling_water"
-        ],
-        [
-          "gelato_cup",
-          "tennis_can",
-          "cola"
+          "milk",
+          "frog_toy",
+          "air_freshener"
         ]
       ]
     },
     {
-      "r": 0,
+      "r": 1,
       "c": 1,
-      "lock": 4,
       "layers": [
         [
-          "red_onion",
-          "cola",
+          "frozen_berries",
+          "cotton_candy",
           null
-        ],
-        [
-          "sparkling_water",
-          "soap_dispenser",
-          "cheese_wheel"
-        ],
-        [
-          "soap_dispenser",
-          "detergent",
-          "gift_box"
-        ],
-        [
-          "soap_dispenser",
-          "soda",
-          "gelato_cup"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "soap_dispenser",
-          "cola",
-          "red_onion"
-        ],
-        [
-          "soap_dispenser",
-          "cola",
-          "gift_box"
-        ],
-        [
-          "cola",
-          "soda",
-          "butter_tub"
-        ],
-        [
-          "butter_tub",
-          "glass_cleaner",
-          "frozen_berries"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "gift_box",
-          null,
-          "tennis_can"
-        ],
-        [
-          "detergent",
-          "gift_box",
-          "frozen_berries"
-        ],
-        [
-          "gift_box",
-          "sparkling_water",
-          "butter_tub"
-        ],
-        [
-          "coconut",
-          "tennis_can",
-          "butter_tub"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "lock": 3,
-      "layers": [
-        [
-          null,
-          "frozen_berries",
-          "frozen_berries"
-        ],
-        [
-          "soda",
-          "gelato_cup",
-          "coconut"
-        ],
-        [
-          "cola",
-          "sparkling_water",
-          "glass_cleaner"
         ]
       ]
     },
@@ -168,30 +115,49 @@
       "c": 2,
       "layers": [
         [
-          "glass_cleaner",
-          "frozen_berries",
-          "frozen_berries"
-        ],
+          "cream_cheese_tub",
+          "glue_stick",
+          "gobstopper_jar"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "layers": [
         [
-          "glass_cleaner",
-          "butter_tub",
-          "gelato_cup"
-        ],
-        [
-          "coconut",
-          "frozen_berries",
-          "cheese_wheel"
-        ],
-        [
-          "gelato_cup",
-          "cola",
-          "cheese_wheel"
+          "milk",
+          "tea_box",
+          "frog_toy"
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
+      "lock": 2,
+      "layers": [
+        [
+          "frog_toy",
+          "glue_stick",
+          "milk"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "fox_toy",
+          "tea_box",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
       "layers": [
         [
           null,
@@ -202,48 +168,12 @@
     },
     {
       "r": 2,
-      "c": 1,
+      "c": 3,
       "layers": [
         [
-          "gift_box",
-          "detergent",
-          "detergent"
-        ],
-        [
-          "gelato_cup",
-          "red_onion",
-          "gift_box"
-        ],
-        [
-          "sparkling_water",
-          "red_onion",
-          "cheese_wheel"
-        ],
-        [
-          "coconut",
-          "butter_tub",
-          "cheese_wheel"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "cheese_wheel",
-          "cheese_wheel",
-          "gelato_cup"
-        ],
-        [
-          "glass_cleaner",
-          "soda",
-          "sparkling_water"
-        ],
-        [
-          "coconut",
-          "coconut",
-          "soda"
+          "air_freshener",
+          "caviar_tin",
+          "pomegranate"
         ]
       ]
     },
@@ -252,24 +182,9 @@
       "c": 0,
       "layers": [
         [
-          "gift_box",
-          "gelato_cup",
-          "soap_dispenser"
-        ],
-        [
-          "soap_dispenser",
-          "detergent",
-          "butter_tub"
-        ],
-        [
-          "cheese_wheel",
-          "soap_dispenser",
-          "tennis_can"
-        ],
-        [
-          "tennis_can",
-          "coconut",
-          "soda"
+          "green_tea",
+          "caviar_tin",
+          null
         ]
       ]
     },
@@ -278,19 +193,9 @@
       "c": 1,
       "layers": [
         [
-          "red_onion",
-          null,
-          null
-        ],
-        [
-          "coconut",
-          "tennis_can",
-          "frozen_berries"
-        ],
-        [
-          "glass_cleaner",
-          "glass_cleaner",
-          "detergent"
+          "cotton_candy",
+          "fox_toy",
+          "tea_box"
         ]
       ]
     },
@@ -299,19 +204,64 @@
       "c": 2,
       "layers": [
         [
-          "gelato_cup",
-          "cola",
-          "frozen_berries"
-        ],
+          "chips",
+          "air_freshener",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 3,
+      "layers": [
         [
-          "glass_cleaner",
-          "butter_tub",
-          "coconut"
-        ],
+          "fox_toy",
+          null,
+          "caviar_tin"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
+      "layers": [
         [
-          "cola",
-          "red_onion",
-          "soap_dispenser"
+          null,
+          "green_tea",
+          "chips"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 1,
+      "layers": [
+        [
+          "pomegranate",
+          "cream_cheese_tub",
+          "lotion_pump"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 2,
+      "layers": [
+        [
+          "cream_cheese_tub",
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 3,
+      "layers": [
+        [
+          "lotion_pump",
+          "frozen_berries",
+          "glue_stick"
         ]
       ]
     }

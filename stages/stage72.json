@@ -1,25 +1,26 @@
 {
   "level": 72,
-  "timeLimit": 280,
+  "timeLimit": 299,
   "cols": 4,
   "rows": 5,
   "cellCap": 3,
   "goods": [
-    "air_freshener",
-    "beet",
-    "butter_tub",
-    "deodorant_stick",
-    "honey_jar",
-    "koala_toy",
-    "lemon_soda",
+    "cabbage",
+    "chip_can_tall",
+    "cocoa_tin_tall",
+    "coconut_water",
+    "cookie_disc",
+    "cream_cheese",
+    "cream_cheese_tub",
+    "flour_bag",
+    "frozen_berries",
+    "glue_stick",
     "lychee",
-    "milk_choc_bar",
-    "mushroom_decor",
-    "sauce",
-    "spray_cleaner",
-    "tea_box",
-    "teddy_bear",
-    "tennis_can"
+    "snowman",
+    "soap_dispenser",
+    "strawberry",
+    "toaster_pastry",
+    "vinegar"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -29,16 +30,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 15,
+    "distinct": 16,
     "depthRange": [
-      3,
-      4
+      1,
+      1
     ],
     "emptyCubbies": 1,
-    "frontGaps": 15,
-    "lockCubbies": 5,
-    "totalGoods": 186,
-    "attempt": 100
+    "frontGaps": 9,
+    "lockCubbies": 4,
+    "totalGoods": 48,
+    "attempt": 0
   },
   "cubbies": [
     {
@@ -46,24 +47,9 @@
       "c": 0,
       "layers": [
         [
-          "beet",
-          "teddy_bear",
-          "air_freshener"
-        ],
-        [
-          "air_freshener",
-          "mushroom_decor",
-          "sauce"
-        ],
-        [
-          "beet",
-          "sauce",
-          "butter_tub"
-        ],
-        [
-          "mushroom_decor",
-          "tea_box",
-          "deodorant_stick"
+          "cookie_disc",
+          "cocoa_tin_tall",
+          "vinegar"
         ]
       ]
     },
@@ -72,121 +58,54 @@
       "c": 1,
       "layers": [
         [
-          "beet",
           null,
-          "butter_tub"
-        ],
-        [
-          "milk_choc_bar",
-          "teddy_bear",
-          "butter_tub"
-        ],
-        [
-          "deodorant_stick",
-          "butter_tub",
-          "sauce"
-        ],
-        [
-          "teddy_bear",
-          "beet",
-          "butter_tub"
+          null,
+          null
         ]
       ]
     },
     {
       "r": 0,
       "c": 2,
-      "lock": 2,
       "layers": [
         [
-          "lemon_soda",
-          "teddy_bear",
-          "milk_choc_bar"
-        ],
-        [
-          "air_freshener",
-          "lemon_soda",
-          "sauce"
-        ],
-        [
-          "honey_jar",
-          "tea_box",
-          "sauce"
+          "frozen_berries",
+          null,
+          null
         ]
       ]
     },
     {
       "r": 0,
       "c": 3,
-      "lock": 2,
       "layers": [
         [
-          "tea_box",
-          "mushroom_decor",
-          "tennis_can"
-        ],
-        [
           "lychee",
-          "honey_jar",
-          "air_freshener"
-        ],
-        [
-          "deodorant_stick",
-          "mushroom_decor",
-          "teddy_bear"
-        ],
-        [
-          "deodorant_stick",
-          "lemon_soda",
-          "milk_choc_bar"
+          "soap_dispenser",
+          "coconut_water"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
-      "layers": [
-        [
-          "koala_toy",
-          "tennis_can",
-          "koala_toy"
-        ],
-        [
-          "sauce",
-          "lychee",
-          "milk_choc_bar"
-        ],
-        [
-          "koala_toy",
-          "milk_choc_bar",
-          "sauce"
-        ],
-        [
-          "butter_tub",
-          "lychee",
-          "spray_cleaner"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
       "lock": 1,
       "layers": [
         [
-          "tennis_can",
-          null,
-          "mushroom_decor"
-        ],
+          "snowman",
+          "cream_cheese_tub",
+          "cabbage"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
         [
-          "tea_box",
-          "milk_choc_bar",
-          "milk_choc_bar"
-        ],
-        [
-          "tennis_can",
-          "koala_toy",
-          "beet"
+          "lychee",
+          "snowman",
+          "chip_can_tall"
         ]
       ]
     },
@@ -195,62 +114,32 @@
       "c": 2,
       "layers": [
         [
-          "butter_tub",
-          "sauce",
-          "tennis_can"
-        ],
-        [
-          "tea_box",
-          "honey_jar",
-          "mushroom_decor"
-        ],
-        [
-          "koala_toy",
-          "lemon_soda",
-          "tea_box"
-        ],
-        [
-          "beet",
-          "air_freshener",
-          "tennis_can"
+          "cabbage",
+          "strawberry",
+          "cream_cheese"
         ]
       ]
     },
     {
       "r": 1,
       "c": 3,
-      "lock": 5,
       "layers": [
         [
-          "tea_box",
-          "spray_cleaner",
-          "air_freshener"
-        ],
-        [
-          "lychee",
-          "butter_tub",
-          "spray_cleaner"
-        ],
-        [
-          "koala_toy",
-          "koala_toy",
-          "tennis_can"
-        ],
-        [
-          "milk_choc_bar",
-          "mushroom_decor",
-          "tea_box"
+          "glue_stick",
+          "coconut_water",
+          null
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
+      "lock": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "soap_dispenser",
+          "coconut_water",
+          "chip_can_tall"
         ]
       ]
     },
@@ -259,45 +148,21 @@
       "c": 1,
       "layers": [
         [
-          "honey_jar",
-          null,
-          null
-        ],
-        [
-          "mushroom_decor",
-          "milk_choc_bar",
-          "spray_cleaner"
-        ],
-        [
-          "teddy_bear",
-          "honey_jar",
-          "mushroom_decor"
-        ],
-        [
-          "koala_toy",
-          "butter_tub",
-          "teddy_bear"
+          "toaster_pastry",
+          "cookie_disc",
+          "flour_bag"
         ]
       ]
     },
     {
       "r": 2,
       "c": 2,
+      "lock": 2,
       "layers": [
         [
-          "air_freshener",
-          "lemon_soda",
-          "spray_cleaner"
-        ],
-        [
-          "lychee",
-          "teddy_bear",
-          "sauce"
-        ],
-        [
-          "teddy_bear",
-          "air_freshener",
-          "mushroom_decor"
+          "cocoa_tin_tall",
+          "toaster_pastry",
+          "frozen_berries"
         ]
       ]
     },
@@ -306,41 +171,20 @@
       "c": 3,
       "layers": [
         [
-          "milk_choc_bar",
-          "mushroom_decor",
-          null
-        ],
-        [
-          "mushroom_decor",
-          "deodorant_stick",
-          "milk_choc_bar"
-        ],
-        [
-          "sauce",
-          "beet",
-          "lemon_soda"
+          "glue_stick",
+          "strawberry",
+          "vinegar"
         ]
       ]
     },
     {
       "r": 3,
       "c": 0,
-      "lock": 4,
       "layers": [
         [
-          "beet",
-          "air_freshener",
-          "spray_cleaner"
-        ],
-        [
-          "sauce",
-          "spray_cleaner",
-          "tennis_can"
-        ],
-        [
-          "honey_jar",
-          "mushroom_decor",
-          "lychee"
+          "glue_stick",
+          "snowman",
+          "vinegar"
         ]
       ]
     },
@@ -349,19 +193,9 @@
       "c": 1,
       "layers": [
         [
-          "lychee",
           null,
-          "koala_toy"
-        ],
-        [
-          "air_freshener",
-          "tea_box",
-          "butter_tub"
-        ],
-        [
-          "spray_cleaner",
-          "lemon_soda",
-          "koala_toy"
+          "cabbage",
+          "cocoa_tin_tall"
         ]
       ]
     },
@@ -370,24 +204,9 @@
       "c": 2,
       "layers": [
         [
-          "sauce",
-          null,
-          null
-        ],
-        [
-          "tennis_can",
-          "koala_toy",
-          "tennis_can"
-        ],
-        [
-          "honey_jar",
-          "lychee",
-          "beet"
-        ],
-        [
-          "lemon_soda",
-          "lemon_soda",
-          "deodorant_stick"
+          "flour_bag",
+          "cookie_disc",
+          "toaster_pastry"
         ]
       ]
     },
@@ -396,19 +215,9 @@
       "c": 3,
       "layers": [
         [
+          "cream_cheese",
           null,
-          "mushroom_decor",
-          "lychee"
-        ],
-        [
-          "deodorant_stick",
-          "lychee",
-          "butter_tub"
-        ],
-        [
-          "teddy_bear",
-          "tea_box",
-          "deodorant_stick"
+          "cream_cheese"
         ]
       ]
     },
@@ -417,24 +226,9 @@
       "c": 0,
       "layers": [
         [
+          "soap_dispenser",
           null,
-          "honey_jar",
-          "deodorant_stick"
-        ],
-        [
-          "honey_jar",
-          "lemon_soda",
-          "lychee"
-        ],
-        [
-          "tennis_can",
-          "beet",
-          "butter_tub"
-        ],
-        [
-          "air_freshener",
-          "tea_box",
-          "mushroom_decor"
+          "frozen_berries"
         ]
       ]
     },
@@ -445,22 +239,7 @@
         [
           null,
           null,
-          "butter_tub"
-        ],
-        [
-          "honey_jar",
-          "deodorant_stick",
-          "butter_tub"
-        ],
-        [
-          "spray_cleaner",
-          "honey_jar",
-          "tennis_can"
-        ],
-        [
-          "lychee",
-          "lemon_soda",
-          "spray_cleaner"
+          "strawberry"
         ]
       ]
     },
@@ -469,40 +248,21 @@
       "c": 2,
       "layers": [
         [
-          null,
-          "beet",
-          "spray_cleaner"
-        ],
-        [
-          "honey_jar",
-          "deodorant_stick",
-          "air_freshener"
-        ],
-        [
-          "teddy_bear",
-          "milk_choc_bar",
-          "lemon_soda"
+          "lychee",
+          "cream_cheese_tub",
+          "flour_bag"
         ]
       ]
     },
     {
       "r": 4,
       "c": 3,
+      "lock": 3,
       "layers": [
         [
-          "beet",
-          null,
+          "chip_can_tall",
+          "cream_cheese_tub",
           null
-        ],
-        [
-          "tea_box",
-          "deodorant_stick",
-          "koala_toy"
-        ],
-        [
-          "butter_tub",
-          "spray_cleaner",
-          "teddy_bear"
         ]
       ]
     }

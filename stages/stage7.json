@@ -1,23 +1,26 @@
 {
   "level": 7,
-  "timeLimit": 360,
-  "cols": 3,
-  "rows": 4,
+  "timeLimit": 412,
+  "cols": 4,
+  "rows": 5,
   "cellCap": 3,
   "goods": [
-    "apple",
-    "artichoke",
-    "berry_smoothie",
-    "cabbage",
-    "energy_bar",
-    "fig",
-    "glass_cleaner",
-    "glue_stick",
-    "gum_pack",
+    "air_freshener",
+    "butter",
+    "chick",
+    "chip_can_tall",
+    "cream_cheese",
+    "gelato_cup",
+    "gold_choc_bar",
+    "hand_soap",
+    "ketchup_squeeze",
     "koala_toy",
-    "oil_can",
-    "sorbet_cup",
-    "sparkling_water"
+    "lychee",
+    "milk_choc_bar",
+    "sandwich_cookies",
+    "tea_box",
+    "toothpaste",
+    "wafer_bar"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -27,16 +30,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 13,
+    "distinct": 16,
     "depthRange": [
       1,
-      2
+      1
     ],
     "emptyCubbies": 1,
-    "frontGaps": 6,
+    "frontGaps": 9,
     "lockCubbies": 0,
-    "totalGoods": 42,
-    "attempt": 4
+    "totalGoods": 48,
+    "attempt": 0
   },
   "cubbies": [
     {
@@ -44,7 +47,7 @@
       "c": 0,
       "layers": [
         [
-          null,
+          "milk_choc_bar",
           null,
           null
         ]
@@ -55,24 +58,30 @@
       "c": 1,
       "layers": [
         [
-          "sorbet_cup",
-          "glass_cleaner",
+          "lychee",
+          "tea_box",
+          "gelato_cup"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "koala_toy",
+          "milk_choc_bar",
           "koala_toy"
-        ],
-        [
-          "glue_stick",
-          "sparkling_water",
-          "sparkling_water"
         ]
       ]
     },
     {
       "r": 0,
-      "c": 2,
+      "c": 3,
       "layers": [
         [
-          "koala_toy",
-          "oil_can",
+          null,
+          null,
           null
         ]
       ]
@@ -82,117 +91,174 @@
       "c": 0,
       "layers": [
         [
-          "sparkling_water",
-          "cabbage",
-          "berry_smoothie"
-        ],
-        [
-          "fig",
-          "gum_pack",
-          "oil_can"
+          "toothpaste",
+          "tea_box",
+          "chick"
         ]
       ]
     },
     {
       "r": 1,
       "c": 1,
+      "layers": [
+        [
+          "air_freshener",
+          "butter",
+          "lychee"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "chip_can_tall",
+          null,
+          "sandwich_cookies"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "layers": [
+        [
+          "cream_cheese",
+          "chip_can_tall",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "chip_can_tall",
+          "air_freshener",
+          "sandwich_cookies"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          "lychee",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "wafer_bar",
+          null,
+          "hand_soap"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "layers": [
+        [
+          "sandwich_cookies",
+          "hand_soap",
+          "ketchup_squeeze"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "cream_cheese",
+          "toothpaste",
+          "chick"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "cream_cheese",
+          "gold_choc_bar",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
       "layers": [
         [
           "koala_toy",
-          "fig",
-          "apple"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "sorbet_cup",
-          "artichoke",
-          "glue_stick"
-        ],
-        [
-          "energy_bar",
-          "fig",
-          "gum_pack"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "gum_pack",
-          "apple",
-          "glue_stick"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "oil_can",
-          "glass_cleaner",
-          "berry_smoothie"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "apple",
-          null,
-          "apple"
+          "gold_choc_bar",
+          "ketchup_squeeze"
         ]
       ]
     },
     {
       "r": 3,
+      "c": 3,
+      "layers": [
+        [
+          "ketchup_squeeze",
+          "gold_choc_bar",
+          "tea_box"
+        ]
+      ]
+    },
+    {
+      "r": 4,
       "c": 0,
       "layers": [
         [
-          null,
-          "energy_bar",
+          "chick",
+          "gelato_cup",
+          "gelato_cup"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 1,
+      "layers": [
+        [
+          "hand_soap",
+          "wafer_bar",
           null
-        ],
-        [
-          "apple",
-          "cabbage",
-          "cabbage"
         ]
       ]
     },
     {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          "apple",
-          null,
-          "glass_cleaner"
-        ]
-      ]
-    },
-    {
-      "r": 3,
+      "r": 4,
       "c": 2,
       "layers": [
         [
-          null,
-          "energy_bar",
-          "sorbet_cup"
-        ],
+          "wafer_bar",
+          "air_freshener",
+          "toothpaste"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 3,
+      "layers": [
         [
-          "artichoke",
-          "berry_smoothie",
-          "artichoke"
+          "butter",
+          "milk_choc_bar",
+          "butter"
         ]
       ]
     }

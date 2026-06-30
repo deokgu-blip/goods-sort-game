@@ -1,23 +1,19 @@
 {
   "level": 29,
-  "timeLimit": 326,
+  "timeLimit": 205,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "apple",
-    "bee_toy",
-    "coconut_water",
-    "cotton_candy",
-    "cracker_box",
-    "cream_cheese_tub",
-    "egg",
-    "frozen_berries",
-    "protein_tube",
-    "soap_dispenser",
-    "sorbet_cup",
-    "sparkling_water",
-    "toothpaste"
+    "cheese_wheel",
+    "chip_can_tall",
+    "coconut",
+    "dino_toy",
+    "grapes",
+    "iced_tea",
+    "slush_cup",
+    "soy_sauce",
+    "toaster_pastry"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -27,16 +23,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 13,
+    "distinct": 9,
     "depthRange": [
-      3,
-      4
+      1,
+      1
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
-    "lockCubbies": 2,
-    "totalGoods": 105,
-    "attempt": 23
+    "lockCubbies": 1,
+    "totalGoods": 27,
+    "attempt": 0
   },
   "cubbies": [
     {
@@ -44,19 +40,9 @@
       "c": 0,
       "layers": [
         [
-          "coconut_water",
-          "frozen_berries",
-          "sorbet_cup"
-        ],
-        [
-          "sorbet_cup",
-          "cream_cheese_tub",
-          "cracker_box"
-        ],
-        [
-          "frozen_berries",
-          "sorbet_cup",
-          "cracker_box"
+          "cheese_wheel",
+          "grapes",
+          "iced_tea"
         ]
       ]
     },
@@ -65,8 +51,8 @@
       "c": 1,
       "layers": [
         [
-          null,
-          null,
+          "grapes",
+          "soy_sauce",
           null
         ]
       ]
@@ -76,24 +62,9 @@
       "c": 2,
       "layers": [
         [
-          "sorbet_cup",
-          "bee_toy",
-          "soap_dispenser"
-        ],
-        [
-          "egg",
-          "sparkling_water",
-          "toothpaste"
-        ],
-        [
-          "cream_cheese_tub",
-          "cotton_candy",
-          "coconut_water"
-        ],
-        [
-          "protein_tube",
-          "sparkling_water",
-          "apple"
+          "dino_toy",
+          "coconut",
+          "grapes"
         ]
       ]
     },
@@ -102,19 +73,9 @@
       "c": 0,
       "layers": [
         [
-          "soap_dispenser",
-          "bee_toy",
-          "coconut_water"
-        ],
-        [
-          "frozen_berries",
-          "toothpaste",
-          "cracker_box"
-        ],
-        [
-          "sparkling_water",
-          "egg",
-          "soap_dispenser"
+          "chip_can_tall",
+          "cheese_wheel",
+          "toaster_pastry"
         ]
       ]
     },
@@ -123,19 +84,9 @@
       "c": 1,
       "layers": [
         [
-          "cracker_box",
-          "sparkling_water",
-          "apple"
-        ],
-        [
-          "coconut_water",
-          "toothpaste",
-          "cream_cheese_tub"
-        ],
-        [
-          "apple",
-          "apple",
-          "soap_dispenser"
+          "chip_can_tall",
+          "slush_cup",
+          "slush_cup"
         ]
       ]
     },
@@ -144,67 +95,32 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          "egg"
-        ],
-        [
-          "egg",
-          "coconut_water",
-          "frozen_berries"
-        ],
-        [
-          "apple",
-          "protein_tube",
-          "sparkling_water"
+          "soy_sauce",
+          "soy_sauce",
+          "iced_tea"
         ]
       ]
     },
     {
       "r": 2,
       "c": 0,
-      "layers": [
-        [
-          "sorbet_cup",
-          "cracker_box",
-          null
-        ],
-        [
-          "protein_tube",
-          "frozen_berries",
-          "toothpaste"
-        ],
-        [
-          "bee_toy",
-          "frozen_berries",
-          "cracker_box"
-        ],
-        [
-          "frozen_berries",
-          "protein_tube",
-          "cotton_candy"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
       "lock": 1,
       "layers": [
         [
-          "cotton_candy",
-          "cream_cheese_tub",
-          "sorbet_cup"
-        ],
+          "cheese_wheel",
+          null,
+          "dino_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
         [
-          "frozen_berries",
-          "coconut_water",
-          "apple"
-        ],
-        [
-          "cracker_box",
-          "toothpaste",
-          "sorbet_cup"
+          "chip_can_tall",
+          null,
+          "coconut"
         ]
       ]
     },
@@ -213,51 +129,20 @@
       "c": 2,
       "layers": [
         [
-          "bee_toy",
           null,
-          "bee_toy"
-        ],
-        [
-          "cracker_box",
-          "coconut_water",
-          "coconut_water"
-        ],
-        [
-          "toothpaste",
-          "cotton_candy",
-          "sparkling_water"
-        ],
-        [
-          "toothpaste",
-          "soap_dispenser",
-          "coconut_water"
+          "coconut",
+          "toaster_pastry"
         ]
       ]
     },
     {
       "r": 3,
       "c": 0,
-      "lock": 3,
       "layers": [
         [
-          "apple",
-          null,
-          "egg"
-        ],
-        [
-          "egg",
-          "egg",
-          "bee_toy"
-        ],
-        [
-          "cream_cheese_tub",
-          "sorbet_cup",
-          "soap_dispenser"
-        ],
-        [
-          "sparkling_water",
-          "protein_tube",
-          "toothpaste"
+          "toaster_pastry",
+          "dino_toy",
+          null
         ]
       ]
     },
@@ -266,19 +151,9 @@
       "c": 1,
       "layers": [
         [
-          "apple",
-          "sorbet_cup",
-          "cotton_candy"
-        ],
-        [
-          "sparkling_water",
-          "bee_toy",
-          "bee_toy"
-        ],
-        [
-          "protein_tube",
-          "egg",
-          "bee_toy"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -287,19 +162,9 @@
       "c": 2,
       "layers": [
         [
-          "egg",
           null,
-          "cracker_box"
-        ],
-        [
-          "apple",
-          "cotton_candy",
-          "cream_cheese_tub"
-        ],
-        [
-          "toothpaste",
-          "sparkling_water",
-          "frozen_berries"
+          "slush_cup",
+          "iced_tea"
         ]
       ]
     }

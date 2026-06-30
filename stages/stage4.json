@@ -1,22 +1,19 @@
 {
   "level": 4,
-  "timeLimit": 360,
-  "cols": 3,
-  "rows": 4,
+  "timeLimit": 230,
+  "cols": 4,
+  "rows": 3,
   "cellCap": 3,
   "goods": [
     "cereal_box",
-    "cream_cheese_tub",
-    "dish_soap",
-    "frog_toy",
-    "milk_choc_bar",
+    "energy_drink",
+    "lemon_lime_soda",
+    "red_onion",
     "sheep_toy",
     "soda",
     "sports_drink",
-    "spray_cleaner",
     "sriracha",
-    "strawberry",
-    "toaster_pastry"
+    "strawberry"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -26,15 +23,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 12,
+    "distinct": 9,
     "depthRange": [
       1,
-      2
+      1
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 0,
-    "totalGoods": 42,
+    "totalGoods": 27,
     "attempt": 0
   },
   "cubbies": [
@@ -43,9 +40,9 @@
       "c": 0,
       "layers": [
         [
-          "cream_cheese_tub",
-          "toaster_pastry",
-          "strawberry"
+          "cereal_box",
+          "lemon_lime_soda",
+          "energy_drink"
         ]
       ]
     },
@@ -54,14 +51,9 @@
       "c": 1,
       "layers": [
         [
-          "frog_toy",
-          null,
-          "cream_cheese_tub"
-        ],
-        [
-          "spray_cleaner",
-          "toaster_pastry",
-          "dish_soap"
+          "soda",
+          "strawberry",
+          null
         ]
       ]
     },
@@ -70,9 +62,20 @@
       "c": 2,
       "layers": [
         [
-          "soda",
-          "cereal_box",
+          "sports_drink",
+          "sriracha",
           null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "layers": [
+        [
+          "sheep_toy",
+          "strawberry",
+          "lemon_lime_soda"
         ]
       ]
     },
@@ -81,14 +84,9 @@
       "c": 0,
       "layers": [
         [
-          "sriracha",
+          "sheep_toy",
           null,
-          null
-        ],
-        [
-          "cereal_box",
-          "spray_cleaner",
-          "sports_drink"
+          "red_onion"
         ]
       ]
     },
@@ -97,9 +95,9 @@
       "c": 1,
       "layers": [
         [
-          "frog_toy",
+          "cereal_box",
           null,
-          "cream_cheese_tub"
+          "energy_drink"
         ]
       ]
     },
@@ -108,90 +106,64 @@
       "c": 2,
       "layers": [
         [
-          "milk_choc_bar",
-          "dish_soap",
-          "toaster_pastry"
-        ],
+          "sriracha",
+          "lemon_lime_soda",
+          "soda"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "layers": [
         [
           "sports_drink",
-          "cereal_box",
+          "red_onion",
+          "sriracha"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "sports_drink",
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "strawberry",
+          "red_onion",
+          "sheep_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "soda",
+          "energy_drink",
           "cereal_box"
         ]
       ]
     },
     {
       "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "cereal_box",
-          "strawberry",
-          "strawberry"
-        ],
-        [
-          "soda",
-          "spray_cleaner",
-          "strawberry"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
+      "c": 3,
       "layers": [
         [
           null,
           null,
           null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "sheep_toy",
-          "frog_toy",
-          "strawberry"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "strawberry",
-          "dish_soap",
-          "sports_drink"
-        ],
-        [
-          "cereal_box",
-          "soda",
-          "sheep_toy"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          "sriracha",
-          "milk_choc_bar",
-          "milk_choc_bar"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
-        [
-          null,
-          "sriracha",
-          "sheep_toy"
         ]
       ]
     }

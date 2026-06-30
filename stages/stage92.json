@@ -1,25 +1,26 @@
 {
   "level": 92,
-  "timeLimit": 295,
+  "timeLimit": 263,
   "cols": 4,
   "rows": 5,
   "cellCap": 3,
   "goods": [
-    "bok_choy",
-    "cereal_corn",
-    "cooking_oil",
-    "cream_cheese_tub",
-    "cupcake_choco",
+    "chestnut",
+    "chick",
+    "chip_can_tall",
+    "cookie_disc",
+    "dino_toy",
     "energy_drink",
-    "grape_soda",
-    "hand_soap",
-    "kettle_item",
-    "marshmallow_blue",
-    "mushroom_brown",
+    "green_tea",
+    "icebar_blue",
+    "lychee",
+    "oat_canister",
     "paint_can",
-    "pomegranate",
-    "soy_sauce",
-    "tennis_can"
+    "red_onion",
+    "sauce",
+    "slush_cup",
+    "tea_tin_round",
+    "yogurt_drink"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -29,16 +30,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 15,
+    "distinct": 16,
     "depthRange": [
-      4,
-      4
+      1,
+      1
     ],
     "emptyCubbies": 1,
-    "frontGaps": 15,
-    "lockCubbies": 6,
-    "totalGoods": 213,
-    "attempt": 122
+    "frontGaps": 9,
+    "lockCubbies": 5,
+    "totalGoods": 48,
+    "attempt": 0
   },
   "cubbies": [
     {
@@ -46,24 +47,9 @@
       "c": 0,
       "layers": [
         [
-          "pomegranate",
-          "grape_soda",
-          "energy_drink"
-        ],
-        [
-          "cupcake_choco",
-          "pomegranate",
-          "cupcake_choco"
-        ],
-        [
-          "cereal_corn",
-          "bok_choy",
-          "mushroom_brown"
-        ],
-        [
-          "pomegranate",
-          "hand_soap",
-          "mushroom_brown"
+          null,
+          "lychee",
+          "sauce"
         ]
       ]
     },
@@ -73,23 +59,8 @@
       "layers": [
         [
           null,
-          "grape_soda",
-          "tennis_can"
-        ],
-        [
-          "pomegranate",
-          "cream_cheese_tub",
-          "mushroom_brown"
-        ],
-        [
-          "cream_cheese_tub",
-          "cream_cheese_tub",
-          "cupcake_choco"
-        ],
-        [
-          "mushroom_brown",
-          "mushroom_brown",
-          "bok_choy"
+          null,
+          null
         ]
       ]
     },
@@ -98,405 +69,179 @@
       "c": 2,
       "layers": [
         [
-          null,
-          "hand_soap",
-          "cupcake_choco"
-        ],
-        [
-          "marshmallow_blue",
-          "hand_soap",
-          "cooking_oil"
-        ],
-        [
-          "pomegranate",
-          "grape_soda",
-          "hand_soap"
-        ],
-        [
-          "cooking_oil",
-          "cream_cheese_tub",
-          "grape_soda"
+          "cookie_disc",
+          "chip_can_tall",
+          "chick"
         ]
       ]
     },
     {
       "r": 0,
       "c": 3,
-      "lock": 5,
       "layers": [
         [
-          "kettle_item",
           null,
-          null
-        ],
-        [
-          "cooking_oil",
-          "bok_choy",
-          "kettle_item"
-        ],
-        [
-          "grape_soda",
-          "soy_sauce",
-          "tennis_can"
-        ],
-        [
-          "soy_sauce",
-          "paint_can",
-          "mushroom_brown"
+          null,
+          "dino_toy"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
+      "lock": 3,
       "layers": [
         [
-          null,
-          "soy_sauce",
-          "paint_can"
-        ],
-        [
-          "grape_soda",
-          "cereal_corn",
-          "marshmallow_blue"
-        ],
-        [
-          "grape_soda",
-          "mushroom_brown",
-          "hand_soap"
-        ],
-        [
-          "soy_sauce",
-          "energy_drink",
-          "kettle_item"
+          "red_onion",
+          "sauce",
+          "chick"
         ]
       ]
     },
     {
       "r": 1,
       "c": 1,
+      "layers": [
+        [
+          "lychee",
+          "slush_cup",
+          "icebar_blue"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 2,
+      "layers": [
+        [
+          "dino_toy",
+          "energy_drink",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "layers": [
+        [
+          "chestnut",
+          "icebar_blue",
+          "slush_cup"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "paint_can",
+          "paint_can",
+          "green_tea"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "yogurt_drink",
+          null,
+          "green_tea"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
       "lock": 4,
       "layers": [
         [
-          null,
-          "tennis_can",
-          "cream_cheese_tub"
-        ],
-        [
-          "pomegranate",
-          "mushroom_brown",
-          "cereal_corn"
-        ],
-        [
-          "cereal_corn",
-          "cooking_oil",
-          "energy_drink"
-        ],
-        [
-          "paint_can",
-          "cooking_oil",
-          "paint_can"
+          "oat_canister",
+          "cookie_disc",
+          "chip_can_tall"
         ]
       ]
     },
     {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          null,
-          "cupcake_choco",
-          "grape_soda"
-        ],
-        [
-          "marshmallow_blue",
-          "soy_sauce",
-          "marshmallow_blue"
-        ],
-        [
-          "cream_cheese_tub",
-          "tennis_can",
-          "bok_choy"
-        ],
-        [
-          "paint_can",
-          "cream_cheese_tub",
-          "hand_soap"
-        ]
-      ]
-    },
-    {
-      "r": 1,
+      "r": 2,
       "c": 3,
-      "lock": 1,
+      "lock": 5,
       "layers": [
         [
-          "soy_sauce",
-          null,
-          "pomegranate"
-        ],
-        [
-          "cream_cheese_tub",
-          "pomegranate",
-          "marshmallow_blue"
-        ],
-        [
-          "bok_choy",
-          "soy_sauce",
-          "soy_sauce"
-        ],
-        [
-          "kettle_item",
-          "energy_drink",
-          "cooking_oil"
+          "sauce",
+          "yogurt_drink",
+          "red_onion"
         ]
       ]
     },
     {
-      "r": 2,
+      "r": 3,
       "c": 0,
-      "lock": 1,
       "layers": [
         [
-          "cereal_corn",
-          null,
-          null
-        ],
-        [
-          "mushroom_brown",
-          "hand_soap",
-          "tennis_can"
-        ],
-        [
-          "mushroom_brown",
-          "cereal_corn",
-          "hand_soap"
-        ],
-        [
-          "tennis_can",
-          "soy_sauce",
-          "tennis_can"
+          "dino_toy",
+          "chestnut",
+          "chick"
         ]
       ]
     },
     {
-      "r": 2,
+      "r": 3,
       "c": 1,
       "layers": [
         [
-          null,
-          null,
+          "oat_canister",
+          "energy_drink",
           null
         ]
       ]
     },
     {
-      "r": 2,
+      "r": 3,
       "c": 2,
+      "layers": [
+        [
+          "cookie_disc",
+          "icebar_blue",
+          "green_tea"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 3,
+      "layers": [
+        [
+          "tea_tin_round",
+          "lychee",
+          "chip_can_tall"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
       "lock": 5,
       "layers": [
         [
           "energy_drink",
-          "grape_soda",
-          "grape_soda"
-        ],
-        [
-          "soy_sauce",
-          "cooking_oil",
-          "hand_soap"
-        ],
-        [
-          "cupcake_choco",
-          "cooking_oil",
-          "pomegranate"
-        ],
-        [
-          "tennis_can",
-          "energy_drink",
-          "cereal_corn"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 3,
-      "layers": [
-        [
-          "tennis_can",
-          "energy_drink",
+          "tea_tin_round",
           null
-        ],
-        [
-          "marshmallow_blue",
-          "cereal_corn",
-          "kettle_item"
-        ],
-        [
-          "energy_drink",
-          "cupcake_choco",
-          "cupcake_choco"
-        ],
-        [
-          "cupcake_choco",
-          "mushroom_brown",
-          "pomegranate"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          "pomegranate",
-          "kettle_item"
-        ],
-        [
-          "kettle_item",
-          "cupcake_choco",
-          "pomegranate"
-        ],
-        [
-          "mushroom_brown",
-          "paint_can",
-          "cereal_corn"
-        ],
-        [
-          "grape_soda",
-          "kettle_item",
-          "soy_sauce"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          null,
-          "soy_sauce",
-          "pomegranate"
-        ],
-        [
-          "mushroom_brown",
-          "paint_can",
-          "bok_choy"
-        ],
-        [
-          "marshmallow_blue",
-          "cereal_corn",
-          "tennis_can"
-        ],
-        [
-          "paint_can",
-          "bok_choy",
-          "paint_can"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
-        [
-          "tennis_can",
-          "mushroom_brown",
-          "cream_cheese_tub"
-        ],
-        [
-          "marshmallow_blue",
-          "bok_choy",
-          "tennis_can"
-        ],
-        [
-          "cereal_corn",
-          "marshmallow_blue",
-          "kettle_item"
-        ],
-        [
-          "energy_drink",
-          "hand_soap",
-          "energy_drink"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 3,
-      "layers": [
-        [
-          "bok_choy",
-          "bok_choy",
-          null
-        ],
-        [
-          "energy_drink",
-          "pomegranate",
-          "bok_choy"
-        ],
-        [
-          "cream_cheese_tub",
-          "kettle_item",
-          "cooking_oil"
-        ],
-        [
-          "marshmallow_blue",
-          "cereal_corn",
-          "cupcake_choco"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 0,
-      "layers": [
-        [
-          "bok_choy",
-          "bok_choy",
-          "cooking_oil"
-        ],
-        [
-          "bok_choy",
-          "tennis_can",
-          "marshmallow_blue"
-        ],
-        [
-          "cooking_oil",
-          "hand_soap",
-          "tennis_can"
-        ],
-        [
-          "grape_soda",
-          "cooking_oil",
-          "cupcake_choco"
         ]
       ]
     },
     {
       "r": 4,
       "c": 1,
-      "lock": 1,
       "layers": [
         [
-          "cream_cheese_tub",
-          "cupcake_choco",
-          "cereal_corn"
-        ],
-        [
-          "grape_soda",
-          "cereal_corn",
-          "energy_drink"
-        ],
-        [
-          "hand_soap",
-          "cream_cheese_tub",
-          "soy_sauce"
-        ],
-        [
-          "kettle_item",
-          "grape_soda",
-          "energy_drink"
+          "tea_tin_round",
+          "slush_cup",
+          "oat_canister"
         ]
       ]
     },
@@ -505,24 +250,9 @@
       "c": 2,
       "layers": [
         [
-          "cream_cheese_tub",
+          null,
           "paint_can",
-          "cream_cheese_tub"
-        ],
-        [
-          "tennis_can",
-          "grape_soda",
-          "cupcake_choco"
-        ],
-        [
-          "paint_can",
-          "cream_cheese_tub",
-          "marshmallow_blue"
-        ],
-        [
-          "marshmallow_blue",
-          "soy_sauce",
-          "energy_drink"
+          "yogurt_drink"
         ]
       ]
     },
@@ -531,24 +261,9 @@
       "c": 3,
       "layers": [
         [
-          null,
-          "mushroom_brown",
-          "soy_sauce"
-        ],
-        [
-          "pomegranate",
-          "paint_can",
-          "marshmallow_blue"
-        ],
-        [
-          "cereal_corn",
-          "kettle_item",
-          "cupcake_choco"
-        ],
-        [
-          "energy_drink",
-          "bok_choy",
-          "marshmallow_blue"
+          "chestnut",
+          "red_onion",
+          null
         ]
       ]
     }

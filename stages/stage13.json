@@ -1,23 +1,19 @@
 {
   "level": 13,
-  "timeLimit": 339,
+  "timeLimit": 223,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
+    "coconut_water",
     "coffee_jar",
-    "cooking_oil",
-    "dino_green",
-    "egg",
+    "dragon_toy",
     "glass_cleaner",
-    "glue_stick",
-    "green_cup",
-    "gum_pack",
-    "hand_soap",
-    "mushroom_brown",
-    "paint_can",
-    "rubber_duck",
-    "sorbet_cup"
+    "grape_soda",
+    "juice",
+    "oat_canister",
+    "oil_can",
+    "red_onion"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -27,15 +23,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 13,
+    "distinct": 9,
     "depthRange": [
-      2,
-      3
+      1,
+      1
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
-    "lockCubbies": 1,
-    "totalGoods": 90,
+    "lockCubbies": 0,
+    "totalGoods": 27,
     "attempt": 0
   },
   "cubbies": [
@@ -44,19 +40,9 @@
       "c": 0,
       "layers": [
         [
-          "glue_stick",
-          "rubber_duck",
-          "paint_can"
-        ],
-        [
-          "gum_pack",
-          "green_cup",
-          "green_cup"
-        ],
-        [
           "glass_cleaner",
-          "glass_cleaner",
-          "hand_soap"
+          "grape_soda",
+          null
         ]
       ]
     },
@@ -65,19 +51,9 @@
       "c": 1,
       "layers": [
         [
-          "gum_pack",
-          "egg",
-          "egg"
-        ],
-        [
-          "cooking_oil",
-          "mushroom_brown",
-          "glue_stick"
-        ],
-        [
-          "mushroom_brown",
-          "egg",
-          "glass_cleaner"
+          "red_onion",
+          "oil_can",
+          "dragon_toy"
         ]
       ]
     },
@@ -86,19 +62,9 @@
       "c": 2,
       "layers": [
         [
-          "coffee_jar",
-          "green_cup",
-          "rubber_duck"
-        ],
-        [
-          "cooking_oil",
-          "dino_green",
-          "sorbet_cup"
-        ],
-        [
-          "glass_cleaner",
-          "cooking_oil",
-          "dino_green"
+          null,
+          "oil_can",
+          null
         ]
       ]
     },
@@ -107,19 +73,9 @@
       "c": 0,
       "layers": [
         [
-          "rubber_duck",
+          "oat_canister",
           "coffee_jar",
           null
-        ],
-        [
-          "green_cup",
-          "glue_stick",
-          "glass_cleaner"
-        ],
-        [
-          "paint_can",
-          "paint_can",
-          "glass_cleaner"
         ]
       ]
     },
@@ -128,19 +84,9 @@
       "c": 1,
       "layers": [
         [
-          "dino_green",
-          "cooking_oil",
-          "sorbet_cup"
-        ],
-        [
-          "green_cup",
-          "paint_can",
-          "coffee_jar"
-        ],
-        [
-          "rubber_duck",
-          "glass_cleaner",
-          "paint_can"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -149,19 +95,9 @@
       "c": 2,
       "layers": [
         [
-          "hand_soap",
-          "egg",
-          "paint_can"
-        ],
-        [
-          "gum_pack",
-          "mushroom_brown",
-          "sorbet_cup"
-        ],
-        [
-          "dino_green",
-          "glue_stick",
-          "mushroom_brown"
+          "grape_soda",
+          null,
+          "red_onion"
         ]
       ]
     },
@@ -170,19 +106,9 @@
       "c": 0,
       "layers": [
         [
-          "green_cup",
-          "rubber_duck",
-          "mushroom_brown"
-        ],
-        [
-          "glue_stick",
-          "green_cup",
-          "rubber_duck"
-        ],
-        [
-          "dino_green",
-          "egg",
-          "gum_pack"
+          "red_onion",
+          "glass_cleaner",
+          "juice"
         ]
       ]
     },
@@ -191,36 +117,20 @@
       "c": 1,
       "layers": [
         [
-          "hand_soap",
-          null,
-          "sorbet_cup"
-        ],
-        [
+          "juice",
           "glass_cleaner",
-          "coffee_jar",
-          "green_cup"
-        ],
-        [
-          "dino_green",
-          "cooking_oil",
-          "gum_pack"
+          "coconut_water"
         ]
       ]
     },
     {
       "r": 2,
       "c": 2,
-      "lock": 1,
       "layers": [
         [
-          "egg",
-          null,
-          null
-        ],
-        [
-          "glass_cleaner",
-          "rubber_duck",
-          "hand_soap"
+          "juice",
+          "oil_can",
+          "dragon_toy"
         ]
       ]
     },
@@ -229,19 +139,9 @@
       "c": 0,
       "layers": [
         [
-          "sorbet_cup",
-          "hand_soap",
-          "glue_stick"
-        ],
-        [
-          "sorbet_cup",
-          "mushroom_brown",
-          "coffee_jar"
-        ],
-        [
+          null,
           "coffee_jar",
-          "rubber_duck",
-          "cooking_oil"
+          "oat_canister"
         ]
       ]
     },
@@ -250,19 +150,9 @@
       "c": 1,
       "layers": [
         [
+          "coconut_water",
           "coffee_jar",
-          null,
-          null
-        ],
-        [
-          "green_cup",
-          "hand_soap",
-          "coffee_jar"
-        ],
-        [
-          "rubber_duck",
-          "gum_pack",
-          "coffee_jar"
+          "coconut_water"
         ]
       ]
     },
@@ -271,9 +161,9 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "dragon_toy",
+          "oat_canister",
+          "grape_soda"
         ]
       ]
     }

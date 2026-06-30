@@ -2259,10 +2259,15 @@
     // fits the height. ALL cells share ONE height = (shelfW/REF_COLS)/cellAR — independent of THIS stage's
     // cols AND rows, so 3/4/5-row (and 3/4-col) boards keep the SAME cell height; only the WIDTH per col
     // and the TOTAL height (= rows × cellH) change.
+    var cols = cfg.cols || 1;
     var shelfW = Math.min(availW, 540, availH * REF_COLS * cellAR / MAX_ROWS);
     var cellH = (shelfW / REF_COLS) / cellAR;        // GLOBAL constant cell height
+    // GLOBAL constant cell WIDTH too: a cell is NEVER wider than the 3-col reference width, so a 2-col
+    // board (2x3) gets the SAME cell width as a 3-col board (3x3) — just a narrower, CENTERED shelf
+    // (user: 2x3 칸 가로폭 = 3x3 칸 가로폭). cols>=REF_COLS keep shelfW/cols (4-col stays as before).
+    var cellW = shelfW / Math.max(cols, REF_COLS);
     sh.style.aspectRatio = 'auto';
-    sh.style.width  = Math.round(shelfW) + 'px';
+    sh.style.width  = Math.round(cellW * cols) + 'px';
     sh.style.height = Math.round(totalRows * cellH) + 'px';
   }
   function buildBoard(){

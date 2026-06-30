@@ -1087,6 +1087,10 @@
 
   /* reels mode: zero safe-top */
   body.reels{ --safe-top:0px; }
+  /* GameReels build (REELS_BUILD): HIDE currency UI + the item/booster bar (restorable — see REELS_BUILD). */
+  body.reels #boosters{ display:none !important; }   /* item / booster button bar */
+  body.reels .cb-coins{ display:none !important; }    /* clear-result coin reward (+N) */
+  body.reels .go-coins{ display:none !important; }    /* coin HUD (game-over / shop) */
 </style>
 </head>
 <body>
@@ -1168,7 +1172,11 @@
    ================================================================= */
 (function(){
   var URLP = new URLSearchParams(location.search);
-  var REELS = URLP.has('reels') || URLP.has('gamereels');
+  // ===== REELS BUILD (GameReels) — forced ON so the deployed file HIDES currency UI + the item/booster
+  // bar and turns the continue screen into a RESTART screen. Nothing is deleted; flip REELS_BUILD=false
+  // to RESTORE the full game (coins/items/continue). verify.mjs sets window.__NO_REELS to test the full game. =====
+  var REELS_BUILD = !window.__NO_REELS;
+  var REELS = REELS_BUILD || URLP.has('reels') || URLP.has('gamereels');
   var DEV   = URLP.has('dev');
   var FROM  = parseInt(URLP.get('from'),10); if(!(FROM>=1)) FROM = 1;
   var TO    = parseInt(URLP.get('to'),10);   if(!(TO>=1))   TO = null;
@@ -3590,9 +3598,28 @@
     document.getElementById('nextBtn').addEventListener('click', function(){ haptic('btn'); nextLevel(); });
   }
 
+  // GameReels build: the game-over is a simple RESTART screen (NO continue, NO coins) — tap RESTART to
+  // replay the current level. Only reached when REELS is on; restoring the full game brings back continue.
+  function showReelsRestart(mode){
+    var isTime = (mode === 'timeup');
+    var title = isTime ? 'TIME UP!' : 'NO SPACE!';
+    popupBox.innerHTML =
+      '<div class="card gameover clean reels-restart" id="goCard">' +
+        '<div class="go-title ' + (isTime ? 'timeup' : 'nospace') + '">' + title + '</div>' +
+        '<div class="card-body">' +
+          '<div class="go-sec bot">' +
+            '<div class="go-btn retry" id="goRestart"><span class="bi-retry">↻</span><span class="bl">RESTART</span></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    overlay.classList.add('on');
+    document.getElementById('goRestart').addEventListener('click', function(){ haptic('btn'); retryLevel(); });
+  }
+
   // GAME OVER — CLEAN panel (panel_gameover_clean.png): coin HUD + ribbon title + X +
   // centered offer (+30s / reshuffle x1) + [CONTINUE(coin) | RETRY]. NO ads/AD labels.
   function showGameOverCard(mode){
+    if (REELS){ showReelsRestart(mode); return; }   // GameReels build: no continue/coins — just RESTART
     var isTime = (mode === 'timeup');
     var title = isTime ? 'TIME UP!' : 'NO SPACE!';
     var offer = isTime
@@ -3888,6 +3915,7 @@
   function onboardSet(){ try{ return JSON.parse(localStorage.getItem('gs_item_onboarded')||'{}'); }catch(e){ return {}; } }
   function saveOnboardSet(s){ try{ localStorage.setItem('gs_item_onboarded', JSON.stringify(s)); }catch(e){} }
   function maybeOnboard(){
+    if (REELS) return;                 // GameReels build: items hidden -> no "NEW ITEM!" unlock popups
     var shown=onboardSet();
     for (var i=0;i<ITEM_DEFS.length;i++){ var d=ITEM_DEFS[i];
       // CHEAT: always show at the unlock level (for testing, no persist); normal: once per item.

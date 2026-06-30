@@ -11,7 +11,7 @@
 <style>
   /* ============================================================
      LAYOUT — mobile PORTRAIT, viewport-driven, no fixed design box.
-     --safe-top : honored by HUD; set to 0 in reels mode.
+     --safe-top : honored by HUD (notch/safe-area, env()). NOT zeroed in reels (header stays where the full game has it).
      ============================================================ */
   :root{
     --safe-top: env(safe-area-inset-top, 0px);
@@ -1085,8 +1085,8 @@
   #grid.shuffled-in .good{ animation:gShufIn .42s cubic-bezier(.34,1.56,.64,1) both; }
   @keyframes gShufIn{ 0%{ opacity:.2; } 60%{ opacity:1; } 100%{ opacity:1; } }
 
-  /* reels mode: zero safe-top */
-  body.reels{ --safe-top:0px; }
+  /* GameReels build keeps the NORMAL top safe-area (env) so the header sits where the full game has it —
+     the old `body.reels{--safe-top:0}` jammed the HUD to the top edge (notch ignored); removed. */
   /* GameReels build (REELS_BUILD): HIDE currency UI + the item/booster bar (restorable — see REELS_BUILD). */
   body.reels #boosters{ display:none !important; }   /* item / booster button bar */
   body.reels .cb-coins{ display:none !important; }    /* clear-result coin reward (+N) */

@@ -1232,8 +1232,12 @@
     reels: REELS, dev: DEV, from: FROM, to: TO, active: true,
     post: postMsg, vibrate: vibrate
   };
-  // GameReels.post fallback object (so postMsg's own fallback works if host supplies it later)
-  if (!window.GameReels) window.GameReels = { post: function(ev,d){ postMsg(ev,d); } };
+  // ⚠️ DO NOT self-install window.GameReels here. postMsg() ALREADY calls
+  // window.GameReels.post(...) as a fallback (above) — if we set window.GameReels.post = postMsg,
+  // every emit recurses postMsg -> GameReels.post -> postMsg -> ... bounded only by the call stack,
+  // flooding the host channel with ~tens-of-thousands of messages PER emit (200k+ GameStart/started
+  // in 2s). That floods the Flutter webview bridge at load -> GAME REELS WHITE SCREEN. The
+  // window.GameReels branch in postMsg is ONLY for a HOST-PROVIDED bridge object. (2026-06-30 fix.)
 })();
 </script>
 
@@ -4129,10 +4133,10 @@
   // =============================================================
   var gameStartSent = false;
   function emitGameStart(){
-    // GameReels "loaded" signal — emit ALL accepted aliases (hosts vary: GameStart / started / luna:started).
+    // GameReels "loaded" signal. The proven GameReels host expects 'GameStart' (data:null).
+    // We emit ONLY 'GameStart' — the started/luna:started aliases were dropped to match the
+    // verified cube-blast reference (same host) which removed them to avoid host confusion. (2026-06-30)
     GR.post('GameStart', null);
-    GR.post('started', null);
-    GR.post('luna:started', null);
     gameStartSent = true;
   }
   [0,300,800,1600,3000,5000].forEach(function(ms){

@@ -1818,16 +1818,23 @@
   // single-HTML source of truth). Runs before the first board build (buildBoard awaits it
   // via __goodsManifestReady when present).
   var __goodsManifestReady = (function(){
+    function applyManifest(m){
+      if (!m || typeof m !== 'object') return false;
+      for (var k in m){ if (typeof m[k] === 'number' && m[k] > 0){ GOOD_AR[k] = m[k]; if (GOOD_SCALE[k] == null) GOOD_SCALE[k] = 1.0; } }
+      if (typeof fitGoods === 'function'){ try { fitGoods(); } catch(e){} }
+      return true;
+    }
+    // INLINE manifest (reels / offline single-HTML build): the GameReels webview loads via file://
+    // (or a custom scheme) where the fetch below is gated OFF, so the build injects the FULL manifest
+    // as window.__GOODS_MANIFEST and we apply it synchronously. CRITICAL: the engine's inlined GOOD_AR
+    // only covers ~119 types, but the 100-stage set uses 213 (red_cup/green_cup + 134 others). Without
+    // this, those fall back to AR 0.42 and render squished/flat on file://. (2026-06-30)
+    if (window.__GOODS_MANIFEST){ return Promise.resolve(applyManifest(window.__GOODS_MANIFEST)); }
     try {
       if (location.protocol !== 'http:' && location.protocol !== 'https:') return Promise.resolve(false);
       return fetch('../goods_manifest.json', { cache: 'no-store' })
         .then(function(r){ return r.ok ? r.json() : null; })
-        .then(function(m){
-          if (!m || typeof m !== 'object') return false;
-          for (var k in m){ if (typeof m[k] === 'number' && m[k] > 0){ GOOD_AR[k] = m[k]; if (GOOD_SCALE[k] == null) GOOD_SCALE[k] = 1.0; } }
-          if (typeof fitGoods === 'function'){ try { fitGoods(); } catch(e){} }
-          return true;
-        })
+        .then(applyManifest)
         .catch(function(){ return false; });
     } catch(e){ return Promise.resolve(false); }
   })();
@@ -1846,6 +1853,14 @@
       return n > 0;
     }
     try {
+      // INLINE stages (reels / offline single-HTML build): the build injects the full 100-stage set
+      // as window.__STAGES BEFORE this script. file:// gates the fetch below OFF, so without this the
+      // game would stay on the throwaway EMBEDDED boot stage (wrong L1 + the legacy "HOW TO PLAY" card
+      // instead of the real guided cup tutorial). When stages are pre-injected, just settle. (2026-06-30)
+      if (window.__STAGES && typeof window.__STAGES === 'object'){
+        var nInline = 0; for (var ki in window.__STAGES){ if (window.__STAGES[ki] && window.__STAGES[ki].cubbies) nInline++; }
+        if (nInline > 0){ window.__stagesSettled = true; return Promise.resolve(true); }
+      }
       if (window.__NO_STAGE_FETCH || /[?&]embed\b/.test(location.search)){ window.__stagesSettled = true; return Promise.resolve(false); }
       if (location.protocol !== 'http:' && location.protocol !== 'https:'){ window.__stagesSettled = true; return Promise.resolve(false); }
       return fetch('../stages/all_stages.json', { cache: 'no-store' })

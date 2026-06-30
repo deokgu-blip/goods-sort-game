@@ -1088,7 +1088,9 @@
   /* GameReels build keeps the NORMAL top safe-area (env) so the header sits where the full game has it —
      the old `body.reels{--safe-top:0}` jammed the HUD to the top edge (notch ignored); removed. */
   /* GameReels build (REELS_BUILD): HIDE currency UI + the item/booster bar (restorable — see REELS_BUILD). */
-  body.reels #boosters{ display:none !important; }   /* item / booster button bar */
+  /* HIDE item bar but RESERVE its space (visibility, not display:none) so the board stays where the
+     full game has it — display:none let #board-wrap grow and dropped the centered shelf ~55px. */
+  body.reels #boosters{ visibility:hidden !important; }   /* item / booster button bar */
   body.reels .cb-coins{ display:none !important; }    /* clear-result coin reward (+N) */
   body.reels .go-coins{ display:none !important; }    /* coin HUD (game-over / shop) */
   /* GameReels game-over: NO popup card — full-screen DIM overlay, tap anywhere to restart. */

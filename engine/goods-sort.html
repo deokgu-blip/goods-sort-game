@@ -1297,15 +1297,20 @@
   // kept LOW + soft (user: "귀 아픈 소리 말고 ASMR 소리처럼").
   // =============================================================
   var SFX = (function(){
-    var ctx=null, buffers={}, inited=false, muted=false, master=null, bgm=null, bgmVol=0.30;
+    var ctx=null, buffers={}, inited=false, muted=false, master=null, bgm=null, bgmVol=0.18;  // BGM turned DOWN (user 2026-06-30: "비지엠 크기 줄이고") — sits well under the SFX
     var FILES={ pick:'sfx_pick', drop:'sfx_drop', clear:'sfx_clear', combo:'sfx_combo', win:'sfx_win', lock:'sfx_lock', button:'sfx_button' };
-    var VOL={ pick:0.5, drop:0.55, clear:0.8, combo:0.75, win:0.85, lock:0.65, button:0.5 };
+    // drop = the good-placed SFX -> nudged UP (user 2026-06-30: "굿즈 내려놓을 때 효과음 조금 키워")
+    var VOL={ pick:0.5, drop:0.72, clear:0.8, combo:0.75, win:0.85, lock:0.65, button:0.5 };
     function init(){
       if (inited) return; inited=true;
       try { var AC=window.AudioContext||window.webkitAudioContext;
         if (AC){ ctx=new AC(); master=ctx.createGain(); master.gain.value=0.85; master.connect(ctx.destination);
           Object.keys(FILES).forEach(function(k){
-            fetch('../assets/audio/'+FILES[k]+'.mp3').then(function(r){ return r.ok?r.arrayBuffer():null; })
+            // INLINE SFX (reels/offline): file:// blocks fetch() of a relative .mp3, so the build injects
+            // each clip as a base64 data: URI in window.__SFX_DATA — data: URIs ARE fetchable on file://
+            // (= SFX play in the GameReels webview). BGM uses <audio src> which loads file:// fine. (2026-06-30)
+            var url = (window.__SFX_DATA && window.__SFX_DATA[k]) ? window.__SFX_DATA[k] : ('../assets/audio/'+FILES[k]+'.mp3');
+            fetch(url).then(function(r){ return r.ok?r.arrayBuffer():null; })
               .then(function(ab){ if(!ab||!ctx) return; ctx.decodeAudioData(ab, function(b){ buffers[k]=b; }, function(){}); })
               .catch(function(){});
           });

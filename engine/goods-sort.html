@@ -3149,9 +3149,27 @@
     var sEl = cb.floor.querySelector('.slot.s'+slot);
     return sEl ? sEl.querySelector('.good') : null;
   }
+  // WIDEN the grab area (user: "굿즈 터치범위 조금만 넓혀줘"): if the pointer lands on the
+  // frame/gap JUST outside a cell (a near-miss), snap to the NEAREST cell whose rect — grown by
+  // a small overhang on every side — contains the point. slotFromX then clamps an out-of-bounds
+  // x to the edge slot, so the aimed-at good is still grabbed. (2026-06-30)
+  function nearestCubbyEl(clientX, clientY){
+    var best=null, bestD=Infinity;
+    for (var i=0;i<S.cubbies.length;i++){
+      var el = S.cubbies[i] && S.cubbies[i].el; if (!el) continue;
+      var r = el.getBoundingClientRect(); if (!r.width) continue;
+      var m = Math.min(r.width, r.height) * 0.20;        // ~a little overhang on each side
+      if (clientX>=r.left-m && clientX<=r.right+m && clientY>=r.top-m && clientY<=r.bottom+m){
+        var cx=r.left+r.width/2, cy=r.top+r.height/2;
+        var d=(clientX-cx)*(clientX-cx)+(clientY-cy)*(clientY-cy);
+        if (d<bestD){ bestD=d; best=el; }
+      }
+    }
+    return best;
+  }
   // resolve a pointer to {cb, cubbyEl, slot, good} (good may be null)
   function hitAt(clientX, clientY){
-    var cubbyEl = cubbyElFromPoint(clientX, clientY);
+    var cubbyEl = cubbyElFromPoint(clientX, clientY) || nearestCubbyEl(clientX, clientY);
     if (!cubbyEl) return null;
     var idx = +cubbyEl.dataset.idx;
     var cb = S.cubbies[idx];
@@ -3269,6 +3287,14 @@
   window.addEventListener('pointermove', onMove, { passive:false });
   window.addEventListener('pointerup', onUp, { passive:false });
   window.addEventListener('pointercancel', onUp, { passive:false });
+  // iOS LOUPE (돋보기)/copy callout: CSS (-webkit-touch-callout/user-select:none) is IGNORED by the
+  // GameReels WKWebView, so a press-and-hold on a good still pops the magnifier. Killing the
+  // touchstart/touchmove DEFAULT on the BOARD suppresses the native long-press gesture. Safe here:
+  // the board drag uses POINTER events (unaffected by touch preventDefault), and the board has NO
+  // click handlers — buttons & the reels game-over tap (click-based) live OUTSIDE shelfEl, so their
+  // taps keep working. (2026-06-30)
+  shelfEl.addEventListener('touchstart', function(e){ e.preventDefault(); }, { passive:false });
+  shelfEl.addEventListener('touchmove',  function(e){ e.preventDefault(); }, { passive:false });
 
   // =============================================================
   // TIMER + WIN/LOSE

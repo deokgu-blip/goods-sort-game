@@ -1,25 +1,26 @@
 {
   "level": 61,
-  "timeLimit": 335,
+  "timeLimit": 538,
   "cols": 3,
   "rows": 5,
   "cellCap": 3,
   "goods": [
-    "air_freshener",
-    "bath_salt_tub",
-    "beet",
     "bell_pepper",
-    "butter",
-    "cabbage",
     "cereal_box_blue",
-    "coconut_water",
-    "cola_zero",
-    "cookie_disc",
-    "cream_cheese",
-    "icebar_blue",
-    "pitcher_juice",
-    "red_onion",
-    "whip_can"
+    "chip_can_tall",
+    "fig",
+    "grapes",
+    "lychee",
+    "marshmallow_blue",
+    "melon_green",
+    "mustard",
+    "orange_juice_carton",
+    "penguin",
+    "robot_toy",
+    "spray_cleaner",
+    "tennis_can",
+    "trail_mix",
+    "wafer_bar"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -29,43 +30,121 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 15,
+    "distinct": 16,
     "depthRange": [
       1,
-      2
+      5
     ],
+    "deepN": 1,
     "emptyCubbies": 1,
-    "frontGaps": 6,
+    "frontGaps": 9,
     "lockCubbies": 5,
-    "totalGoods": 51,
-    "attempt": 5
+    "totalGoods": 78,
+    "attempt": 2
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
+      "lock": 3,
       "layers": [
+        [
+          "lychee",
+          "fig",
+          null
+        ],
+        [
+          "mustard",
+          "trail_mix",
+          "tennis_can"
+        ],
+        [
+          "chip_can_tall",
+          "cereal_box_blue",
+          "mustard"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "lock": 3,
+      "layers": [
+        [
+          "tennis_can",
+          "bell_pepper",
+          "wafer_bar"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "lock": 3,
+      "layers": [
+        [
+          "robot_toy",
+          "bell_pepper",
+          "trail_mix"
+        ],
         [
           "bell_pepper",
-          "cereal_box_blue",
-          "bell_pepper"
+          "orange_juice_carton",
+          "trail_mix"
         ]
       ]
     },
     {
-      "r": 0,
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          "penguin",
+          "melon_green"
+        ],
+        [
+          "marshmallow_blue",
+          "bell_pepper",
+          "chip_can_tall"
+        ]
+      ]
+    },
+    {
+      "r": 1,
       "c": 1,
       "layers": [
         [
-          "whip_can",
-          "butter",
-          "pitcher_juice"
+          "trail_mix",
+          "fig",
+          "chip_can_tall"
+        ],
+        [
+          "marshmallow_blue",
+          "lychee",
+          "melon_green"
+        ],
+        [
+          "cereal_box_blue",
+          "chip_can_tall",
+          "lychee"
         ]
       ]
     },
     {
-      "r": 0,
+      "r": 1,
       "c": 2,
+      "layers": [
+        [
+          "lychee",
+          "marshmallow_blue",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
       "layers": [
         [
           null,
@@ -75,141 +154,90 @@
       ]
     },
     {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "beet",
-          "butter",
-          "cream_cheese"
-        ],
-        [
-          "bath_salt_tub",
-          "whip_can",
-          "beet"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "air_freshener",
-          "cereal_box_blue",
-          "cream_cheese"
-        ],
-        [
-          "butter",
-          "pitcher_juice",
-          "cabbage"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "cookie_disc",
-          "coconut_water",
-          "whip_can"
-        ],
-        [
-          "cola_zero",
-          "red_onion",
-          "cola_zero"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "icebar_blue",
-          "air_freshener",
-          "cereal_box_blue"
-        ]
-      ]
-    },
-    {
       "r": 2,
       "c": 1,
-      "lock": 3,
-      "layers": [
-        [
-          "icebar_blue",
-          "bath_salt_tub",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "lock": 3,
-      "layers": [
-        [
-          "red_onion",
-          "whip_can",
-          null
-        ],
-        [
-          "bath_salt_tub",
-          "beet",
-          "cookie_disc"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "pitcher_juice",
-          "icebar_blue",
-          "pitcher_juice"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          "cookie_disc",
-          "cabbage",
-          "coconut_water"
-        ],
-        [
-          "pitcher_juice",
-          "red_onion",
-          "cream_cheese"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "lock": 3,
-      "layers": [
-        [
-          "whip_can",
-          "coconut_water",
-          "air_freshener"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 0,
       "lock": 2,
       "layers": [
         [
+          "lychee",
+          "grapes",
+          "marshmallow_blue"
+        ],
+        [
+          "orange_juice_carton",
+          "spray_cleaner",
+          "marshmallow_blue"
+        ],
+        [
+          "orange_juice_carton",
+          "spray_cleaner",
+          "tennis_can"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
           null,
-          "whip_can",
-          null
+          null,
+          "orange_juice_carton"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "chip_can_tall",
+          "chip_can_tall",
+          "bell_pepper"
+        ],
+        [
+          "tennis_can",
+          "mustard",
+          "fig"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "lock": 4,
+      "layers": [
+        [
+          "cereal_box_blue",
+          "melon_green",
+          "melon_green"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "orange_juice_carton",
+          null,
+          "melon_green"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
+      "layers": [
+        [
+          "wafer_bar",
+          "wafer_bar",
+          "marshmallow_blue"
+        ],
+        [
+          "tennis_can",
+          "mustard",
+          "grapes"
         ]
       ]
     },
@@ -218,21 +246,45 @@
       "c": 1,
       "layers": [
         [
-          null,
-          "bell_pepper",
+          "trail_mix",
+          "melon_green",
           null
+        ],
+        [
+          "spray_cleaner",
+          "penguin",
+          "spray_cleaner"
+        ],
+        [
+          "penguin",
+          "bell_pepper",
+          "lychee"
+        ],
+        [
+          "spray_cleaner",
+          "mustard",
+          "orange_juice_carton"
+        ],
+        [
+          "robot_toy",
+          "tennis_can",
+          "robot_toy"
         ]
       ]
     },
     {
       "r": 4,
       "c": 2,
-      "lock": 3,
       "layers": [
         [
-          "cola_zero",
-          "cabbage",
-          "pitcher_juice"
+          null,
+          null,
+          "trail_mix"
+        ],
+        [
+          "spray_cleaner",
+          "grapes",
+          "mustard"
         ]
       ]
     }

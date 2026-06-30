@@ -1,25 +1,26 @@
 {
   "level": 47,
-  "timeLimit": 381,
+  "timeLimit": 540,
   "cols": 3,
   "rows": 5,
   "cellCap": 3,
   "goods": [
+    "broccoli",
     "cereal_box_blue",
-    "cocoa_tin_tall",
-    "cupcake_choco",
-    "detergent",
-    "frog_toy",
-    "grapes",
+    "chick",
+    "chip_tube",
+    "dish_soap",
+    "fig",
+    "green_tea",
     "icebar_blue",
-    "juice_box",
-    "lychee",
+    "milk_choc_bar",
+    "mushroom_decor",
     "mustard",
-    "peanut_jar",
+    "owl_toy",
+    "pretzel_bag",
     "red_onion",
-    "rice_bag",
-    "sauce",
-    "teddy_bear"
+    "soda",
+    "water"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -29,76 +30,127 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 15,
+    "distinct": 16,
     "depthRange": [
       1,
-      2
+      5
     ],
+    "deepN": 2,
     "emptyCubbies": 1,
-    "frontGaps": 6,
+    "frontGaps": 9,
     "lockCubbies": 2,
-    "totalGoods": 48,
-    "attempt": 0
+    "totalGoods": 84,
+    "attempt": 4
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
-      "lock": 3,
       "layers": [
         [
           "mustard",
-          null,
-          null
+          "red_onion",
+          "dish_soap"
         ],
         [
-          "frog_toy",
-          "teddy_bear",
-          "lychee"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 1,
-      "layers": [
+          "broccoli",
+          "mustard",
+          "chick"
+        ],
         [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "rice_bag",
-          "peanut_jar",
-          "sauce"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "rice_bag",
-          null,
-          "lychee"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          null,
-          "juice_box",
+          "broccoli",
+          "mustard",
           "red_onion"
+        ],
+        [
+          "broccoli",
+          "fig",
+          "chick"
+        ],
+        [
+          "chick",
+          "dish_soap",
+          "icebar_blue"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 1,
+      "layers": [
+        [
+          "chip_tube",
+          "soda",
+          null
+        ],
+        [
+          "water",
+          "red_onion",
+          "red_onion"
+        ],
+        [
+          "dish_soap",
+          "chip_tube",
+          "icebar_blue"
+        ],
+        [
+          "icebar_blue",
+          "mushroom_decor",
+          "soda"
+        ],
+        [
+          "fig",
+          "chick",
+          "green_tea"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          "chip_tube",
+          "mushroom_decor"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "lock": 1,
+      "layers": [
+        [
+          null,
+          "milk_choc_bar",
+          "milk_choc_bar"
+        ],
+        [
+          "cereal_box_blue",
+          "pretzel_bag",
+          "fig"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "pretzel_bag",
+          "mushroom_decor",
+          null
+        ],
+        [
+          "water",
+          "mushroom_decor",
+          "soda"
+        ],
+        [
+          "mustard",
+          "cereal_box_blue",
+          "water"
         ]
       ]
     },
@@ -107,9 +159,9 @@
       "c": 2,
       "layers": [
         [
-          "frog_toy",
-          null,
-          "cereal_box_blue"
+          "mushroom_decor",
+          "icebar_blue",
+          "dish_soap"
         ]
       ]
     },
@@ -118,9 +170,9 @@
       "c": 0,
       "layers": [
         [
+          "green_tea",
           null,
-          "detergent",
-          "sauce"
+          null
         ]
       ]
     },
@@ -129,14 +181,14 @@
       "c": 1,
       "layers": [
         [
-          "grapes",
-          "cocoa_tin_tall",
-          "cupcake_choco"
+          "cereal_box_blue",
+          "cereal_box_blue",
+          "water"
         ],
         [
-          "cocoa_tin_tall",
-          "cupcake_choco",
-          "cereal_box_blue"
+          "mustard",
+          "water",
+          "fig"
         ]
       ]
     },
@@ -145,9 +197,9 @@
       "c": 2,
       "layers": [
         [
-          "lychee",
-          "grapes",
-          "peanut_jar"
+          "icebar_blue",
+          "owl_toy",
+          "milk_choc_bar"
         ]
       ]
     },
@@ -157,8 +209,13 @@
       "layers": [
         [
           "cereal_box_blue",
-          "red_onion",
-          "cocoa_tin_tall"
+          "water",
+          null
+        ],
+        [
+          "pretzel_bag",
+          "owl_toy",
+          "soda"
         ]
       ]
     },
@@ -167,9 +224,14 @@
       "c": 1,
       "layers": [
         [
-          "rice_bag",
-          "peanut_jar",
-          "sauce"
+          "mushroom_decor",
+          "fig",
+          "pretzel_bag"
+        ],
+        [
+          "mustard",
+          "pretzel_bag",
+          "dish_soap"
         ]
       ]
     },
@@ -178,25 +240,36 @@
       "c": 2,
       "layers": [
         [
-          "mustard",
-          "teddy_bear",
-          "juice_box"
+          "soda",
+          "red_onion",
+          "chick"
+        ],
+        [
+          "soda",
+          "owl_toy",
+          "red_onion"
         ]
       ]
     },
     {
       "r": 4,
       "c": 0,
+      "lock": 3,
       "layers": [
         [
-          "grapes",
-          "cupcake_choco",
-          "red_onion"
+          "pretzel_bag",
+          null,
+          null
         ],
         [
           "icebar_blue",
-          "detergent",
-          "cupcake_choco"
+          "chick",
+          "broccoli"
+        ],
+        [
+          "cereal_box_blue",
+          "green_tea",
+          "broccoli"
         ]
       ]
     },
@@ -205,26 +278,20 @@
       "c": 1,
       "layers": [
         [
-          "teddy_bear",
-          "juice_box",
-          "mustard"
+          "fig",
+          "dish_soap",
+          "broccoli"
         ]
       ]
     },
     {
       "r": 4,
       "c": 2,
-      "lock": 3,
       "layers": [
         [
-          "cupcake_choco",
-          "icebar_blue",
-          "frog_toy"
-        ],
-        [
-          "icebar_blue",
-          "detergent",
-          "cupcake_choco"
+          null,
+          null,
+          null
         ]
       ]
     }

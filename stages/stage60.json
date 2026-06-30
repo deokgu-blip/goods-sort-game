@@ -1,31 +1,26 @@
 {
   "level": 60,
-  "timeLimit": 440,
+  "timeLimit": 540,
   "cols": 4,
   "rows": 5,
   "cellCap": 3,
   "goods": [
+    "cantaloupe",
+    "cherry_pair",
+    "chick",
+    "coconut_water",
+    "cooking_oil",
+    "cream_cheese",
     "cream_cheese_tub",
-    "dish_soap",
-    "frozen_berries",
-    "gift_box",
-    "glue_stick",
-    "hand_soap",
-    "icecream_cone",
-    "lemon_lime_soda",
+    "energy_drink",
+    "flower_vase",
+    "grape_soda",
+    "hand_cream_tube",
+    "mason_jam",
     "oat_canister",
-    "pasta_jar_tall",
-    "penguin",
-    "rice_bag",
-    "robot_toy",
-    "santa",
-    "sauerkraut_jar",
-    "sorbet_cup",
-    "sriracha",
-    "teddy_bear",
-    "toothpaste",
-    "wafer_bar",
-    "water",
+    "popping_candy",
+    "protein_tube",
+    "vinegar",
     "wheel_of_lime"
   ],
   "combo": {
@@ -36,32 +31,32 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 22,
+    "distinct": 17,
     "depthRange": [
       1,
-      2
+      6
     ],
+    "deepN": 2,
     "emptyCubbies": 1,
-    "frontGaps": 9,
+    "frontGaps": 15,
     "lockCubbies": 4,
-    "totalGoods": 72,
-    "attempt": 7
+    "totalGoods": 99,
+    "attempt": 15
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
-      "lock": 3,
       "layers": [
         [
-          "lemon_lime_soda",
-          "gift_box",
-          "frozen_berries"
+          "wheel_of_lime",
+          "flower_vase",
+          "coconut_water"
         ],
         [
-          "sorbet_cup",
-          "wafer_bar",
-          "pasta_jar_tall"
+          "chick",
+          "vinegar",
+          "cream_cheese_tub"
         ]
       ]
     },
@@ -70,14 +65,19 @@
       "c": 1,
       "layers": [
         [
-          "lemon_lime_soda",
-          "hand_soap",
-          "hand_soap"
+          "vinegar",
+          null,
+          "cream_cheese_tub"
         ],
         [
-          "sorbet_cup",
-          "penguin",
-          "dish_soap"
+          "grape_soda",
+          "grape_soda",
+          "protein_tube"
+        ],
+        [
+          "coconut_water",
+          "chick",
+          "hand_cream_tube"
         ]
       ]
     },
@@ -86,9 +86,34 @@
       "c": 2,
       "layers": [
         [
-          "water",
+          "popping_candy",
           null,
           "wheel_of_lime"
+        ],
+        [
+          "grape_soda",
+          "coconut_water",
+          "cream_cheese"
+        ],
+        [
+          "flower_vase",
+          "cooking_oil",
+          "mason_jam"
+        ],
+        [
+          "oat_canister",
+          "oat_canister",
+          "cherry_pair"
+        ],
+        [
+          "cooking_oil",
+          "energy_drink",
+          "hand_cream_tube"
+        ],
+        [
+          "energy_drink",
+          "grape_soda",
+          "vinegar"
         ]
       ]
     },
@@ -97,191 +122,222 @@
       "c": 3,
       "layers": [
         [
-          "pasta_jar_tall",
-          "oat_canister",
-          "cream_cheese_tub"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "frozen_berries",
-          "teddy_bear",
-          "dish_soap"
-        ],
-        [
-          "icecream_cone",
-          "sauerkraut_jar",
-          "icecream_cone"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "glue_stick",
-          "wheel_of_lime",
-          null
-        ],
-        [
-          "dish_soap",
-          "sriracha",
+          "vinegar",
+          "cherry_pair",
           "oat_canister"
         ]
       ]
     },
     {
       "r": 1,
-      "c": 3,
+      "c": 0,
       "layers": [
         [
-          "santa",
+          "energy_drink",
+          "hand_cream_tube",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          "cream_cheese",
+          "vinegar"
+        ],
+        [
           "oat_canister",
-          "water"
+          "cream_cheese_tub",
+          "cream_cheese"
         ]
       ]
     },
     {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "penguin",
-          "toothpaste",
-          "glue_stick"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "lock": 4,
-      "layers": [
-        [
-          "penguin",
-          "robot_toy",
-          "teddy_bear"
-        ]
-      ]
-    },
-    {
-      "r": 2,
+      "r": 1,
       "c": 2,
+      "lock": 2,
       "layers": [
         [
           null,
-          null,
-          "frozen_berries"
+          "cream_cheese",
+          "chick"
         ],
         [
-          "rice_bag",
-          "icecream_cone",
-          "lemon_lime_soda"
+          "cream_cheese_tub",
+          "cantaloupe",
+          "cantaloupe"
         ]
       ]
     },
     {
-      "r": 2,
+      "r": 1,
       "c": 3,
       "layers": [
         [
-          "teddy_bear",
-          "wheel_of_lime",
-          "hand_soap"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "lock": 4,
-      "layers": [
-        [
-          "toothpaste",
-          null,
+          "cooking_oil",
+          "flower_vase",
           null
         ],
         [
-          "robot_toy",
-          "sriracha",
-          "icecream_cone"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
+          "cantaloupe",
+          "energy_drink",
+          "hand_cream_tube"
+        ],
         [
-          "glue_stick",
-          "pasta_jar_tall",
-          "cream_cheese_tub"
+          "cooking_oil",
+          "cherry_pair",
+          "popping_candy"
         ]
       ]
     },
     {
-      "r": 3,
-      "c": 2,
+      "r": 2,
+      "c": 0,
       "layers": [
         [
           null,
-          "teddy_bear",
-          "gift_box"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 3,
-      "layers": [
-        [
-          "toothpaste",
-          "teddy_bear",
+          null,
           null
         ]
       ]
     },
     {
-      "r": 4,
-      "c": 0,
-      "layers": [
-        [
-          "sauerkraut_jar",
-          null,
-          "robot_toy"
-        ],
-        [
-          "teddy_bear",
-          "santa",
-          "santa"
-        ]
-      ]
-    },
-    {
-      "r": 4,
+      "r": 2,
       "c": 1,
       "lock": 2,
       "layers": [
         [
-          "water",
-          "icecream_cone",
-          "icecream_cone"
+          null,
+          "cantaloupe",
+          "popping_candy"
+        ],
+        [
+          "cooking_oil",
+          "coconut_water",
+          "cream_cheese"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          "oat_canister",
+          "wheel_of_lime"
+        ],
+        [
+          "hand_cream_tube",
+          "chick",
+          "mason_jam"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "lock": 3,
+      "layers": [
+        [
+          null,
+          "grape_soda",
+          "cream_cheese"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "mason_jam",
+          null,
+          "cherry_pair"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "lock": 2,
+      "layers": [
+        [
+          "wheel_of_lime",
+          "cream_cheese_tub",
+          "mason_jam"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "cream_cheese_tub",
+          "coconut_water",
+          null
+        ],
+        [
+          "oat_canister",
+          "wheel_of_lime",
+          "mason_jam"
+        ],
+        [
+          "energy_drink",
+          "flower_vase",
+          "cherry_pair"
+        ],
+        [
+          "flower_vase",
+          "popping_candy",
+          "mason_jam"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 3,
+      "layers": [
+        [
+          "vinegar",
+          "chick",
+          "cooking_oil"
+        ],
+        [
+          "grape_soda",
+          "chick",
+          "popping_candy"
+        ],
+        [
+          "cantaloupe",
+          "protein_tube",
+          "coconut_water"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          "protein_tube",
+          "cantaloupe"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          "cherry_pair",
+          "hand_cream_tube"
         ]
       ]
     },
@@ -290,14 +346,9 @@
       "c": 2,
       "layers": [
         [
-          "sauerkraut_jar",
-          "sorbet_cup",
-          "cream_cheese_tub"
-        ],
-        [
-          "gift_box",
-          "wafer_bar",
-          "rice_bag"
+          "wheel_of_lime",
+          "energy_drink",
+          "flower_vase"
         ]
       ]
     },
@@ -306,9 +357,9 @@
       "c": 3,
       "layers": [
         [
-          "rice_bag",
-          "sriracha",
-          "wafer_bar"
+          null,
+          "popping_candy",
+          null
         ]
       ]
     }

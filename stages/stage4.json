@@ -1,16 +1,22 @@
 {
   "level": 4,
-  "timeLimit": 200,
+  "timeLimit": 380,
   "cols": 4,
   "rows": 3,
   "cellCap": 3,
   "goods": [
-    "cereal_box",
-    "energy_drink",
+    "coffee_jar",
+    "cream_cheese_tub",
+    "energy_bar",
     "frog_toy",
+    "glue_stick",
+    "hand_soap",
+    "lemon_lime_soda",
+    "milk_carton_tall",
     "milk_choc_bar",
+    "robot_toy",
     "sheep_toy",
-    "sports_drink",
+    "soda",
     "sriracha",
     "strawberry",
     "toaster_pastry"
@@ -23,15 +29,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 15,
     "depthRange": [
       1,
-      1
+      3
     ],
+    "deepN": 0,
     "emptyCubbies": 1,
-    "frontGaps": 6,
+    "frontGaps": 9,
     "lockCubbies": 0,
-    "totalGoods": 27,
+    "totalGoods": 45,
     "attempt": 0
   },
   "cubbies": [
@@ -40,9 +47,9 @@
       "c": 0,
       "layers": [
         [
-          "cereal_box",
-          "toaster_pastry",
-          "energy_drink"
+          "hand_soap",
+          "energy_bar",
+          "milk_choc_bar"
         ]
       ]
     },
@@ -51,53 +58,68 @@
       "c": 1,
       "layers": [
         [
-          "milk_choc_bar",
-          "strawberry",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "sports_drink",
-          "sriracha",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 3,
-      "layers": [
-        [
-          "sheep_toy",
-          "strawberry",
-          "toaster_pastry"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "sheep_toy",
+          "frog_toy",
           null,
           "frog_toy"
         ]
       ]
     },
     {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          "milk_carton_tall",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "layers": [
+        [
+          "toaster_pastry",
+          null,
+          "strawberry"
+        ],
+        [
+          "energy_bar",
+          "glue_stick",
+          "hand_soap"
+        ],
+        [
+          "sheep_toy",
+          "sheep_toy",
+          "soda"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "robot_toy",
+          null,
+          "robot_toy"
+        ],
+        [
+          "sheep_toy",
+          "strawberry",
+          "cream_cheese_tub"
+        ]
+      ]
+    },
+    {
       "r": 1,
       "c": 1,
       "layers": [
         [
-          "cereal_box",
-          null,
-          "energy_drink"
+          "glue_stick",
+          "cream_cheese_tub",
+          "sriracha"
         ]
       ]
     },
@@ -106,9 +128,9 @@
       "c": 2,
       "layers": [
         [
-          "sriracha",
-          "toaster_pastry",
-          "milk_choc_bar"
+          null,
+          "milk_carton_tall",
+          "coffee_jar"
         ]
       ]
     },
@@ -117,9 +139,19 @@
       "c": 3,
       "layers": [
         [
-          "sports_drink",
           "frog_toy",
-          "sriracha"
+          null,
+          "lemon_lime_soda"
+        ],
+        [
+          "milk_carton_tall",
+          "strawberry",
+          "soda"
+        ],
+        [
+          "soda",
+          "milk_choc_bar",
+          "energy_bar"
         ]
       ]
     },
@@ -128,9 +160,9 @@
       "c": 0,
       "layers": [
         [
-          "sports_drink",
-          null,
-          null
+          "glue_stick",
+          "coffee_jar",
+          "hand_soap"
         ]
       ]
     },
@@ -139,9 +171,9 @@
       "c": 1,
       "layers": [
         [
-          "strawberry",
-          "frog_toy",
-          "sheep_toy"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -150,9 +182,14 @@
       "c": 2,
       "layers": [
         [
-          "milk_choc_bar",
-          "energy_drink",
-          "cereal_box"
+          null,
+          "lemon_lime_soda",
+          "cream_cheese_tub"
+        ],
+        [
+          "lemon_lime_soda",
+          "toaster_pastry",
+          "toaster_pastry"
         ]
       ]
     },
@@ -162,8 +199,13 @@
       "layers": [
         [
           null,
-          null,
-          null
+          "milk_choc_bar",
+          "robot_toy"
+        ],
+        [
+          "sriracha",
+          "sriracha",
+          "coffee_jar"
         ]
       ]
     }

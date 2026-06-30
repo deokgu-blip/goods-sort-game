@@ -1,28 +1,26 @@
 {
   "level": 58,
-  "timeLimit": 355,
+  "timeLimit": 540,
   "cols": 3,
   "rows": 5,
   "cellCap": 3,
   "goods": [
-    "bath_salt_tub",
-    "bok_choy",
-    "cream_cheese_tub",
-    "dino_green",
-    "energy_drink",
+    "broccoli",
+    "cereal_box",
+    "cereal_box_blue",
+    "coconut_water",
+    "cooking_oil",
+    "fox_toy",
+    "gift_box",
     "glue_stick",
     "gum_pack",
     "hand_soap",
-    "icebar_choco",
-    "lemonade",
-    "lipstick",
-    "marshmallow_blue",
-    "milk",
-    "penguin",
-    "pickle_jar",
-    "pomegranate",
+    "lollipop",
+    "robot_toy",
+    "sauce",
     "sheep_toy",
-    "teddy_bear"
+    "teddy_bear",
+    "water"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -32,16 +30,17 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 18,
+    "distinct": 16,
     "depthRange": [
       1,
-      2
+      6
     ],
+    "deepN": 1,
     "emptyCubbies": 1,
-    "frontGaps": 6,
+    "frontGaps": 9,
     "lockCubbies": 3,
-    "totalGoods": 60,
-    "attempt": 1
+    "totalGoods": 69,
+    "attempt": 5
   },
   "cubbies": [
     {
@@ -49,25 +48,51 @@
       "c": 0,
       "layers": [
         [
-          "bok_choy",
-          "penguin",
-          "hand_soap"
+          "water",
+          null,
+          "coconut_water"
         ],
         [
-          "dino_green",
-          "marshmallow_blue",
-          "dino_green"
+          "hand_soap",
+          "teddy_bear",
+          "cereal_box_blue"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "lock": 1,
       "layers": [
         [
-          "pickle_jar",
-          "teddy_bear",
-          "icebar_choco"
+          "sauce",
+          null,
+          null
+        ],
+        [
+          "cereal_box_blue",
+          "broccoli",
+          "gum_pack"
+        ],
+        [
+          "glue_stick",
+          "sheep_toy",
+          "robot_toy"
+        ],
+        [
+          "glue_stick",
+          "cooking_oil",
+          "gift_box"
+        ],
+        [
+          "cereal_box",
+          "lollipop",
+          "sauce"
+        ],
+        [
+          "cereal_box",
+          "cooking_oil",
+          "cereal_box"
         ]
       ]
     },
@@ -77,68 +102,63 @@
       "layers": [
         [
           "teddy_bear",
-          "teddy_bear",
-          "lipstick"
-        ],
-        [
-          "pomegranate",
-          "milk",
-          "energy_drink"
+          "water",
+          "cooking_oil"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
-      "lock": 2,
       "layers": [
         [
-          "gum_pack",
-          "energy_drink",
-          "pickle_jar"
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "lollipop",
+          "sheep_toy",
+          null
         ],
         [
-          "lemonade",
+          "water",
+          "glue_stick",
+          "fox_toy"
+        ],
+        [
+          "gum_pack",
+          "robot_toy",
+          "broccoli"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          null,
           "hand_soap",
           "teddy_bear"
         ]
       ]
     },
     {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "teddy_bear",
-          "pomegranate",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "gum_pack",
-          "lemonade",
-          "pomegranate"
-        ]
-      ]
-    },
-    {
       "r": 2,
       "c": 0,
+      "lock": 2,
       "layers": [
         [
-          null,
-          "milk",
+          "gift_box",
+          "coconut_water",
           "sheep_toy"
-        ],
-        [
-          "marshmallow_blue",
-          "cream_cheese_tub",
-          "energy_drink"
         ]
       ]
     },
@@ -147,26 +167,30 @@
       "c": 1,
       "layers": [
         [
-          null,
-          "milk",
-          null
+          "lollipop",
+          "lollipop",
+          "cereal_box_blue"
         ],
         [
-          "dino_green",
-          "pickle_jar",
-          "glue_stick"
+          "glue_stick",
+          "robot_toy",
+          "lollipop"
+        ],
+        [
+          "water",
+          "broccoli",
+          "broccoli"
         ]
       ]
     },
     {
       "r": 2,
       "c": 2,
-      "lock": 1,
       "layers": [
         [
-          "bok_choy",
-          "cream_cheese_tub",
-          "glue_stick"
+          "sauce",
+          "gift_box",
+          "hand_soap"
         ]
       ]
     },
@@ -175,37 +199,41 @@
       "c": 0,
       "layers": [
         [
-          "teddy_bear",
-          "lipstick",
-          "gum_pack"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "lock": 3,
-      "layers": [
+          "broccoli",
+          "cooking_oil",
+          "hand_soap"
+        ],
         [
-          "icebar_choco",
-          "icebar_choco",
-          "glue_stick"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
-        [
-          "marshmallow_blue",
           "hand_soap",
-          null
+          "water",
+          "teddy_bear"
         ],
         [
-          "lipstick",
-          "penguin",
-          "sheep_toy"
+          "cooking_oil",
+          "teddy_bear",
+          "water"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "lollipop",
+          "coconut_water",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "cooking_oil",
+          null,
+          "fox_toy"
         ]
       ]
     },
@@ -214,25 +242,21 @@
       "c": 0,
       "layers": [
         [
+          "glue_stick",
           null,
-          null,
-          null
+          "broccoli"
         ]
       ]
     },
     {
       "r": 4,
       "c": 1,
+      "lock": 2,
       "layers": [
         [
-          "cream_cheese_tub",
-          "sheep_toy",
-          "lemonade"
-        ],
-        [
-          "bath_salt_tub",
-          "bath_salt_tub",
-          "milk"
+          "fox_toy",
+          null,
+          "hand_soap"
         ]
       ]
     },
@@ -241,14 +265,9 @@
       "c": 2,
       "layers": [
         [
-          "bok_choy",
-          "milk",
-          null
-        ],
-        [
-          "penguin",
-          "bath_salt_tub",
-          "milk"
+          "teddy_bear",
+          "glue_stick",
+          "gum_pack"
         ]
       ]
     }

@@ -1828,7 +1828,7 @@
     maxCombo: 0,         // highest combo reached this level (shown on result — Phase 2b)
     comboTimer: null,
     urgent: false,       // timer <60s red-urgency state
-    coins: (function(){ try{ var v=parseInt(localStorage.getItem('gs_coins'),10); return (v>=0)?v:1030; }catch(e){ return 1030; } })(),
+    coins: (function(){ try{ var v=parseInt(localStorage.getItem('gs_coins'),10); return (v>=0)?v:150; }catch(e){ return 150; } })(),
     lastTick: 0
   };
 
@@ -3532,7 +3532,8 @@
     tutGuide = null; clearTutorHand(); clearTutPoke(); // L1 solved -> drop the tutorial gate + hand + glow
     if (S.comboTimer) clearTimeout(S.comboTimer);
     // COIN REWARD on clear (the only earn source): base + combo bonus + small level scaling.
-    S._earned = 40 + (S.maxCombo||0)*6 + Math.floor((S.level||1)/4)*5;
+    // CHALLENGE economy (2026-06-30): tighter + skill(combo)-rewarded so coins must be managed.
+    S._earned = 15 + (S.maxCombo||0)*4 + Math.floor((S.level||1)/8)*4;
     S.coins += S._earned; saveCoins();
     if (S._cheat) {}  // (cheat doesn't change rewards)
     if (shouldEmitGameEnd(S.level)){
@@ -3698,7 +3699,7 @@
     setTimeout(function(){ try { preloadTiles(stageGoodTypes(loadStage((S.level||1)+1))); } catch(e){} }, 350);  // warm the NEXT stage during play -> instant transition
     updateTimer();
     // ITEM bar: refresh per-level free uses, clear transient item state, render, onboard new unlocks.
-    ITEM_DEFS.forEach(function(d){ itemFree[d.key] = FREE_PER_LEVEL; });
+    grantUnlockFreebies();   // challenge economy: 1 free per item at FIRST unlock only (no per-level refill)
     hammerArmed = false; freezeUntil = 0;
     document.body.classList.remove('frozen');
     renderItems();
@@ -3726,7 +3727,8 @@
 
   // =============================================================
   // ITEM (POWERUP) BAR — hammer always on; timefreeze/shuffle/addtime unlock at Lv 3/6/9.
-  // Each item grants 1 FREE use per level ("Free" label). Locked items show a padlock + Lv.
+  // CHALLENGE ECONOMY (2026-06-30): NO per-level free refill. Each item grants ONE free use the FIRST
+  // time it unlocks (gs_item_freebie); after that you BUY with coins (persistent inventory, gs_items).
   // =============================================================
   var ITEM_DEFS = [
     { key:'hammer',     icon:'btn_hammer',     unlock:1, cost:120, name:'HAMMER',      desc:'Smash a good and 2 more of the same kind.' },
@@ -3734,8 +3736,17 @@
     { key:'shuffle',    icon:'btn_shuffle',    unlock:6, cost:200, name:'RESHUFFLE',   desc:'Shuffles every item into a fresh layout.' },
     { key:'addtime',    icon:'btn_addtime',    unlock:9, cost:180, name:'ADD TIME',    desc:'Adds 30 seconds to the timer.' }
   ];
-  var FREE_PER_LEVEL = 1, FREEZE_MS = 8000;
-  var itemFree = {};            // per-level free uses remaining, keyed by item
+  var FREE_ON_UNLOCK = 1, FREEZE_MS = 8000;
+  // PERSISTENT item inventory (challenge economy): owned counts persist across levels via gs_items.
+  // NO per-level free refill — each item grants ONE free use the FIRST time it unlocks (gs_item_freebie).
+  var itemFree = (function(){ try{ return JSON.parse(localStorage.getItem('gs_items')||'{}')||{}; }catch(e){ return {}; } })();
+  function saveItems(){ try{ localStorage.setItem('gs_items', JSON.stringify(itemFree)); }catch(e){} }
+  function freebieSet(){ try{ return JSON.parse(localStorage.getItem('gs_item_freebie')||'{}'); }catch(e){ return {}; } }
+  function grantUnlockFreebies(){
+    var fb=freebieSet(), changed=false;
+    ITEM_DEFS.forEach(function(d){ if (S.level >= d.unlock && !fb[d.key]){ itemFree[d.key]=(itemFree[d.key]||0)+FREE_ON_UNLOCK; fb[d.key]=1; changed=true; } });
+    if (changed){ try{ localStorage.setItem('gs_item_freebie', JSON.stringify(fb)); }catch(e){} saveItems(); }
+  }
   var freezeUntil = 0;          // performance.now() ts until which the timer is frozen
   var hammerArmed = false;
   function defOf(k){ for (var i=0;i<ITEM_DEFS.length;i++) if (ITEM_DEFS[i].key===k) return ITEM_DEFS[i]; return null; }
@@ -3763,11 +3774,11 @@
   // an item is usable only if INVENTORY remains. Coins are spent in the SHOP (openShop), not here.
   function canUse(key){ return S._cheat || (itemFree[key]||0) > 0; }
   // consume ONE from inventory. Returns true if there was one.
-  function consumeItem(key){ if (S._cheat) return true; if ((itemFree[key]||0) > 0){ itemFree[key]-=1; return true; } return false; }
+  function consumeItem(key){ if (S._cheat) return true; if ((itemFree[key]||0) > 0){ itemFree[key]-=1; saveItems(); return true; } return false; }
   // BUY one more of an item with coins (item shop). Returns true on success.
   function buyItem(key){
     var def=defOf(key); if(!def) return false; var cost=def.cost||0;
-    if (S.coins >= cost){ S.coins-=cost; saveCoins(); itemFree[key]=(itemFree[key]||0)+1; return true; }
+    if (S.coins >= cost){ S.coins-=cost; saveCoins(); itemFree[key]=(itemFree[key]||0)+1; saveItems(); return true; }
     return false;
   }
 
@@ -4045,6 +4056,7 @@
     S._cheat = !S._cheat;
     document.getElementById('devnav').classList.toggle('on', S._cheat);
     if (S._cheat) cheatRefillItems();
+    else { try{ itemFree = JSON.parse(localStorage.getItem('gs_items')||'{}')||{}; }catch(e){ itemFree={}; } }  // restore real inventory (drop cheat 999s)
     renderItems(); updateDevLabel();
   }
   document.getElementById('devPrev').addEventListener('click', function(){ cheatGoLevel(S.level-1); });
@@ -4924,7 +4936,7 @@
     itemUse: function(key){ return useItem(key); },
     itemCanUse: function(key){ return canUse(key); },
     itemFreeLeft: function(key){ return itemFree[key]||0; },
-    setItemFree: function(key, n){ itemFree[key]=n|0; renderItems(); return itemFree[key]; },
+    setItemFree: function(key, n){ itemFree[key]=n|0; saveItems(); renderItems(); return itemFree[key]; },
     hammerAt: function(cubbyIdx, slot){ var cb=S.cubbies[cubbyIdx]; var g=cb&&frontGoodDOM(cb,slot); return g?hammerSmash(g):false; },
     coins: function(){ return S.coins; },
     setCoins: function(n){ S.coins=n|0; saveCoins(); renderItems(); return S.coins; },

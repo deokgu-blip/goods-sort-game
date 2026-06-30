@@ -1,24 +1,26 @@
 {
   "level": 11,
-  "timeLimit": 359,
+  "timeLimit": 383,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "bath_salt_tub",
-    "butter_box",
-    "chick",
+    "berry_smoothie",
+    "chestnut",
+    "cupcake_choco",
     "dish_soap",
-    "gift_box",
-    "glue_stick",
-    "grape_soda",
+    "frog_toy",
+    "green_tea",
     "icebar_blue",
-    "lychee",
-    "melon_green",
-    "santa",
-    "sriracha",
-    "wafer_bar",
-    "water"
+    "mason_jam",
+    "paint_can",
+    "pomegranate",
+    "pump_ketchup",
+    "shampoo",
+    "strawberry",
+    "toothpaste",
+    "water",
+    "whip_can"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -28,7 +30,7 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 14,
+    "distinct": 16,
     "depthRange": [
       1,
       3
@@ -37,8 +39,8 @@
     "emptyCubbies": 1,
     "frontGaps": 9,
     "lockCubbies": 1,
-    "totalGoods": 42,
-    "attempt": 4
+    "totalGoods": 54,
+    "attempt": 10
   },
   "cubbies": [
     {
@@ -46,9 +48,9 @@
       "c": 0,
       "layers": [
         [
-          "dish_soap",
-          "bath_salt_tub",
-          "gift_box"
+          "frog_toy",
+          null,
+          "chestnut"
         ]
       ]
     },
@@ -57,26 +59,30 @@
       "c": 1,
       "layers": [
         [
-          "santa",
-          "glue_stick",
-          "chick"
+          "water",
+          "pump_ketchup",
+          "icebar_blue"
         ],
         [
-          "lychee",
-          "bath_salt_tub",
-          "chick"
+          "mason_jam",
+          "water",
+          "pump_ketchup"
         ]
       ]
     },
     {
       "r": 0,
       "c": 2,
-      "lock": 2,
       "layers": [
         [
-          "melon_green",
-          null,
-          "glue_stick"
+          "paint_can",
+          "frog_toy",
+          null
+        ],
+        [
+          "shampoo",
+          "shampoo",
+          "dish_soap"
         ]
       ]
     },
@@ -85,30 +91,36 @@
       "c": 0,
       "layers": [
         [
-          null,
-          "sriracha",
-          "grape_soda"
+          "pump_ketchup",
+          "green_tea",
+          "green_tea"
         ],
         [
-          "icebar_blue",
-          "sriracha",
+          "chestnut",
+          "cupcake_choco",
           "dish_soap"
         ],
         [
-          "bath_salt_tub",
-          "water",
-          "lychee"
+          "shampoo",
+          "cupcake_choco",
+          "shampoo"
         ]
       ]
     },
     {
       "r": 1,
       "c": 1,
+      "lock": 2,
       "layers": [
         [
           null,
-          "wafer_bar",
+          "dish_soap",
           null
+        ],
+        [
+          "shampoo",
+          "paint_can",
+          "whip_can"
         ]
       ]
     },
@@ -117,9 +129,9 @@
       "c": 2,
       "layers": [
         [
-          "santa",
-          "wafer_bar",
-          "melon_green"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -128,9 +140,19 @@
       "c": 0,
       "layers": [
         [
+          "berry_smoothie",
           null,
-          "wafer_bar",
-          null
+          "paint_can"
+        ],
+        [
+          "water",
+          "strawberry",
+          "chestnut"
+        ],
+        [
+          "icebar_blue",
+          "whip_can",
+          "shampoo"
         ]
       ]
     },
@@ -139,41 +161,41 @@
       "c": 1,
       "layers": [
         [
-          "icebar_blue",
-          "water",
+          "toothpaste",
+          "pomegranate",
+          null
+        ],
+        [
+          "strawberry",
+          "mason_jam",
+          "whip_can"
+        ],
+        [
+          "pomegranate",
+          "strawberry",
+          "mason_jam"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "frog_toy",
+          "pomegranate",
           "icebar_blue"
         ]
       ]
     },
     {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "chick",
-          "butter_box",
-          "butter_box"
-        ],
-        [
-          "gift_box",
-          "butter_box",
-          "grape_soda"
-        ],
-        [
-          "water",
-          "gift_box",
-          "glue_stick"
-        ]
-      ]
-    },
-    {
       "r": 3,
       "c": 0,
       "layers": [
         [
-          null,
-          "santa",
-          "lychee"
+          "whip_can",
+          "toothpaste",
+          null
         ]
       ]
     },
@@ -182,9 +204,14 @@
       "c": 1,
       "layers": [
         [
-          null,
-          null,
+          "toothpaste",
+          "berry_smoothie",
           null
+        ],
+        [
+          "berry_smoothie",
+          "whip_can",
+          "green_tea"
         ]
       ]
     },
@@ -193,14 +220,9 @@
       "c": 2,
       "layers": [
         [
-          "melon_green",
-          null,
+          "cupcake_choco",
+          "whip_can",
           null
-        ],
-        [
-          "sriracha",
-          "dish_soap",
-          "grape_soda"
         ]
       ]
     }

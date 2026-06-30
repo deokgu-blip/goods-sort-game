@@ -1,18 +1,23 @@
 {
   "level": 10,
-  "timeLimit": 217,
+  "timeLimit": 340,
   "cols": 4,
   "rows": 3,
   "cellCap": 3,
   "goods": [
-    "candy_coated_bag",
+    "cereal_box_blue",
     "coconut",
-    "dish_soap",
+    "cola_zero",
+    "cream_cheese_tub",
+    "detergent",
+    "gelato_cup",
+    "green_tea",
     "gum_pack",
+    "juice_box",
+    "lychee",
     "mason_jam",
-    "milk",
-    "robot_toy",
     "rubber_duck",
+    "soap_dispenser",
     "spray_cleaner"
   ],
   "combo": {
@@ -23,15 +28,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 14,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 1,
-    "totalGoods": 27,
+    "totalGoods": 42,
     "attempt": 0
   },
   "cubbies": [
@@ -40,9 +45,14 @@
       "c": 0,
       "layers": [
         [
-          "dish_soap",
-          "mason_jam",
-          "rubber_duck"
+          null,
+          "juice_box",
+          "detergent"
+        ],
+        [
+          "cereal_box_blue",
+          "cereal_box_blue",
+          "green_tea"
         ]
       ]
     },
@@ -52,75 +62,90 @@
       "layers": [
         [
           null,
-          "mason_jam",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "milk",
-          "milk",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 3,
-      "layers": [
-        [
-          "rubber_duck",
-          "spray_cleaner",
-          "gum_pack"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "mason_jam",
-          "candy_coated_bag",
-          "robot_toy"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "spray_cleaner",
-          "coconut",
+          "detergent",
           "spray_cleaner"
         ]
       ]
     },
     {
-      "r": 1,
+      "r": 0,
       "c": 2,
       "layers": [
         [
-          "dish_soap",
-          "robot_toy",
-          "candy_coated_bag"
+          "green_tea",
+          "soap_dispenser",
+          "soap_dispenser"
+        ],
+        [
+          "lychee",
+          "cola_zero",
+          "gelato_cup"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "layers": [
+        [
+          "gum_pack",
+          "spray_cleaner",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          "rubber_duck",
+          "coconut"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "gum_pack",
+          "gum_pack",
+          "lychee"
+        ],
+        [
+          "cola_zero",
+          "juice_box",
+          "cream_cheese_tub"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 1,
+      "layers": [
+        [
+          "cereal_box_blue",
+          "cream_cheese_tub",
+          "juice_box"
         ]
       ]
     },
     {
       "r": 1,
       "c": 3,
-      "lock": 2,
       "layers": [
         [
-          "dish_soap",
-          "milk",
-          "gum_pack"
+          null,
+          "mason_jam",
+          "rubber_duck"
+        ],
+        [
+          "gelato_cup",
+          "cream_cheese_tub",
+          "spray_cleaner"
         ]
       ]
     },
@@ -129,9 +154,9 @@
       "c": 0,
       "layers": [
         [
-          "coconut",
-          "robot_toy",
-          "gum_pack"
+          "gelato_cup",
+          "soap_dispenser",
+          "green_tea"
         ]
       ]
     },
@@ -140,7 +165,7 @@
       "c": 1,
       "layers": [
         [
-          "candy_coated_bag",
+          null,
           null,
           null
         ]
@@ -151,9 +176,14 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "mason_jam",
+          "mason_jam",
+          "coconut"
+        ],
+        [
+          "cola_zero",
+          "detergent",
+          "coconut"
         ]
       ]
     },
@@ -162,9 +192,9 @@
       "c": 3,
       "layers": [
         [
-          "coconut",
           "rubber_duck",
-          null
+          null,
+          "lychee"
         ]
       ]
     }

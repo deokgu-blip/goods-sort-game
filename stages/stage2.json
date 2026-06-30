@@ -1,19 +1,14 @@
 {
   "level": 2,
-  "timeLimit": 237,
-  "cols": 4,
+  "timeLimit": 200,
+  "cols": 2,
   "rows": 3,
   "cellCap": 3,
   "goods": [
-    "bell_pepper",
     "cola",
-    "energy_drink",
     "gobstopper_jar",
-    "juice",
-    "milk_choc_bar",
     "robot_toy",
-    "tea_box",
-    "toaster_pastry"
+    "tea_box"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -23,15 +18,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 4,
     "depthRange": [
       1,
       1
     ],
     "emptyCubbies": 1,
-    "frontGaps": 6,
+    "frontGaps": 3,
     "lockCubbies": 0,
-    "totalGoods": 27,
+    "totalGoods": 12,
     "attempt": 0
   },
   "cubbies": [
@@ -40,42 +35,20 @@
       "c": 0,
       "layers": [
         [
-          "tea_box",
-          "toaster_pastry",
-          "energy_drink"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 1,
-      "layers": [
-        [
-          "bell_pepper",
+          "robot_toy",
           "cola",
-          "milk_choc_bar"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "milk_choc_bar",
-          "energy_drink",
           "gobstopper_jar"
         ]
       ]
     },
     {
       "r": 0,
-      "c": 3,
+      "c": 1,
       "layers": [
         [
+          "tea_box",
           "cola",
-          "tea_box",
-          "juice"
+          null
         ]
       ]
     },
@@ -84,9 +57,9 @@
       "c": 0,
       "layers": [
         [
-          "gobstopper_jar",
-          "robot_toy",
-          "toaster_pastry"
+          null,
+          "tea_box",
+          null
         ]
       ]
     },
@@ -95,29 +68,7 @@
       "c": 1,
       "layers": [
         [
-          "juice",
           null,
-          "energy_drink"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "bell_pepper",
-          null,
-          "bell_pepper"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 3,
-      "layers": [
-        [
-          "robot_toy",
           null,
           null
         ]
@@ -128,9 +79,9 @@
       "c": 0,
       "layers": [
         [
-          null,
-          "tea_box",
-          "milk_choc_bar"
+          "robot_toy",
+          "cola",
+          "tea_box"
         ]
       ]
     },
@@ -139,31 +90,9 @@
       "c": 1,
       "layers": [
         [
-          null,
-          "gobstopper_jar",
-          "cola"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 3,
-      "layers": [
-        [
           "robot_toy",
-          "juice",
-          "toaster_pastry"
+          "gobstopper_jar",
+          "gobstopper_jar"
         ]
       ]
     }

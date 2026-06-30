@@ -1,22 +1,27 @@
 {
   "level": 73,
-  "timeLimit": 218,
+  "timeLimit": 325,
   "cols": 3,
   "rows": 5,
   "cellCap": 3,
   "goods": [
-    "caviar_tin",
-    "cupcake_choco",
-    "dino_green",
+    "air_freshener",
+    "candy_bag",
+    "cheese_wheel",
+    "coconut",
+    "coconut_water",
+    "cream_cheese_tub",
     "energy_bar",
-    "frozen_peas",
-    "glass_cleaner",
-    "kettle_item",
-    "lipstick",
-    "milk_choc_bar",
+    "green_cup",
+    "gum_pack",
+    "hand_soap",
+    "lotion_pump",
+    "marshmallow_blue",
+    "pitcher_juice",
     "red_onion",
     "sandwich_cookies",
-    "spray_cleaner"
+    "soap_dispenser",
+    "wheel_of_lime"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -26,16 +31,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 12,
+    "distinct": 17,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 4,
-    "totalGoods": 36,
-    "attempt": 1
+    "totalGoods": 57,
+    "attempt": 8
   },
   "cubbies": [
     {
@@ -43,21 +48,26 @@
       "c": 0,
       "layers": [
         [
-          "dino_green",
-          "milk_choc_bar",
-          null
+          null,
+          "pitcher_juice",
+          "lotion_pump"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
-      "lock": 2,
+      "lock": 3,
       "layers": [
         [
-          "cupcake_choco",
-          "red_onion",
-          null
+          "sandwich_cookies",
+          "hand_soap",
+          "gum_pack"
+        ],
+        [
+          "sandwich_cookies",
+          "energy_bar",
+          "gum_pack"
         ]
       ]
     },
@@ -66,20 +76,31 @@
       "c": 2,
       "layers": [
         [
-          "kettle_item",
-          "sandwich_cookies",
-          "milk_choc_bar"
+          "marshmallow_blue",
+          "gum_pack",
+          "coconut"
+        ],
+        [
+          "energy_bar",
+          "hand_soap",
+          "pitcher_juice"
         ]
       ]
     },
     {
       "r": 1,
       "c": 0,
+      "lock": 4,
       "layers": [
         [
-          "lipstick",
-          "cupcake_choco",
-          "red_onion"
+          "wheel_of_lime",
+          "energy_bar",
+          "soap_dispenser"
+        ],
+        [
+          "wheel_of_lime",
+          "coconut_water",
+          "candy_bag"
         ]
       ]
     },
@@ -88,53 +109,64 @@
       "c": 1,
       "layers": [
         [
-          "dino_green",
+          "green_cup",
+          "cream_cheese_tub",
+          "green_cup"
+        ],
+        [
+          "wheel_of_lime",
+          "marshmallow_blue",
+          "soap_dispenser"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "lotion_pump",
+          "coconut",
+          "coconut_water"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "lock": 4,
+      "layers": [
+        [
+          "air_freshener",
+          "marshmallow_blue",
+          "soap_dispenser"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          "candy_bag",
+          "cream_cheese_tub"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "cheese_wheel",
+          null,
+          "air_freshener"
+        ],
+        [
+          "cream_cheese_tub",
           "red_onion",
-          "caviar_tin"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "dino_green",
-          "energy_bar",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "cupcake_choco",
-          "spray_cleaner",
-          "frozen_peas"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "kettle_item",
-          "energy_bar",
-          "lipstick"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          null,
-          null,
-          null
+          "lotion_pump"
         ]
       ]
     },
@@ -143,9 +175,14 @@
       "c": 0,
       "layers": [
         [
-          "glass_cleaner",
-          "milk_choc_bar",
-          "sandwich_cookies"
+          null,
+          "hand_soap",
+          "lotion_pump"
+        ],
+        [
+          "red_onion",
+          "pitcher_juice",
+          "air_freshener"
         ]
       ]
     },
@@ -154,56 +191,59 @@
       "c": 1,
       "layers": [
         [
-          "energy_bar",
-          "caviar_tin",
-          "glass_cleaner"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
+          "cheese_wheel",
+          "pitcher_juice",
+          "pitcher_juice"
+        ],
         [
-          "spray_cleaner",
-          null,
-          "caviar_tin"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 0,
-      "lock": 3,
-      "layers": [
-        [
-          "spray_cleaner",
-          null,
-          "frozen_peas"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 1,
-      "lock": 3,
-      "layers": [
-        [
-          "glass_cleaner",
-          null,
-          "frozen_peas"
-        ]
-      ]
-    },
-    {
-      "r": 4,
-      "c": 2,
-      "lock": 1,
-      "layers": [
-        [
-          "lipstick",
+          "lotion_pump",
           "sandwich_cookies",
-          "kettle_item"
+          "candy_bag"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "layers": [
+        [
+          "coconut",
+          "coconut_water",
+          "cheese_wheel"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 0,
+      "lock": 4,
+      "layers": [
+        [
+          null,
+          "red_onion",
+          "lotion_pump"
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 4,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          "green_cup",
+          "pitcher_juice"
         ]
       ]
     }

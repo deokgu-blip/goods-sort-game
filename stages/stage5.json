@@ -1,17 +1,21 @@
 {
   "level": 5,
-  "timeLimit": 222,
+  "timeLimit": 350,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
+    "cabbage",
+    "coconut_water",
+    "cookie_disc",
     "cream_cheese",
     "fox_toy",
-    "frog_toy",
     "glue_stick",
+    "juice",
+    "koala_toy",
     "mayo_squeeze",
-    "milk",
     "pomegranate",
+    "sandwich_cookies",
     "soda",
     "soy_sauce"
   ],
@@ -23,27 +27,26 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 13,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 1,
-    "totalGoods": 27,
+    "totalGoods": 39,
     "attempt": 0
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
-      "lock": 1,
       "layers": [
         [
-          "soda",
-          "glue_stick",
-          "fox_toy"
+          "fox_toy",
+          "sandwich_cookies",
+          "pomegranate"
         ]
       ]
     },
@@ -52,14 +55,57 @@
       "c": 1,
       "layers": [
         [
-          null,
+          "koala_toy",
           "soda",
-          "soda"
+          "pomegranate"
+        ],
+        [
+          "cabbage",
+          "mayo_squeeze",
+          "cream_cheese"
         ]
       ]
     },
     {
       "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "koala_toy",
+          "sandwich_cookies",
+          null
+        ],
+        [
+          "cream_cheese",
+          "glue_stick",
+          "soda"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "cookie_disc",
+          "juice",
+          "sandwich_cookies"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "cookie_disc",
+          "glue_stick",
+          "cream_cheese"
+        ]
+      ]
+    },
+    {
+      "r": 1,
       "c": 2,
       "layers": [
         [
@@ -70,68 +116,40 @@
       ]
     },
     {
-      "r": 1,
+      "r": 2,
       "c": 0,
       "layers": [
         [
+          "soy_sauce",
           "fox_toy",
-          "pomegranate",
-          "soy_sauce"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
+          "koala_toy"
+        ],
         [
-          "frog_toy",
-          "glue_stick",
-          "cream_cheese"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "mayo_squeeze",
-          null,
-          "mayo_squeeze"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          "pomegranate",
-          "cream_cheese"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "frog_toy",
-          "milk",
+          "cookie_disc",
+          "coconut_water",
           "pomegranate"
         ]
       ]
     },
     {
       "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          "coconut_water",
+          "glue_stick"
+        ]
+      ]
+    },
+    {
+      "r": 2,
       "c": 2,
       "layers": [
         [
           "fox_toy",
-          null,
-          "milk"
+          "soy_sauce",
+          "mayo_squeeze"
         ]
       ]
     },
@@ -140,19 +158,25 @@
       "c": 0,
       "layers": [
         [
-          "glue_stick",
           "mayo_squeeze",
-          "frog_toy"
+          "cabbage",
+          null
+        ],
+        [
+          "coconut_water",
+          "soda",
+          "cabbage"
         ]
       ]
     },
     {
       "r": 3,
       "c": 1,
+      "lock": 1,
       "layers": [
         [
+          "soy_sauce",
           null,
-          "cream_cheese",
           null
         ]
       ]
@@ -162,9 +186,9 @@
       "c": 2,
       "layers": [
         [
-          "milk",
-          "soy_sauce",
-          "soy_sauce"
+          "juice",
+          null,
+          "juice"
         ]
       ]
     }

@@ -1,19 +1,25 @@
 {
   "level": 11,
-  "timeLimit": 213,
+  "timeLimit": 335,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "artichoke",
-    "bee_toy",
-    "cereal_fruit_loops",
-    "frozen_berries",
-    "pomegranate",
-    "pumpkin",
-    "soap_dispenser",
-    "soy_sauce",
-    "sports_drink"
+    "chip_can_tall",
+    "choc_chip_bag",
+    "coconut_water",
+    "cotton_candy",
+    "glue_stick",
+    "grape_soda",
+    "mayo",
+    "melon_green",
+    "sheep_toy",
+    "shiba_dog",
+    "sorbet_cup",
+    "sports_drink",
+    "strawberry",
+    "wafer_bar",
+    "water"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -23,16 +29,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 15,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 1,
-    "totalGoods": 27,
-    "attempt": 0
+    "totalGoods": 45,
+    "attempt": 4
   },
   "cubbies": [
     {
@@ -40,9 +46,14 @@
       "c": 0,
       "layers": [
         [
-          "bee_toy",
-          "soy_sauce",
-          null
+          null,
+          "glue_stick",
+          "shiba_dog"
+        ],
+        [
+          "water",
+          "coconut_water",
+          "strawberry"
         ]
       ]
     },
@@ -51,9 +62,14 @@
       "c": 1,
       "layers": [
         [
-          "cereal_fruit_loops",
-          "artichoke",
-          "soy_sauce"
+          "choc_chip_bag",
+          "melon_green",
+          "cotton_candy"
+        ],
+        [
+          "cotton_candy",
+          "shiba_dog",
+          "sheep_toy"
         ]
       ]
     },
@@ -62,98 +78,118 @@
       "c": 2,
       "layers": [
         [
-          "frozen_berries",
-          "frozen_berries",
-          "pomegranate"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "pumpkin",
-          "pumpkin",
-          "cereal_fruit_loops"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
           null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
+          "grape_soda",
+          "cotton_candy"
+        ],
         [
-          "pumpkin",
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "soap_dispenser",
-          "bee_toy",
-          "soy_sauce"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "soap_dispenser",
-          null,
-          "bee_toy"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "soap_dispenser",
+          "grape_soda",
           "sports_drink",
-          "pomegranate"
+          "sheep_toy"
         ]
       ]
     },
     {
-      "r": 3,
+      "r": 1,
       "c": 0,
       "layers": [
         [
-          "artichoke",
-          "frozen_berries",
-          "pomegranate"
+          "mayo",
+          "sports_drink",
+          "strawberry"
         ]
       ]
     },
     {
-      "r": 3,
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          null,
+          null,
+          "melon_green"
+        ],
+        [
+          "choc_chip_bag",
+          "sorbet_cup",
+          "coconut_water"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "chip_can_tall",
+          "water",
+          "wafer_bar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
       "c": 1,
       "lock": 1,
       "layers": [
         [
+          "shiba_dog",
+          "sheep_toy",
+          "wafer_bar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "water",
+          "grape_soda",
+          "glue_stick"
+        ],
+        [
           "sports_drink",
-          "sports_drink",
-          null
+          "strawberry",
+          "wafer_bar"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "mayo",
+          null,
+          "mayo"
+        ],
+        [
+          "melon_green",
+          "chip_can_tall",
+          "chip_can_tall"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "glue_stick",
+          "choc_chip_bag",
+          "sorbet_cup"
         ]
       ]
     },
@@ -162,9 +198,9 @@
       "c": 2,
       "layers": [
         [
+          "sorbet_cup",
           null,
-          "cereal_fruit_loops",
-          "artichoke"
+          "coconut_water"
         ]
       ]
     }

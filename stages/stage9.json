@@ -1,19 +1,24 @@
 {
   "level": 9,
-  "timeLimit": 225,
+  "timeLimit": 345,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "chestnut",
-    "choc_balls_bag",
-    "dino_green",
+    "air_freshener",
+    "bee_toy",
+    "cherry_pair",
+    "egg",
     "energy_bar",
-    "energy_drink",
-    "glass_cleaner",
-    "iced_coffee_can",
-    "lychee",
-    "rice_bag"
+    "frog_toy",
+    "instant_noodle_cup",
+    "milk_choc_bar",
+    "popping_candy",
+    "red_onion",
+    "rice_bag",
+    "santa",
+    "sports_drink",
+    "tea_box"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -23,16 +28,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 14,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 0,
-    "totalGoods": 27,
-    "attempt": 0
+    "totalGoods": 42,
+    "attempt": 4
   },
   "cubbies": [
     {
@@ -40,9 +45,9 @@
       "c": 0,
       "layers": [
         [
-          "energy_drink",
-          "iced_coffee_can",
-          "chestnut"
+          "tea_box",
+          null,
+          "air_freshener"
         ]
       ]
     },
@@ -51,9 +56,9 @@
       "c": 1,
       "layers": [
         [
-          "rice_bag",
-          "chestnut",
-          "chestnut"
+          null,
+          "popping_candy",
+          "tea_box"
         ]
       ]
     },
@@ -62,9 +67,9 @@
       "c": 2,
       "layers": [
         [
-          "glass_cleaner",
-          "glass_cleaner",
-          "iced_coffee_can"
+          "instant_noodle_cup",
+          "rice_bag",
+          "energy_bar"
         ]
       ]
     },
@@ -73,9 +78,14 @@
       "c": 0,
       "layers": [
         [
-          "lychee",
-          "rice_bag",
+          "milk_choc_bar",
+          "popping_candy",
           null
+        ],
+        [
+          "frog_toy",
+          "sports_drink",
+          "red_onion"
         ]
       ]
     },
@@ -84,9 +94,9 @@
       "c": 1,
       "layers": [
         [
-          "energy_drink",
           null,
-          null
+          "santa",
+          "red_onion"
         ]
       ]
     },
@@ -95,25 +105,73 @@
       "c": 2,
       "layers": [
         [
-          "choc_balls_bag",
-          "energy_drink",
+          "bee_toy",
+          "bee_toy",
+          "instant_noodle_cup"
+        ],
+        [
+          "rice_bag",
+          "milk_choc_bar",
+          "sports_drink"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "energy_bar",
+          null,
+          "cherry_pair"
+        ],
+        [
+          "energy_bar",
+          "air_freshener",
           "rice_bag"
         ]
       ]
     },
     {
       "r": 2,
-      "c": 0,
+      "c": 1,
       "layers": [
         [
-          "dino_green",
-          "choc_balls_bag",
-          "energy_bar"
+          "santa",
+          "milk_choc_bar",
+          "egg"
         ]
       ]
     },
     {
       "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "air_freshener",
+          null,
+          "egg"
+        ],
+        [
+          "frog_toy",
+          "bee_toy",
+          "egg"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "cherry_pair",
+          "sports_drink",
+          "instant_noodle_cup"
+        ]
+      ]
+    },
+    {
+      "r": 3,
       "c": 1,
       "layers": [
         [
@@ -124,46 +182,18 @@
       ]
     },
     {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "dino_green",
-          "energy_bar",
-          "glass_cleaner"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "lychee",
-          "dino_green",
-          "iced_coffee_can"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          null,
-          null,
-          "lychee"
-        ]
-      ]
-    },
-    {
       "r": 3,
       "c": 2,
       "layers": [
         [
-          "energy_bar",
-          "choc_balls_bag",
-          null
+          "tea_box",
+          "santa",
+          "popping_candy"
+        ],
+        [
+          "cherry_pair",
+          "frog_toy",
+          "red_onion"
         ]
       ]
     }

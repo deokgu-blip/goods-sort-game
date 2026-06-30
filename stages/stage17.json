@@ -1,19 +1,24 @@
 {
   "level": 17,
-  "timeLimit": 221,
+  "timeLimit": 345,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "apple",
     "beet",
+    "cereal_box_blue",
     "chick",
-    "dino_toy",
-    "egg",
-    "frozen_berries",
-    "glue_stick",
-    "lemon_soda",
-    "wafer_bar"
+    "cola",
+    "frog_toy",
+    "icebar_blue",
+    "mushroom_brown",
+    "red_onion",
+    "robot_toy",
+    "sandwich_cookies",
+    "soda",
+    "soy_sauce",
+    "spray_sunscreen",
+    "tea_tin_round"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -23,15 +28,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 14,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 0,
-    "totalGoods": 27,
+    "totalGoods": 42,
     "attempt": 0
   },
   "cubbies": [
@@ -40,9 +45,9 @@
       "c": 0,
       "layers": [
         [
-          "dino_toy",
-          "wafer_bar",
-          "wafer_bar"
+          "sandwich_cookies",
+          "chick",
+          "spray_sunscreen"
         ]
       ]
     },
@@ -51,9 +56,9 @@
       "c": 1,
       "layers": [
         [
-          "wafer_bar",
-          "chick",
-          "apple"
+          "sandwich_cookies",
+          "spray_sunscreen",
+          "sandwich_cookies"
         ]
       ]
     },
@@ -62,9 +67,9 @@
       "c": 2,
       "layers": [
         [
-          "egg",
-          "lemon_soda",
-          "glue_stick"
+          "frog_toy",
+          "red_onion",
+          null
         ]
       ]
     },
@@ -73,53 +78,73 @@
       "c": 0,
       "layers": [
         [
-          "apple",
           null,
-          "lemon_soda"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
+          "cola",
+          "frog_toy"
+        ],
         [
-          "beet",
-          "beet",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "glue_stick",
-          "dino_toy",
-          "dino_toy"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
+          "spray_sunscreen",
           "chick",
-          null,
+          "soda"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "cola",
+          "cereal_box_blue",
+          "cereal_box_blue"
+        ],
+        [
+          "tea_tin_round",
+          "soy_sauce",
+          "soy_sauce"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "cola",
+          "chick",
           null
+        ],
+        [
+          "soda",
+          "mushroom_brown",
+          "frog_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          "soy_sauce",
+          "icebar_blue"
+        ],
+        [
+          "tea_tin_round",
+          "tea_tin_round",
+          "soda"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "red_onion",
+          "beet",
+          "mushroom_brown"
         ]
       ]
     },
@@ -128,9 +153,9 @@
       "c": 2,
       "layers": [
         [
-          "beet",
-          "glue_stick",
-          "egg"
+          null,
+          null,
+          null
         ]
       ]
     },
@@ -139,9 +164,9 @@
       "c": 0,
       "layers": [
         [
-          "lemon_soda",
-          "frozen_berries",
-          "frozen_berries"
+          "beet",
+          "robot_toy",
+          "robot_toy"
         ]
       ]
     },
@@ -150,9 +175,14 @@
       "c": 1,
       "layers": [
         [
-          "frozen_berries",
-          "egg",
+          "robot_toy",
+          "beet",
           null
+        ],
+        [
+          "icebar_blue",
+          "red_onion",
+          "icebar_blue"
         ]
       ]
     },
@@ -161,9 +191,9 @@
       "c": 2,
       "layers": [
         [
-          "chick",
           null,
-          "apple"
+          "cereal_box_blue",
+          "mushroom_brown"
         ]
       ]
     }

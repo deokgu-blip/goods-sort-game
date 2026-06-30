@@ -1,19 +1,22 @@
 {
   "level": 15,
-  "timeLimit": 212,
+  "timeLimit": 335,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "cereal_box_blue",
-    "cherry_pair",
-    "gift_box",
-    "gingerbread",
-    "icebar_blue",
-    "ridged_chips",
-    "sparkling_water",
-    "wheel_of_lime",
-    "yogurt_drink"
+    "bath_salt_tub",
+    "cheese_wheel",
+    "cream_cheese_tub",
+    "fig",
+    "glass_cleaner",
+    "glue_stick",
+    "lollipop",
+    "lychee",
+    "pasta_box",
+    "protein_tube",
+    "strawberry",
+    "tennis_can"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -23,16 +26,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 12,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 1,
-    "totalGoods": 27,
-    "attempt": 0
+    "totalGoods": 36,
+    "attempt": 4
   },
   "cubbies": [
     {
@@ -40,9 +43,14 @@
       "c": 0,
       "layers": [
         [
-          "cereal_box_blue",
-          "yogurt_drink",
+          null,
+          "bath_salt_tub",
           null
+        ],
+        [
+          "cheese_wheel",
+          "cream_cheese_tub",
+          "lychee"
         ]
       ]
     },
@@ -51,9 +59,9 @@
       "c": 1,
       "layers": [
         [
-          "cereal_box_blue",
-          "gingerbread",
-          null
+          "tennis_can",
+          "pasta_box",
+          "glue_stick"
         ]
       ]
     },
@@ -62,54 +70,64 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
+          "protein_tube",
+          "cream_cheese_tub",
           null
+        ],
+        [
+          "tennis_can",
+          "lollipop",
+          "cheese_wheel"
         ]
       ]
     },
     {
       "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "sparkling_water",
-          "yogurt_drink",
-          "ridged_chips"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "cherry_pair",
-          "icebar_blue",
-          "yogurt_drink"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "gift_box",
-          "ridged_chips",
-          "wheel_of_lime"
-        ]
-      ]
-    },
-    {
-      "r": 2,
       "c": 0,
       "lock": 1,
       "layers": [
         [
-          "sparkling_water",
-          "gift_box",
-          "gingerbread"
+          "cheese_wheel",
+          "lychee",
+          "glue_stick"
+        ],
+        [
+          "glass_cleaner",
+          "cream_cheese_tub",
+          "strawberry"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "protein_tube",
+          "fig",
+          "glue_stick"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "pasta_box",
+          "bath_salt_tub",
+          "protein_tube"
         ]
       ]
     },
@@ -118,9 +136,9 @@
       "c": 1,
       "layers": [
         [
-          "gingerbread",
-          "wheel_of_lime",
-          "icebar_blue"
+          "tennis_can",
+          null,
+          null
         ]
       ]
     },
@@ -129,9 +147,9 @@
       "c": 2,
       "layers": [
         [
-          "wheel_of_lime",
-          "cereal_box_blue",
-          null
+          "lychee",
+          null,
+          "lollipop"
         ]
       ]
     },
@@ -140,9 +158,9 @@
       "c": 0,
       "layers": [
         [
-          "gift_box",
-          null,
-          "ridged_chips"
+          "bath_salt_tub",
+          "glass_cleaner",
+          "fig"
         ]
       ]
     },
@@ -151,9 +169,9 @@
       "c": 1,
       "layers": [
         [
-          null,
-          "icebar_blue",
-          "cherry_pair"
+          "glass_cleaner",
+          "fig",
+          "pasta_box"
         ]
       ]
     },
@@ -162,9 +180,9 @@
       "c": 2,
       "layers": [
         [
-          "sparkling_water",
-          "cherry_pair",
-          null
+          "strawberry",
+          "strawberry",
+          "lollipop"
         ]
       ]
     }

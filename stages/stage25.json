@@ -1,19 +1,22 @@
 {
   "level": 25,
-  "timeLimit": 202,
+  "timeLimit": 320,
   "cols": 3,
   "rows": 4,
   "cellCap": 3,
   "goods": [
-    "air_freshener",
-    "bath_salt_tub",
-    "bok_choy",
-    "cooking_oil",
-    "gift_box",
-    "lotion_pump",
+    "broccoli",
+    "chick",
+    "cotton_candy",
+    "energy_drink",
+    "grape_soda",
+    "milk",
     "mushroom_brown",
+    "oat_canister",
     "robot_toy",
-    "rubber_duck"
+    "sports_drink",
+    "sriracha",
+    "tea_box"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -23,15 +26,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 12,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 2,
-    "totalGoods": 27,
+    "totalGoods": 39,
     "attempt": 1
   },
   "cubbies": [
@@ -40,20 +43,21 @@
       "c": 0,
       "layers": [
         [
-          "cooking_oil",
-          "robot_toy",
-          "rubber_duck"
+          "mushroom_brown",
+          "tea_box",
+          "sports_drink"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "lock": 2,
       "layers": [
         [
-          "air_freshener",
-          "robot_toy",
-          "bok_choy"
+          "sports_drink",
+          "cotton_candy",
+          "robot_toy"
         ]
       ]
     },
@@ -62,9 +66,14 @@
       "c": 2,
       "layers": [
         [
-          "air_freshener",
-          "bok_choy",
-          "bath_salt_tub"
+          "sriracha",
+          "broccoli",
+          "milk"
+        ],
+        [
+          "mushroom_brown",
+          "sports_drink",
+          "broccoli"
         ]
       ]
     },
@@ -73,54 +82,64 @@
       "c": 0,
       "layers": [
         [
-          "gift_box",
-          "gift_box",
-          "lotion_pump"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "rubber_duck",
-          "mushroom_brown",
+          "oat_canister",
+          "energy_drink",
           null
+        ],
+        [
+          "mushroom_brown",
+          "mushroom_brown",
+          "chick"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "tea_box",
+          "robot_toy",
+          "sriracha"
+        ],
+        [
+          "grape_soda",
+          "milk",
+          "milk"
         ]
       ]
     },
     {
       "r": 1,
       "c": 2,
-      "lock": 1,
       "layers": [
         [
-          "cooking_oil",
-          "cooking_oil",
-          "rubber_duck"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "air_freshener",
           "mushroom_brown",
+          null,
           "robot_toy"
         ]
       ]
     },
     {
       "r": 2,
-      "c": 1,
+      "c": 0,
       "layers": [
         [
-          "gift_box",
-          null,
-          "bath_salt_tub"
+          "grape_soda",
+          "cotton_candy",
+          "energy_drink"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "lock": 3,
+      "layers": [
+        [
+          "broccoli",
+          "sriracha",
+          "chick"
         ]
       ]
     },
@@ -129,21 +148,25 @@
       "c": 2,
       "layers": [
         [
-          "lotion_pump",
           null,
-          null
+          null,
+          "energy_drink"
+        ],
+        [
+          "oat_canister",
+          "grape_soda",
+          "oat_canister"
         ]
       ]
     },
     {
       "r": 3,
       "c": 0,
-      "lock": 1,
       "layers": [
         [
-          "bok_choy",
           null,
-          "mushroom_brown"
+          null,
+          null
         ]
       ]
     },
@@ -152,9 +175,9 @@
       "c": 1,
       "layers": [
         [
-          "bath_salt_tub",
-          "lotion_pump",
-          null
+          null,
+          null,
+          "chick"
         ]
       ]
     },
@@ -163,9 +186,9 @@
       "c": 2,
       "layers": [
         [
-          null,
-          null,
-          null
+          "mushroom_brown",
+          "cotton_candy",
+          "tea_box"
         ]
       ]
     }

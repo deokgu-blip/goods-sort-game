@@ -1,22 +1,28 @@
 {
   "level": 20,
-  "timeLimit": 281,
+  "timeLimit": 419,
   "cols": 3,
   "rows": 5,
   "cellCap": 3,
   "goods": [
-    "bbq_sauce",
-    "cabbage",
-    "cantaloupe",
-    "hot_sauce",
-    "lychee",
-    "paint_can",
-    "popping_candy",
-    "protein_tube",
-    "pumpkin",
-    "soap_dispenser",
-    "toothpaste",
-    "water"
+    "bath_salt_tub",
+    "bee_toy",
+    "beet",
+    "cereal_box_blue",
+    "cream_cheese",
+    "curry_paste_jar",
+    "dino_toy",
+    "dish_soap",
+    "dragon_toy",
+    "energy_drink",
+    "glass_cleaner",
+    "gobstopper_jar",
+    "grapes",
+    "koala_toy",
+    "lemon_lime_soda",
+    "lipstick",
+    "sorbet_cup",
+    "wafer_bar"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -26,16 +32,16 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 12,
+    "distinct": 18,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 1,
-    "totalGoods": 36,
-    "attempt": 0
+    "totalGoods": 57,
+    "attempt": 1
   },
   "cubbies": [
     {
@@ -43,131 +49,156 @@
       "c": 0,
       "layers": [
         [
-          "protein_tube",
-          "protein_tube",
-          "cantaloupe"
+          "lemon_lime_soda",
+          "energy_drink",
+          "bee_toy"
         ]
       ]
     },
     {
       "r": 0,
       "c": 1,
+      "layers": [
+        [
+          "bee_toy",
+          "cereal_box_blue",
+          "gobstopper_jar"
+        ],
+        [
+          "beet",
+          "wafer_bar",
+          "dino_toy"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "cereal_box_blue",
+          "dragon_toy",
+          "sorbet_cup"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "cream_cheese",
+          "cream_cheese",
+          "bath_salt_tub"
+        ],
+        [
+          "sorbet_cup",
+          "cream_cheese",
+          "dragon_toy"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "dish_soap",
+          "lipstick",
+          "curry_paste_jar"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          "wafer_bar",
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "dragon_toy",
+          "gobstopper_jar",
+          null
+        ],
+        [
+          "curry_paste_jar",
+          "sorbet_cup",
+          "dino_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "wafer_bar",
+          "grapes",
+          "cereal_box_blue"
+        ],
+        [
+          "wafer_bar",
+          "dish_soap",
+          "lipstick"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "energy_drink",
+          null,
+          "koala_toy"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "beet",
+          null,
+          "dino_toy"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
       "lock": 2,
       "layers": [
         [
-          null,
-          "water",
-          "pumpkin"
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 2,
-      "layers": [
+          "gobstopper_jar",
+          "glass_cleaner",
+          "glass_cleaner"
+        ],
         [
-          "bbq_sauce",
-          "cabbage",
-          "soap_dispenser"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "protein_tube",
-          "paint_can",
-          "bbq_sauce"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "toothpaste",
-          null,
-          "pumpkin"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "cabbage",
-          "pumpkin",
-          "soap_dispenser"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          "hot_sauce",
-          "toothpaste",
-          "soap_dispenser"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "paint_can",
-          "lychee",
-          "lychee"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "hot_sauce",
-          "water",
-          "cabbage"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          "paint_can",
-          "popping_candy",
-          "bbq_sauce"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "layers": [
-        [
-          "cantaloupe",
-          null,
-          "popping_candy"
+          "koala_toy",
+          "lipstick",
+          "grapes"
         ]
       ]
     },
@@ -176,9 +207,9 @@
       "c": 0,
       "layers": [
         [
-          null,
-          null,
-          "water"
+          "bee_toy",
+          "dish_soap",
+          "bath_salt_tub"
         ]
       ]
     },
@@ -187,9 +218,14 @@
       "c": 1,
       "layers": [
         [
-          "hot_sauce",
-          "toothpaste",
-          "cantaloupe"
+          null,
+          "beet",
+          "glass_cleaner"
+        ],
+        [
+          "energy_drink",
+          "bath_salt_tub",
+          "lemon_lime_soda"
         ]
       ]
     },
@@ -198,9 +234,14 @@
       "c": 2,
       "layers": [
         [
-          "lychee",
-          "popping_candy",
-          null
+          "wafer_bar",
+          "wafer_bar",
+          "koala_toy"
+        ],
+        [
+          "grapes",
+          "lemon_lime_soda",
+          "curry_paste_jar"
         ]
       ]
     }

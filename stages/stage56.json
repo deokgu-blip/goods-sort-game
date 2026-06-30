@@ -1,25 +1,23 @@
 {
   "level": 56,
-  "timeLimit": 306,
+  "timeLimit": 286,
   "cols": 4,
   "rows": 5,
   "cellCap": 3,
   "goods": [
-    "artichoke",
-    "bell_pepper_red",
-    "berry_smoothie",
-    "butter",
-    "cherry_pair",
-    "cupcake_choco",
-    "detergent",
-    "glass_cleaner",
-    "grape_soda",
-    "hand_soap",
+    "bath_salt_tub",
+    "chick",
+    "cotton_candy",
     "hot_sauce",
+    "iced_tea",
+    "kettle_item",
+    "koala_toy",
+    "lemon_lime_soda",
+    "lemon_soda",
     "lychee",
-    "milk",
-    "santa",
-    "soap_dispenser",
+    "paint_can",
+    "sports_drink",
+    "toothpaste",
     "wheel_of_lime"
   ],
   "combo": {
@@ -30,7 +28,7 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 16,
+    "distinct": 14,
     "depthRange": [
       1,
       1
@@ -49,8 +47,8 @@
       "layers": [
         [
           null,
-          "hot_sauce",
-          "bell_pepper_red"
+          "kettle_item",
+          "chick"
         ]
       ]
     },
@@ -59,9 +57,9 @@
       "c": 1,
       "layers": [
         [
-          "cherry_pair",
-          "detergent",
-          "hand_soap"
+          "lemon_soda",
+          "wheel_of_lime",
+          "paint_can"
         ]
       ]
     },
@@ -70,9 +68,9 @@
       "c": 2,
       "layers": [
         [
-          "hot_sauce",
+          "kettle_item",
           null,
-          "hot_sauce"
+          "kettle_item"
         ]
       ]
     },
@@ -81,7 +79,7 @@
       "c": 3,
       "layers": [
         [
-          "hand_soap",
+          "paint_can",
           null,
           null
         ]
@@ -92,121 +90,121 @@
       "c": 0,
       "layers": [
         [
-          "glass_cleaner",
+          "lemon_lime_soda",
+          "iced_tea",
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "hot_sauce",
+          "toothpaste",
+          "chick"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "hot_sauce",
+          "paint_can",
+          "sports_drink"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "lock": 4,
+      "layers": [
+        [
+          "iced_tea",
+          "hot_sauce",
+          "cotton_candy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
+      "layers": [
+        [
+          "sports_drink",
+          "iced_tea",
+          "bath_salt_tub"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "chick",
+          "lemon_lime_soda",
+          "kettle_item"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "layers": [
+        [
+          null,
+          "sports_drink",
+          "wheel_of_lime"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 0,
+      "layers": [
+        [
+          "bath_salt_tub",
+          "cotton_candy",
+          "iced_tea"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 1,
+      "layers": [
+        [
+          "cotton_candy",
+          "toothpaste",
+          "kettle_item"
+        ]
+      ]
+    },
+    {
+      "r": 3,
+      "c": 2,
+      "lock": 4,
+      "layers": [
+        [
+          "kettle_item",
           "lychee",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "wheel_of_lime",
-          "cupcake_choco",
-          "bell_pepper_red"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "wheel_of_lime",
-          "hand_soap",
-          "santa"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 3,
-      "lock": 4,
-      "layers": [
-        [
-          "artichoke",
-          "wheel_of_lime",
-          "soap_dispenser"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "layers": [
-        [
-          null,
-          null,
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
-          "santa",
-          "artichoke",
-          "milk"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
-        [
-          "bell_pepper_red",
-          "glass_cleaner",
-          "butter"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 3,
-      "layers": [
-        [
-          null,
-          "santa",
-          "detergent"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 0,
-      "layers": [
-        [
-          "milk",
-          "soap_dispenser",
-          "lychee"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 1,
-      "layers": [
-        [
-          "soap_dispenser",
-          "cupcake_choco",
-          "butter"
-        ]
-      ]
-    },
-    {
-      "r": 3,
-      "c": 2,
-      "lock": 4,
-      "layers": [
-        [
-          "butter",
-          "grape_soda",
-          "artichoke"
+          "iced_tea"
         ]
       ]
     },
@@ -216,9 +214,9 @@
       "lock": 2,
       "layers": [
         [
-          "berry_smoothie",
+          "koala_toy",
           null,
-          "grape_soda"
+          "lychee"
         ]
       ]
     },
@@ -227,9 +225,9 @@
       "c": 0,
       "layers": [
         [
-          "cherry_pair",
-          "cherry_pair",
-          "berry_smoothie"
+          "lemon_soda",
+          "lemon_soda",
+          "koala_toy"
         ]
       ]
     },
@@ -240,7 +238,7 @@
         [
           null,
           null,
-          "lychee"
+          "iced_tea"
         ]
       ]
     },
@@ -249,9 +247,9 @@
       "c": 2,
       "layers": [
         [
-          "glass_cleaner",
-          "detergent",
-          "berry_smoothie"
+          "lemon_lime_soda",
+          "wheel_of_lime",
+          "koala_toy"
         ]
       ]
     },
@@ -261,9 +259,9 @@
       "lock": 3,
       "layers": [
         [
-          "cupcake_choco",
-          "grape_soda",
-          "milk"
+          "toothpaste",
+          "lychee",
+          "bath_salt_tub"
         ]
       ]
     }

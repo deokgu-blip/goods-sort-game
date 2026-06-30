@@ -1,19 +1,21 @@
 {
   "level": 30,
-  "timeLimit": 202,
+  "timeLimit": 310,
   "cols": 4,
   "rows": 3,
   "cellCap": 3,
   "goods": [
-    "beet",
+    "candy_coated_bag",
     "cantaloupe",
-    "chips_tube_red",
-    "frog_toy",
-    "honey_jar",
-    "instant_noodle_cup",
+    "detergent",
+    "dino_toy",
+    "energy_drink",
+    "grapes",
     "mayo_squeeze",
-    "sports_drink",
-    "toothpaste"
+    "red_onion",
+    "tennis_can",
+    "toothpaste",
+    "whip_can"
   ],
   "combo": {
     "resetAfterMs": 20000
@@ -23,15 +25,15 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 11,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 2,
-    "totalGoods": 27,
+    "totalGoods": 36,
     "attempt": 0
   },
   "cubbies": [
@@ -40,9 +42,9 @@
       "c": 0,
       "layers": [
         [
-          "frog_toy",
-          "frog_toy",
-          "toothpaste"
+          "mayo_squeeze",
+          "candy_coated_bag",
+          "grapes"
         ]
       ]
     },
@@ -51,9 +53,9 @@
       "c": 1,
       "layers": [
         [
-          "mayo_squeeze",
-          "sports_drink",
-          null
+          "tennis_can",
+          "whip_can",
+          "red_onion"
         ]
       ]
     },
@@ -64,7 +66,7 @@
         [
           null,
           null,
-          null
+          "tennis_can"
         ]
       ]
     },
@@ -73,99 +75,114 @@
       "c": 3,
       "layers": [
         [
-          "frog_toy",
-          "instant_noodle_cup",
-          "beet"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 0,
-      "layers": [
-        [
-          "beet",
-          "chips_tube_red",
-          "sports_drink"
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 1,
-      "layers": [
-        [
-          "instant_noodle_cup",
-          "mayo_squeeze",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 1,
-      "c": 2,
-      "layers": [
-        [
-          "cantaloupe",
           null,
-          null
+          "whip_can",
+          "mayo_squeeze"
         ]
       ]
     },
     {
       "r": 1,
-      "c": 3,
-      "layers": [
-        [
-          "honey_jar",
-          "cantaloupe",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 2,
       "c": 0,
       "layers": [
         [
+          null,
           "mayo_squeeze",
-          "chips_tube_red",
-          "honey_jar"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "lock": 1,
-      "layers": [
+          "cantaloupe"
+        ],
         [
+          "whip_can",
           "toothpaste",
-          "beet",
-          "chips_tube_red"
+          "cantaloupe"
         ]
       ]
     },
     {
-      "r": 2,
-      "c": 2,
+      "r": 1,
+      "c": 1,
       "layers": [
         [
-          "cantaloupe",
+          "red_onion",
+          "energy_drink",
+          "detergent"
+        ],
+        [
+          "whip_can",
+          "energy_drink",
+          "red_onion"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "lock": 2,
+      "layers": [
+        [
+          "dino_toy",
           null,
-          "toothpaste"
+          "grapes"
+        ],
+        [
+          "candy_coated_bag",
+          "candy_coated_bag",
+          "detergent"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "layers": [
+        [
+          "grapes",
+          "energy_drink",
+          null
         ]
       ]
     },
     {
       "r": 2,
-      "c": 3,
+      "c": 0,
+      "layers": [
+        [
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 1,
       "lock": 3,
       "layers": [
         [
-          "instant_noodle_cup",
-          "sports_drink",
-          "honey_jar"
+          "toothpaste",
+          "detergent",
+          "dino_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 2,
+      "layers": [
+        [
+          "cantaloupe",
+          "whip_can",
+          "dino_toy"
+        ]
+      ]
+    },
+    {
+      "r": 2,
+      "c": 3,
+      "layers": [
+        [
+          "whip_can",
+          "toothpaste",
+          "tennis_can"
         ]
       ]
     }

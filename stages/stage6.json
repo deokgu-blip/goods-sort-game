@@ -1,16 +1,22 @@
 {
   "level": 6,
-  "timeLimit": 218,
+  "timeLimit": 340,
   "cols": 4,
   "rows": 3,
   "cellCap": 3,
   "goods": [
+    "air_freshener",
+    "bell_pepper",
     "butter_box",
     "cantaloupe",
     "chips_tube_red",
     "cream_cheese_tub",
+    "glass_cleaner",
+    "lemon_lime_soda",
     "milk_carton_tall",
+    "red_onion",
     "root_beer",
+    "soda",
     "spray_cleaner",
     "toaster_pastry",
     "wheel_of_lime"
@@ -23,26 +29,27 @@
     "comboBonus": 1
   },
   "_gen": {
-    "distinct": 9,
+    "distinct": 15,
     "depthRange": [
       1,
-      1
+      2
     ],
     "emptyCubbies": 1,
     "frontGaps": 6,
     "lockCubbies": 1,
-    "totalGoods": 27,
+    "totalGoods": 45,
     "attempt": 0
   },
   "cubbies": [
     {
       "r": 0,
       "c": 0,
+      "lock": 1,
       "layers": [
         [
-          "cantaloupe",
-          "chips_tube_red",
-          "cream_cheese_tub"
+          null,
+          null,
+          "cantaloupe"
         ]
       ]
     },
@@ -51,58 +58,127 @@
       "c": 1,
       "layers": [
         [
-          "cantaloupe",
+          "milk_carton_tall",
+          "toaster_pastry",
+          "chips_tube_red"
+        ],
+        [
+          "cream_cheese_tub",
+          "glass_cleaner",
+          "lemon_lime_soda"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 2,
+      "layers": [
+        [
+          "chips_tube_red",
+          "toaster_pastry",
+          "air_freshener"
+        ]
+      ]
+    },
+    {
+      "r": 0,
+      "c": 3,
+      "layers": [
+        [
+          "butter_box",
           null,
+          null
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 0,
+      "layers": [
+        [
+          "lemon_lime_soda",
+          "butter_box",
+          "toaster_pastry"
+        ],
+        [
+          "soda",
+          "glass_cleaner",
+          "air_freshener"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 1,
+      "layers": [
+        [
+          "wheel_of_lime",
+          "soda",
+          "red_onion"
+        ],
+        [
+          "cream_cheese_tub",
+          "bell_pepper",
+          "red_onion"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 2,
+      "layers": [
+        [
+          "wheel_of_lime",
+          "root_beer",
+          "root_beer"
+        ],
+        [
+          "lemon_lime_soda",
+          "bell_pepper",
+          "milk_carton_tall"
+        ]
+      ]
+    },
+    {
+      "r": 1,
+      "c": 3,
+      "layers": [
+        [
+          null,
+          null,
+          "cream_cheese_tub"
+        ],
+        [
+          "red_onion",
+          "spray_cleaner",
           "butter_box"
         ]
       ]
     },
     {
-      "r": 0,
-      "c": 2,
-      "layers": [
-        [
-          "butter_box",
-          "root_beer",
-          null
-        ]
-      ]
-    },
-    {
-      "r": 0,
-      "c": 3,
-      "layers": [
-        [
-          null,
-          "toaster_pastry",
-          "milk_carton_tall"
-        ]
-      ]
-    },
-    {
-      "r": 1,
+      "r": 2,
       "c": 0,
       "layers": [
         [
           "spray_cleaner",
           "cantaloupe",
-          "chips_tube_red"
+          "soda"
         ]
       ]
     },
     {
-      "r": 1,
+      "r": 2,
       "c": 1,
       "layers": [
         [
-          null,
+          "wheel_of_lime",
           "root_beer",
-          "milk_carton_tall"
+          "cantaloupe"
         ]
       ]
     },
     {
-      "r": 1,
+      "r": 2,
       "c": 2,
       "layers": [
         [
@@ -113,58 +189,18 @@
       ]
     },
     {
-      "r": 1,
+      "r": 2,
       "c": 3,
       "layers": [
         [
-          null,
-          null,
-          "milk_carton_tall"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 0,
-      "lock": 2,
-      "layers": [
-        [
-          "wheel_of_lime",
-          "cream_cheese_tub",
-          "wheel_of_lime"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 1,
-      "layers": [
-        [
+          "spray_cleaner",
           "chips_tube_red",
-          "root_beer",
-          "spray_cleaner"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 2,
-      "layers": [
+          "bell_pepper"
+        ],
         [
-          "cream_cheese_tub",
-          "butter_box",
-          "spray_cleaner"
-        ]
-      ]
-    },
-    {
-      "r": 2,
-      "c": 3,
-      "layers": [
-        [
-          "wheel_of_lime",
-          "toaster_pastry",
-          "toaster_pastry"
+          "air_freshener",
+          "milk_carton_tall",
+          "glass_cleaner"
         ]
       ]
     }

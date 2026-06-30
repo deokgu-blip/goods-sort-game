@@ -1332,7 +1332,13 @@
     }
     function setMuted(m){ muted=!!m;
       if (bgm){ if (muted){ try{ bgm.pause(); }catch(e){} } else { var pr=bgm.play(); if(pr&&pr.catch) pr.catch(function(){}); } } }
-    return { init:init, unlock:unlock, play:play, setMuted:setMuted, isMuted:function(){return muted;},
+    // HOST PAUSE (GameReels GamePause = "오디오 정지"): pause BGM + suspend the SFX context WITHOUT
+    // touching the user's mute toggle; resume restores both (only un-pauses BGM if not user-muted).
+    function setPaused(p){
+      if (p){ if (bgm){ try{ bgm.pause(); }catch(e){} } if (ctx && ctx.state==='running'){ try{ ctx.suspend(); }catch(e){} } }
+      else { if (ctx && ctx.state==='suspended'){ try{ ctx.resume(); }catch(e){} }
+             if (bgm && !muted){ var pr=bgm.play(); if(pr&&pr.catch) pr.catch(function(){}); } } }
+    return { init:init, unlock:unlock, play:play, setMuted:setMuted, setPaused:setPaused, isMuted:function(){return muted;},
              setBgmVolume:function(v){ bgmVol=Math.max(0,Math.min(1,v)); if(bgm) bgm.volume=bgmVol; },
              bgmState:function(){ return bgm ? { paused:bgm.paused, t:bgm.currentTime, vol:bgm.volume } : null; } };
   })();
@@ -3837,11 +3843,13 @@
   function pauseGame(showUI){
     if (S.over) return;
     S.paused = true;
+    try { SFX.setPaused(true); }catch(e){}            // GameReels GamePause contract: stop audio too
     if (showUI) pauseScreen.classList.add('on');
   }
   function resumeGame(){
     S.paused = false;
     pauseScreen.classList.remove('on');
+    try { SFX.setPaused(false); }catch(e){}            // restore audio on resume (respects user mute)
     S.lastTick = performance.now();
   }
   (function(){ var pb=document.getElementById('pause'); if(pb) pb.addEventListener('click', function(){ haptic('btn'); pauseGame(true); }); })();
@@ -4215,6 +4223,15 @@
   [0,300,800,1600,3000,5000].forEach(function(ms){
     setTimeout(emitGameStart, ms);
   });
+
+  // BGM AUTOPLAY (user 2026-06-30: "음악이 첫 터치를 해야 나와. 앱에서 웹뷰로 서빙 중"). In a webview
+  // the host typically allows autoplay (mediaPlaybackRequiresUserAction=false), so try to start BGM on
+  // boot + whenever the webview becomes visible / on resume — no first tap needed. If the platform DOES
+  // block autoplay, the .catch is silent and the existing first-gesture unlock() still starts it (fallback).
+  function tryAutoplayBgm(){ if (SFX.isMuted && SFX.isMuted()) return; try { SFX.unlock(); }catch(e){} }
+  [120, 600, 1500].forEach(function(ms){ setTimeout(tryAutoplayBgm, ms); });
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) tryAutoplayBgm(); });
+  window.addEventListener('pageshow', tryAutoplayBgm);
 
   // V12 — refold the niche 3D boxes on resize (per-cell px geometry tracks the
   // responsive shelf) then re-fit goods (size + floor depth). Debounced.

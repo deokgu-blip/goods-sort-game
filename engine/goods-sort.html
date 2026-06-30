@@ -2630,10 +2630,20 @@
     if (sFrom < 0) return false;                        // nothing to move
     var type = ff[sFrom];
 
-    // SAME-CUBBY drop = CANCEL the action (user): dropping the good back onto its OWN cubby
-    // does NOT relocate it — it returns to its ORIGINAL slot (endDrag re-renders the source,
-    // restoring the hidden good in place). No data change, no combo change.
-    if (fromCb === toCb) return false;
+    // SAME-CUBBY relocate (user: "같은 그리드 안에서도 굿즈 위치 바꿀 수 있게"): dropping onto a DIFFERENT
+    // slot of its OWN cubby MOVES the good there — into an empty slot, or SWAPPING with the good already
+    // in that slot. Dropping back on its own slot = no-op (snaps home). Rearranging the same goods can
+    // never change allSameSlots, so no clear results and the combo is untouched; endDrag re-renders the
+    // cubby to show the new arrangement. (2026-06-30 — replaces the earlier same-cubby = CANCEL rule.)
+    if (fromCb === toCb){
+      var dstSlot = (toSlot===undefined || toSlot===null) ? sFrom : toSlot;
+      if (dstSlot === sFrom) return false;              // dropped on its own slot -> no change (snap home)
+      var occ = ff[dstSlot];
+      ff[dstSlot] = type;                               // dragged good   -> target slot
+      ff[sFrom]   = occ;                                // occupant (or null) -> source slot (swap / move)
+      haptic('place');
+      return false;                                     // committed (no clear); endDrag re-renders the cubby
+    }
 
     if (!canDrop(fromCb, toCb, type)) return false;
 

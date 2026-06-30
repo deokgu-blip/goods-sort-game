@@ -1096,22 +1096,17 @@
   /* GameReels game-over: NO popup card — full-screen DIM overlay, tap anywhere to restart. */
   .reels-over{ position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center; padding:0 24px; cursor:pointer; pointer-events:auto;
-    background:rgba(16,9,3,.46); }   /* extra dim over the overlay for a clean GAME OVER */
-  .reels-over .ro-title{ font-size:46px; font-weight:900; color:#fff; letter-spacing:1.5px;
-    text-shadow:0 3px 0 rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.45); }
-  .reels-over .ro-reason{ margin-top:12px; font-size:22px; font-weight:700; color:#ffd9a8;
-    text-shadow:0 2px 0 rgba(0,0,0,.4); }
-  /* central restart affordance — glossy toy circle (matches the game's CTA buttons), pulsing */
-  .reels-over .ro-icon{ margin-top:46px; width:108px; height:108px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(#ffb858 0%,#f7973a 48%,#ef7d1c 100%);
-    box-shadow:inset 0 3px 0 rgba(255,255,255,.55), inset 0 -6px 8px rgba(150,55,0,.34), 0 6px 0 #c25e12, 0 10px 16px rgba(0,0,0,.42);
-    animation:roTap 1.2s ease-in-out infinite; }
-  .reels-over .ro-icon::before{ content:'\21BB'; font-size:60px; font-weight:900; color:#fff; line-height:1;
-    margin-top:-4px; text-shadow:0 2px 2px rgba(150,55,0,.45); }
-  .reels-over .ro-tap{ margin-top:20px; font-size:23px; font-weight:800; color:#fff;
-    text-shadow:0 2px 6px rgba(0,0,0,.5); opacity:.95; }
-  @keyframes roTap{ 0%,100%{ transform:scale(.95); } 50%{ transform:scale(1.07); } }
+    background:rgba(12,10,16,.5); }   /* clean neutral dim over the overlay (reference look) */
+  /* GAME OVER — big white with a soft glow/bloom (reference) */
+  .reels-over .ro-title{ font-size:48px; font-weight:900; color:#fff; letter-spacing:1px;
+    text-shadow:0 0 18px rgba(255,255,255,.5), 0 0 44px rgba(150,190,255,.32), 0 3px 4px rgba(0,0,0,.4); }
+  .reels-over .ro-reason{ margin-top:10px; font-size:23px; font-weight:800; color:#fff;
+    text-shadow:0 1px 3px rgba(0,0,0,.5); }
+  /* Tap to Restart — light blue, gentle pulse (affordance) */
+  .reels-over .ro-tap{ margin-top:34px; font-size:24px; font-weight:800; color:#8fc4f0;
+    text-shadow:0 0 10px rgba(120,180,240,.4), 0 1px 3px rgba(0,0,0,.5);
+    animation:roTap 1.5s ease-in-out infinite; }
+  @keyframes roTap{ 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
 </style>
 </head>
 <body>
@@ -1258,11 +1253,22 @@
   if (REELS) document.body.classList.add('reels');
   if (DEV) document.getElementById('devnav').classList.add('on');
 
+  // GameEnd success CADENCE (reels): emit GameEnd on every Nth level. Host/runtime override via
+  // URL `?ge=N` or `?loop=N`; default below (1 = every game end — right for a standalone playable).
+  var GAMEEND_EVERY = (function(){ var u=new URLSearchParams(location.search); var n=parseInt(u.get('ge')||u.get('loop'),10); return (n>=1)?n:1; })();
   // GameEnd emission policy (single source of truth)
   function shouldEmitGameEnd(level){
     if (!REELS) return true;                 // non-reels: every level
     if (stopLevel && level === stopLevel) return true;  // segment end
-    return (level % 30) === 0;               // reels: 30-multiples only
+    return (level % GAMEEND_EVERY) === 0;    // reels: every Nth level (GAMEEND_EVERY)
+  }
+  // GameReels GameEnd — emit the STRUCTURED object FIRST, then the LEGACY string (additive + ordered:
+  // some hosts read the LAST value, so object->string order is part of the contract). progressIndex =
+  // current level, 1-BASED. Centralized so win/timeup/nospace all go through the same gated emit.
+  function emitGameEnd(success, level){
+    if (!shouldEmitGameEnd(level)) return;
+    GR.post('GameEnd', { success: !!success, progressIndex: level, currentIndex: level });  // structured (object)
+    GR.post('GameEnd', success ? 'success' : 'fail');                                        // legacy (string)
   }
 
   // ---------- haptics (CORE-GATED only) ----------
@@ -3565,9 +3571,7 @@
     S._earned = 15 + (S.maxCombo||0)*4 + Math.floor((S.level||1)/8)*4;
     S.coins += S._earned; saveCoins();
     if (S._cheat) {}  // (cheat doesn't change rewards)
-    if (shouldEmitGameEnd(S.level)){
-      GR.post('GameEnd', { success:true, progressIndex:S.level, currentIndex:S.level });
-    }
+    emitGameEnd(true, S.level);
     var dur = launchFireworks();                 // ~1.6-2s all-around fireworks
     // show the result card partway through the show (so the celebration overlaps it)
     setTimeout(function(){ showResultCard(); }, Math.min(1400, Math.max(900, dur*0.7)));
@@ -3578,9 +3582,7 @@
     if (S.over) return;
     S.over = true; S.running = false;
     if (S.comboTimer) clearTimeout(S.comboTimer);
-    if (shouldEmitGameEnd(S.level)){
-      GR.post('GameEnd', { success:false, progressIndex:S.level, currentIndex:S.level });
-    }
+    emitGameEnd(false, S.level);
     showGameOverCard('timeup');
   }
   // ---- GAME OVER: NO SPACE (deadlock — no clear reachable) ----
@@ -3588,9 +3590,7 @@
     if (S.over) return;
     S.over = true; S.running = false;
     if (S.comboTimer) clearTimeout(S.comboTimer);
-    if (shouldEmitGameEnd(S.level)){
-      GR.post('GameEnd', { success:false, progressIndex:S.level, currentIndex:S.level });
-    }
+    emitGameEnd(false, S.level);
     showGameOverCard('nospace');
   }
 
@@ -3623,14 +3623,13 @@
   // replay the current level. Only reached when REELS is on; restoring the full game brings back continue.
   function showReelsRestart(mode){
     var isTime = (mode === 'timeup');
-    var reason = isTime ? "Time's up!" : 'No space left!';   // game-over reason (shown if any)
-    // NO popup card (user spec): a full-screen DIM overlay — GAME OVER (top) + reason + "Tap to Restart".
-    // Tapping ANYWHERE restarts the current level.
+    var reason = isTime ? "Time's Up" : 'Out of Space';   // game-over reason (shown if any)
+    // NO popup card (user spec + reference): full-screen DIM overlay, text only, centered —
+    // GAME OVER (white + soft glow) / reason (white) / Tap to Restart (light blue). Tap ANYWHERE restarts.
     popupBox.innerHTML =
       '<div class="reels-over" id="reelsOver">' +
         '<div class="ro-title">GAME OVER</div>' +
         '<div class="ro-reason">' + reason + '</div>' +
-        '<div class="ro-icon"></div>' +
         '<div class="ro-tap">Tap to Restart</div>' +
       '</div>';
     overlay.classList.add('on');
@@ -4130,7 +4129,10 @@
   // =============================================================
   var gameStartSent = false;
   function emitGameStart(){
+    // GameReels "loaded" signal — emit ALL accepted aliases (hosts vary: GameStart / started / luna:started).
     GR.post('GameStart', null);
+    GR.post('started', null);
+    GR.post('luna:started', null);
     gameStartSent = true;
   }
   [0,300,800,1600,3000,5000].forEach(function(ms){

@@ -1092,16 +1092,24 @@
   body.reels .cb-coins{ display:none !important; }    /* clear-result coin reward (+N) */
   body.reels .go-coins{ display:none !important; }    /* coin HUD (game-over / shop) */
   /* GameReels game-over: NO popup card — full-screen DIM overlay, tap anywhere to restart. */
-  .reels-over{ position:fixed; inset:0; display:flex; flex-direction:column; align-items:center;
+  .reels-over{ position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center; padding:0 24px; cursor:pointer; pointer-events:auto;
-    background:rgba(16,9,3,.42); }   /* extra dim over the overlay for a clean GAME OVER */
-  .reels-over .ro-title{ margin-top:20vh; font-size:46px; font-weight:900; color:#fff; letter-spacing:1.5px;
+    background:rgba(16,9,3,.46); }   /* extra dim over the overlay for a clean GAME OVER */
+  .reels-over .ro-title{ font-size:46px; font-weight:900; color:#fff; letter-spacing:1.5px;
     text-shadow:0 3px 0 rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.45); }
   .reels-over .ro-reason{ margin-top:12px; font-size:22px; font-weight:700; color:#ffd9a8;
     text-shadow:0 2px 0 rgba(0,0,0,.4); }
-  .reels-over .ro-tap{ margin-top:auto; margin-bottom:26vh; font-size:24px; font-weight:800; color:#fff;
-    text-shadow:0 2px 6px rgba(0,0,0,.5); animation:roTap 1.15s ease-in-out infinite; }
-  @keyframes roTap{ 0%,100%{ opacity:.5; transform:scale(.97); } 50%{ opacity:1; transform:scale(1.05); } }
+  /* central restart affordance — glossy toy circle (matches the game's CTA buttons), pulsing */
+  .reels-over .ro-icon{ margin-top:46px; width:108px; height:108px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(#ffb858 0%,#f7973a 48%,#ef7d1c 100%);
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.55), inset 0 -6px 8px rgba(150,55,0,.34), 0 6px 0 #c25e12, 0 10px 16px rgba(0,0,0,.42);
+    animation:roTap 1.2s ease-in-out infinite; }
+  .reels-over .ro-icon::before{ content:'\21BB'; font-size:60px; font-weight:900; color:#fff; line-height:1;
+    margin-top:-4px; text-shadow:0 2px 2px rgba(150,55,0,.45); }
+  .reels-over .ro-tap{ margin-top:20px; font-size:23px; font-weight:800; color:#fff;
+    text-shadow:0 2px 6px rgba(0,0,0,.5); opacity:.95; }
+  @keyframes roTap{ 0%,100%{ transform:scale(.95); } 50%{ transform:scale(1.07); } }
 </style>
 </head>
 <body>
@@ -3620,6 +3628,7 @@
       '<div class="reels-over" id="reelsOver">' +
         '<div class="ro-title">GAME OVER</div>' +
         '<div class="ro-reason">' + reason + '</div>' +
+        '<div class="ro-icon"></div>' +
         '<div class="ro-tap">Tap to Restart</div>' +
       '</div>';
     overlay.classList.add('on');

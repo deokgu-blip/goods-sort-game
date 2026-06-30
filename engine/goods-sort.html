@@ -1085,8 +1085,12 @@
   #grid.shuffled-in .good{ animation:gShufIn .42s cubic-bezier(.34,1.56,.64,1) both; }
   @keyframes gShufIn{ 0%{ opacity:.2; } 60%{ opacity:1; } 100%{ opacity:1; } }
 
-  /* GameReels build keeps the NORMAL top safe-area (env) so the header sits where the full game has it —
-     the old `body.reels{--safe-top:0}` jammed the HUD to the top edge (notch ignored); removed. */
+  /* GameReels build — NOTCH FIX (2026-06-30): the Flutter webview host reports env(safe-area-inset-top)=0,
+     so the HUD pills jammed under the device notch + the host's back/menu chrome. Give the reels build a
+     MINIMUM top inset so the pills drop BELOW the notch/host chrome; #hud's brown background already fills
+     full-bleed from y=0, so the added top strip is filled with the SAME header-brown (user: 내린부분 같은 갈색).
+     Tunable per host without a rebuild via ?safetop=N (px) — see the bridge (--safe-top-min). */
+  body.reels{ --safe-top: max(env(safe-area-inset-top, 0px), var(--safe-top-min, 96px)); }
   /* GameReels build (REELS_BUILD): HIDE currency UI + the item/booster bar (restorable — see REELS_BUILD). */
   /* HIDE item bar but RESERVE its space (visibility, not display:none) so the board stays where the
      full game has it — display:none let #board-wrap grow and dropped the centered shelf ~55px. */
@@ -1196,6 +1200,11 @@
   var DEV   = URLP.has('dev');
   var FROM  = parseInt(URLP.get('from'),10); if(!(FROM>=1)) FROM = 1;
   var TO    = parseInt(URLP.get('to'),10);   if(!(TO>=1))   TO = null;
+  // NOTCH FIX: per-host override of the reels HUD top inset (px). CSS uses
+  // max(env(safe-area-inset-top), var(--safe-top-min, 96px)); this lets the host/user dial it in
+  // (e.g. ?safetop=120) without a rebuild when env() is 0 in the webview. Clamped 0..240.
+  var SAFETOP = parseInt(URLP.get('safetop'),10);
+  if (SAFETOP>=0 && SAFETOP<=240) { try{ document.documentElement.style.setProperty('--safe-top-min', SAFETOP+'px'); }catch(e){} }
 
   // single channel post (event-message) — FLAT {event,data}
   function postMsg(event, data){

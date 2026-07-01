@@ -704,8 +704,8 @@
     background:url("../assets/ui/fx_star.png") center/contain no-repeat;
     filter:drop-shadow(0 0 6px rgba(255,200,40,.9)); will-change:transform,opacity; }
   /* COMBO flame that flies from the clear spot into the top flame pill */
-  .fly-flame{ position:fixed; z-index:58; pointer-events:none; font-size:26px; line-height:1;
-    transform:translate(-50%,-50%) scale(1); will-change:left,top,transform,opacity;
+  .fly-flame{ position:fixed; left:0; top:0; z-index:58; pointer-events:none; font-size:26px; line-height:1;
+    transform:translate(-50%,-50%) scale(1); will-change:transform,opacity;   /* transform-only anim = GPU, no reflow */
     filter:drop-shadow(0 0 5px rgba(255,140,30,.85)); }
   /* praise = praise_*.png banner image, escalating by combo tier */
   /* praise = an <img> (praise_<word>.png) — FIXED HEIGHT gives the SAME letter size for every word
@@ -1317,7 +1317,10 @@
         }
       } catch(e){ ctx=null; }
       // BGM = a calm looping track (HTMLAudio); low volume so it sits UNDER the SFX. Starts on unlock().
-      try { bgm=new Audio('../assets/audio/bgm.mp3'); bgm.loop=true; bgm.volume=bgmVol; bgm.preload='auto'; } catch(e){ bgm=null; }
+      // BGM REMOVED per user (2026-07-01: "굿즈솔트 BGM 제거해줘"). SFX stay. All bgm.* calls are
+      // null-guarded, so leaving this null is enough. RESTORE by re-adding:
+      //   try { bgm=new Audio('../assets/audio/bgm.mp3'); bgm.loop=true; bgm.volume=bgmVol; bgm.preload='auto'; } catch(e){ bgm=null; }
+      bgm = null;
     }
     function unlock(){
       init();
@@ -2802,6 +2805,30 @@
   // COMBO flames — `count` 🔥 (= the current combo, capped) pop at the clear spot and fly, ONE AFTER
   // ANOTHER (staggered), INTO the top flame pill (#comboCount). The flame count grows with the combo
   // (user: "콤보수에 따라 불꽃이 점점 늘어나고, N개를 한번에 얻으면 N개가 차례대로 빨려들어가야 돼").
+  // PERF (user 2026-07-01: "불꽃 여러 개일 때 프레임드랍"): ONE shared rAF drives EVERY in-flight flame
+  // (not one rAF per flame), and it writes ONLY transform(translate3d)+opacity — never left/top — so N
+  // flames no longer trigger N layout reflows per frame. The pill bump forces at most ONE reflow on an
+  // arrival frame (not per flame).
+  var _flames = [], _flameRAF = null;
+  function _flameTick(now){
+    var arrived = false;
+    for (var i=_flames.length-1; i>=0; i--){
+      var f = _flames[i];
+      var p = Math.min(1, (now - f.t0)/f.rise);
+      var e = p<0.5 ? 2*p*p : 1 - Math.pow(-2*p+2,2)/2;   // easeInOutQuad
+      var u = 1 - e;
+      var px = u*u*f.x + 2*u*e*f.cx + e*e*f.tx;           // quadratic-bezier arc
+      var py = u*u*f.y + 2*u*e*f.cy + e*e*f.ty;
+      var sway = Math.sin(p*Math.PI*4) * 7 * u;           // horizontal sway (fades out)
+      var scale = 1.12 - e*0.85;
+      var rot  = Math.sin(p*Math.PI*3) * 20;              // flicker/wobble
+      f.el.style.transform = 'translate3d('+(px+sway).toFixed(1)+'px,'+py.toFixed(1)+'px,0) translate(-50%,-50%) scale('+scale.toFixed(3)+') rotate('+rot.toFixed(1)+'deg)';
+      f.el.style.opacity = (1 - e*0.85).toFixed(2);
+      if (p >= 1){ f.el.remove(); _flames.splice(i,1); arrived = true; }
+    }
+    if (arrived && comboCountEl){ comboCountEl.classList.remove('bump'); void comboCountEl.offsetWidth; comboCountEl.classList.add('bump'); }
+    _flameRAF = _flames.length ? requestAnimationFrame(_flameTick) : null;
+  }
   var FLAME_CAP = 6;
   // COMBO flames (user 2026-07-01): when a combo is big enough to spawn N flames, they DON'T all pop
   // from one spot — they appear SCATTERED across the matched grid (cubby `rect`), then fly TOGETHER
@@ -2854,39 +2881,25 @@
     }
     var tx = t.left + t.width*0.5, ty = t.top + t.height/2;
     var fl = document.createElement('div'); fl.className='fly-flame'; fl.textContent='🔥';
-    fl.style.left = x+'px'; fl.style.top = y+'px';
-    fl.style.transform = 'translate(-50%,-50%) scale(0)';
+    // POSITION VIA TRANSFORM ONLY (translate3d = GPU compositor, NO per-frame reflow). left/top stay 0.
+    fl.style.transform = 'translate3d('+x+'px,'+y+'px,0) translate(-50%,-50%) scale(0)';
     document.body.appendChild(fl);
     var HOLD = 180, RISE = rise || 620;
-    // 1) POP IN at the clear spot (overshoot), then HOLD a beat in place
+    // 1) POP IN at the scattered spot (overshoot), then HOLD a beat in place
     requestAnimationFrame(function(){
       fl.style.transition = 'transform .2s cubic-bezier(.34,1.75,.5,1)';
-      fl.style.transform = 'translate(-50%,-50%) scale(1.12)';
+      fl.style.transform = 'translate3d('+x+'px,'+y+'px,0) translate(-50%,-50%) scale(1.12)';
     });
-    // 2) after the hold, SWOOP up along a dynamic ARC into the top flame pill (rAF):
-    //    bow the path up+sideways + add a rotation wobble + horizontal sway + shrink/fade.
+    // 2) after the hold, hand off to the SHARED rAF loop (ONE loop drives ALL flames — no per-flame
+    //    rAF — and it writes only transform/opacity, so many flames no longer thrash layout).
     setTimeout(function(){
       fl.style.transition = 'none';
       var side = (tx >= x ? 1 : -1);
-      var cx = (x + tx)/2 + side*46;          // control point: bow SIDEWAYS
-      var cy = Math.min(y, ty) - 72;          // ... and UP above both ends (arc)
-      var t0 = performance.now();
-      function step(now){
-        var p = Math.min(1, (now - t0)/RISE);
-        var e = p<0.5 ? 2*p*p : 1 - Math.pow(-2*p+2,2)/2;   // easeInOutQuad
-        var u = 1 - e;
-        var px = u*u*x + 2*u*e*cx + e*e*tx;                 // quadratic-bezier arc
-        var py = u*u*y + 2*u*e*cy + e*e*ty;
-        var scale = 1.12 - e*0.85;
-        var rot  = Math.sin(p*Math.PI*3) * 20;              // flicker/wobble
-        var sway = Math.sin(p*Math.PI*4) * 7 * u;           // horizontal sway (fades out)
-        fl.style.left = px+'px'; fl.style.top = py+'px';
-        fl.style.transform = 'translate(calc(-50% + '+sway.toFixed(1)+'px),-50%) scale('+scale.toFixed(3)+') rotate('+rot.toFixed(1)+'deg)';
-        fl.style.opacity = (1 - e*0.85).toFixed(2);
-        if (p < 1) requestAnimationFrame(step);
-        else { fl.remove(); if (comboCountEl){ comboCountEl.classList.remove('bump'); void comboCountEl.offsetWidth; comboCountEl.classList.add('bump'); } }
-      }
-      requestAnimationFrame(step);
+      _flames.push({ el:fl, x:x, y:y, tx:tx, ty:ty,
+        cx:(x + tx)/2 + side*46,      // control point: bow SIDEWAYS
+        cy:Math.min(y, ty) - 72,      // ... and UP above both ends (arc)
+        rise:RISE, t0:performance.now() });
+      if (!_flameRAF) _flameRAF = requestAnimationFrame(_flameTick);
     }, HOLD);
   }
 

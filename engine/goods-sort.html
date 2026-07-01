@@ -1349,12 +1349,13 @@
 
   function haptic(kind){
     // kind: 'place' (drop/place) -> Light | 'clear' (cubby clear) -> Medium | 'btn' -> Soft
+    //       'flame' -> Soft (combo flame reaching the top pill; NO sfx — vibration only). (2026-07-01)
     SFX.unlock();                              // any haptic == a user gesture -> unlock audio + play soft SFX
     if (kind==='place') SFX.play('drop');
     else if (kind==='btn') SFX.play('button');
     var sig = kind==='clear' ? 'MediumVibrate'
             : kind==='place' ? 'LightVibrate'
-            : kind==='btn'   ? 'SoftVibrate' : null;
+            : (kind==='btn' || kind==='flame') ? 'SoftVibrate' : null;
     if (!sig) return;                         // anything else = not core -> no vibration
     try{ GR.vibrate(sig); }catch(e){}
   }
@@ -2824,7 +2825,8 @@
       var rot  = Math.sin(p*Math.PI*3) * 20;              // flicker/wobble
       f.el.style.transform = 'translate3d('+(px+sway).toFixed(1)+'px,'+py.toFixed(1)+'px,0) translate(-50%,-50%) scale('+scale.toFixed(3)+') rotate('+rot.toFixed(1)+'deg)';
       f.el.style.opacity = (1 - e*0.85).toFixed(2);
-      if (p >= 1){ f.el.remove(); _flames.splice(i,1); arrived = true; }
+      if (p >= 1){ f.el.remove(); _flames.splice(i,1); arrived = true;
+        try{ haptic('flame'); }catch(e){} }   // Soft haptic each time a flame enters the pill (user 2026-07-01)
     }
     if (arrived && comboCountEl){ comboCountEl.classList.remove('bump'); void comboCountEl.offsetWidth; comboCountEl.classList.add('bump'); }
     _flameRAF = _flames.length ? requestAnimationFrame(_flameTick) : null;

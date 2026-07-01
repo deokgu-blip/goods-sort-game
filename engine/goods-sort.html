@@ -2719,7 +2719,7 @@
     var heldGoods = cb.floor ? cb.floor.querySelectorAll('.good') : [];
     setTimeout(function(){
       // COMBO FEEDBACK — flame -> top pill, sparkle, + PRAISE TEXT (GOOD!/GREAT!/… by combo).
-      flyFlameToCombo(cx, cy, combo);             // # of flames scales with combo (user: 콤보수만큼 차례로 빨려듦)
+      flyFlameToCombo(cx, cy, combo, rect);       // flames scatter across THIS grid (rect) then fly to the pill
       sparkleRing(cx, cy);
       praise(cx, cy - 6, combo);
       if (el){ el.classList.add('clearing'); el.addEventListener('animationend', function(){ el.classList.remove('clearing'); }, { once:true }); }
@@ -2803,20 +2803,43 @@
   // ANOTHER (staggered), INTO the top flame pill (#comboCount). The flame count grows with the combo
   // (user: "콤보수에 따라 불꽃이 점점 늘어나고, N개를 한번에 얻으면 N개가 차례대로 빨려들어가야 돼").
   var FLAME_CAP = 6;
-  function flyFlameToCombo(x, y, count){
+  // COMBO flames (user 2026-07-01): when a combo is big enough to spawn N flames, they DON'T all pop
+  // from one spot — they appear SCATTERED across the matched grid (cubby `rect`), then fly TOGETHER
+  // ("일괄적으로") into the top flame pill. Because each starts at a different spot, its flight duration
+  // scales with its distance to the pill, so they ENTER the pill at slightly different times.
+  function flyFlameToCombo(x, y, count, rect){
     count = Math.max(1, Math.min(count|0 || 1, FLAME_CAP));
     var dest = comboCountEl || comboEl;
     var t = dest ? dest.getBoundingClientRect() : null;
     var hidden = (!t || (t.width === 0 && t.height === 0));   // tutorial / hidden HUD -> pop in place
-    for (var i=0;i<count;i++){
-      (function(i){
-        // tiny spread so stacked flames don't perfectly overlap at the source
-        var ox = x + (i ? (((i*53)%23) - 11) : 0), oy = y + (i ? (((i*37)%15) - 7) : 0);
-        setTimeout(function(){ spawnFlyFlame(ox, oy, hidden ? null : t); }, i*130);   // STAGGER -> sequential suck-in
-      })(i);
+    var tx = t ? (t.left + t.width*0.5) : x, ty = t ? (t.top + t.height/2) : y;
+    // SCATTER region = the cleared cubby's rect (flames appear "여기저기서" INSIDE the grid); fall back
+    // to a small box around (x,y) when no rect is given (QA / hidden HUD).
+    var rx, ry, rw, rh;
+    if (rect && rect.width > 2 && rect.height > 2){ rx=rect.left; ry=rect.top; rw=rect.width; rh=rect.height; }
+    else { rw=56; rh=56; rx=x-28; ry=y-28; }
+    var insetX = rw*0.18, insetY = rh*0.18;                   // keep flames off the frame edge
+    // pick N scattered points + measure each one's distance to the pill (for distance-scaled flight)
+    var pts=[], dmin=1e9, dmax=0, i;
+    for (i=0;i<count;i++){
+      var fx = rx + insetX + Math.random()*(rw - 2*insetX);
+      var fy = ry + insetY + Math.random()*(rh - 2*insetY);
+      var d = Math.sqrt((tx-fx)*(tx-fx) + (ty-fy)*(ty-fy));
+      pts.push({ x:fx, y:fy, d:d }); if (d<dmin) dmin=d; if (d>dmax) dmax=d;
+    }
+    var span = Math.max(1, dmax - dmin);
+    for (i=0;i<count;i++){
+      (function(p, i){
+        // POP scattered across the grid in quick succession (여기저기서 나타남 — small 32ms stagger so the
+        // launch still reads as one batch), then FLY with a distance-scaled duration so farther flames
+        // ENTER the pill a bit later (user: 시작 위치가 다르니 들어가는 시간이 조금씩 달라야).
+        var popDelay = i*32;
+        var rise = 500 + ((p.d - dmin)/span)*230 + (i%2)*40;   // ~500..770ms, distance-driven + tiny jitter
+        setTimeout(function(){ spawnFlyFlame(p.x, p.y, hidden ? null : t, rise); }, popDelay);
+      })(pts[i], i);
     }
   }
-  function spawnFlyFlame(x, y, t){
+  function spawnFlyFlame(x, y, t, rise){
     // t = the dest pill rect, or null when the HUD is hidden (tutorial): just pop + fade in place.
     if (!t){
       var flp = document.createElement('div'); flp.className='fly-flame'; flp.textContent='🔥';
@@ -2834,7 +2857,7 @@
     fl.style.left = x+'px'; fl.style.top = y+'px';
     fl.style.transform = 'translate(-50%,-50%) scale(0)';
     document.body.appendChild(fl);
-    var HOLD = 150, RISE = 620;
+    var HOLD = 180, RISE = rise || 620;
     // 1) POP IN at the clear spot (overshoot), then HOLD a beat in place
     requestAnimationFrame(function(){
       fl.style.transition = 'transform .2s cubic-bezier(.34,1.75,.5,1)';
@@ -5040,7 +5063,8 @@
     setLock: function(idx, n){ var cb=S.cubbies[idx]; if(!cb) return null; cb.lock=n|0; renderCubby(cb); return cb.lock; },
     lockStates: function(){ return S.cubbies.map(function(cb){ return cb.lock|0; }); },
     fireCombo: function(n){ for(var i=0;i<(n||1);i++) bumpCombo(); return S.combo; },   // preview the combo gauge
-    flyFlames: function(n){ flyFlameToCombo(window.innerWidth*0.5, window.innerHeight*0.6, n||1); return n; },   // QA: N flames fly to the pill
+    flyFlames: function(n, rect){ var cx = rect? rect.left+rect.width/2 : window.innerWidth*0.5, cy = rect? rect.top+rect.height/2 : window.innerHeight*0.6; flyFlameToCombo(cx, cy, n||1, rect); return n; },   // QA: N flames scatter across rect (if given) then fly to the pill
+    cubbyRectQA: function(i){ var cb=S.cubbies[i]; if(!cb||!cb.el) return null; var r=cb.el.getBoundingClientRect(); return {left:r.left,top:r.top,width:r.width,height:r.height}; },
     bgmState: function(){ return window.__sfx ? window.__sfx.bgmState && window.__sfx.bgmState() : null; },
     // build a CONTRIVED deadlock board on the live state: 4 types x3 each (multiples of 3,
     // so the bag IS reshuffle-solvable), but arranged FULLY PACKED + MIXED with NO empty
